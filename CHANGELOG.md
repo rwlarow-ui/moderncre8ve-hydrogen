@@ -1,5 +1,20 @@
 # ModernCre8ve Hydrogen Storefront
 
+## 1.0.1 — 2026-02-13
+
+### Migration Status Check
+- Verified all environment variables configured (13 vars: Storefront API, Weaverse, Customer Account API)
+- Verified 25 Weaverse sections available (slideshow, featured products, testimonials, image gallery, etc.)
+- Confirmed branding, SEO, and redirect CSV complete
+
+### Remaining Migration Tasks
+- Import `redirects-for-shopify.csv` (77 redirects) in Shopify Admin
+- Build static pages (Home, About, Contact, FAQ) in Weaverse Studio
+- Deploy to Shopify Oxygen
+- DNS cutover — assign moderncre8ve.com in Shopify Admin
+
+---
+
 ## 1.0.0 — 2026-02-12
 
 ### ModernCre8ve Branding Migration
