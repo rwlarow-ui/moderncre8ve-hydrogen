@@ -9,8 +9,6 @@ import * as AccordionItem from "~/sections/accordion/accordion-item";
 import * as AccordionInformationGroup from "~/sections/accordion/content-information";
 import * as AccordionSection from "~/sections/accordion/index";
 import * as AccordionInformationItem from "~/sections/accordion/information-item";
-// import * as AliReview from "~/sections/ali-reviews";
-// import * as AliReviewList from "~/sections/ali-reviews/review-list";
 import * as AllProducts from "~/sections/all-products";
 import * as Articles from "~/sections/articles";
 import * as BeforeAndAfter from "~/sections/before-and-after";
@@ -88,8 +86,6 @@ export const components: HydrogenComponent[] = [
   Heading,
   Paragraph,
   Link,
-  // AliReview,
-  // AliReviewList,
   AllProducts,
   AccordionSection,
   AccordionInformationItem,
@@ -139,9 +135,6 @@ export const components: HydrogenComponent[] = [
   CountDownTimer,
   NewsLetter,
   NewsLetterForm,
-  Blogs,
-  BlogPost,
-  AllProducts,
   FeaturedProducts,
   FeaturedContentProducts,
   FeaturedProductItems,

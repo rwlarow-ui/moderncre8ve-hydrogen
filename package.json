@@ -1,10 +1,10 @@
 {
-  "name": "@weaverse/aspen",
+  "name": "@moderncre8ve/storefront",
   "private": true,
   "sideEffects": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
-  "author": "Weaverse",
+  "author": "ModernCre8ve",
   "scripts": {
     "build": "shopify hydrogen build --codegen",
     "dev": "shopify hydrogen dev --codegen --port 3456",

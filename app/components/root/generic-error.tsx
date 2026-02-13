@@ -6,15 +6,9 @@ export function GenericError({
 }: {
   error?: { message: string; stack?: string };
 }) {
-  const heading = "Something’s wrong here.";
-  let description = "We found an error while loading this page.";
-
-  // TODO hide error in prod?
-  if (error) {
-    description += `\n${error.message}`;
-    // biome-ignore lint/suspicious/noConsole: <explanation> --- IGNORE ---
-    console.error(error);
-  }
+  const heading = "Something's wrong here.";
+  const description = "We found an error while loading this page.";
+  const isDev = import.meta.env.DEV;
 
   return (
     <Section
@@ -24,7 +18,7 @@ export function GenericError({
     >
       <h4 className="font-medium">{heading}</h4>
       <p>{description}</p>
-      {error?.stack && (
+      {isDev && error?.stack && (
         <pre
           style={{
             padding: "2rem",
