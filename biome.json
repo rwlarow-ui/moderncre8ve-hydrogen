@@ -1,0 +1,59 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
+  "extends": ["ultracite", "./node_modules/@weaverse/biome/biome.json"],
+  "linter": {
+    "rules": {
+      "style": {
+        "useThrowNewError": "warn",
+        "useFilenamingConvention": "off",
+        "noParameterAssign": "off",
+        "noNestedTernary": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "off",
+        "useAwait": "off",
+        "noArrayIndexKey": "off"
+      },
+      "nursery": {
+        "useUniqueElementIds": "off",
+        "useSortedClasses": {
+          "level": "on",
+          "fix": "safe",
+          "options": {
+            "functions": ["clsx", "cva", "cn"]
+          }
+        },
+        "noNoninteractiveElementInteractions": "off"
+      },
+      "correctness": {
+        "noUnusedVariables": "off"
+      },
+      "performance": {
+        "noNamespaceImport": "off",
+        "useTopLevelRegex": "off"
+      },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": {
+          "level": "error",
+          "options": {
+            "maxAllowedComplexity": 50
+          }
+        }
+      }
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "useSortedAttributes": "off"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all"
+    }
+  }
+}

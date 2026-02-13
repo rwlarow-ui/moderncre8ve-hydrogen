@@ -1,0 +1,352 @@
+import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
+import * as Dialog from "@radix-ui/react-dialog";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import clsx from "clsx";
+import { AnimatePresence, motion } from "framer-motion";
+import { type MutableRefObject, useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router";
+import Link from "~/components/link";
+import { usePredictiveSearch } from "~/hooks/use-predictive-search";
+import { PredictiveSearchForm } from "../search-form";
+import { PopularSearch } from "./PopularSearch";
+import { PredictiveSearchResult } from "./predictive-search-result";
+
+export function PredictiveSearchButtonDesktop({ setIsSearchOpen }) {
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  let [searchQuery, setSearchQuery] = useState("");
+  let [hasSearched, setHasSearched] = useState(false);
+  let [isSearching, setIsSearching] = useState(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: close the dialog when the location changes, aka when the user navigates to a search result page
+  useEffect(() => {
+    setOpen(false);
+    setIsSearchOpen(false);
+    setHasSearched(false);
+    setSearchQuery("");
+    setIsSearching(false);
+  }, [location]);
+
+  return (
+    <Dialog.Root
+      open={open}
+      onOpenChange={(isOpen) => {
+        setOpen(isOpen);
+        if (!isOpen) {
+          if (debounceRef.current) {
+            clearTimeout(debounceRef.current);
+          }
+          setSearchQuery("");
+          setHasSearched(false);
+          setIsSearching(false);
+        }
+      }}
+    >
+      <Dialog.Trigger
+        asChild
+        className="hidden h-8 w-8 items-center justify-center focus-visible:outline-hidden lg:flex"
+      >
+        <button type="button" onClick={() => setIsSearchOpen(true)}>
+          <MagnifyingGlassIcon className="h-5 w-5" />
+        </button>
+      </Dialog.Trigger>
+      <Dialog.Portal forceMount>
+        <AnimatePresence>
+          {open && (
+            <>
+              <Dialog.Overlay forceMount>
+                <motion.div
+                  className="fixed inset-0 top-[calc(var(--height-nav)+var(--topbar-height))] z-9 bg-black/50 backdrop-blur-xs"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                />
+              </Dialog.Overlay>
+              <Dialog.Content
+                forceMount
+                onCloseAutoFocus={(e) => e.preventDefault()}
+                className="fixed inset-x-0 top-[calc(var(--height-nav)+var(--topbar-height))] z-9"
+                aria-describedby={undefined}
+              >
+                <motion.div
+                  initial={{ y: "-100%" }}
+                  animate={{ y: 0 }}
+                  exit={{ y: "-100%" }}
+                  transition={{
+                    type: "spring",
+                    damping: 25,
+                    stiffness: 150,
+                  }}
+                  className="w-full border-line-subtle border-t bg-(--color-header-bg)"
+                >
+                  <VisuallyHidden.Root asChild>
+                    <Dialog.Title>Predictive search</Dialog.Title>
+                  </VisuallyHidden.Root>
+                  <div className="relative p-6">
+                    <PredictiveSearchForm key={open ? "open" : "closed"}>
+                      {({ fetchResults, inputRef }) => (
+                        <div className="mx-auto mb-6 flex max-w-(--page-width) items-center gap-3 border-line-subtle border-b px-3">
+                          <button
+                            type="button"
+                            className="shrink-0 p-1 text-gray-500 hover:text-gray-700"
+                            onClick={() => {
+                              if (inputRef.current?.value.trim()) {
+                                const value = inputRef.current.value.trim();
+                                if (debounceRef.current) {
+                                  clearTimeout(debounceRef.current);
+                                }
+                                setSearchQuery(value);
+                                setHasSearched(true);
+                                setIsSearching(false);
+                                fetchResults(value);
+                              }
+                            }}
+                          >
+                            <MagnifyingGlassIcon className="h-5 w-5" />
+                          </button>
+                          <input
+                            name="q"
+                            type="search"
+                            onChange={(e) => {
+                              const value = e.target.value;
+                              setSearchQuery(value);
+                              const trimmed = value.trim();
+
+                              if (debounceRef.current) {
+                                clearTimeout(debounceRef.current);
+                              }
+
+                              if (!trimmed) {
+                                setHasSearched(false);
+                                setIsSearching(false);
+                                fetchResults("");
+                                return;
+                              }
+
+                              setIsSearching(true);
+                              debounceRef.current = setTimeout(() => {
+                                setHasSearched(true);
+                                setIsSearching(false);
+                                fetchResults(trimmed);
+                              }, 300);
+                            }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault();
+                                if (inputRef.current?.value.trim()) {
+                                  const value = inputRef.current.value.trim();
+                                  if (debounceRef.current) {
+                                    clearTimeout(debounceRef.current);
+                                  }
+                                  setSearchQuery(value);
+                                  setHasSearched(true);
+                                  setIsSearching(false);
+                                  try {
+                                    const raw =
+                                      localStorage.getItem("searchHistory");
+                                    const parsed = raw ? JSON.parse(raw) : [];
+                                    const next = Array.isArray(parsed)
+                                      ? parsed
+                                      : [];
+                                    next.push(value.toLowerCase());
+                                    localStorage.setItem(
+                                      "searchHistory",
+                                      JSON.stringify(next),
+                                    );
+                                  } catch {}
+                                  navigate(
+                                    `/search?q=${encodeURIComponent(value)}`,
+                                  );
+                                }
+                              }
+                            }}
+                            placeholder="Enter a keyword"
+                            ref={inputRef}
+                            autoComplete="off"
+                            className="h-full w-full py-4 focus-visible:outline-hidden"
+                          />
+                          <button
+                            type="button"
+                            className="shrink-0 p-1 text-gray-500 hover:text-gray-700"
+                            onClick={() => {
+                              if (inputRef.current) {
+                                if (debounceRef.current) {
+                                  clearTimeout(debounceRef.current);
+                                }
+                                inputRef.current.value = "";
+                                setSearchQuery("");
+                                setHasSearched(false);
+                                setIsSearching(false);
+                                fetchResults("");
+                              }
+                            }}
+                          >
+                            <XIcon className="h-5 w-5" />
+                          </button>
+                        </div>
+                      )}
+                    </PredictiveSearchForm>
+                    <motion.div
+                      className="relative min-h-[200px] overflow-hidden"
+                      initial={false}
+                      animate={{
+                        height: hasSearched && !isSearching ? 460 : "auto",
+                      }}
+                      transition={{
+                        duration: 0.4,
+                        ease: [0.32, 0.72, 0, 1],
+                      }}
+                    >
+                      <AnimatePresence mode="wait" initial={false}>
+                        {!(hasSearched || isSearching) && (
+                          <motion.div
+                            key="popular"
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{
+                              duration: 0.4,
+                              ease: [0.32, 0.72, 0, 1],
+                              delay: 0.05,
+                            }}
+                          >
+                            <PopularSearch />
+                          </motion.div>
+                        )}
+                        {isSearching && (
+                          <motion.div
+                            key="searching"
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{
+                              duration: 0.4,
+                              ease: [0.32, 0.72, 0, 1],
+                              delay: 0.05,
+                            }}
+                            className="mx-auto flex max-w-(--page-width) items-center justify-center py-12"
+                          >
+                            <p className="text-gray-500 text-sm">
+                              Searching...
+                            </p>
+                          </motion.div>
+                        )}
+                        {hasSearched && !isSearching && (
+                          <motion.div
+                            key="results"
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{
+                              duration: 0.4,
+                              ease: [0.32, 0.72, 0, 1],
+                              delay: 0.05,
+                            }}
+                            className="h-[460px] overflow-y-auto"
+                          >
+                            <PredictiveSearchResults
+                              searchFetcher={undefined}
+                            />
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              </Dialog.Content>
+            </>
+          )}
+        </AnimatePresence>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+}
+
+function PredictiveSearchResults({ searchFetcher }: { searchFetcher?: any }) {
+  const [activeType, setActiveType] = useState("products");
+  const { results, totalResults, searchTerm } = usePredictiveSearch();
+  const queries = results?.find(({ type }) => type === "queries");
+  const articles = results?.find(({ type }) => type === "articles");
+  const products = results?.find(({ type }) => type === "products");
+
+  const isLoading = searchFetcher?.state === "loading";
+
+  if (!totalResults) {
+    return (
+      <div className="z-9 mx-auto max-w-(--page-width)">
+        <NoResults searchTerm={searchTerm} />
+      </div>
+    );
+  }
+  return (
+    <div className="z-9 mx-auto max-w-(--page-width)">
+      <div className="flex gap-6 overflow-hidden py-6">
+        <div className="flex w-1/5 flex-col gap-4 divide-y divide-line">
+          <PredictiveSearchResult type="queries" items={queries?.items} />
+        </div>
+        <div className="w-4/5">
+          <div className="relative flex gap-6 border-line-subtle border-b">
+            {["products", "articles"].map((type) => {
+              const itemCount =
+                type === "articles"
+                  ? articles?.items?.length || 0
+                  : products?.items?.length || 0;
+
+              return (
+                <button
+                  type="button"
+                  key={type}
+                  className={clsx(
+                    "relative px-3 py-1 font-normal transition",
+                    activeType === type
+                      ? "text-[#524B46] after:absolute after:right-0 after:bottom-0 after:left-0 after:h-[1px] after:translate-y-[1px] after:bg-[#A79D95]"
+                      : "text-[#918379]",
+                  )}
+                  onClick={() => setActiveType(type)}
+                >
+                  <span className="uppercase">{type}</span>
+                  <span className="ml-2 text-sm opacity-70">({itemCount})</span>
+                </button>
+              );
+            })}
+          </div>
+          <div className="mt-5 flex flex-col gap-4">
+            {activeType === "articles" && (
+              <PredictiveSearchResult type="articles" items={articles?.items} />
+            )}
+            {activeType === "products" && (
+              <PredictiveSearchResult
+                type="products"
+                items={products?.items?.slice(0, 4)}
+              />
+            )}
+          </div>
+          {activeType === "products" && products?.items?.length > 0 && (
+            <div className="mt-10 flex items-center justify-center">
+              <Link
+                to={`/search?q=${searchTerm.current}`}
+                variant="secondary"
+                className="flex h-[54px] w-fit items-center gap-2 px-6 py-5"
+              >
+                <span className="uppercase">View all Products</span>
+              </Link>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function NoResults({ searchTerm }: { searchTerm: MutableRefObject<string> }) {
+  if (!searchTerm.current) {
+    return null;
+  }
+  return (
+    <p className="p-6">
+      No results found for <q>{searchTerm.current}</q>
+    </p>
+  );
+}

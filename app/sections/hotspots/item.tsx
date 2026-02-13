@@ -1,0 +1,336 @@
+import { HandbagIcon, PlusIcon, TagIcon, XIcon } from "@phosphor-icons/react";
+import * as Dialog from "@radix-ui/react-dialog";
+import {
+  type ComponentLoaderArgs,
+  createSchema,
+  type HydrogenComponentProps,
+  type WeaverseProduct,
+} from "@weaverse/hydrogen";
+import clsx from "clsx";
+import type { CSSProperties } from "react";
+import { forwardRef, useState } from "react";
+import { useFetcher } from "react-router";
+import type { ProductQuery } from "storefront-api.generated";
+import { QuickShop } from "~/components/product/quick-shop";
+import { ScrollArea } from "~/components/scroll-area";
+import { PRODUCT_QUERY } from "~/graphql/queries";
+import { usePrefixPathWithLocale } from "~/hooks/use-prefix-path-with-locale";
+import { ProductPopup } from "./product-popup";
+
+export interface HotspotsItemData {
+  icon: "circle" | "plus" | "bag" | "tag";
+  iconSize: number;
+  offsetX: number;
+  offsetY: number;
+  product: WeaverseProduct;
+  showPrice: boolean;
+  showViewDetailsLink: boolean;
+  viewDetailsLinkText: string;
+}
+
+interface HotspotsItemProps
+  extends HydrogenComponentProps<Awaited<ReturnType<typeof loader>>>,
+    HotspotsItemData {}
+
+const ICONS = {
+  circle: CircleDotIcon,
+  plus: PlusIcon,
+  bag: HandbagIcon,
+  tag: TagIcon,
+};
+
+function CircleDotIcon(props: any) {
+  let { width, height, ...rest } = props;
+  return (
+    <div
+      style={{ width, height }}
+      className="flex items-center justify-center rounded-full border border-white p-3.5"
+    >
+      <span className="h-1.5 w-1.5 rounded-full bg-white" />
+    </div>
+  );
+}
+
+const HotspotsItem = forwardRef<HTMLDivElement, HotspotsItemProps>(
+  (props, ref) => {
+    const {
+      icon,
+      iconSize,
+      offsetX,
+      offsetY,
+      product,
+      showPrice,
+      showViewDetailsLink,
+      viewDetailsLinkText,
+      children,
+      loaderData,
+      ...rest
+    } = props;
+    const Icon = ICONS[icon];
+    const [showQuickShop, setShowQuickShop] = useState(false);
+    const { load, data: quickShopData, state } = useFetcher();
+    const apiPath = usePrefixPathWithLocale(
+      `/api/product?handle=${product?.handle}`,
+    );
+
+    // Handle click - open quick shop on mobile and tablet, popup on desktop
+    const handleClick = () => {
+      if (window.innerWidth < 1024) {
+        // Mobile and tablet breakpoint
+        // On mobile and tablet, open QuickShop
+        if (!quickShopData && state !== "loading") {
+          load(apiPath);
+        }
+        setShowQuickShop(true);
+      }
+    };
+
+    return (
+      <>
+        <div
+          ref={ref}
+          {...rest}
+          className="-translate-x-1/2 -translate-y-1/2 absolute hover:z-1"
+          style={
+            {
+              top: `${offsetY}%`,
+              left: `${offsetX}%`,
+              "--translate-x-ratio": offsetX > 50 ? 1 : -1,
+              "--translate-y-ratio": offsetY > 50 ? 1 : -1,
+              "--spot-size": `${iconSize + 16}px`,
+            } as CSSProperties
+          }
+        >
+          <div className="group relative flex cursor-pointer">
+            <span
+              className={clsx(
+                "absolute inline-flex animate-ping rounded-full",
+                {
+                  "-translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-3/4 w-3/4 bg-white opacity-100 group-hover:opacity-100":
+                    icon === "circle",
+                  "h-full w-full bg-gray-700 opacity-75": icon !== "circle",
+                },
+              )}
+              style={{ animationDuration: "1500ms" }}
+            />
+            <span
+              className={clsx(
+                "group relative inline-flex rounded-full transition-all duration-300",
+                {
+                  "bg-white p-2 hover:scale-110 hover:shadow-lg":
+                    icon !== "circle",
+                  "bg-transparent hover:drop-shadow-lg": icon === "circle",
+                },
+              )}
+              onClick={handleClick}
+            >
+              <Icon style={{ width: iconSize, height: iconSize }} />
+              {/* Desktop popup - only on actual desktop screens (1024px+) */}
+              <div className="hidden lg:block">
+                <ProductPopup
+                  product={loaderData?.product}
+                  offsetX={offsetX}
+                  offsetY={offsetY}
+                  showPrice={showPrice}
+                  showViewDetailsLink={showViewDetailsLink}
+                  viewDetailsLinkText={viewDetailsLinkText}
+                />
+              </div>
+            </span>
+          </div>
+        </div>
+
+        {/* Mobile Quick Shop */}
+        <Dialog.Root open={showQuickShop} onOpenChange={setShowQuickShop}>
+          <Dialog.Portal>
+            <Dialog.Overlay
+              className={clsx(
+                "fixed inset-0 z-10 bg-black/50",
+                showQuickShop ? "animate-fade-in" : "animate-fade-out",
+              )}
+            />
+            <Dialog.Content
+              className={clsx(
+                "fixed inset-y-0 right-0 z-10 w-full bg-background py-2.5 shadow-2xl md:max-w-[430px] lg:hidden",
+                showQuickShop
+                  ? "animate-slide-in-right"
+                  : "animate-slide-out-right",
+              )}
+              aria-describedby={undefined}
+            >
+              <div className="flex h-full flex-col">
+                {/* Header */}
+                <div className="flex flex-shrink-0 items-center justify-between px-5 py-3">
+                  <Dialog.Title asChild>
+                    <span className="font-semibold uppercase">Quick Shop</span>
+                  </Dialog.Title>
+                  <button
+                    type="button"
+                    onClick={() => setShowQuickShop(false)}
+                    className="rounded p-1 transition-colors hover:bg-gray-100"
+                  >
+                    <XIcon className="h-5 w-5" />
+                  </button>
+                </div>
+
+                {/* Content */}
+                <ScrollArea className="flex-1" size="sm">
+                  <div className="px-5 py-4">
+                    {quickShopData ? (
+                      <QuickShop
+                        data={quickShopData as any}
+                        showDescription={false}
+                        setShowDescription={() => {}}
+                        onCloseAll={() => setShowQuickShop(false)}
+                      />
+                    ) : (
+                      <div className="py-8 text-center">
+                        <p className="text-body-subtle">
+                          Loading product data...
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </ScrollArea>
+              </div>
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
+      </>
+    );
+  },
+);
+
+export default HotspotsItem;
+
+export const loader = async (args: ComponentLoaderArgs<HotspotsItemData>) => {
+  const { weaverse, data } = args;
+  const { storefront } = weaverse;
+  if (!data?.product) {
+    return null;
+  }
+
+  try {
+    const productHandle = data.product.handle;
+    const { product } = await storefront.query<ProductQuery>(PRODUCT_QUERY, {
+      variables: {
+        handle: productHandle,
+        selectedOptions: [],
+        language: storefront.i18n.language,
+        country: storefront.i18n.country,
+      },
+    });
+
+    return { product };
+  } catch (error) {
+    console.error("Error loading hotspots product data:", error);
+    return null;
+  }
+};
+
+export const schema = createSchema({
+  type: "hotspots--item",
+  title: "Hotspots item",
+  settings: [
+    {
+      group: "Icon",
+      inputs: [
+        {
+          type: "toggle-group",
+          name: "icon",
+          label: "Icon",
+          configs: {
+            options: [
+              {
+                label: "Circle",
+                value: "circle",
+                icon: "circle",
+              },
+              {
+                label: "Plus",
+                value: "plus",
+                icon: "plus",
+              },
+              {
+                label: "Bag",
+                value: "bag",
+                icon: "shopping-bag",
+              },
+              {
+                label: "Tag",
+                value: "tag",
+                icon: "tag",
+              },
+            ],
+          },
+          defaultValue: "plus",
+        },
+        {
+          type: "range",
+          name: "iconSize",
+          label: "Icon size",
+          configs: {
+            min: 16,
+            max: 32,
+            step: 2,
+            unit: "px",
+          },
+          defaultValue: 20,
+        },
+        {
+          type: "range",
+          name: "offsetX",
+          label: "Offset X",
+          configs: {
+            min: 0,
+            max: 100,
+            step: 1,
+            unit: "%",
+          },
+          defaultValue: 50,
+        },
+        {
+          type: "range",
+          name: "offsetY",
+          label: "Offset Y",
+          configs: {
+            min: 0,
+            max: 100,
+            step: 1,
+            unit: "%",
+          },
+          defaultValue: 50,
+        },
+      ],
+    },
+    {
+      group: "Product",
+      inputs: [
+        {
+          type: "product",
+          name: "product",
+          label: "Product",
+        },
+        {
+          type: "switch",
+          name: "showPrice",
+          label: "Show price",
+          defaultValue: true,
+        },
+        {
+          type: "switch",
+          name: "showViewDetailsLink",
+          label: "Show view details link",
+          defaultValue: true,
+        },
+        {
+          type: "text",
+          name: "viewDetailsLinkText",
+          label: "View details link text",
+          defaultValue: "View details",
+          condition: (data: HotspotsItemData) => data.showViewDetailsLink,
+        },
+      ],
+    },
+  ],
+});
