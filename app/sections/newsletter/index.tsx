@@ -26,12 +26,12 @@ export const schema = createSchema({
     children: [
       {
         type: "heading",
-        content: "SIGN UP & SAVE 15%",
+        content: "Join the ModernCre8ve Family",
       },
       {
         type: "paragraph",
         content:
-          "Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.",
+          "Be the first to know about new designs, exclusive offers, and behind-the-scenes looks at our workshop.",
       },
       { type: "newsletter-form" },
     ],

@@ -163,14 +163,14 @@ export let schema: HydrogenComponentSchema = {
           name: "description",
           label: "Description",
           defaultValue:
-            "Beautiful dining set, the color is natural and the chairs very comfortable!",
+            "The craftsmanship on our dining table is incredible. You can feel the quality in every detail — this is furniture built to be passed down.",
           placeholder: "Pair large text with an image to tell a story.",
         },
         {
           type: "range",
           name: "ratting",
           label: "Reviews",
-          defaultValue: 3,
+          defaultValue: 5,
           configs: {
             min: 1,
             max: 5,
@@ -181,7 +181,7 @@ export let schema: HydrogenComponentSchema = {
           type: "text",
           name: "author",
           label: "Author name",
-          defaultValue: "Stephanie L.",
+          defaultValue: "Sarah M.",
           placeholder: "Name of the author",
         },
       ],

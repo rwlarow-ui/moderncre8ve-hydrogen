@@ -252,7 +252,7 @@ export const schema = createSchema({
           type: "text",
           name: "headingContent",
           label: "Heading content",
-          defaultValue: "Slide with text overlay",
+          defaultValue: "Handcrafted Modern Furniture",
           placeholder: "Enter heading text",
         },
         ...headingInputs.map((input) => {
@@ -273,7 +273,7 @@ export const schema = createSchema({
           type: "text",
           name: "subheadingContent",
           label: "Subheading content",
-          defaultValue: "Subheading",
+          defaultValue: "Made by Amish Artisans in Ohio",
           placeholder: "Enter subheading text",
         },
         {
@@ -347,7 +347,7 @@ export const schema = createSchema({
           name: "paragraphContent",
           label: "Paragraph content",
           defaultValue:
-            "Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.",
+            "Solid hardwood furniture designed for modern living — built one piece at a time in Ohio.",
           placeholder: "Enter paragraph text",
         },
         {
@@ -461,16 +461,17 @@ export const schema = createSchema({
     backgroundFit: "cover",
     enableOverlay: true,
     overlayOpacity: 50,
-    headingContent: "Slide with text overlay",
+    headingContent: "Handcrafted Modern Furniture",
     color: "#fff",
     size: "scale",
+    subheadingContent: "Made by Amish Artisans in Ohio",
     subheadingColor: "#fff",
     paragraphContent:
-      "Wide inventory of furniture with plenty of essentials that no home would be complete without.",
+      "Solid hardwood furniture designed for modern living — built one piece at a time in Ohio.",
     paragraphColor: "#fff",
     paragraphWidth: "full",
-    buttonContent: "Shop all",
-    to: "/products",
+    buttonContent: "Shop Collections",
+    to: "/collections",
     variant: "decor",
     textColorDecor: "#fff",
   },

@@ -223,7 +223,7 @@ export let schema: HydrogenComponentSchema = {
           type: "text",
           name: "heading",
           label: "Heading (optional)",
-          defaultValue: "OUR STORES",
+          defaultValue: "VISIT US",
         },
         {
           type: "toggle-group",
@@ -256,21 +256,15 @@ export let schema: HydrogenComponentSchema = {
     ...sectionSettings,
   ],
   presets: {
+    heading: "VISIT US",
     children: [
       {
         type: "address-item",
-        nameStore: "STORE 1",
-        address: "11 P. Hoàng Ngân, Nhân Chính, Thanh Xuân, Hà Nội, Việt Nam",
-      },
-      {
-        type: "address-item",
-        nameStore: "STORE 2",
-        address: "M2C3+QX Thành phố New York, Tiểu bang New York, Hoa Kỳ",
-      },
-      {
-        type: "address-item",
-        nameStore: "STORE 3",
-        address: "288 Sporer Route, New Uteland, NV 73529-8830",
+        nameStore: "MODERNCRE8VE SHOWROOM",
+        address: "1400 E 36th Street, Suite 2802A, Cleveland, OH 44114",
+        phoneNumber: "(216) 502-0755",
+        openingHours: "Mon - Fri: 9:00AM - 5:00PM",
+        openingHoursSat: "Sat - Sun: Closed",
       },
     ],
   },

@@ -274,7 +274,7 @@ export const schema = createSchema({
           type: "text",
           name: "headingContent",
           label: "Heading content",
-          defaultValue: "Collections",
+          defaultValue: "Shop by Category",
           placeholder: "Enter heading text",
         },
         ...headingInputs.map((input) => {
@@ -296,7 +296,7 @@ export const schema = createSchema({
           name: "paragraphContent",
           label: "Paragraph content",
           defaultValue:
-            "Discover our most-loved collections and curated highlights.",
+            "From dining tables to bedroom furniture — explore our handcrafted collections.",
           placeholder: "Enter paragraph text",
           condition: (data: CollectionListDynamicProps) =>
             data.displayMode === "vertical",
@@ -393,7 +393,7 @@ export const schema = createSchema({
           type: "text",
           name: "buttonContent",
           label: "Button text",
-          defaultValue: "EXPLORE NOW",
+          defaultValue: "VIEW ALL",
           placeholder: "Enter button text",
         },
         ...(linkInputs
@@ -410,10 +410,11 @@ export const schema = createSchema({
   presets: {
     displayMode: "vertical",
     gap: 32,
-    headingContent: "Collections",
+    headingContent: "Shop by Category",
     paragraphContent:
-      "Discover our most-loved collections and curated highlights.",
-    buttonContent: "EXPLORE NOW",
+      "From dining tables to bedroom furniture — explore our handcrafted collections.",
+    buttonContent: "VIEW ALL",
+    to: "/collections",
     variant: "decor",
   },
 });

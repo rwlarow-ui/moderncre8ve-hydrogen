@@ -130,21 +130,15 @@ export const schema = createSchema({
     children: [
       {
         type: "subheading",
-        content: "Subheading",
+        content: "Cleveland, Ohio",
         color: "#ffffff",
       },
       {
         type: "heading",
-        content: "Hero image with text overlay",
+        content: "Handcrafted Modern Furniture Since 2013",
         as: "h2",
         color: "#ffffff",
         size: "default",
-      },
-      {
-        type: "paragraph",
-        content:
-          "Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.",
-        color: "#ffffff",
       },
     ],
   },

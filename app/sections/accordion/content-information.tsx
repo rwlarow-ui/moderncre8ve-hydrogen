@@ -73,29 +73,29 @@ export const schema = createSchema({
     children: [
       {
         type: "heading",
-        content: "CUSTOMER SERVICE",
+        content: "FREQUENTLY ASKED QUESTIONS",
         alignment: "left",
       },
       {
         type: "subheading",
-        content: "We offer support via email.",
+        content: "Everything you need to know about ordering from ModernCre8ve.",
         alignment: "left",
       },
       {
         type: "paragraph",
-        content: "<p>Email</p><p>support@archercommerce.com</p>",
+        content: "<p>Email</p><p>inquiry@moderncre8ve.com</p>",
         width: "full",
         alignment: "left",
       },
       {
         type: "paragraph",
-        content: "<p>Email</p><p>support@archercommerce.com</p>",
+        content: "<p>Phone</p><p>(216) 502-0755</p>",
         width: "full",
         alignment: "left",
       },
       {
         type: "paragraph",
-        content: "<p>Email</p><p>support@archercommerce.com</p>",
+        content: "<p>Hours</p><p>Mon-Fri 9am-5pm EST</p>",
         width: "full",
         alignment: "left",
       },

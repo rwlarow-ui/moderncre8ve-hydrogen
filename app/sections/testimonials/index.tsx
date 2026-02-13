@@ -120,6 +120,10 @@ export const schema = createSchema({
   ],
   childTypes: ["testimonial--item"],
   presets: {
-    children: [{ type: "testimonial--item" }, { type: "testimonial--item" }],
+    children: [
+      { type: "testimonial--item" },
+      { type: "testimonial--item" },
+      { type: "testimonial--item" },
+    ],
   },
 });

@@ -224,8 +224,7 @@ export let schema = createSchema({
   presets: {
     iconType: "circle",
     badgeTextColor: "#29231E",
-    headingContent:
-      "Quality furniture made to last through moves and milestones.",
+    headingContent: "Handcrafted in Ohio",
     color: "#29231E",
   },
 });

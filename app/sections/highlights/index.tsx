@@ -83,12 +83,13 @@ export let schema = createSchema({
         type: "highlights-badge",
         iconType: "circle",
         badgeTextColor: "#29231E",
+        headingContent: "Handcrafted in Ohio",
         showBorder: true,
         children: [
           {
             type: "paragraph",
             content:
-              "The best of every modern style from minimalist to mid century.",
+              "Every piece built by skilled Amish artisans using time-honored techniques.",
             color: "#29231E",
           },
         ],
@@ -97,12 +98,13 @@ export let schema = createSchema({
         type: "highlights-badge",
         iconType: "square",
         badgeTextColor: "#29231E",
+        headingContent: "Solid Hardwood",
         showBorder: true,
         children: [
           {
             type: "paragraph",
             content:
-              "Quality furniture made to last through moves and milestones.",
+              "Domestic-sourced lumber, built to last for generations.",
             color: "#29231E",
           },
         ],
@@ -111,11 +113,13 @@ export let schema = createSchema({
         type: "highlights-badge",
         iconType: "triangle",
         badgeTextColor: "#29231E",
+        headingContent: "Custom Orders",
         showBorder: false,
         children: [
           {
             type: "paragraph",
-            content: "Delivery for free in days - not weeks.",
+            content:
+              "Personalize any piece to fit your space — choose your wood, finish, and dimensions.",
             color: "#29231E",
           },
         ],

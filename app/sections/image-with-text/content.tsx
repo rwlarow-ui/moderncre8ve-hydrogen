@@ -118,19 +118,21 @@ export const schema = createSchema({
     children: [
       {
         type: "subheading",
-        content: "Subheading",
+        content: "Our Story",
       },
       {
         type: "heading",
-        content: "Heading for image",
+        content: "Where Heritage Meets Modern Design",
       },
       {
         type: "paragraph",
-        content: "Pair large text with an image to tell a story.",
+        content:
+          "Founded in Cleveland, Ohio in 2013, ModernCre8ve marries modern design with the world-class execution of old-world Amish craftsmen. Every piece is handmade one at a time using domestic-sourced hardwood lumber.",
       },
       {
         type: "button",
-        text: "Shop now",
+        text: "Learn More",
+        to: "/pages/about-us",
       },
     ],
   },

@@ -274,7 +274,7 @@ export const schema = createSchema({
           type: "text",
           name: "headingContent",
           label: "Heading content",
-          defaultValue: "Featured products",
+          defaultValue: "Best Sellers",
           placeholder: "Enter heading text",
         },
         ...headingInputs.map((input) => {
@@ -296,7 +296,7 @@ export const schema = createSchema({
           name: "paragraphContent",
           label: "Paragraph content",
           defaultValue:
-            "Discover nomad, our best-selling and most-awarded modular seating.",
+            "Handcrafted with care, these are our most loved pieces — built to last for generations.",
           placeholder: "Enter paragraph text",
           condition: (data: FeaturedProductsLoaderData) =>
             data.displayMode === "vertical",
@@ -393,7 +393,7 @@ export const schema = createSchema({
           type: "text",
           name: "buttonContent",
           label: "Button text",
-          defaultValue: "EXPLORE NOW",
+          defaultValue: "SHOP ALL",
           placeholder: "Enter button text",
         },
         ...linkInputs
@@ -410,10 +410,11 @@ export const schema = createSchema({
   presets: {
     displayMode: "vertical",
     gap: 32,
-    headingContent: "Featured products",
+    headingContent: "Best Sellers",
     paragraphContent:
-      "Discover nomad, our best-selling and most-awarded modular seating.",
-    buttonContent: "EXPLORE NOW",
+      "Handcrafted with care, these are our most loved pieces — built to last for generations.",
+    buttonContent: "SHOP ALL",
+    to: "/collections/best-sellers",
     variant: "decor",
   },
 });
