@@ -10,6 +10,9 @@ Replacement for moderncre8ve.com — handcrafted modern furniture (mid-century, 
 - **Template:** Weaverse Aspen (furniture-focused Hydrogen theme)
 - **Repo:** github.com/rwlarow-ui/moderncre8ve-hydrogen
 - **Deploy target:** Shopify Oxygen
+- **Shopify Admin (Hydrogen):** https://admin.shopify.com/store/moderncre8ve/hydrogen/1000097972
+- **Weaverse Studio:** https://studio.weaverse.io/dashboard/projects/gkv7k7xwkbfez2rdmkbbzxuw
+- **Oxygen URL:** https://moderncre8ve-v2-6aebe5cb62e16d9300dd.o2.myshopify.dev
 
 ### Branding
 - **Fonts:** Jost (headings, `--font-sans`) / Spectral (body, `--font-serif`)
@@ -24,13 +27,14 @@ Replacement for moderncre8ve.com — handcrafted modern furniture (mid-century, 
 | `app/styles/app.css` | Global styles, font-face declarations, CSS custom properties |
 | `app/root.tsx` | Root layout, font preloads |
 | `redirects-for-shopify.csv` | 77 SEO redirects for Shopify Admin bulk import |
+| `weaverse-pages/` | 8 page + 2 template JSON files for Weaverse Studio import |
 
 ### Deployment Status
 | Phase | Status |
 |-------|--------|
 | 1. Foundation (branding, SEO, redirects, MCP) | Done |
 | 2. Content migration (presets, audit, remove.bg, content extraction) | Done |
-| 3. Page building (11 pages + 2 templates in Weaverse Studio) | **In Progress** |
+| 3. Page building (11 pages + 2 templates in Weaverse Studio) | **In Progress** — 3 done in Studio, 8 page + 2 template JSONs generated in `weaverse-pages/` |
 | 4. Shopify Admin cleanup (images, redirects, collections, SEO) | Pending |
 | 5. Launch (final deploy, DNS cutover) | Pending |
 

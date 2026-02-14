@@ -4,6 +4,33 @@
 
 ---
 
+## 1.0.3 — 2026-02-14
+
+### Project Links & Setup
+- Added Shopify Admin, Weaverse Studio, and Oxygen deployment URLs to CLAUDE.md
+- Re-cloned repo into working directory (previous empty directory was a failed install)
+
+### Weaverse Page JSON Generation
+Generated 10 Weaverse page import JSON files in `weaverse-pages/`:
+
+**Pages (8):**
+- `faq.json` — 6 sections: hero, 4 accordion groups (Ordering, Shipping, Materials, Custom), CTA
+- `custom-orders.json` — 5 sections: hero, intro IWT, 4-step columns, highlights, CTA
+- `our-materials.json` — 3 sections: hero, 4-wood-type columns, mixed walnut IWT
+- `assembly-care.json` — 3 sections: hero, assembly accordion, care accordion
+- `shipping-policy.json` — 3 sections: hero, delivery methods accordion, policies accordion
+- `order-policies.json` — 2 sections: hero, 8-item policies accordion
+- `press.json` — 4 sections: hero, intro IWT, 9 press logos columns, inquiry CTA
+- `reviews.json` — 3 sections: hero, 4 testimonials carousel, highlights badges
+
+**Templates (2):**
+- `default-product.json` — main-product (grid layout) + related-products
+- `default-collection.json` — collection-filters with sidebar, banners, sorting
+
+All files use flat `items[]` array with `children: [{id}]` references matching `WeaverseProjectDataType`. All `type` values verified against registered components in `app/weaverse/components.ts`.
+
+---
+
 ## 1.0.2 — 2026-02-14
 
 ### Content Extraction & Page Blueprints

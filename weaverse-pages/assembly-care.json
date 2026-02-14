@@ -1,0 +1,165 @@
+{
+  "rootId": "assembly-root",
+  "items": [
+    {
+      "id": "assembly-root",
+      "type": "*",
+      "children": [
+        { "id": "assembly-hero" },
+        { "id": "assembly-accordion-assembly" },
+        { "id": "assembly-accordion-care" }
+      ]
+    },
+
+    {
+      "id": "assembly-hero",
+      "type": "hero-image",
+      "height": "large",
+      "contentPosition": "center center",
+      "backgroundFit": "cover",
+      "enableOverlay": true,
+      "overlayOpacity": 40,
+      "children": [
+        { "id": "assembly-hero-sub" },
+        { "id": "assembly-hero-heading" }
+      ]
+    },
+    {
+      "id": "assembly-hero-sub",
+      "type": "subheading",
+      "content": "Keep your furniture beautiful for generations",
+      "color": "#ffffff"
+    },
+    {
+      "id": "assembly-hero-heading",
+      "type": "heading",
+      "content": "Assembly & Care",
+      "as": "h1",
+      "color": "#ffffff",
+      "size": "default"
+    },
+
+    {
+      "id": "assembly-accordion-assembly",
+      "type": "accordion",
+      "accordionLayout": "column",
+      "children": [
+        { "id": "assembly-info" },
+        { "id": "assembly-group" }
+      ]
+    },
+    {
+      "id": "assembly-info",
+      "type": "content-information",
+      "gap": 20,
+      "children": [
+        { "id": "assembly-info-heading" },
+        { "id": "assembly-info-sub" }
+      ]
+    },
+    {
+      "id": "assembly-info-heading",
+      "type": "heading",
+      "content": "Assembly",
+      "as": "h2",
+      "alignment": "left"
+    },
+    {
+      "id": "assembly-info-sub",
+      "type": "paragraph",
+      "content": "While a vast majority of our pieces are delivered with in-home delivery and assembly included, it may become necessary for you to understand how to disassemble and reassemble your furniture.",
+      "alignment": "left",
+      "width": "full"
+    },
+    {
+      "id": "assembly-group",
+      "type": "accordion-group",
+      "accordionBackgroundColor": "#F3F3F3",
+      "accordionTextColor": "#524B46",
+      "children": [
+        { "id": "assembly-q1" },
+        { "id": "assembly-q2" }
+      ]
+    },
+    {
+      "id": "assembly-q1",
+      "type": "accordion--item",
+      "title": "Santa Monica Table & Extension Table",
+      "content": "Tables ship with legs detached. Attach using provided hardware and Allen key. See assembly instructions included with your order for detailed steps."
+    },
+    {
+      "id": "assembly-q2",
+      "type": "accordion--item",
+      "title": "Bosco, Wookie, Stowe, Warwick and Baxter Beds",
+      "content": "Beds require two people for assembly. Headboard and side rails connect to footboard via provided bolts. See assembly instructions included with your order for detailed steps."
+    },
+
+    {
+      "id": "assembly-accordion-care",
+      "type": "accordion",
+      "accordionLayout": "column",
+      "children": [
+        { "id": "care-info" },
+        { "id": "care-group" }
+      ]
+    },
+    {
+      "id": "care-info",
+      "type": "content-information",
+      "gap": 20,
+      "children": [
+        { "id": "care-info-heading" }
+      ]
+    },
+    {
+      "id": "care-info-heading",
+      "type": "heading",
+      "content": "Care & Use Guidelines",
+      "as": "h2",
+      "alignment": "left"
+    },
+    {
+      "id": "care-group",
+      "type": "accordion-group",
+      "accordionBackgroundColor": "#F3F3F3",
+      "accordionTextColor": "#524B46",
+      "children": [
+        { "id": "care-q1" },
+        { "id": "care-q2" },
+        { "id": "care-q3" },
+        { "id": "care-q4" },
+        { "id": "care-q5" }
+      ]
+    },
+    {
+      "id": "care-q1",
+      "type": "accordion--item",
+      "title": "What finish is on my furniture?",
+      "content": "Coffee and dining tables: hard-wearing, satin sheen conversion varnish. All other items: hand-applied oil and wax based finish. Both are very durable and highly resistant to water and wear, but not waterproof or scratch-proof."
+    },
+    {
+      "id": "care-q2",
+      "type": "accordion--item",
+      "title": "How do I clean my furniture?",
+      "content": "Use a plant-based wood cleaner or a microfiber cloth and water for daily cleaning and dusting. We recommend Vermont Naturals wood cleaner."
+    },
+    {
+      "id": "care-q3",
+      "type": "accordion--item",
+      "title": "How do I use Lareaux's Furniture Paste Wax?",
+      "content": "Apply paste liberally, allow to sit and soak for at least 15 minutes, then buff off excess with a soft clean cloth. Use quarterly to monthly. Each order ships with a small tin. Full 8oz tins available for purchase on the site."
+    },
+    {
+      "id": "care-q4",
+      "type": "accordion--item",
+      "title": "What should I avoid?",
+      "content": "Be careful setting hard, heavy items on table tops. Never drag items that may scratch. Don't allow liquids to pool on surfaces. Don't place hot items directly on surfaces — use a trivet or pad."
+    },
+    {
+      "id": "care-q5",
+      "type": "accordion--item",
+      "title": "What about sunlight and humidity?",
+      "content": "Sunlight will naturally lighten exposed areas over time. Relative humidity affects wood and may cause checking if humidity varies greatly. Maintain consistent indoor humidity when possible."
+    }
+  ]
+}

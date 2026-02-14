@@ -1,0 +1,176 @@
+{
+  "rootId": "reviews-root",
+  "items": [
+    {
+      "id": "reviews-root",
+      "type": "*",
+      "children": [
+        { "id": "reviews-hero" },
+        { "id": "reviews-testimonials" },
+        { "id": "reviews-highlights" }
+      ]
+    },
+
+    {
+      "id": "reviews-hero",
+      "type": "hero-image",
+      "height": "large",
+      "contentPosition": "center center",
+      "backgroundFit": "cover",
+      "enableOverlay": true,
+      "overlayOpacity": 40,
+      "children": [
+        { "id": "reviews-hero-sub" },
+        { "id": "reviews-hero-heading" }
+      ]
+    },
+    {
+      "id": "reviews-hero-sub",
+      "type": "subheading",
+      "content": "Don't just take our word for it",
+      "color": "#ffffff"
+    },
+    {
+      "id": "reviews-hero-heading",
+      "type": "heading",
+      "content": "Customer Reviews",
+      "as": "h1",
+      "color": "#ffffff",
+      "size": "default"
+    },
+
+    {
+      "id": "reviews-testimonials",
+      "type": "testimonial",
+      "children": [
+        { "id": "reviews-test-1" },
+        { "id": "reviews-test-2" },
+        { "id": "reviews-test-3" },
+        { "id": "reviews-test-4" }
+      ]
+    },
+    {
+      "id": "reviews-test-1",
+      "type": "testimonial--item",
+      "children": [
+        { "id": "reviews-test-1-content" },
+        { "id": "reviews-test-1-hotspot" }
+      ]
+    },
+    {
+      "id": "reviews-test-1-content",
+      "type": "testimonial--content",
+      "content": "Stunning Craftsmanship",
+      "description": "The quality of the craftsmanship is immediately evident. Every piece feels substantial and well-made. I couldn't be happier with my walnut dining table!",
+      "ratting": 5,
+      "author": "John D."
+    },
+    {
+      "id": "reviews-test-1-hotspot",
+      "type": "testimonial--hotspots-item",
+      "aspectRatio": "1/1"
+    },
+
+    {
+      "id": "reviews-test-2",
+      "type": "testimonial--item",
+      "children": [
+        { "id": "reviews-test-2-content" },
+        { "id": "reviews-test-2-hotspot" }
+      ]
+    },
+    {
+      "id": "reviews-test-2-content",
+      "type": "testimonial--content",
+      "content": "Beautiful and Functional",
+      "description": "Our new coffee table is both a statement piece and incredibly functional. It has quickly become the centerpiece of our living room.",
+      "ratting": 5,
+      "author": "Susan M."
+    },
+    {
+      "id": "reviews-test-2-hotspot",
+      "type": "testimonial--hotspots-item",
+      "aspectRatio": "1/1"
+    },
+
+    {
+      "id": "reviews-test-3",
+      "type": "testimonial--item",
+      "children": [
+        { "id": "reviews-test-3-content" },
+        { "id": "reviews-test-3-hotspot" }
+      ]
+    },
+    {
+      "id": "reviews-test-3-content",
+      "type": "testimonial--content",
+      "content": "Perfect Blend of Style and Durability",
+      "description": "I was looking for something modern yet durable, and Moderncre8ve delivered beyond my expectations. My new bed frame is a dream!",
+      "ratting": 5,
+      "author": "Alex P."
+    },
+    {
+      "id": "reviews-test-3-hotspot",
+      "type": "testimonial--hotspots-item",
+      "aspectRatio": "1/1"
+    },
+
+    {
+      "id": "reviews-test-4",
+      "type": "testimonial--item",
+      "children": [
+        { "id": "reviews-test-4-content" },
+        { "id": "reviews-test-4-hotspot" }
+      ]
+    },
+    {
+      "id": "reviews-test-4-content",
+      "type": "testimonial--content",
+      "content": "Outstanding Customer Service",
+      "description": "The team at Moderncre8ve was a pleasure to work with from start to finish. They made sure I was completely satisfied with my purchase.",
+      "ratting": 5,
+      "author": "Rachel T."
+    },
+    {
+      "id": "reviews-test-4-hotspot",
+      "type": "testimonial--hotspots-item",
+      "aspectRatio": "1/1"
+    },
+
+    {
+      "id": "reviews-highlights",
+      "type": "highlights",
+      "alignment": "center",
+      "backgroundColor": "#FFFFFF",
+      "children": [
+        { "id": "reviews-badge-1" },
+        { "id": "reviews-badge-2" },
+        { "id": "reviews-badge-3" }
+      ]
+    },
+    {
+      "id": "reviews-badge-1",
+      "type": "highlights-badge",
+      "iconType": "circle",
+      "badgeTextColor": "#29231E",
+      "headingContent": "Amish Craftsmanship",
+      "color": "#29231E"
+    },
+    {
+      "id": "reviews-badge-2",
+      "type": "highlights-badge",
+      "iconType": "square",
+      "badgeTextColor": "#29231E",
+      "headingContent": "Solid Hardwood",
+      "color": "#29231E"
+    },
+    {
+      "id": "reviews-badge-3",
+      "type": "highlights-badge",
+      "iconType": "triangle",
+      "badgeTextColor": "#29231E",
+      "headingContent": "Made in the USA",
+      "color": "#29231E"
+    }
+  ]
+}

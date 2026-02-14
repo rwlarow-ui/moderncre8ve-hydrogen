@@ -1,0 +1,137 @@
+{
+  "rootId": "policies-root",
+  "items": [
+    {
+      "id": "policies-root",
+      "type": "*",
+      "children": [
+        { "id": "policies-hero" },
+        { "id": "policies-accordion" }
+      ]
+    },
+
+    {
+      "id": "policies-hero",
+      "type": "hero-image",
+      "height": "large",
+      "contentPosition": "center center",
+      "backgroundFit": "cover",
+      "enableOverlay": true,
+      "overlayOpacity": 40,
+      "children": [
+        { "id": "policies-hero-sub" },
+        { "id": "policies-hero-heading" }
+      ]
+    },
+    {
+      "id": "policies-hero-sub",
+      "type": "subheading",
+      "content": "Everything you need to know before and after placing your order",
+      "color": "#ffffff"
+    },
+    {
+      "id": "policies-hero-heading",
+      "type": "heading",
+      "content": "Order Policies & Guidelines",
+      "as": "h1",
+      "color": "#ffffff",
+      "size": "default"
+    },
+
+    {
+      "id": "policies-accordion",
+      "type": "accordion",
+      "accordionLayout": "column",
+      "children": [
+        { "id": "policies-info" },
+        { "id": "policies-group" }
+      ]
+    },
+    {
+      "id": "policies-info",
+      "type": "content-information",
+      "gap": 20,
+      "children": [
+        { "id": "policies-info-heading" },
+        { "id": "policies-info-sub" }
+      ]
+    },
+    {
+      "id": "policies-info-heading",
+      "type": "heading",
+      "content": "Policies",
+      "as": "h2",
+      "alignment": "left"
+    },
+    {
+      "id": "policies-info-sub",
+      "type": "subheading",
+      "content": "Questions? Contact support@moderncre8ve.com or call (216) 502-0755",
+      "alignment": "left"
+    },
+    {
+      "id": "policies-group",
+      "type": "accordion-group",
+      "accordionBackgroundColor": "#F3F3F3",
+      "accordionTextColor": "#524B46",
+      "children": [
+        { "id": "policies-q1" },
+        { "id": "policies-q2" },
+        { "id": "policies-q3" },
+        { "id": "policies-q4" },
+        { "id": "policies-q5" },
+        { "id": "policies-q6" },
+        { "id": "policies-q7" },
+        { "id": "policies-q8" }
+      ]
+    },
+    {
+      "id": "policies-q1",
+      "type": "accordion--item",
+      "title": "Payment Information",
+      "content": "MODERNCRE8VE, Inc. bills through online billing. All payments in U.S. dollars. Sales tax added as required by law."
+    },
+    {
+      "id": "policies-q2",
+      "type": "accordion--item",
+      "title": "Chargebacks",
+      "content": "We maintain a non-tolerance policy on chargebacks. All products are made-to-order or custom-made. Rescinding payment after fabrication begins is considered non-payment. Disputes should be directed to support@moderncre8ve.com or (216) 502-0755."
+    },
+    {
+      "id": "policies-q3",
+      "type": "accordion--item",
+      "title": "Description of Service",
+      "content": "Custom and Made-to-Order Furniture. All custom specifications are listed on your invoice. Contact us promptly if there are any discrepancies before fabrication begins."
+    },
+    {
+      "id": "policies-q4",
+      "type": "accordion--item",
+      "title": "Product Guarantee",
+      "content": "Two-year guarantee on all furniture and products. We will repair or replace items if issues occur and proper care was maintained per our Care Instructions. Does not cover: checking from humidity changes, user damage, or improper care. Natural wood inclusions are not defects."
+    },
+    {
+      "id": "policies-q5",
+      "type": "accordion--item",
+      "title": "Shipping & Delivery Lead Times",
+      "content": "Non-custom orders: 8-10 weeks. Custom orders: 12-16 weeks (both including delivery scheduling). Extensions will be communicated if beyond 1 week past the initial estimated date."
+    },
+    {
+      "id": "policies-q6",
+      "type": "accordion--item",
+      "title": "Order Cancellations",
+      "content": "Items are not returnable and cannot be cancelled once fabrication has begun. Contact us as soon as possible for cancellation or modification before production starts. 72-hour window for issues with custom orders."
+    },
+    {
+      "id": "policies-q7",
+      "type": "accordion--item",
+      "title": "Damaged Product",
+      "content": "Note damage on the Bill of Lading (BOL) at time of delivery. Damaged items should be refused and sent back. After the carrier leaves, the customer is responsible. Must report damage within 72 hours with pictures to MODERNCRE8VE."
+    },
+    {
+      "id": "policies-q8",
+      "type": "accordion--item",
+      "title": "Force Majeure",
+      "content": "Standard force majeure clause applies: acts of God, war, fire, strikes, epidemics/pandemics, and other events beyond our control."
+    }
+  ]
+}

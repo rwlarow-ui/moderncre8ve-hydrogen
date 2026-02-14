@@ -1,0 +1,242 @@
+{
+  "rootId": "custom-root",
+  "items": [
+    {
+      "id": "custom-root",
+      "type": "*",
+      "children": [
+        { "id": "custom-hero" },
+        { "id": "custom-iwt-intro" },
+        { "id": "custom-columns" },
+        { "id": "custom-highlights" },
+        { "id": "custom-iwt-cta" }
+      ]
+    },
+
+    {
+      "id": "custom-hero",
+      "type": "hero-image",
+      "height": "large",
+      "contentPosition": "center center",
+      "backgroundFit": "cover",
+      "enableOverlay": true,
+      "overlayOpacity": 40,
+      "children": [
+        { "id": "custom-hero-sub" },
+        { "id": "custom-hero-heading" }
+      ]
+    },
+    {
+      "id": "custom-hero-sub",
+      "type": "subheading",
+      "content": "Tailored to Your Tastes by MODERNCRE8VE",
+      "color": "#ffffff"
+    },
+    {
+      "id": "custom-hero-heading",
+      "type": "heading",
+      "content": "Exquisite Custom Furniture",
+      "as": "h1",
+      "color": "#ffffff",
+      "size": "default"
+    },
+
+    {
+      "id": "custom-iwt-intro",
+      "type": "image-with-text",
+      "verticalPadding": "none",
+      "backgroundColor": "#F0F0EF",
+      "backgroundFor": "content",
+      "children": [
+        { "id": "custom-iwt-intro-images" },
+        { "id": "custom-iwt-intro-content" }
+      ]
+    },
+    {
+      "id": "custom-iwt-intro-images",
+      "type": "image-with-text--images",
+      "imageAspectRatio": "1/1",
+      "children": [
+        { "id": "custom-iwt-intro-image" }
+      ]
+    },
+    {
+      "id": "custom-iwt-intro-image",
+      "type": "image-with-text--image",
+      "objectFit": "cover",
+      "borderRadius": 0
+    },
+    {
+      "id": "custom-iwt-intro-content",
+      "type": "image-with-text--content",
+      "gap": "5",
+      "contentPosition": "center center",
+      "children": [
+        { "id": "custom-iwt-intro-heading" },
+        { "id": "custom-iwt-intro-paragraph" }
+      ]
+    },
+    {
+      "id": "custom-iwt-intro-heading",
+      "type": "heading",
+      "content": "Pioneers in Custom Furniture",
+      "as": "h2"
+    },
+    {
+      "id": "custom-iwt-intro-paragraph",
+      "type": "paragraph",
+      "content": "At ModernCre8ve, we specialize in creating bespoke custom furniture that speaks to individual style and functionality needs. More than half of our orders involve a custom twist. Our team of seasoned craftsmen harnesses their extensive experience to bring even the most intricate furniture designs to life."
+    },
+
+    {
+      "id": "custom-columns",
+      "type": "columns-with-images",
+      "gap": 48,
+      "children": [
+        { "id": "custom-columns-heading" },
+        { "id": "custom-columns-items" }
+      ]
+    },
+    {
+      "id": "custom-columns-heading",
+      "type": "heading",
+      "content": "Your Custom Furniture Journey",
+      "as": "h2"
+    },
+    {
+      "id": "custom-columns-items",
+      "type": "columns-with-images--items",
+      "gap": 40,
+      "imageAspectRatio": "4/3",
+      "children": [
+        { "id": "custom-col-1" },
+        { "id": "custom-col-2" },
+        { "id": "custom-col-3" },
+        { "id": "custom-col-4" }
+      ]
+    },
+    {
+      "id": "custom-col-1",
+      "type": "column-with-image--item",
+      "size": "medium",
+      "heading": "1. Start the Conversation",
+      "content": "Have a custom furniture idea? Connect with us through our contact page, a quick phone call, or our online chat. Your dream furniture piece begins with a conversation.",
+      "imageBorderRadius": 0
+    },
+    {
+      "id": "custom-col-2",
+      "type": "column-with-image--item",
+      "size": "medium",
+      "heading": "2. Transparent Pricing",
+      "content": "Once we understand your vision, we offer an all-inclusive quote with no hidden fees, shipping included.",
+      "imageBorderRadius": 0
+    },
+    {
+      "id": "custom-col-3",
+      "type": "column-with-image--item",
+      "size": "medium",
+      "heading": "3. Collaborative Design",
+      "content": "We partner with you in designing your custom furniture, refining every detail, and then present a finalized invoice.",
+      "imageBorderRadius": 0
+    },
+    {
+      "id": "custom-col-4",
+      "type": "column-with-image--item",
+      "size": "medium",
+      "heading": "4. Creation Begins",
+      "content": "After payment confirmation, your custom piece enters our dedicated production line, crafted with precision and passion.",
+      "imageBorderRadius": 0
+    },
+
+    {
+      "id": "custom-highlights",
+      "type": "highlights",
+      "alignment": "center",
+      "backgroundColor": "#FFFFFF",
+      "children": [
+        { "id": "custom-badge-1" },
+        { "id": "custom-badge-2" },
+        { "id": "custom-badge-3" }
+      ]
+    },
+    {
+      "id": "custom-badge-1",
+      "type": "highlights-badge",
+      "iconType": "circle",
+      "badgeTextColor": "#29231E",
+      "headingContent": "Beauty Meets Function",
+      "color": "#29231E"
+    },
+    {
+      "id": "custom-badge-2",
+      "type": "highlights-badge",
+      "iconType": "square",
+      "badgeTextColor": "#29231E",
+      "headingContent": "Originality Guaranteed",
+      "color": "#29231E"
+    },
+    {
+      "id": "custom-badge-3",
+      "type": "highlights-badge",
+      "iconType": "triangle",
+      "badgeTextColor": "#29231E",
+      "headingContent": "Made to Order",
+      "color": "#29231E"
+    },
+
+    {
+      "id": "custom-iwt-cta",
+      "type": "image-with-text",
+      "verticalPadding": "none",
+      "backgroundColor": "#F0F0EF",
+      "backgroundFor": "content",
+      "children": [
+        { "id": "custom-iwt-cta-images" },
+        { "id": "custom-iwt-cta-content" }
+      ]
+    },
+    {
+      "id": "custom-iwt-cta-images",
+      "type": "image-with-text--images",
+      "imageAspectRatio": "1/1",
+      "children": [
+        { "id": "custom-iwt-cta-image" }
+      ]
+    },
+    {
+      "id": "custom-iwt-cta-image",
+      "type": "image-with-text--image",
+      "objectFit": "cover",
+      "borderRadius": 0
+    },
+    {
+      "id": "custom-iwt-cta-content",
+      "type": "image-with-text--content",
+      "gap": "5",
+      "contentPosition": "center center",
+      "children": [
+        { "id": "custom-iwt-cta-heading" },
+        { "id": "custom-iwt-cta-paragraph" },
+        { "id": "custom-iwt-cta-button" }
+      ]
+    },
+    {
+      "id": "custom-iwt-cta-heading",
+      "type": "heading",
+      "content": "Ready to Start?",
+      "as": "h2"
+    },
+    {
+      "id": "custom-iwt-cta-paragraph",
+      "type": "paragraph",
+      "content": "Your dream furniture piece is just a conversation away."
+    },
+    {
+      "id": "custom-iwt-cta-button",
+      "type": "button",
+      "text": "Contact Us",
+      "to": "/pages/contact",
+      "variant": "primary"
+    }
+  ]
+}

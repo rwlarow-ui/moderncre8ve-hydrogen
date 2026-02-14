@@ -1,0 +1,40 @@
+{
+  "rootId": "product-root",
+  "items": [
+    {
+      "id": "product-root",
+      "type": "*",
+      "children": [
+        { "id": "product-main" },
+        { "id": "product-related" }
+      ]
+    },
+
+    {
+      "id": "product-main",
+      "type": "main-product",
+      "mediaLayout": "grid",
+      "gridSize": "2x2",
+      "imageAspectRatio": "adapt",
+      "showThumbnails": true,
+      "showDots": true,
+      "enableZoom": true,
+      "showBadgesOnProductMedia": true,
+      "addToCartText": "Add to Cart",
+      "addBundleToCartText": "Add Bundle to Cart",
+      "soldOutText": "Sold Out",
+      "showVendor": false,
+      "showSalePrice": true,
+      "showShortDescription": true,
+      "showShippingPolicy": true,
+      "showRefundPolicy": true
+    },
+
+    {
+      "id": "product-related",
+      "type": "related-products",
+      "gap": 32,
+      "content": "You May Also Like"
+    }
+  ]
+}
