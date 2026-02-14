@@ -4,6 +4,17 @@
 
 ---
 
+## 1.0.7 — 2026-02-14
+
+### Admin API Access Unlocked
+- Obtained Shopify Admin API token with full write scopes via OAuth flow
+- Created "Claude2" app in Shopify Dev Dashboard (custom distribution)
+- Built `scripts/get-admin-token.mjs` — one-time HTTPS OAuth script with self-signed cert
+- Token saved to `.env` as `SHOPIFY_ADMIN_API_TOKEN` (full admin scopes: write_products, write_redirects, write_files, etc.)
+- All 6 Phase 4 tasks now unblocked and ready for automated execution
+
+---
+
 ## 1.0.6 — 2026-02-14
 
 ### Phase 4 Prep: Shopify Admin Cleanup

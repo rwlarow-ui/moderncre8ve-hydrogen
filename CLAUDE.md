@@ -28,6 +28,7 @@ Replacement for moderncre8ve.com — handcrafted modern furniture (mid-century, 
 | `app/root.tsx` | Root layout, font preloads |
 | `redirects-for-shopify.csv` | 77 SEO redirects for Shopify Admin bulk import |
 | `weaverse-pages/` | 8 page + 2 template JSON files for Weaverse Studio import |
+| `scripts/get-admin-token.mjs` | One-time OAuth script for Shopify Admin API token |
 
 ### Deployment Status
 | Phase | Status |
@@ -35,7 +36,7 @@ Replacement for moderncre8ve.com — handcrafted modern furniture (mid-century, 
 | 1. Foundation (branding, SEO, redirects, MCP) | Done |
 | 2. Content migration (presets, audit, remove.bg, content extraction) | Done |
 | 3. Page building (11 pages + 2 templates in Weaverse Studio) | **In Progress** — 3 done in Studio, 8 page + 2 template JSONs generated in `weaverse-pages/` |
-| 4. Shopify Admin cleanup (images, redirects, collections, SEO) | **In Progress** — requires manual Shopify Admin work (no Admin API token) |
+| 4. Shopify Admin cleanup (images, redirects, collections, SEO) | **In Progress** — Admin API token obtained, 6 tasks ready to execute |
 | 5. Launch (final deploy, DNS cutover) | Pending |
 
 See `CHANGELOG.md` for full details and page-by-page TODO list.
@@ -77,12 +78,19 @@ See `CHANGELOG.md` for full details and page-by-page TODO list.
 - The archived version reached v0.7.3 (~90% complete) but was superseded by this Hydrogen + Weaverse approach for better Shopify ecosystem integration
 - SEO data, redirect rules, and content extraction from the archived project informed this build
 
+### Admin API Access
+- **Token:** `SHOPIFY_ADMIN_API_TOKEN` in `.env` (full admin write scopes)
+- **App:** "Claude2" in Shopify Dev Dashboard (custom distribution)
+- **Client ID:** `fd5964839bc3fb47703bafb47d25d3fc`
+- **OAuth script:** `scripts/get-admin-token.mjs` (HTTPS localhost with self-signed cert)
+- **Scopes:** write_products, write_redirects, write_files, and all other admin scopes
+
 ### MCP Servers (This Project)
 Configured in `~/Desktop/my-hydrogen-storefront/.mcp.json`:
 - **Ahrefs** — SEO analysis
 - **Figma** — Design reference
-- **Shopify** — Storefront API
-- **remove.bg** — Background removal for product/lifestyle images
+- **Shopify** — Storefront API (read-only)
+- **Shopify Dev** — Shopify developer documentation and schema tools
 
 > **Note:** Composer and Crypto.com MCP servers visible in Claude sessions are from the **OWS Next.js project** (`~/Desktop/UW/options-wall-scanner-next`), not this project. They are irrelevant here.
 
@@ -224,6 +232,7 @@ Required environment variables:
 - `PUBLIC_STOREFRONT_API_TOKEN` - Storefront API access token
 - `WEAVERSE_PROJECT_ID` - Weaverse project identifier
 - `SESSION_SECRET` - Session encryption key
+- `SHOPIFY_ADMIN_API_TOKEN` - Admin API token (obtained via `scripts/get-admin-token.mjs`)
 
 ### Performance Considerations
 - **Server-side rendering** with hydration
