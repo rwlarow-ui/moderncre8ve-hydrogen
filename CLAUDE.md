@@ -35,7 +35,7 @@ Replacement for moderncre8ve.com — handcrafted modern furniture (mid-century, 
 | 1. Foundation (branding, SEO, redirects, MCP) | Done |
 | 2. Content migration (presets, audit, remove.bg, content extraction) | Done |
 | 3. Page building (11 pages + 2 templates in Weaverse Studio) | **In Progress** — 3 done in Studio, 8 page + 2 template JSONs generated in `weaverse-pages/` |
-| 4. Shopify Admin cleanup (images, redirects, collections, SEO) | Pending |
+| 4. Shopify Admin cleanup (images, redirects, collections, SEO) | **In Progress** — requires manual Shopify Admin work (no Admin API token) |
 | 5. Launch (final deploy, DNS cutover) | Pending |
 
 See `CHANGELOG.md` for full details and page-by-page TODO list.
@@ -46,7 +46,8 @@ See `CHANGELOG.md` for full details and page-by-page TODO list.
 | Task | Where | Details |
 |------|-------|---------|
 | Fix missing image alt text | Products > The Mar Vista | 3 of 10 images missing alt text |
-| Handle unavailable products | Products | 3 products unavailable: `contemporary-dining-bench-vermonter`, `mid-century-modern-bed-frame`, `mid-century-dresser-larchmere-tallboy` — restock, draft, or remove |
+| Draft unavailable products | Products | 3 products → set to Draft: `contemporary-dining-bench-vermonter`, `mid-century-modern-bed-frame`, `mid-century-dresser-larchmere-tallboy` |
+| Upload 27 product images | Products > each product | Add background-removed PNGs from `product-images-nobg/` (filenames match handles) |
 | Enable inventory scope (optional) | Settings > Apps > Storefront API | Add `unauthenticated_read_product_inventory` scope if stock display is needed |
 
 **Collections — Empty (0 products)**

@@ -1,6 +1,27 @@
 # ModernCre8ve Hydrogen Storefront
 
-## Migration Status: Phase 3 — Page Building (In Progress)
+## Migration Status: Phase 4 — Shopify Admin Cleanup (In Progress)
+
+---
+
+## 1.0.6 — 2026-02-14
+
+### Phase 4 Prep: Shopify Admin Cleanup
+- Audited all 20 collections via Storefront API (5 empty, 2 missing SEO)
+- Verified 77 SEO redirects CSV ready for import
+- Verified 27 background-removed product images ready for upload (40 MB in `product-images-nobg/`)
+- Connected GitHub repo to Shopify Hydrogen for auto-deploy on push
+- Set up Oxygen deployment token (`CI=1 --token`) for scripted deploys
+- Attempted Admin API token creation — blocked by Shopify's Jan 2026 custom app deprecation; tasks require manual Shopify Admin work
+
+### Phase 4 TODO — Manual Shopify Admin Tasks
+- [ ] **Draft 3 unavailable products** — Products > set status to Draft:
+  - `contemporary-dining-bench-vermonter`
+  - `mid-century-modern-bed-frame`
+  - `mid-century-dresser-larchmere-tallboy`
+- [ ] **Fix Mar Vista alt text** — Products > The Mar Vista > add alt text to 3 images
+- [ ] **Import 77 SEO redirects** — Online Store > Navigation > URL Redirects > Import `redirects-for-shopify.csv`
+- [ ] **Upload 27 product images** — Products > each product > add PNG from `product-images-nobg/` (filenames match product handles)
 
 ---
 
