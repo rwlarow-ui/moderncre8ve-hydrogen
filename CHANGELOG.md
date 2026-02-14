@@ -4,6 +4,19 @@
 
 ---
 
+## 1.0.5 — 2026-02-14
+
+### Architectural Decision: Hydrogen as Master Version
+- Established `my-hydrogen-storefront` as the master rebuild of moderncre8ve.com
+- Archived the prior Next.js + Builder.io version (`~/Desktop/Moderncre8ve Rebuild [ARCHIVED]/`)
+  - That project reached v0.7.3 (~90%) but was superseded for better Shopify ecosystem integration
+- Added `ARCHIVED.md` to the Next.js project with pointers to this active project
+- Updated CLAUDE.md with project history section
+- Cleaned up deploy script: removed `--builder` flag (Builder.io no longer active), updated Oxygen deploy to use `CI=1 --token` for non-interactive deployments
+- Updated global Claude config and memory files to reflect the architectural decision
+
+---
+
 ## 1.0.4 — 2026-02-14
 
 ### Remaining Core Page JSON Generation

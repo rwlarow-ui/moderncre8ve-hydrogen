@@ -70,6 +70,12 @@ See `CHANGELOG.md` for full details and page-by-page TODO list.
 |------|-------|---------|
 | Import SEO redirects | Online Store > Navigation > URL Redirects | Upload `redirects-for-shopify.csv` (77 redirects) |
 
+### Project History
+- **This is the master version** of the moderncre8ve.com rebuild
+- A prior Next.js + Builder.io version exists at `~/Desktop/Moderncre8ve Rebuild [ARCHIVED]/` (archived 2026-02-14)
+- The archived version reached v0.7.3 (~90% complete) but was superseded by this Hydrogen + Weaverse approach for better Shopify ecosystem integration
+- SEO data, redirect rules, and content extraction from the archived project informed this build
+
 ### MCP Servers (This Project)
 Configured in `~/Desktop/my-hydrogen-storefront/.mcp.json`:
 - **Ahrefs** — SEO analysis
