@@ -1,0 +1,376 @@
+{
+  "rootId": "about-root",
+  "items": [
+    {
+      "id": "about-root",
+      "type": "*",
+      "children": [
+        { "id": "about-hero" },
+        { "id": "about-iwt-story" },
+        { "id": "about-video" },
+        { "id": "about-iwt-philosophy" },
+        { "id": "about-columns-team" },
+        { "id": "about-iwt-charities" }
+      ]
+    },
+
+    {
+      "id": "about-hero",
+      "type": "hero-image",
+      "children": [
+        { "id": "about-hero-sub" },
+        { "id": "about-hero-heading" }
+      ],
+      "data": {
+        "height": "large",
+        "contentPosition": "center center",
+        "backgroundFit": "cover",
+        "enableOverlay": true,
+        "overlayOpacity": 40
+      }
+    },
+    {
+      "id": "about-hero-sub",
+      "type": "subheading",
+      "data": {
+        "content": "Handcrafted furniture from Cleveland, Ohio since 2013",
+        "color": "#ffffff"
+      }
+    },
+    {
+      "id": "about-hero-heading",
+      "type": "heading",
+      "data": {
+        "content": "About ModernCre8ve",
+        "as": "h1",
+        "color": "#ffffff",
+        "size": "default"
+      }
+    },
+
+    {
+      "id": "about-iwt-story",
+      "type": "image-with-text",
+      "children": [
+        { "id": "about-iwt-story-images" },
+        { "id": "about-iwt-story-content" }
+      ],
+      "data": {
+        "verticalPadding": "none",
+        "backgroundColor": "#F0F0EF",
+        "backgroundFor": "content"
+      }
+    },
+    {
+      "id": "about-iwt-story-images",
+      "type": "image-with-text--images",
+      "children": [
+        { "id": "about-iwt-story-image" }
+      ],
+      "data": {
+        "imageAspectRatio": "3/4"
+      }
+    },
+    {
+      "id": "about-iwt-story-image",
+      "type": "image-with-text--image",
+      "data": {
+        "objectFit": "cover",
+        "borderRadius": 0
+      }
+    },
+    {
+      "id": "about-iwt-story-content",
+      "type": "image-with-text--content",
+      "children": [
+        { "id": "about-iwt-story-sub" },
+        { "id": "about-iwt-story-heading" },
+        { "id": "about-iwt-story-p1" },
+        { "id": "about-iwt-story-p2" }
+      ],
+      "data": {
+        "gap": "5",
+        "contentPosition": "center center"
+      }
+    },
+    {
+      "id": "about-iwt-story-sub",
+      "type": "subheading",
+      "data": {
+        "content": "Our Story"
+      }
+    },
+    {
+      "id": "about-iwt-story-heading",
+      "type": "heading",
+      "data": {
+        "content": "Where Heritage Meets Modern Design",
+        "as": "h2"
+      }
+    },
+    {
+      "id": "about-iwt-story-p1",
+      "type": "paragraph",
+      "data": {
+        "content": "Founded in Cleveland, Ohio in 2013, ModernCre8ve marries modern design with the world-class execution of old-world Amish craftsmen. Every piece is handmade one at a time using domestic-sourced hardwood lumber."
+      }
+    },
+    {
+      "id": "about-iwt-story-p2",
+      "type": "paragraph",
+      "data": {
+        "content": "What started as a passion project quickly grew into a studio dedicated to creating furniture that honors both form and function. We believe great design should be accessible, built to last, and made with integrity."
+      }
+    },
+
+    {
+      "id": "about-video",
+      "type": "video-embed",
+      "children": [
+        { "id": "about-video-content" },
+        { "id": "about-video-item" }
+      ]
+    },
+    {
+      "id": "about-video-content",
+      "type": "video-embed-content",
+      "data": {
+        "displayMode": "vertical",
+        "contentPosition": "center center",
+        "headingContent": "Inside the Workshop",
+        "paragraphContent": "See how every piece of ModernCre8ve furniture is handcrafted from start to finish."
+      }
+    },
+    {
+      "id": "about-video-item",
+      "type": "video-embed--item",
+      "data": {
+        "size": "large",
+        "borderRadius": 0
+      }
+    },
+
+    {
+      "id": "about-iwt-philosophy",
+      "type": "image-with-text",
+      "children": [
+        { "id": "about-iwt-phil-content" },
+        { "id": "about-iwt-phil-images" }
+      ],
+      "data": {
+        "verticalPadding": "none",
+        "backgroundColor": "#FFFFFF",
+        "backgroundFor": "content"
+      }
+    },
+    {
+      "id": "about-iwt-phil-images",
+      "type": "image-with-text--images",
+      "children": [
+        { "id": "about-iwt-phil-image" }
+      ],
+      "data": {
+        "imageAspectRatio": "3/4"
+      }
+    },
+    {
+      "id": "about-iwt-phil-image",
+      "type": "image-with-text--image",
+      "data": {
+        "objectFit": "cover",
+        "borderRadius": 0
+      }
+    },
+    {
+      "id": "about-iwt-phil-content",
+      "type": "image-with-text--content",
+      "children": [
+        { "id": "about-iwt-phil-sub" },
+        { "id": "about-iwt-phil-heading" },
+        { "id": "about-iwt-phil-p1" },
+        { "id": "about-iwt-phil-p2" }
+      ],
+      "data": {
+        "gap": "5",
+        "contentPosition": "center center"
+      }
+    },
+    {
+      "id": "about-iwt-phil-sub",
+      "type": "subheading",
+      "data": {
+        "content": "Our Philosophy"
+      }
+    },
+    {
+      "id": "about-iwt-phil-heading",
+      "type": "heading",
+      "data": {
+        "content": "Built to Last, Designed to Inspire",
+        "as": "h2"
+      }
+    },
+    {
+      "id": "about-iwt-phil-p1",
+      "type": "paragraph",
+      "data": {
+        "content": "We believe furniture should be more than functional — it should tell a story. Every grain pattern, every joint, every finish is chosen with intention. Our mid-century modern, Scandinavian, and Japandi-inspired designs bring warmth and character to modern spaces."
+      }
+    },
+    {
+      "id": "about-iwt-phil-p2",
+      "type": "paragraph",
+      "data": {
+        "content": "By working directly with Amish craftsmen in Ohio, we maintain the highest standards of quality while keeping our process sustainable and our prices fair. No middlemen, no mass production — just honest furniture made the right way."
+      }
+    },
+
+    {
+      "id": "about-columns-team",
+      "type": "columns-with-images",
+      "children": [
+        { "id": "about-team-sub" },
+        { "id": "about-team-heading" },
+        { "id": "about-team-items" }
+      ],
+      "data": {
+        "gap": 48
+      }
+    },
+    {
+      "id": "about-team-sub",
+      "type": "subheading",
+      "data": {
+        "content": "The People Behind the Pieces"
+      }
+    },
+    {
+      "id": "about-team-heading",
+      "type": "heading",
+      "data": {
+        "content": "Meet the Team",
+        "as": "h2"
+      }
+    },
+    {
+      "id": "about-team-items",
+      "type": "columns-with-images--items",
+      "children": [
+        { "id": "about-team-1" },
+        { "id": "about-team-2" },
+        { "id": "about-team-3" }
+      ],
+      "data": {
+        "gap": 40,
+        "imageAspectRatio": "3/4"
+      }
+    },
+    {
+      "id": "about-team-1",
+      "type": "column-with-image--item",
+      "data": {
+        "size": "medium",
+        "heading": "Randy Larow",
+        "content": "Founder & Designer — Randy launched ModernCre8ve in 2013 with a vision to make handcrafted modern furniture accessible to everyone.",
+        "imageBorderRadius": 0
+      }
+    },
+    {
+      "id": "about-team-2",
+      "type": "column-with-image--item",
+      "data": {
+        "size": "medium",
+        "heading": "The Artisans",
+        "content": "Our team of Amish craftsmen bring decades of woodworking expertise to every piece, using traditional joinery and modern precision.",
+        "imageBorderRadius": 0
+      }
+    },
+    {
+      "id": "about-team-3",
+      "type": "column-with-image--item",
+      "data": {
+        "size": "medium",
+        "heading": "Customer Experience",
+        "content": "From your first inquiry to white-glove delivery, our team is dedicated to making your experience seamless and personal.",
+        "imageBorderRadius": 0
+      }
+    },
+
+    {
+      "id": "about-iwt-charities",
+      "type": "image-with-text",
+      "children": [
+        { "id": "about-iwt-charity-images" },
+        { "id": "about-iwt-charity-content" }
+      ],
+      "data": {
+        "verticalPadding": "none",
+        "backgroundColor": "#F0F0EF",
+        "backgroundFor": "content"
+      }
+    },
+    {
+      "id": "about-iwt-charity-images",
+      "type": "image-with-text--images",
+      "children": [
+        { "id": "about-iwt-charity-image" }
+      ],
+      "data": {
+        "imageAspectRatio": "1/1"
+      }
+    },
+    {
+      "id": "about-iwt-charity-image",
+      "type": "image-with-text--image",
+      "data": {
+        "objectFit": "cover",
+        "borderRadius": 0
+      }
+    },
+    {
+      "id": "about-iwt-charity-content",
+      "type": "image-with-text--content",
+      "children": [
+        { "id": "about-iwt-charity-sub" },
+        { "id": "about-iwt-charity-heading" },
+        { "id": "about-iwt-charity-paragraph" },
+        { "id": "about-iwt-charity-button" }
+      ],
+      "data": {
+        "gap": "5",
+        "contentPosition": "center center"
+      }
+    },
+    {
+      "id": "about-iwt-charity-sub",
+      "type": "subheading",
+      "data": {
+        "content": "Giving Back"
+      }
+    },
+    {
+      "id": "about-iwt-charity-heading",
+      "type": "heading",
+      "data": {
+        "content": "Rooted in Community",
+        "as": "h2"
+      }
+    },
+    {
+      "id": "about-iwt-charity-paragraph",
+      "type": "paragraph",
+      "data": {
+        "content": "ModernCre8ve is proud to support organizations that strengthen our Cleveland community and beyond. We believe in building more than furniture — we're building a better future through meaningful partnerships and charitable giving."
+      }
+    },
+    {
+      "id": "about-iwt-charity-button",
+      "type": "button",
+      "data": {
+        "text": "Contact Us",
+        "to": "/pages/contact",
+        "variant": "primary"
+      }
+    }
+  ]
+}

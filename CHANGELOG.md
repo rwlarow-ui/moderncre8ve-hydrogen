@@ -4,6 +4,39 @@
 
 ---
 
+## 1.0.4 — 2026-02-14
+
+### Remaining Core Page JSON Generation
+Generated the final 3 Weaverse page import JSON files in `weaverse-pages/`:
+
+**`homepage.json`** — 8 sections:
+- Slideshow (3 hero slides: main brand, mid-century dining, Scandinavian/Japandi)
+- Highlights (3 value prop badges: Handcrafted in Ohio, Solid Hardwood, Custom Orders)
+- Featured Products ("Best Sellers" carousel)
+- Collection List Dynamic ("Shop by Category" grid)
+- Image with Text (About teaser — founding story CTA)
+- Video Embed ("See Our Workshop")
+- Testimonials (3 customer reviews: John D., Susan M., Alex P.)
+- Newsletter ("Join the ModernCre8ve Family")
+
+**`about-us.json`** — 6 sections:
+- Hero Image ("About ModernCre8ve")
+- Image with Text — Our Story (founding in 2013, Amish craftsmen)
+- Video Embed ("Inside the Workshop")
+- Image with Text — Philosophy (design philosophy, sustainability)
+- Columns with Images — Team (Randy Larow, The Artisans, Customer Experience)
+- Image with Text — Charities ("Rooted in Community")
+
+**`contact.json`** — 4 sections:
+- Hero Image ("Contact Us")
+- Map with address (Cleveland showroom, hours, phone)
+- Image with Text — Custom Orders CTA (links to custom orders page)
+- Image with Text — Shipping CTA (white glove delivery, links to shipping policy)
+
+All `type` values verified against `app/weaverse/components.ts`. All content sourced from migrated section presets.
+
+---
+
 ## 1.0.3 — 2026-02-14
 
 ### Project Links & Setup
@@ -51,23 +84,25 @@ All files use flat `items[]` array with `children: [{id}]` references matching `
 ### Phase 3 TODO — Pages to Build in Weaverse Studio
 
 **Core Pages**
-- [ ] Homepage — Slideshow, Highlights, Featured Products, Collection List, Image with Text, Video, Testimonials, Newsletter
-- [ ] About Us (`/pages/about-us`) — Hero, Story, YouTube video, Philosophy, Team (3 members), Charities
-- [ ] Contact (`/pages/contact`) — Hero, Map (Cleveland showroom), Custom Piece CTA, Shipping CTA
-- [ ] FAQ (`/pages/faq`) — Hero, 4 accordion groups (16 Q&A items total)
+- [x] Homepage — Slideshow, Highlights, Featured Products, Collection List, Image with Text, Video, Testimonials, Newsletter
+- [x] About Us (`/pages/about-us`) — Hero, Story, YouTube video, Philosophy, Team (3 members), Charities
+- [x] Contact (`/pages/contact`) — Hero, Map (Cleveland showroom), Custom Piece CTA, Shipping CTA
+- [x] FAQ (`/pages/faq`) — Hero, 4 accordion groups (16 Q&A items total)
 
 **Supporting Pages**
-- [ ] Custom Orders (`/pages/custom-furniture-crafted-to-perfection`) — 4-step process
-- [ ] Our Materials (`/pages/our-materials`) — Walnut, White Oak, Hard Maple, Cherry
-- [ ] Assembly & Care (`/pages/assembly-care`) — Assembly instructions, care guidelines
-- [ ] Shipping Policy (`/pages/shipping-policy-and-customer-responsibilities`) — Full shipping policy
-- [ ] Order Policies (`/pages/ordering-policies`) — Payment, guarantee, cancellations, damages
-- [ ] Press (`/pages/mid-century-modern-press-coverage`) — 9 press mentions (HGTV, Domino, etc.)
-- [ ] Reviews (`/pages/reviews`) — Customer testimonials, value props
+- [x] Custom Orders (`/pages/custom-furniture-crafted-to-perfection`) — 4-step process
+- [x] Our Materials (`/pages/our-materials`) — Walnut, White Oak, Hard Maple, Cherry
+- [x] Assembly & Care (`/pages/assembly-care`) — Assembly instructions, care guidelines
+- [x] Shipping Policy (`/pages/shipping-policy-and-customer-responsibilities`) — Full shipping policy
+- [x] Order Policies (`/pages/ordering-policies`) — Payment, guarantee, cancellations, damages
+- [x] Press (`/pages/mid-century-modern-press-coverage`) — 9 press mentions (HGTV, Domino, etc.)
+- [x] Reviews (`/pages/reviews`) — Customer testimonials, value props
 
 **Templates**
-- [ ] Default Product — Main Product + Related Products
-- [ ] Default Collection — Collection Filters + cross-sell
+- [x] Default Product — Main Product + Related Products
+- [x] Default Collection — Collection Filters + cross-sell
+
+**Remaining:** All 13 JSON files need to be imported into Weaverse Studio. Images to be assigned in Studio.
 
 ### Phase 4 TODO — Shopify Admin Cleanup
 - [ ] Upload 27 background-removed product images to Shopify

@@ -5,246 +5,354 @@
       "id": "press-root",
       "type": "*",
       "children": [
-        { "id": "press-hero" },
-        { "id": "press-iwt-intro" },
-        { "id": "press-columns" },
-        { "id": "press-iwt-cta" }
+        {
+          "id": "press-hero"
+        },
+        {
+          "id": "press-iwt-intro"
+        },
+        {
+          "id": "press-columns"
+        },
+        {
+          "id": "press-iwt-cta"
+        }
       ]
     },
-
     {
       "id": "press-hero",
       "type": "hero-image",
-      "height": "large",
-      "contentPosition": "center center",
-      "backgroundFit": "cover",
-      "enableOverlay": true,
-      "overlayOpacity": 40,
       "children": [
-        { "id": "press-hero-sub" },
-        { "id": "press-hero-heading" }
-      ]
+        {
+          "id": "press-hero-sub"
+        },
+        {
+          "id": "press-hero-heading"
+        }
+      ],
+      "data": {
+        "height": "large",
+        "contentPosition": "center center",
+        "backgroundFit": "cover",
+        "enableOverlay": true,
+        "overlayOpacity": 40
+      }
     },
     {
       "id": "press-hero-sub",
       "type": "subheading",
-      "content": "Featured in leading design and lifestyle publications",
-      "color": "#ffffff"
+      "data": {
+        "content": "Featured in leading design and lifestyle publications",
+        "color": "#ffffff"
+      }
     },
     {
       "id": "press-hero-heading",
       "type": "heading",
-      "content": "Press Coverage",
-      "as": "h1",
-      "color": "#ffffff",
-      "size": "default"
+      "data": {
+        "content": "Press Coverage",
+        "as": "h1",
+        "color": "#ffffff",
+        "size": "default"
+      }
     },
-
     {
       "id": "press-iwt-intro",
       "type": "image-with-text",
-      "verticalPadding": "none",
-      "backgroundColor": "#F0F0EF",
-      "backgroundFor": "content",
       "children": [
-        { "id": "press-iwt-intro-images" },
-        { "id": "press-iwt-intro-content" }
-      ]
+        {
+          "id": "press-iwt-intro-images"
+        },
+        {
+          "id": "press-iwt-intro-content"
+        }
+      ],
+      "data": {
+        "verticalPadding": "none",
+        "backgroundColor": "#F0F0EF",
+        "backgroundFor": "content"
+      }
     },
     {
       "id": "press-iwt-intro-images",
       "type": "image-with-text--images",
-      "imageAspectRatio": "1/1",
       "children": [
-        { "id": "press-iwt-intro-image" }
-      ]
+        {
+          "id": "press-iwt-intro-image"
+        }
+      ],
+      "data": {
+        "imageAspectRatio": "1/1"
+      }
     },
     {
       "id": "press-iwt-intro-image",
       "type": "image-with-text--image",
-      "objectFit": "cover",
-      "borderRadius": 0
+      "data": {
+        "objectFit": "cover",
+        "borderRadius": 0
+      }
     },
     {
       "id": "press-iwt-intro-content",
       "type": "image-with-text--content",
-      "gap": "5",
-      "contentPosition": "center center",
       "children": [
-        { "id": "press-iwt-intro-heading" },
-        { "id": "press-iwt-intro-paragraph" }
-      ]
+        {
+          "id": "press-iwt-intro-heading"
+        },
+        {
+          "id": "press-iwt-intro-paragraph"
+        }
+      ],
+      "data": {
+        "gap": "5",
+        "contentPosition": "center center"
+      }
     },
     {
       "id": "press-iwt-intro-heading",
       "type": "heading",
-      "content": "Where Excellence Meets Innovation",
-      "as": "h2"
+      "data": {
+        "content": "Where Excellence Meets Innovation",
+        "as": "h2"
+      }
     },
     {
       "id": "press-iwt-intro-paragraph",
       "type": "paragraph",
-      "content": "From the captivating features on HGTV to the trendsetting spreads in Domino Magazine, our craftsmanship has caught the eyes of prestigious giants in the editorial domain. We continue to enrich the narrative of contemporary design."
+      "data": {
+        "content": "From the captivating features on HGTV to the trendsetting spreads in Domino Magazine, our craftsmanship has caught the eyes of prestigious giants in the editorial domain. We continue to enrich the narrative of contemporary design."
+      }
     },
-
     {
       "id": "press-columns",
       "type": "columns-with-images",
-      "gap": 48,
       "children": [
-        { "id": "press-columns-heading" },
-        { "id": "press-columns-items" }
-      ]
+        {
+          "id": "press-columns-heading"
+        },
+        {
+          "id": "press-columns-items"
+        }
+      ],
+      "data": {
+        "gap": 48
+      }
     },
     {
       "id": "press-columns-heading",
       "type": "heading",
-      "content": "As Featured In",
-      "as": "h2"
+      "data": {
+        "content": "As Featured In",
+        "as": "h2"
+      }
     },
     {
       "id": "press-columns-items",
       "type": "columns-with-images--items",
-      "gap": 40,
-      "imageAspectRatio": "1/1",
       "children": [
-        { "id": "press-col-1" },
-        { "id": "press-col-2" },
-        { "id": "press-col-3" },
-        { "id": "press-col-4" },
-        { "id": "press-col-5" },
-        { "id": "press-col-6" },
-        { "id": "press-col-7" },
-        { "id": "press-col-8" },
-        { "id": "press-col-9" }
-      ]
+        {
+          "id": "press-col-1"
+        },
+        {
+          "id": "press-col-2"
+        },
+        {
+          "id": "press-col-3"
+        },
+        {
+          "id": "press-col-4"
+        },
+        {
+          "id": "press-col-5"
+        },
+        {
+          "id": "press-col-6"
+        },
+        {
+          "id": "press-col-7"
+        },
+        {
+          "id": "press-col-8"
+        },
+        {
+          "id": "press-col-9"
+        }
+      ],
+      "data": {
+        "gap": 40,
+        "imageAspectRatio": "1/1"
+      }
     },
     {
       "id": "press-col-1",
       "type": "column-with-image--item",
-      "size": "medium",
-      "heading": "HGTV",
-      "content": "",
-      "imageBorderRadius": 0
+      "data": {
+        "size": "medium",
+        "heading": "HGTV",
+        "content": "",
+        "imageBorderRadius": 0
+      }
     },
     {
       "id": "press-col-2",
       "type": "column-with-image--item",
-      "size": "medium",
-      "heading": "Domino Magazine",
-      "content": "",
-      "imageBorderRadius": 0
+      "data": {
+        "size": "medium",
+        "heading": "Domino Magazine",
+        "content": "",
+        "imageBorderRadius": 0
+      }
     },
     {
       "id": "press-col-3",
       "type": "column-with-image--item",
-      "size": "medium",
-      "heading": "Apartment Therapy",
-      "content": "",
-      "imageBorderRadius": 0
+      "data": {
+        "size": "medium",
+        "heading": "Apartment Therapy",
+        "content": "",
+        "imageBorderRadius": 0
+      }
     },
     {
       "id": "press-col-4",
       "type": "column-with-image--item",
-      "size": "medium",
-      "heading": "Buzzfeed",
-      "content": "",
-      "imageBorderRadius": 0
+      "data": {
+        "size": "medium",
+        "heading": "Buzzfeed",
+        "content": "",
+        "imageBorderRadius": 0
+      }
     },
     {
       "id": "press-col-5",
       "type": "column-with-image--item",
-      "size": "medium",
-      "heading": "Etsy",
-      "content": "",
-      "imageBorderRadius": 0
+      "data": {
+        "size": "medium",
+        "heading": "Etsy",
+        "content": "",
+        "imageBorderRadius": 0
+      }
     },
     {
       "id": "press-col-6",
       "type": "column-with-image--item",
-      "size": "medium",
-      "heading": "Dwell",
-      "content": "",
-      "imageBorderRadius": 0
+      "data": {
+        "size": "medium",
+        "heading": "Dwell",
+        "content": "",
+        "imageBorderRadius": 0
+      }
     },
     {
       "id": "press-col-7",
       "type": "column-with-image--item",
-      "size": "medium",
-      "heading": "Atomic Ranch",
-      "content": "",
-      "imageBorderRadius": 0
+      "data": {
+        "size": "medium",
+        "heading": "Atomic Ranch",
+        "content": "",
+        "imageBorderRadius": 0
+      }
     },
     {
       "id": "press-col-8",
       "type": "column-with-image--item",
-      "size": "medium",
-      "heading": "The Plain Dealer",
-      "content": "",
-      "imageBorderRadius": 0
+      "data": {
+        "size": "medium",
+        "heading": "The Plain Dealer",
+        "content": "",
+        "imageBorderRadius": 0
+      }
     },
     {
       "id": "press-col-9",
       "type": "column-with-image--item",
-      "size": "medium",
-      "heading": "Refinery 29",
-      "content": "",
-      "imageBorderRadius": 0
+      "data": {
+        "size": "medium",
+        "heading": "Refinery 29",
+        "content": "",
+        "imageBorderRadius": 0
+      }
     },
-
     {
       "id": "press-iwt-cta",
       "type": "image-with-text",
-      "verticalPadding": "none",
-      "backgroundColor": "#F0F0EF",
-      "backgroundFor": "content",
       "children": [
-        { "id": "press-iwt-cta-images" },
-        { "id": "press-iwt-cta-content" }
-      ]
+        {
+          "id": "press-iwt-cta-images"
+        },
+        {
+          "id": "press-iwt-cta-content"
+        }
+      ],
+      "data": {
+        "verticalPadding": "none",
+        "backgroundColor": "#F0F0EF",
+        "backgroundFor": "content"
+      }
     },
     {
       "id": "press-iwt-cta-images",
       "type": "image-with-text--images",
-      "imageAspectRatio": "1/1",
       "children": [
-        { "id": "press-iwt-cta-image" }
-      ]
+        {
+          "id": "press-iwt-cta-image"
+        }
+      ],
+      "data": {
+        "imageAspectRatio": "1/1"
+      }
     },
     {
       "id": "press-iwt-cta-image",
       "type": "image-with-text--image",
-      "objectFit": "cover",
-      "borderRadius": 0
+      "data": {
+        "objectFit": "cover",
+        "borderRadius": 0
+      }
     },
     {
       "id": "press-iwt-cta-content",
       "type": "image-with-text--content",
-      "gap": "5",
-      "contentPosition": "center center",
       "children": [
-        { "id": "press-iwt-cta-heading" },
-        { "id": "press-iwt-cta-paragraph" },
-        { "id": "press-iwt-cta-button" }
-      ]
+        {
+          "id": "press-iwt-cta-heading"
+        },
+        {
+          "id": "press-iwt-cta-paragraph"
+        },
+        {
+          "id": "press-iwt-cta-button"
+        }
+      ],
+      "data": {
+        "gap": "5",
+        "contentPosition": "center center"
+      }
     },
     {
       "id": "press-iwt-cta-heading",
       "type": "heading",
-      "content": "Press Inquiries",
-      "as": "h2"
+      "data": {
+        "content": "Press Inquiries",
+        "as": "h2"
+      }
     },
     {
       "id": "press-iwt-cta-paragraph",
       "type": "paragraph",
-      "content": "For press inquiries and bespoke collaborations, reach out to us at info@moderncre8ve.com. Let's craft the future together."
+      "data": {
+        "content": "For press inquiries and bespoke collaborations, reach out to us at info@moderncre8ve.com. Let's craft the future together."
+      }
     },
     {
       "id": "press-iwt-cta-button",
       "type": "button",
-      "text": "Contact Us",
-      "to": "/pages/contact",
-      "variant": "primary"
+      "data": {
+        "text": "Contact Us",
+        "to": "/pages/contact",
+        "variant": "primary"
+      }
     }
   ]
 }

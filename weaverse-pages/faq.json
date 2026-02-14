@@ -5,347 +5,513 @@
       "id": "faq-root",
       "type": "*",
       "children": [
-        { "id": "faq-hero" },
-        { "id": "faq-accordion-ordering" },
-        { "id": "faq-accordion-shipping" },
-        { "id": "faq-accordion-materials" },
-        { "id": "faq-accordion-custom" },
-        { "id": "faq-iwt-cta" }
+        {
+          "id": "faq-hero"
+        },
+        {
+          "id": "faq-accordion-ordering"
+        },
+        {
+          "id": "faq-accordion-shipping"
+        },
+        {
+          "id": "faq-accordion-materials"
+        },
+        {
+          "id": "faq-accordion-custom"
+        },
+        {
+          "id": "faq-iwt-cta"
+        }
       ]
     },
-
     {
       "id": "faq-hero",
       "type": "hero-image",
-      "height": "large",
-      "contentPosition": "center center",
-      "backgroundFit": "cover",
-      "enableOverlay": true,
-      "overlayOpacity": 40,
       "children": [
-        { "id": "faq-hero-sub" },
-        { "id": "faq-hero-heading" }
-      ]
+        {
+          "id": "faq-hero-sub"
+        },
+        {
+          "id": "faq-hero-heading"
+        }
+      ],
+      "data": {
+        "height": "large",
+        "contentPosition": "center center",
+        "backgroundFit": "cover",
+        "enableOverlay": true,
+        "overlayOpacity": 40
+      }
     },
     {
       "id": "faq-hero-sub",
       "type": "subheading",
-      "content": "Everything you need to know about ordering, shipping, and caring for your furniture",
-      "color": "#ffffff"
+      "data": {
+        "content": "Everything you need to know about ordering, shipping, and caring for your furniture",
+        "color": "#ffffff"
+      }
     },
     {
       "id": "faq-hero-heading",
       "type": "heading",
-      "content": "Frequently Asked Questions",
-      "as": "h1",
-      "color": "#ffffff",
-      "size": "default"
+      "data": {
+        "content": "Frequently Asked Questions",
+        "as": "h1",
+        "color": "#ffffff",
+        "size": "default"
+      }
     },
-
     {
       "id": "faq-accordion-ordering",
       "type": "accordion",
-      "accordionLayout": "column",
       "children": [
-        { "id": "faq-ordering-info" },
-        { "id": "faq-ordering-group" }
-      ]
+        {
+          "id": "faq-ordering-info"
+        },
+        {
+          "id": "faq-ordering-group"
+        }
+      ],
+      "data": {
+        "accordionLayout": "column"
+      }
     },
     {
       "id": "faq-ordering-info",
       "type": "content-information",
-      "gap": 20,
       "children": [
-        { "id": "faq-ordering-heading" },
-        { "id": "faq-ordering-sub" }
-      ]
+        {
+          "id": "faq-ordering-heading"
+        },
+        {
+          "id": "faq-ordering-sub"
+        }
+      ],
+      "data": {
+        "gap": 20
+      }
     },
     {
       "id": "faq-ordering-heading",
       "type": "heading",
-      "content": "Ordering & Payment",
-      "as": "h2",
-      "alignment": "left"
+      "data": {
+        "content": "Ordering & Payment",
+        "as": "h2",
+        "alignment": "left"
+      }
     },
     {
       "id": "faq-ordering-sub",
       "type": "subheading",
-      "content": "For questions, email inquiry@moderncre8ve.com or call (216) 502-0755",
-      "alignment": "left"
+      "data": {
+        "content": "For questions, email inquiry@moderncre8ve.com or call (216) 502-0755",
+        "alignment": "left"
+      }
     },
     {
       "id": "faq-ordering-group",
       "type": "accordion-group",
-      "accordionBackgroundColor": "#F3F3F3",
-      "accordionTextColor": "#524B46",
       "children": [
-        { "id": "faq-ordering-q1" },
-        { "id": "faq-ordering-q2" },
-        { "id": "faq-ordering-q3" }
-      ]
+        {
+          "id": "faq-ordering-q1"
+        },
+        {
+          "id": "faq-ordering-q2"
+        },
+        {
+          "id": "faq-ordering-q3"
+        }
+      ],
+      "data": {
+        "accordionBackgroundColor": "#F3F3F3",
+        "accordionTextColor": "#524B46"
+      }
     },
     {
       "id": "faq-ordering-q1",
       "type": "accordion--item",
-      "title": "What payment methods do you accept?",
-      "content": "All payments in U.S. dollars. Sales tax added as required. Shop Pay and Affirm \"Buy Now, Pay Later\" available at checkout."
+      "data": {
+        "title": "What payment methods do you accept?",
+        "content": "All payments in U.S. dollars. Sales tax added as required. Shop Pay and Affirm \"Buy Now, Pay Later\" available at checkout."
+      }
     },
     {
       "id": "faq-ordering-q2",
       "type": "accordion--item",
-      "title": "Can I change or cancel my order?",
-      "content": "Standard orders: changes possible before production/shipping. Custom orders: changes allowed before production/material purchase. Contact us promptly. Items are not returnable and cannot be cancelled once fabrication has begun."
+      "data": {
+        "title": "Can I change or cancel my order?",
+        "content": "Standard orders: changes possible before production/shipping. Custom orders: changes allowed before production/material purchase. Contact us promptly. Items are not returnable and cannot be cancelled once fabrication has begun."
+      }
     },
     {
       "id": "faq-ordering-q3",
       "type": "accordion--item",
-      "title": "What is your guarantee/warranty?",
-      "content": "Two-year guarantee on all furniture. We will repair or replace items if issues occur and proper care was maintained per our Care Instructions. Does not cover: checking from humidity changes, user damage, or improper care. Natural wood inclusions (tonal streaking, grain irregularity, knots, whorls, textural variances) are not defects."
+      "data": {
+        "title": "What is your guarantee/warranty?",
+        "content": "Two-year guarantee on all furniture. We will repair or replace items if issues occur and proper care was maintained per our Care Instructions. Does not cover: checking from humidity changes, user damage, or improper care. Natural wood inclusions (tonal streaking, grain irregularity, knots, whorls, textural variances) are not defects."
+      }
     },
-
     {
       "id": "faq-accordion-shipping",
       "type": "accordion",
-      "accordionLayout": "column",
       "children": [
-        { "id": "faq-shipping-info" },
-        { "id": "faq-shipping-group" }
-      ]
+        {
+          "id": "faq-shipping-info"
+        },
+        {
+          "id": "faq-shipping-group"
+        }
+      ],
+      "data": {
+        "accordionLayout": "column"
+      }
     },
     {
       "id": "faq-shipping-info",
       "type": "content-information",
-      "gap": 20,
       "children": [
-        { "id": "faq-shipping-heading" }
-      ]
+        {
+          "id": "faq-shipping-heading"
+        }
+      ],
+      "data": {
+        "gap": 20
+      }
     },
     {
       "id": "faq-shipping-heading",
       "type": "heading",
-      "content": "Shipping & Delivery",
-      "as": "h2",
-      "alignment": "left"
+      "data": {
+        "content": "Shipping & Delivery",
+        "as": "h2",
+        "alignment": "left"
+      }
     },
     {
       "id": "faq-shipping-group",
       "type": "accordion-group",
-      "accordionBackgroundColor": "#F3F3F3",
-      "accordionTextColor": "#524B46",
       "children": [
-        { "id": "faq-shipping-q1" },
-        { "id": "faq-shipping-q2" },
-        { "id": "faq-shipping-q3" },
-        { "id": "faq-shipping-q4" },
-        { "id": "faq-shipping-q5" }
-      ]
+        {
+          "id": "faq-shipping-q1"
+        },
+        {
+          "id": "faq-shipping-q2"
+        },
+        {
+          "id": "faq-shipping-q3"
+        },
+        {
+          "id": "faq-shipping-q4"
+        },
+        {
+          "id": "faq-shipping-q5"
+        }
+      ],
+      "data": {
+        "accordionBackgroundColor": "#F3F3F3",
+        "accordionTextColor": "#524B46"
+      }
     },
     {
       "id": "faq-shipping-q1",
       "type": "accordion--item",
-      "title": "How long does shipping take?",
-      "content": "ModernCre8ve items: 2-14 days depending on product and destination. Non-custom orders: 8-10 weeks lead time. Custom orders: 12-16 weeks including delivery scheduling. Piper + Fox Collection ships within 3-7 business days via UPS, DHL, FedEx, or USPS."
+      "data": {
+        "title": "How long does shipping take?",
+        "content": "ModernCre8ve items: 2-14 days depending on product and destination. Non-custom orders: 8-10 weeks lead time. Custom orders: 12-16 weeks including delivery scheduling. Piper + Fox Collection ships within 3-7 business days via UPS, DHL, FedEx, or USPS."
+      }
     },
     {
       "id": "faq-shipping-q2",
       "type": "accordion--item",
-      "title": "Do you offer white glove delivery?",
-      "content": "Yes, over 95% of deliveries include in-home delivery with assembly (since July 2023). Includes delivery to your preferred room, light assembly, and packing material removal."
+      "data": {
+        "title": "Do you offer white glove delivery?",
+        "content": "Yes, over 95% of deliveries include in-home delivery with assembly (since July 2023). Includes delivery to your preferred room, light assembly, and packing material removal."
+      }
     },
     {
       "id": "faq-shipping-q3",
       "type": "accordion--item",
-      "title": "What about exceptional shipping situations?",
-      "content": "NYC/Brooklyn delivery, island deliveries, spiral staircases, tight hallways, and steep/narrow stairs are available with advance notice. Notify us via the Shipping & Delivery Questionnaire sent after order confirmation. Rescheduling fees may apply for missed deliveries."
+      "data": {
+        "title": "What about exceptional shipping situations?",
+        "content": "NYC/Brooklyn delivery, island deliveries, spiral staircases, tight hallways, and steep/narrow stairs are available with advance notice. Notify us via the Shipping & Delivery Questionnaire sent after order confirmation. Rescheduling fees may apply for missed deliveries."
+      }
     },
     {
       "id": "faq-shipping-q4",
       "type": "accordion--item",
-      "title": "What if my furniture arrives damaged?",
-      "content": "Note damage on the Bill of Lading (BOL) at time of delivery. Damaged items should be refused and sent back with your delivery team. You are not responsible for return shipping charges. If damage is found after delivery, report within 72 hours with photos to MODERNCRE8VE."
+      "data": {
+        "title": "What if my furniture arrives damaged?",
+        "content": "Note damage on the Bill of Lading (BOL) at time of delivery. Damaged items should be refused and sent back with your delivery team. You are not responsible for return shipping charges. If damage is found after delivery, report within 72 hours with photos to MODERNCRE8VE."
+      }
     },
     {
       "id": "faq-shipping-q5",
       "type": "accordion--item",
-      "title": "Are there storage fees?",
-      "content": "7 days free storage post-production. 7-14 days: 1% of order total per 7 days. 15+ days: 3% of order total per 30 days, up to 90 days maximum."
+      "data": {
+        "title": "Are there storage fees?",
+        "content": "7 days free storage post-production. 7-14 days: 1% of order total per 7 days. 15+ days: 3% of order total per 30 days, up to 90 days maximum."
+      }
     },
-
     {
       "id": "faq-accordion-materials",
       "type": "accordion",
-      "accordionLayout": "column",
       "children": [
-        { "id": "faq-materials-info" },
-        { "id": "faq-materials-group" }
-      ]
+        {
+          "id": "faq-materials-info"
+        },
+        {
+          "id": "faq-materials-group"
+        }
+      ],
+      "data": {
+        "accordionLayout": "column"
+      }
     },
     {
       "id": "faq-materials-info",
       "type": "content-information",
-      "gap": 20,
       "children": [
-        { "id": "faq-materials-heading" }
-      ]
+        {
+          "id": "faq-materials-heading"
+        }
+      ],
+      "data": {
+        "gap": 20
+      }
     },
     {
       "id": "faq-materials-heading",
       "type": "heading",
-      "content": "Materials & Care",
-      "as": "h2",
-      "alignment": "left"
+      "data": {
+        "content": "Materials & Care",
+        "as": "h2",
+        "alignment": "left"
+      }
     },
     {
       "id": "faq-materials-group",
       "type": "accordion-group",
-      "accordionBackgroundColor": "#F3F3F3",
-      "accordionTextColor": "#524B46",
       "children": [
-        { "id": "faq-materials-q1" },
-        { "id": "faq-materials-q2" },
-        { "id": "faq-materials-q3" },
-        { "id": "faq-materials-q4" }
-      ]
+        {
+          "id": "faq-materials-q1"
+        },
+        {
+          "id": "faq-materials-q2"
+        },
+        {
+          "id": "faq-materials-q3"
+        },
+        {
+          "id": "faq-materials-q4"
+        }
+      ],
+      "data": {
+        "accordionBackgroundColor": "#F3F3F3",
+        "accordionTextColor": "#524B46"
+      }
     },
     {
       "id": "faq-materials-q1",
       "type": "accordion--item",
-      "title": "What wood species do you use?",
-      "content": "American/Black Walnut, White Oak, Hard Maple, and American Cherry. All premium hardwood sourced from Amish mills in Ohio."
+      "data": {
+        "title": "What wood species do you use?",
+        "content": "American/Black Walnut, White Oak, Hard Maple, and American Cherry. All premium hardwood sourced from Amish mills in Ohio."
+      }
     },
     {
       "id": "faq-materials-q2",
       "type": "accordion--item",
-      "title": "What's the difference between mixed walnut and classic walnut?",
-      "content": "Mixed walnut blends sapwood (creamy white) and heartwood (dark chocolate brown), making the color difference quite distinct. Classic walnut (heartwood only, without light streaks) is available at a premium."
+      "data": {
+        "title": "What's the difference between mixed walnut and classic walnut?",
+        "content": "Mixed walnut blends sapwood (creamy white) and heartwood (dark chocolate brown), making the color difference quite distinct. Classic walnut (heartwood only, without light streaks) is available at a premium."
+      }
     },
     {
       "id": "faq-materials-q3",
       "type": "accordion--item",
-      "title": "How do I care for my furniture?",
-      "content": "Use Lareaux's Furniture Paste Wax quarterly to monthly — apply liberally, let sit 15 minutes, buff with soft cloth. Use a plant-based wood cleaner or microfiber cloth and water for daily cleaning. Don't place hot items directly on surfaces. Don't allow liquids to pool. Be mindful of sunlight and humidity."
+      "data": {
+        "title": "How do I care for my furniture?",
+        "content": "Use Lareaux's Furniture Paste Wax quarterly to monthly \u2014 apply liberally, let sit 15 minutes, buff with soft cloth. Use a plant-based wood cleaner or microfiber cloth and water for daily cleaning. Don't place hot items directly on surfaces. Don't allow liquids to pool. Be mindful of sunlight and humidity."
+      }
     },
     {
       "id": "faq-materials-q4",
       "type": "accordion--item",
-      "title": "How durable is the finish?",
-      "content": "Dining and coffee tables get multiple coats of commercial-grade satin/matte conversion varnish. All other items receive a hand-applied oil and wax finish. Both are highly water and spill-resistant, but not waterproof or scratch-proof."
+      "data": {
+        "title": "How durable is the finish?",
+        "content": "Dining and coffee tables get multiple coats of commercial-grade satin/matte conversion varnish. All other items receive a hand-applied oil and wax finish. Both are highly water and spill-resistant, but not waterproof or scratch-proof."
+      }
     },
-
     {
       "id": "faq-accordion-custom",
       "type": "accordion",
-      "accordionLayout": "column",
       "children": [
-        { "id": "faq-custom-info" },
-        { "id": "faq-custom-group" }
-      ]
+        {
+          "id": "faq-custom-info"
+        },
+        {
+          "id": "faq-custom-group"
+        }
+      ],
+      "data": {
+        "accordionLayout": "column"
+      }
     },
     {
       "id": "faq-custom-info",
       "type": "content-information",
-      "gap": 20,
       "children": [
-        { "id": "faq-custom-heading" }
-      ]
+        {
+          "id": "faq-custom-heading"
+        }
+      ],
+      "data": {
+        "gap": 20
+      }
     },
     {
       "id": "faq-custom-heading",
       "type": "heading",
-      "content": "Custom Orders",
-      "as": "h2",
-      "alignment": "left"
+      "data": {
+        "content": "Custom Orders",
+        "as": "h2",
+        "alignment": "left"
+      }
     },
     {
       "id": "faq-custom-group",
       "type": "accordion-group",
-      "accordionBackgroundColor": "#F3F3F3",
-      "accordionTextColor": "#524B46",
       "children": [
-        { "id": "faq-custom-q1" },
-        { "id": "faq-custom-q2" },
-        { "id": "faq-custom-q3" },
-        { "id": "faq-custom-q4" }
-      ]
+        {
+          "id": "faq-custom-q1"
+        },
+        {
+          "id": "faq-custom-q2"
+        },
+        {
+          "id": "faq-custom-q3"
+        },
+        {
+          "id": "faq-custom-q4"
+        }
+      ],
+      "data": {
+        "accordionBackgroundColor": "#F3F3F3",
+        "accordionTextColor": "#524B46"
+      }
     },
     {
       "id": "faq-custom-q1",
       "type": "accordion--item",
-      "title": "Can I order custom sizes?",
-      "content": "About 60% of our orders are custom. Contact us to discuss your unique needs — your dream furniture piece is just a conversation away."
+      "data": {
+        "title": "Can I order custom sizes?",
+        "content": "About 60% of our orders are custom. Contact us to discuss your unique needs \u2014 your dream furniture piece is just a conversation away."
+      }
     },
     {
       "id": "faq-custom-q2",
       "type": "accordion--item",
-      "title": "Do you make custom designs?",
-      "content": "We create unique custom furniture but don't replicate other brands' designs. Connect through our contact page, phone, or chat. We provide an all-inclusive quote with no hidden fees, shipping included."
+      "data": {
+        "title": "Do you make custom designs?",
+        "content": "We create unique custom furniture but don't replicate other brands' designs. Connect through our contact page, phone, or chat. We provide an all-inclusive quote with no hidden fees, shipping included."
+      }
     },
     {
       "id": "faq-custom-q3",
       "type": "accordion--item",
-      "title": "Can I get custom wood finishes?",
-      "content": "Wood staining is available. Contact us for stain samples before placing your order."
+      "data": {
+        "title": "Can I get custom wood finishes?",
+        "content": "Wood staining is available. Contact us for stain samples before placing your order."
+      }
     },
     {
       "id": "faq-custom-q4",
       "type": "accordion--item",
-      "title": "Can I buy the steel bases separately?",
-      "content": "No, the steel geometric bases are exclusive to our furniture collections and are not sold separately."
+      "data": {
+        "title": "Can I buy the steel bases separately?",
+        "content": "No, the steel geometric bases are exclusive to our furniture collections and are not sold separately."
+      }
     },
-
     {
       "id": "faq-iwt-cta",
       "type": "image-with-text",
-      "verticalPadding": "none",
-      "backgroundColor": "#F0F0EF",
-      "backgroundFor": "content",
       "children": [
-        { "id": "faq-iwt-images" },
-        { "id": "faq-iwt-content" }
-      ]
+        {
+          "id": "faq-iwt-images"
+        },
+        {
+          "id": "faq-iwt-content"
+        }
+      ],
+      "data": {
+        "verticalPadding": "none",
+        "backgroundColor": "#F0F0EF",
+        "backgroundFor": "content"
+      }
     },
     {
       "id": "faq-iwt-images",
       "type": "image-with-text--images",
-      "imageAspectRatio": "1/1",
       "children": [
-        { "id": "faq-iwt-image" }
-      ]
+        {
+          "id": "faq-iwt-image"
+        }
+      ],
+      "data": {
+        "imageAspectRatio": "1/1"
+      }
     },
     {
       "id": "faq-iwt-image",
       "type": "image-with-text--image",
-      "objectFit": "cover",
-      "borderRadius": 0
+      "data": {
+        "objectFit": "cover",
+        "borderRadius": 0
+      }
     },
     {
       "id": "faq-iwt-content",
       "type": "image-with-text--content",
-      "gap": "5",
-      "contentPosition": "center center",
       "children": [
-        { "id": "faq-iwt-heading" },
-        { "id": "faq-iwt-paragraph" },
-        { "id": "faq-iwt-button" }
-      ]
+        {
+          "id": "faq-iwt-heading"
+        },
+        {
+          "id": "faq-iwt-paragraph"
+        },
+        {
+          "id": "faq-iwt-button"
+        }
+      ],
+      "data": {
+        "gap": "5",
+        "contentPosition": "center center"
+      }
     },
     {
       "id": "faq-iwt-heading",
       "type": "heading",
-      "content": "Still Have Questions?",
-      "as": "h2"
+      "data": {
+        "content": "Still Have Questions?",
+        "as": "h2"
+      }
     },
     {
       "id": "faq-iwt-paragraph",
       "type": "paragraph",
-      "content": "We're here Monday to Friday, 9am-5pm EST. Shoot us an email anytime at inquiry@moderncre8ve.com — we'll get back to you within a few hours."
+      "data": {
+        "content": "We're here Monday to Friday, 9am-5pm EST. Shoot us an email anytime at inquiry@moderncre8ve.com \u2014 we'll get back to you within a few hours."
+      }
     },
     {
       "id": "faq-iwt-button",
       "type": "button",
-      "text": "Contact Us",
-      "to": "/pages/contact",
-      "variant": "primary"
+      "data": {
+        "text": "Contact Us",
+        "to": "/pages/contact",
+        "variant": "primary"
+      }
     }
   ]
 }

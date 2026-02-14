@@ -1,0 +1,405 @@
+{
+  "rootId": "home-root",
+  "items": [
+    {
+      "id": "home-root",
+      "type": "*",
+      "children": [
+        { "id": "home-slideshow" },
+        { "id": "home-highlights" },
+        { "id": "home-featured" },
+        { "id": "home-collections" },
+        { "id": "home-iwt-about" },
+        { "id": "home-video" },
+        { "id": "home-testimonials" },
+        { "id": "home-newsletter" }
+      ]
+    },
+
+    {
+      "id": "home-slideshow",
+      "type": "slideshow",
+      "children": [
+        { "id": "home-slide-1" },
+        { "id": "home-slide-2" },
+        { "id": "home-slide-3" }
+      ],
+      "data": {
+        "height": "full",
+        "effect": "fade",
+        "autoRotate": true,
+        "loop": true,
+        "arrows": true,
+        "dots": true
+      }
+    },
+    {
+      "id": "home-slide-1",
+      "type": "slideshow-slide",
+      "data": {
+        "headingContent": "Handcrafted Modern Furniture",
+        "subheadingContent": "Made by Amish Artisans in Ohio",
+        "paragraphContent": "Solid hardwood furniture designed for modern living — built one piece at a time in Ohio.",
+        "buttonContent": "Shop Collections",
+        "to": "/collections",
+        "enableOverlay": true,
+        "overlayOpacity": 40
+      }
+    },
+    {
+      "id": "home-slide-2",
+      "type": "slideshow-slide",
+      "data": {
+        "headingContent": "Mid-Century Modern Dining",
+        "subheadingContent": "Solid Hardwood. Built to Last.",
+        "paragraphContent": "Gather around a table built to last for generations — handcrafted from domestic hardwoods.",
+        "buttonContent": "Explore Dining",
+        "to": "/collections/dining",
+        "enableOverlay": true,
+        "overlayOpacity": 40
+      }
+    },
+    {
+      "id": "home-slide-3",
+      "type": "slideshow-slide",
+      "data": {
+        "headingContent": "Scandinavian & Japandi Design",
+        "subheadingContent": "Where Simplicity Meets Craftsmanship",
+        "paragraphContent": "Clean lines, natural materials, and timeless design — furniture that brings calm to every room.",
+        "buttonContent": "View Collection",
+        "to": "/collections/scandinavian-design-furniture",
+        "enableOverlay": true,
+        "overlayOpacity": 40
+      }
+    },
+
+    {
+      "id": "home-highlights",
+      "type": "highlights",
+      "children": [
+        { "id": "home-badge-1" },
+        { "id": "home-badge-2" },
+        { "id": "home-badge-3" }
+      ],
+      "data": {
+        "alignment": "center",
+        "backgroundColor": "#FFFFFF"
+      }
+    },
+    {
+      "id": "home-badge-1",
+      "type": "highlights-badge",
+      "data": {
+        "iconType": "circle",
+        "badgeTextColor": "#29231E",
+        "headingContent": "Handcrafted in Ohio",
+        "content": "Every piece built by skilled Amish artisans using time-honored techniques.",
+        "color": "#29231E"
+      }
+    },
+    {
+      "id": "home-badge-2",
+      "type": "highlights-badge",
+      "data": {
+        "iconType": "square",
+        "badgeTextColor": "#29231E",
+        "headingContent": "Solid Hardwood",
+        "content": "Domestic-sourced lumber, built to last for generations.",
+        "color": "#29231E"
+      }
+    },
+    {
+      "id": "home-badge-3",
+      "type": "highlights-badge",
+      "data": {
+        "iconType": "triangle",
+        "badgeTextColor": "#29231E",
+        "headingContent": "Custom Orders",
+        "content": "Personalize any piece to fit your space — choose your wood, finish, and dimensions.",
+        "color": "#29231E"
+      }
+    },
+
+    {
+      "id": "home-featured",
+      "type": "featured-products",
+      "children": [
+        { "id": "home-featured-content" },
+        { "id": "home-featured-items" }
+      ]
+    },
+    {
+      "id": "home-featured-content",
+      "type": "featured-content-products",
+      "data": {
+        "displayMode": "vertical",
+        "contentPosition": "center center",
+        "headingContent": "Best Sellers",
+        "paragraphContent": "Handcrafted with care, these are our most loved pieces — built to last for generations.",
+        "buttonContent": "SHOP ALL",
+        "to": "/collections/best-sellers"
+      }
+    },
+    {
+      "id": "home-featured-items",
+      "type": "featured-products-items",
+      "data": {
+        "layout": "carousel",
+        "slidesPerView": 4,
+        "productsToShow": 8
+      }
+    },
+
+    {
+      "id": "home-collections",
+      "type": "feature-collection",
+      "children": [
+        { "id": "home-collections-content" },
+        { "id": "home-collections-items" }
+      ]
+    },
+    {
+      "id": "home-collections-content",
+      "type": "collection-content-dynamic",
+      "data": {
+        "displayMode": "vertical",
+        "contentPosition": "center center",
+        "headingContent": "Shop by Category",
+        "paragraphContent": "From dining tables to bedroom furniture — explore our handcrafted collections.",
+        "buttonContent": "VIEW ALL",
+        "to": "/collections"
+      }
+    },
+    {
+      "id": "home-collections-items",
+      "type": "collection-list-dynamic-items",
+      "data": {
+        "layout": "grid",
+        "gap": 20
+      }
+    },
+
+    {
+      "id": "home-iwt-about",
+      "type": "image-with-text",
+      "children": [
+        { "id": "home-iwt-about-images" },
+        { "id": "home-iwt-about-content" }
+      ],
+      "data": {
+        "verticalPadding": "none",
+        "backgroundColor": "#F0F0EF",
+        "backgroundFor": "content"
+      }
+    },
+    {
+      "id": "home-iwt-about-images",
+      "type": "image-with-text--images",
+      "children": [
+        { "id": "home-iwt-about-image" }
+      ],
+      "data": {
+        "imageAspectRatio": "3/4"
+      }
+    },
+    {
+      "id": "home-iwt-about-image",
+      "type": "image-with-text--image",
+      "data": {
+        "objectFit": "cover",
+        "borderRadius": 0
+      }
+    },
+    {
+      "id": "home-iwt-about-content",
+      "type": "image-with-text--content",
+      "children": [
+        { "id": "home-iwt-about-sub" },
+        { "id": "home-iwt-about-heading" },
+        { "id": "home-iwt-about-paragraph" },
+        { "id": "home-iwt-about-button" }
+      ],
+      "data": {
+        "gap": "5",
+        "contentPosition": "center center"
+      }
+    },
+    {
+      "id": "home-iwt-about-sub",
+      "type": "subheading",
+      "data": {
+        "content": "Our Story"
+      }
+    },
+    {
+      "id": "home-iwt-about-heading",
+      "type": "heading",
+      "data": {
+        "content": "Where Heritage Meets Modern Design",
+        "as": "h2"
+      }
+    },
+    {
+      "id": "home-iwt-about-paragraph",
+      "type": "paragraph",
+      "data": {
+        "content": "Founded in Cleveland, Ohio in 2013, ModernCre8ve marries modern design with the world-class execution of old-world Amish craftsmen. Every piece is handmade one at a time using domestic-sourced hardwood lumber."
+      }
+    },
+    {
+      "id": "home-iwt-about-button",
+      "type": "button",
+      "data": {
+        "text": "Learn More",
+        "to": "/pages/about-us",
+        "variant": "primary"
+      }
+    },
+
+    {
+      "id": "home-video",
+      "type": "video-embed",
+      "children": [
+        { "id": "home-video-content" },
+        { "id": "home-video-item" }
+      ]
+    },
+    {
+      "id": "home-video-content",
+      "type": "video-embed-content",
+      "data": {
+        "displayMode": "vertical",
+        "contentPosition": "center center",
+        "headingContent": "See Our Workshop",
+        "paragraphContent": "Step inside our Cleveland studio and see how every piece of ModernCre8ve furniture comes to life."
+      }
+    },
+    {
+      "id": "home-video-item",
+      "type": "video-embed--item",
+      "data": {
+        "size": "large",
+        "borderRadius": 0
+      }
+    },
+
+    {
+      "id": "home-testimonials",
+      "type": "testimonial",
+      "children": [
+        { "id": "home-test-1" },
+        { "id": "home-test-2" },
+        { "id": "home-test-3" }
+      ]
+    },
+    {
+      "id": "home-test-1",
+      "type": "testimonial--item",
+      "children": [
+        { "id": "home-test-1-content" },
+        { "id": "home-test-1-hotspot" }
+      ]
+    },
+    {
+      "id": "home-test-1-content",
+      "type": "testimonial--content",
+      "data": {
+        "content": "Stunning Craftsmanship",
+        "description": "The quality of the craftsmanship is immediately evident. Every piece feels substantial and well-made. I couldn't be happier with my walnut dining table!",
+        "ratting": 5,
+        "author": "John D."
+      }
+    },
+    {
+      "id": "home-test-1-hotspot",
+      "type": "testimonial--hotspots-item",
+      "data": {
+        "aspectRatio": "1/1"
+      }
+    },
+    {
+      "id": "home-test-2",
+      "type": "testimonial--item",
+      "children": [
+        { "id": "home-test-2-content" },
+        { "id": "home-test-2-hotspot" }
+      ]
+    },
+    {
+      "id": "home-test-2-content",
+      "type": "testimonial--content",
+      "data": {
+        "content": "Beautiful and Functional",
+        "description": "Our new coffee table is both a statement piece and incredibly functional. It has quickly become the centerpiece of our living room.",
+        "ratting": 5,
+        "author": "Susan M."
+      }
+    },
+    {
+      "id": "home-test-2-hotspot",
+      "type": "testimonial--hotspots-item",
+      "data": {
+        "aspectRatio": "1/1"
+      }
+    },
+    {
+      "id": "home-test-3",
+      "type": "testimonial--item",
+      "children": [
+        { "id": "home-test-3-content" },
+        { "id": "home-test-3-hotspot" }
+      ]
+    },
+    {
+      "id": "home-test-3-content",
+      "type": "testimonial--content",
+      "data": {
+        "content": "Perfect Blend of Style and Durability",
+        "description": "I was looking for something modern yet durable, and Moderncre8ve delivered beyond my expectations. My new bed frame is a dream!",
+        "ratting": 5,
+        "author": "Alex P."
+      }
+    },
+    {
+      "id": "home-test-3-hotspot",
+      "type": "testimonial--hotspots-item",
+      "data": {
+        "aspectRatio": "1/1"
+      }
+    },
+
+    {
+      "id": "home-newsletter",
+      "type": "newsletter",
+      "children": [
+        { "id": "home-newsletter-heading" },
+        { "id": "home-newsletter-paragraph" },
+        { "id": "home-newsletter-form" }
+      ]
+    },
+    {
+      "id": "home-newsletter-heading",
+      "type": "heading",
+      "data": {
+        "content": "Join the ModernCre8ve Family",
+        "as": "h2"
+      }
+    },
+    {
+      "id": "home-newsletter-paragraph",
+      "type": "paragraph",
+      "data": {
+        "content": "Be the first to know about new designs, exclusive offers, and behind-the-scenes looks at our workshop."
+      }
+    },
+    {
+      "id": "home-newsletter-form",
+      "type": "newsletter-form",
+      "data": {
+        "width": 400,
+        "placeholder": "Enter your email",
+        "buttonText": "Subscribe"
+      }
+    }
+  ]
+}

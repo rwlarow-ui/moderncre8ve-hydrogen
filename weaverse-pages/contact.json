@@ -1,0 +1,226 @@
+{
+  "rootId": "contact-root",
+  "items": [
+    {
+      "id": "contact-root",
+      "type": "*",
+      "children": [
+        { "id": "contact-hero" },
+        { "id": "contact-map" },
+        { "id": "contact-iwt-custom" },
+        { "id": "contact-iwt-shipping" }
+      ]
+    },
+
+    {
+      "id": "contact-hero",
+      "type": "hero-image",
+      "children": [
+        { "id": "contact-hero-sub" },
+        { "id": "contact-hero-heading" }
+      ],
+      "data": {
+        "height": "large",
+        "contentPosition": "center center",
+        "backgroundFit": "cover",
+        "enableOverlay": true,
+        "overlayOpacity": 40
+      }
+    },
+    {
+      "id": "contact-hero-sub",
+      "type": "subheading",
+      "data": {
+        "content": "We'd love to hear from you",
+        "color": "#ffffff"
+      }
+    },
+    {
+      "id": "contact-hero-heading",
+      "type": "heading",
+      "data": {
+        "content": "Contact Us",
+        "as": "h1",
+        "color": "#ffffff",
+        "size": "default"
+      }
+    },
+
+    {
+      "id": "contact-map",
+      "type": "map",
+      "children": [
+        { "id": "contact-address" }
+      ],
+      "data": {
+        "heading": "Visit Our Showroom",
+        "layoutMap": "list"
+      }
+    },
+    {
+      "id": "contact-address",
+      "type": "address-item",
+      "data": {
+        "nameStore": "MODERNCRE8VE SHOWROOM",
+        "address": "1400 E 36th Street, Suite 2802A, Cleveland, OH 44114",
+        "phoneNumber": "(216) 502-0755",
+        "openingHours": "Mon - Fri: 9:00AM - 5:00PM",
+        "openingHoursSat": "Sat - Sun: Closed"
+      }
+    },
+
+    {
+      "id": "contact-iwt-custom",
+      "type": "image-with-text",
+      "children": [
+        { "id": "contact-iwt-custom-images" },
+        { "id": "contact-iwt-custom-content" }
+      ],
+      "data": {
+        "verticalPadding": "none",
+        "backgroundColor": "#F0F0EF",
+        "backgroundFor": "content"
+      }
+    },
+    {
+      "id": "contact-iwt-custom-images",
+      "type": "image-with-text--images",
+      "children": [
+        { "id": "contact-iwt-custom-image" }
+      ],
+      "data": {
+        "imageAspectRatio": "1/1"
+      }
+    },
+    {
+      "id": "contact-iwt-custom-image",
+      "type": "image-with-text--image",
+      "data": {
+        "objectFit": "cover",
+        "borderRadius": 0
+      }
+    },
+    {
+      "id": "contact-iwt-custom-content",
+      "type": "image-with-text--content",
+      "children": [
+        { "id": "contact-iwt-custom-sub" },
+        { "id": "contact-iwt-custom-heading" },
+        { "id": "contact-iwt-custom-paragraph" },
+        { "id": "contact-iwt-custom-button" }
+      ],
+      "data": {
+        "gap": "5",
+        "contentPosition": "center center"
+      }
+    },
+    {
+      "id": "contact-iwt-custom-sub",
+      "type": "subheading",
+      "data": {
+        "content": "Something Unique in Mind?"
+      }
+    },
+    {
+      "id": "contact-iwt-custom-heading",
+      "type": "heading",
+      "data": {
+        "content": "Custom Furniture, Crafted for You",
+        "as": "h2"
+      }
+    },
+    {
+      "id": "contact-iwt-custom-paragraph",
+      "type": "paragraph",
+      "data": {
+        "content": "About 60% of our orders are custom. Tell us your vision — dimensions, wood species, finish — and we'll create an all-inclusive quote with no hidden fees. Shipping included."
+      }
+    },
+    {
+      "id": "contact-iwt-custom-button",
+      "type": "button",
+      "data": {
+        "text": "Learn About Custom Orders",
+        "to": "/pages/custom-furniture-crafted-to-perfection",
+        "variant": "primary"
+      }
+    },
+
+    {
+      "id": "contact-iwt-shipping",
+      "type": "image-with-text",
+      "children": [
+        { "id": "contact-iwt-ship-content" },
+        { "id": "contact-iwt-ship-images" }
+      ],
+      "data": {
+        "verticalPadding": "none",
+        "backgroundColor": "#FFFFFF",
+        "backgroundFor": "content"
+      }
+    },
+    {
+      "id": "contact-iwt-ship-images",
+      "type": "image-with-text--images",
+      "children": [
+        { "id": "contact-iwt-ship-image" }
+      ],
+      "data": {
+        "imageAspectRatio": "1/1"
+      }
+    },
+    {
+      "id": "contact-iwt-ship-image",
+      "type": "image-with-text--image",
+      "data": {
+        "objectFit": "cover",
+        "borderRadius": 0
+      }
+    },
+    {
+      "id": "contact-iwt-ship-content",
+      "type": "image-with-text--content",
+      "children": [
+        { "id": "contact-iwt-ship-sub" },
+        { "id": "contact-iwt-ship-heading" },
+        { "id": "contact-iwt-ship-paragraph" },
+        { "id": "contact-iwt-ship-button" }
+      ],
+      "data": {
+        "gap": "5",
+        "contentPosition": "center center"
+      }
+    },
+    {
+      "id": "contact-iwt-ship-sub",
+      "type": "subheading",
+      "data": {
+        "content": "White Glove Delivery"
+      }
+    },
+    {
+      "id": "contact-iwt-ship-heading",
+      "type": "heading",
+      "data": {
+        "content": "Nationwide Shipping & In-Home Setup",
+        "as": "h2"
+      }
+    },
+    {
+      "id": "contact-iwt-ship-paragraph",
+      "type": "paragraph",
+      "data": {
+        "content": "Over 95% of our deliveries include in-home delivery with assembly. We'll bring your furniture to your preferred room, assemble it, and remove all packing materials."
+      }
+    },
+    {
+      "id": "contact-iwt-ship-button",
+      "type": "button",
+      "data": {
+        "text": "Shipping Policy",
+        "to": "/pages/shipping-policy-and-customer-responsibilities",
+        "variant": "primary"
+      }
+    }
+  ]
+}

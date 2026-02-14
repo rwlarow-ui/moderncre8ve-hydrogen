@@ -5,153 +5,222 @@
       "id": "shipping-root",
       "type": "*",
       "children": [
-        { "id": "shipping-hero" },
-        { "id": "shipping-accordion-methods" },
-        { "id": "shipping-accordion-policies" }
+        {
+          "id": "shipping-hero"
+        },
+        {
+          "id": "shipping-accordion-methods"
+        },
+        {
+          "id": "shipping-accordion-policies"
+        }
       ]
     },
-
     {
       "id": "shipping-hero",
       "type": "hero-image",
-      "height": "large",
-      "contentPosition": "center center",
-      "backgroundFit": "cover",
-      "enableOverlay": true,
-      "overlayOpacity": 40,
       "children": [
-        { "id": "shipping-hero-sub" },
-        { "id": "shipping-hero-heading" }
-      ]
+        {
+          "id": "shipping-hero-sub"
+        },
+        {
+          "id": "shipping-hero-heading"
+        }
+      ],
+      "data": {
+        "height": "large",
+        "contentPosition": "center center",
+        "backgroundFit": "cover",
+        "enableOverlay": true,
+        "overlayOpacity": 40
+      }
     },
     {
       "id": "shipping-hero-sub",
       "type": "subheading",
-      "content": "Thank you for your business! Here's what to expect.",
-      "color": "#ffffff"
+      "data": {
+        "content": "Thank you for your business! Here's what to expect.",
+        "color": "#ffffff"
+      }
     },
     {
       "id": "shipping-hero-heading",
       "type": "heading",
-      "content": "Shipping Policy & Customer Responsibilities",
-      "as": "h1",
-      "color": "#ffffff",
-      "size": "default"
+      "data": {
+        "content": "Shipping Policy & Customer Responsibilities",
+        "as": "h1",
+        "color": "#ffffff",
+        "size": "default"
+      }
     },
-
     {
       "id": "shipping-accordion-methods",
       "type": "accordion",
-      "accordionLayout": "column",
       "children": [
-        { "id": "shipping-methods-info" },
-        { "id": "shipping-methods-group" }
-      ]
+        {
+          "id": "shipping-methods-info"
+        },
+        {
+          "id": "shipping-methods-group"
+        }
+      ],
+      "data": {
+        "accordionLayout": "column"
+      }
     },
     {
       "id": "shipping-methods-info",
       "type": "content-information",
-      "gap": 20,
       "children": [
-        { "id": "shipping-methods-heading" }
-      ]
+        {
+          "id": "shipping-methods-heading"
+        }
+      ],
+      "data": {
+        "gap": 20
+      }
     },
     {
       "id": "shipping-methods-heading",
       "type": "heading",
-      "content": "Delivery Methods",
-      "as": "h2",
-      "alignment": "left"
+      "data": {
+        "content": "Delivery Methods",
+        "as": "h2",
+        "alignment": "left"
+      }
     },
     {
       "id": "shipping-methods-group",
       "type": "accordion-group",
-      "accordionBackgroundColor": "#F3F3F3",
-      "accordionTextColor": "#524B46",
       "children": [
-        { "id": "shipping-methods-q1" },
-        { "id": "shipping-methods-q2" },
-        { "id": "shipping-methods-q3" }
-      ]
+        {
+          "id": "shipping-methods-q1"
+        },
+        {
+          "id": "shipping-methods-q2"
+        },
+        {
+          "id": "shipping-methods-q3"
+        }
+      ],
+      "data": {
+        "accordionBackgroundColor": "#F3F3F3",
+        "accordionTextColor": "#524B46"
+      }
     },
     {
       "id": "shipping-methods-q1",
       "type": "accordion--item",
-      "title": "In-Home Delivery with Assembly",
-      "content": "Over 95% of deliveries are now made in-home with assembly included via well-vetted Independent Carriers. Includes delivery to your preferred room, light assembly, and packing material removal. Inspect thoroughly during assembly."
+      "data": {
+        "title": "In-Home Delivery with Assembly",
+        "content": "Over 95% of deliveries are now made in-home with assembly included via well-vetted Independent Carriers. Includes delivery to your preferred room, light assembly, and packing material removal. Inspect thoroughly during assembly."
+      }
     },
     {
       "id": "shipping-methods-q2",
       "type": "accordion--item",
-      "title": "Freight / White Glove Shipping",
-      "content": "White Glove services are automatically booked for freight shipments. Inspect during assembly — removing packaging greatly increases difficulty and cost of returns."
+      "data": {
+        "title": "Freight / White Glove Shipping",
+        "content": "White Glove services are automatically booked for freight shipments. Inspect during assembly \u2014 removing packaging greatly increases difficulty and cost of returns."
+      }
     },
     {
       "id": "shipping-methods-q3",
       "type": "accordion--item",
-      "title": "Threshold Delivery",
-      "content": "Furniture arrives in plywood or cardboard crate on pallet, delivered to first dry area (garage/lobby). Have someone available to help move the piece. This method is used when in-home delivery is not feasible."
+      "data": {
+        "title": "Threshold Delivery",
+        "content": "Furniture arrives in plywood or cardboard crate on pallet, delivered to first dry area (garage/lobby). Have someone available to help move the piece. This method is used when in-home delivery is not feasible."
+      }
     },
-
     {
       "id": "shipping-accordion-policies",
       "type": "accordion",
-      "accordionLayout": "column",
       "children": [
-        { "id": "shipping-policies-info" },
-        { "id": "shipping-policies-group" }
-      ]
+        {
+          "id": "shipping-policies-info"
+        },
+        {
+          "id": "shipping-policies-group"
+        }
+      ],
+      "data": {
+        "accordionLayout": "column"
+      }
     },
     {
       "id": "shipping-policies-info",
       "type": "content-information",
-      "gap": 20,
       "children": [
-        { "id": "shipping-policies-heading" }
-      ]
+        {
+          "id": "shipping-policies-heading"
+        }
+      ],
+      "data": {
+        "gap": 20
+      }
     },
     {
       "id": "shipping-policies-heading",
       "type": "heading",
-      "content": "Important Policies",
-      "as": "h2",
-      "alignment": "left"
+      "data": {
+        "content": "Important Policies",
+        "as": "h2",
+        "alignment": "left"
+      }
     },
     {
       "id": "shipping-policies-group",
       "type": "accordion-group",
-      "accordionBackgroundColor": "#F3F3F3",
-      "accordionTextColor": "#524B46",
       "children": [
-        { "id": "shipping-policies-q1" },
-        { "id": "shipping-policies-q2" },
-        { "id": "shipping-policies-q3" },
-        { "id": "shipping-policies-q4" }
-      ]
+        {
+          "id": "shipping-policies-q1"
+        },
+        {
+          "id": "shipping-policies-q2"
+        },
+        {
+          "id": "shipping-policies-q3"
+        },
+        {
+          "id": "shipping-policies-q4"
+        }
+      ],
+      "data": {
+        "accordionBackgroundColor": "#F3F3F3",
+        "accordionTextColor": "#524B46"
+      }
     },
     {
       "id": "shipping-policies-q1",
       "type": "accordion--item",
-      "title": "Communication Process",
-      "content": "After your order, we send an Order Confirmation followed by a Shipping & Delivery Questionnaire — this is critical to complete. You'll then receive the carrier name and order/PRO number via email. Independent Carriers will contact you to schedule delivery."
+      "data": {
+        "title": "Communication Process",
+        "content": "After your order, we send an Order Confirmation followed by a Shipping & Delivery Questionnaire \u2014 this is critical to complete. You'll then receive the carrier name and order/PRO number via email. Independent Carriers will contact you to schedule delivery."
+      }
     },
     {
       "id": "shipping-policies-q2",
       "type": "accordion--item",
-      "title": "Inspection Responsibilities",
-      "content": "Inspect thoroughly BEFORE the carrier leaves. Damage must be noted on the Bill of Lading (BOL). Failure to note damage releases carriers from responsibility. You have the right to refuse a damaged delivery. For concealed damage, notify immediately via email with pictures."
+      "data": {
+        "title": "Inspection Responsibilities",
+        "content": "Inspect thoroughly BEFORE the carrier leaves. Damage must be noted on the Bill of Lading (BOL). Failure to note damage releases carriers from responsibility. You have the right to refuse a damaged delivery. For concealed damage, notify immediately via email with pictures."
+      }
     },
     {
       "id": "shipping-policies-q3",
       "type": "accordion--item",
-      "title": "Exceptional Shipping Services",
-      "content": "Available with advance notice: NYC/Brooklyn delivery, island deliveries, spiral staircases, tight hallways, steep/narrow stairs. Rescheduling fees may apply for missed deliveries. Notify us via the Shipping & Delivery Questionnaire."
+      "data": {
+        "title": "Exceptional Shipping Services",
+        "content": "Available with advance notice: NYC/Brooklyn delivery, island deliveries, spiral staircases, tight hallways, steep/narrow stairs. Rescheduling fees may apply for missed deliveries. Notify us via the Shipping & Delivery Questionnaire."
+      }
     },
     {
       "id": "shipping-policies-q4",
       "type": "accordion--item",
-      "title": "Storage Fees",
-      "content": "7 days free storage post-production. 7-14 days: 1% of order total per 7 days. 15+ days: 3% of order total per 30 days, up to 90 days maximum."
+      "data": {
+        "title": "Storage Fees",
+        "content": "7 days free storage post-production. 7-14 days: 1% of order total per 7 days. 15+ days: 3% of order total per 30 days, up to 90 days maximum."
+      }
     }
   ]
 }
