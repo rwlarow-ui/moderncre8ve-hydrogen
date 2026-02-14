@@ -26,13 +26,54 @@ Replacement for moderncre8ve.com — handcrafted modern furniture (mid-century, 
 | `redirects-for-shopify.csv` | 77 SEO redirects for Shopify Admin bulk import |
 
 ### Deployment Status
-| Task | Status |
-|------|--------|
-| Branding (fonts, colors, logo, SEO) | Done |
-| Redirect CSV generated | Done — needs Shopify Admin import |
-| Static pages (Home, About, Contact, FAQ) | TODO — build in Weaverse Studio |
-| Deploy to Oxygen | TODO — `npx shopify hydrogen deploy` |
-| DNS cutover | TODO — assign domain in Shopify Admin |
+| Phase | Status |
+|-------|--------|
+| 1. Foundation (branding, SEO, redirects, MCP) | Done |
+| 2. Content migration (presets, audit, remove.bg, content extraction) | Done |
+| 3. Page building (11 pages + 2 templates in Weaverse Studio) | **In Progress** |
+| 4. Shopify Admin cleanup (images, redirects, collections, SEO) | Pending |
+| 5. Launch (final deploy, DNS cutover) | Pending |
+
+See `CHANGELOG.md` for full details and page-by-page TODO list.
+
+### Shopify Admin TODOs
+
+**Products**
+| Task | Where | Details |
+|------|-------|---------|
+| Fix missing image alt text | Products > The Mar Vista | 3 of 10 images missing alt text |
+| Handle unavailable products | Products | 3 products unavailable: `contemporary-dining-bench-vermonter`, `mid-century-modern-bed-frame`, `mid-century-dresser-larchmere-tallboy` — restock, draft, or remove |
+| Enable inventory scope (optional) | Settings > Apps > Storefront API | Add `unauthenticated_read_product_inventory` scope if stock display is needed |
+
+**Collections — Empty (0 products)**
+| Collection | Handle | Action |
+|-----------|--------|--------|
+| Mid Century Modern Coffee Tables | `mid-century-modern-coffee-tables` | Add products or delete |
+| Custom Made Furniture | `custom-made-furniture` | Add products or delete |
+| Housewares | `housewares` | Add products or delete |
+| In Stock | `modern-extendable-dining-tables` | Misleading handle vs title — add products or delete |
+| Piper and Fox Collection | `piper-fox-collection-scandi-japandi-modern-furniture-collection` | Add products or delete |
+| Collections-All | `collections-all` | No SEO, no products — likely delete |
+
+**Collections — SEO Issues**
+| Collection | Handle | Issue |
+|-----------|--------|-------|
+| Collections-All | `collections-all` | Missing SEO title + description |
+| Edit these 2025 | `edit-these-2025` | Missing SEO title + description, no image — staging/internal, likely delete |
+
+**Site-wide**
+| Task | Where | Details |
+|------|-------|---------|
+| Import SEO redirects | Online Store > Navigation > URL Redirects | Upload `redirects-for-shopify.csv` (77 redirects) |
+
+### MCP Servers (This Project)
+Configured in `~/Desktop/my-hydrogen-storefront/.mcp.json`:
+- **Ahrefs** — SEO analysis
+- **Figma** — Design reference
+- **Shopify** — Storefront API
+- **remove.bg** — Background removal for product/lifestyle images
+
+> **Note:** Composer and Crypto.com MCP servers visible in Claude sessions are from the **OWS Next.js project** (`~/Desktop/UW/options-wall-scanner-next`), not this project. They are irrelevant here.
 
 ## Development Commands
 

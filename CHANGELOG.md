@@ -1,17 +1,117 @@
 # ModernCre8ve Hydrogen Storefront
 
+## Migration Status: Phase 3 — Page Building (In Progress)
+
+---
+
+## 1.0.2 — 2026-02-14
+
+### Content Extraction & Page Blueprints
+- Extracted all 20 Shopify pages via Storefront API (full HTML body content)
+- Catalogued 81 registered Weaverse sections available for page building
+- Created detailed section-by-section blueprints for all active pages
+- Identified 12 active pages to port, 8 pages to skip (empty/superseded/GDPR)
+
+### Product Image Processing
+- Processed all 27 available product featured images through remove.bg API
+- Background-removed PNGs saved to `product-images-nobg/` directory
+- Linked each processed image to its Shopify Admin product edit URL
+
+### Weaverse Studio Setup
+- Created page templates: Product, Collection, Page
+- Templates ready for page building in Weaverse Studio
+
+### Phase 3 TODO — Pages to Build in Weaverse Studio
+
+**Core Pages**
+- [ ] Homepage — Slideshow, Highlights, Featured Products, Collection List, Image with Text, Video, Testimonials, Newsletter
+- [ ] About Us (`/pages/about-us`) — Hero, Story, YouTube video, Philosophy, Team (3 members), Charities
+- [ ] Contact (`/pages/contact`) — Hero, Map (Cleveland showroom), Custom Piece CTA, Shipping CTA
+- [ ] FAQ (`/pages/faq`) — Hero, 4 accordion groups (16 Q&A items total)
+
+**Supporting Pages**
+- [ ] Custom Orders (`/pages/custom-furniture-crafted-to-perfection`) — 4-step process
+- [ ] Our Materials (`/pages/our-materials`) — Walnut, White Oak, Hard Maple, Cherry
+- [ ] Assembly & Care (`/pages/assembly-care`) — Assembly instructions, care guidelines
+- [ ] Shipping Policy (`/pages/shipping-policy-and-customer-responsibilities`) — Full shipping policy
+- [ ] Order Policies (`/pages/ordering-policies`) — Payment, guarantee, cancellations, damages
+- [ ] Press (`/pages/mid-century-modern-press-coverage`) — 9 press mentions (HGTV, Domino, etc.)
+- [ ] Reviews (`/pages/reviews`) — Customer testimonials, value props
+
+**Templates**
+- [ ] Default Product — Main Product + Related Products
+- [ ] Default Collection — Collection Filters + cross-sell
+
+### Phase 4 TODO — Shopify Admin Cleanup
+- [ ] Upload 27 background-removed product images to Shopify
+- [ ] Import SEO redirects CSV (77 redirects)
+- [ ] Fix Mar Vista image alt text (3/10 missing)
+- [ ] Handle 3 unavailable products (restock, draft, or remove)
+- [ ] Delete or populate 6 empty collections
+- [ ] Fix SEO on 2 collections (Collections-All, Edit these 2025)
+
+### Phase 5 TODO — Launch
+- [ ] Final deploy to Oxygen
+- [ ] Assign moderncre8ve.com domain in Shopify Admin
+- [ ] Verify all pages, redirects, and SEO
+- [ ] Remove password protection from old site
+- [ ] DNS cutover
+
+### Original Site Pages Inventory (from Storefront API)
+| # | Handle | Status |
+|---|--------|--------|
+| 1 | `about-us-1` | Port → About Us |
+| 2 | `contact-and-inquiry` | Port → Contact |
+| 3 | `custom-furniture-crafted-to-perfection` | Port |
+| 4 | `mid-century-modern-press-coverage` | Port |
+| 5 | `our-materials` | Port |
+| 6 | `reviews` | Port |
+| 7 | `assembly-care` | Port |
+| 8 | `ordering-policies` | Port |
+| 9 | `shipping-policy-and-customer-responsibilities` | Port |
+| 10 | `faq` | Port |
+| 11 | `terms-of-service` | Port (legal) |
+| 12 | `privacy-policy` | Port (legal) |
+| 13 | `custom-kitchen-cabinets-cleveland` | Skip (minimal) |
+| 14 | `about-us` | Skip (empty, superseded) |
+| 15 | `contact-us` | Skip (empty, superseded) |
+| 16 | `legal` | Skip (empty) |
+| 17 | `trade-1` | Skip (empty) |
+| 18 | `wrong-turn` | Skip (promo redirect) |
+| 19 | `my-personal-data` | Skip (GDPR) |
+| 20 | `request-personal-data` | Skip (GDPR) |
+
+---
+
 ## 1.0.1 — 2026-02-13
 
-### Migration Status Check
-- Verified all environment variables configured (13 vars: Storefront API, Weaverse, Customer Account API)
-- Verified 25 Weaverse sections available (slideshow, featured products, testimonials, image gallery, etc.)
-- Confirmed branding, SEO, and redirect CSV complete
+### Section Presets Migration
+- Migrated all 16 section presets to ModernCre8ve content (16 files modified)
+- Slideshow: 3 hero slides with Shopify CDN images
+- Featured Products: "Best Sellers" with real copy
+- Image with Text: About teaser with founding story
+- Collection List Dynamic: "Shop by Category"
+- Testimonials: 3 customer reviews
+- Newsletter: "Join the ModernCre8ve Family"
+- Highlights: 3 value prop badges (Handcrafted, Solid Hardwood, Custom Orders)
+- Hero Image: inner page hero for About/FAQ
+- Accordion/FAQ: 5 real FAQ items with policies
+- Map/Contact: Cleveland showroom address, phone, hours
 
-### Remaining Migration Tasks
-- Import `redirects-for-shopify.csv` (77 redirects) in Shopify Admin
-- Build static pages (Home, About, Contact, FAQ) in Weaverse Studio
-- Deploy to Shopify Oxygen
-- DNS cutover — assign moderncre8ve.com in Shopify Admin
+### Product & Collection Audit
+- 27 available products, 3 unavailable
+- All 27 products have SEO titles and descriptions
+- 27 collections total, 6 empty, 2 missing SEO
+- Mar Vista: 3/10 images missing alt text
+
+### Deployment
+- Committed and pushed to GitHub (main)
+- Deployed to Shopify Oxygen (`npx shopify hydrogen deploy --env production`)
+
+### Infrastructure
+- Created `.mcp.json` with Ahrefs, Figma, Shopify, Shopify Dev servers
+- Added `REMOVE_BG_API_KEY` to `.env`
+- Updated CLAUDE.md with MCP server notes and Shopify Admin TODOs
 
 ---
 
