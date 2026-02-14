@@ -16,3 +16,4 @@ node_modules
 pnpm-lock.yaml
 .DS_Store
 .react-router
+h2_deploy_log.json
