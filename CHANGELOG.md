@@ -4,6 +4,17 @@
 
 ---
 
+## 1.0.9 — 2026-02-15
+
+### Mokker AI Background Generation Script
+- Created `scripts/mokker-backgrounds.mjs` — batch background generation for 27 product images via Mokker AI API
+- Supports `--dry-run`, `--start-from`, `--delay` flags; auto-resume skips already-processed images
+- Uses Google DNS (8.8.8.8) to bypass local DNS issues with `api.mokker.ai`
+- Added `product-images-bg/` to `.gitignore` for generated output
+- **Blocked**: Mokker API endpoint (`api.mokker.ai`) is unreachable — AWS ELB decommissioned post-soona acquisition; contacted support@mokker.ai for updated endpoint
+
+---
+
 ## 1.0.8 — 2026-02-14
 
 ### Phase 4 Complete: All Shopify Admin Cleanup Tasks Executed
