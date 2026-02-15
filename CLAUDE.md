@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Replacement for moderncre8ve.com — handcrafted modern furniture (mid-century, Scandinavian, Japandi).
 
-- **Store:** moderncre8ve.myshopify.com (29 products, 10 collections)
+- **Store:** moderncre8ve.myshopify.com (26 active + 3 draft products, 16 collections)
 - **Template:** Weaverse Aspen (furniture-focused Hydrogen theme)
 - **Repo:** github.com/rwlarow-ui/moderncre8ve-hydrogen
 - **Deploy target:** Shopify Oxygen
@@ -36,41 +36,31 @@ Replacement for moderncre8ve.com — handcrafted modern furniture (mid-century, 
 | 1. Foundation (branding, SEO, redirects, MCP) | Done |
 | 2. Content migration (presets, audit, remove.bg, content extraction) | Done |
 | 3. Page building (11 pages + 2 templates in Weaverse Studio) | **In Progress** — 3 done in Studio, 8 page + 2 template JSONs generated in `weaverse-pages/` |
-| 4. Shopify Admin cleanup (images, redirects, collections, SEO) | **In Progress** — Admin API token obtained, 6 tasks ready to execute |
+| 4. Shopify Admin cleanup (images, redirects, collections, SEO) | **Done** — All 6 tasks completed via Admin API |
 | 5. Launch (final deploy, DNS cutover) | Pending |
 
 See `CHANGELOG.md` for full details and page-by-page TODO list.
 
-### Shopify Admin TODOs
+### Shopify Admin — Completed (Phase 4)
 
-**Products**
+All tasks executed via Admin GraphQL API (v1.0.8):
+- **27 product images uploaded** — background-removed PNGs via staged uploads
+- **77 SEO redirects imported** — via `urlRedirectCreate` mutations
+- **3 products drafted** — `vermonter`, `quincy bed`, `larchmere tallboy`
+- **Mar Vista alt text fixed** — 3 images updated
+- **4 collections deleted** — In Stock, Piper and Fox, Collections-All, Edit these 2025
+
+**Remaining collections** (not empty, kept):
+| Collection | Handle | Note |
+|-----------|--------|------|
+| Mid Century Modern Coffee Tables | `mid-century-modern-coffee-tables` | May need products added |
+| Custom Made Furniture | `custom-made-furniture` | May need products added |
+| Housewares | `housewares` | May need products added |
+
+**Optional**
 | Task | Where | Details |
 |------|-------|---------|
-| Fix missing image alt text | Products > The Mar Vista | 3 of 10 images missing alt text |
-| Draft unavailable products | Products | 3 products → set to Draft: `contemporary-dining-bench-vermonter`, `mid-century-modern-bed-frame`, `mid-century-dresser-larchmere-tallboy` |
-| Upload 27 product images | Products > each product | Add background-removed PNGs from `product-images-nobg/` (filenames match handles) |
-| Enable inventory scope (optional) | Settings > Apps > Storefront API | Add `unauthenticated_read_product_inventory` scope if stock display is needed |
-
-**Collections — Empty (0 products)**
-| Collection | Handle | Action |
-|-----------|--------|--------|
-| Mid Century Modern Coffee Tables | `mid-century-modern-coffee-tables` | Add products or delete |
-| Custom Made Furniture | `custom-made-furniture` | Add products or delete |
-| Housewares | `housewares` | Add products or delete |
-| In Stock | `modern-extendable-dining-tables` | Misleading handle vs title — add products or delete |
-| Piper and Fox Collection | `piper-fox-collection-scandi-japandi-modern-furniture-collection` | Add products or delete |
-| Collections-All | `collections-all` | No SEO, no products — likely delete |
-
-**Collections — SEO Issues**
-| Collection | Handle | Issue |
-|-----------|--------|-------|
-| Collections-All | `collections-all` | Missing SEO title + description |
-| Edit these 2025 | `edit-these-2025` | Missing SEO title + description, no image — staging/internal, likely delete |
-
-**Site-wide**
-| Task | Where | Details |
-|------|-------|---------|
-| Import SEO redirects | Online Store > Navigation > URL Redirects | Upload `redirects-for-shopify.csv` (77 redirects) |
+| Enable inventory scope | Settings > Apps > Storefront API | Add `unauthenticated_read_product_inventory` scope if stock display is needed |
 
 ### Project History
 - **This is the master version** of the moderncre8ve.com rebuild

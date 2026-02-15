@@ -1,6 +1,19 @@
 # ModernCre8ve Hydrogen Storefront
 
-## Migration Status: Phase 4 — Shopify Admin Cleanup (In Progress)
+## Migration Status: Phase 4 — Complete | Phase 5 — Launch (Pending)
+
+---
+
+## 1.0.8 — 2026-02-14
+
+### Phase 4 Complete: All Shopify Admin Cleanup Tasks Executed
+All 6 Phase 4 tasks executed via Admin GraphQL API using the OAuth token from v1.0.7.
+
+- **Drafted 3 unavailable products** — Set DRAFT status on `contemporary-dining-bench-vermonter`, `mid-century-modern-bed-frame` (The Quincy), `mid-century-dresser-larchmere-tallboy`
+- **Fixed Mar Vista alt text** — Updated 3 images with missing alt text on `scandinavian-oval-dining-table-mar-vista`
+- **Imported 77 SEO redirects** — All 77 `urlRedirectCreate` mutations succeeded (8 batches)
+- **Uploaded 27 product images** — All 27 background-removed PNGs uploaded via staged uploads + `productCreateMedia` (27/27 succeeded, 0 failed)
+- **Cleaned up 4 collections** — Deleted: In Stock, Piper and Fox, Collections-All, Edit these 2025
 
 ---
 
@@ -25,14 +38,11 @@
 - Set up Oxygen deployment token (`CI=1 --token`) for scripted deploys
 - Attempted Admin API token creation — blocked by Shopify's Jan 2026 custom app deprecation; tasks require manual Shopify Admin work
 
-### Phase 4 TODO — Manual Shopify Admin Tasks
-- [ ] **Draft 3 unavailable products** — Products > set status to Draft:
-  - `contemporary-dining-bench-vermonter`
-  - `mid-century-modern-bed-frame`
-  - `mid-century-dresser-larchmere-tallboy`
-- [ ] **Fix Mar Vista alt text** — Products > The Mar Vista > add alt text to 3 images
-- [ ] **Import 77 SEO redirects** — Online Store > Navigation > URL Redirects > Import `redirects-for-shopify.csv`
-- [ ] **Upload 27 product images** — Products > each product > add PNG from `product-images-nobg/` (filenames match product handles)
+### Phase 4 TODO — Shopify Admin Tasks (All Completed in v1.0.8)
+- [x] **Draft 3 unavailable products** — Done via `productUpdate` mutation
+- [x] **Fix Mar Vista alt text** — Done via `productUpdateMedia` mutation
+- [x] **Import 77 SEO redirects** — Done via `urlRedirectCreate` mutations (8 batches)
+- [x] **Upload 27 product images** — Done via staged uploads + `productCreateMedia` (27/27)
 
 ---
 
@@ -149,13 +159,13 @@ All files use flat `items[]` array with `children: [{id}]` references matching `
 
 **Remaining:** All 13 JSON files need to be imported into Weaverse Studio. Images to be assigned in Studio.
 
-### Phase 4 TODO — Shopify Admin Cleanup
-- [ ] Upload 27 background-removed product images to Shopify
-- [ ] Import SEO redirects CSV (77 redirects)
-- [ ] Fix Mar Vista image alt text (3/10 missing)
-- [ ] Handle 3 unavailable products (restock, draft, or remove)
-- [ ] Delete or populate 6 empty collections
-- [ ] Fix SEO on 2 collections (Collections-All, Edit these 2025)
+### Phase 4 — Shopify Admin Cleanup (Completed v1.0.8)
+- [x] Upload 27 background-removed product images to Shopify
+- [x] Import SEO redirects CSV (77 redirects)
+- [x] Fix Mar Vista image alt text (3/10 missing)
+- [x] Handle 3 unavailable products (set to Draft)
+- [x] Delete 4 empty/internal collections (In Stock, Piper and Fox, Collections-All, Edit these 2025)
+- [x] ~~Fix SEO on 2 collections~~ — deleted instead (both were empty/internal)
 
 ### Phase 5 TODO — Launch
 - [ ] Final deploy to Oxygen
