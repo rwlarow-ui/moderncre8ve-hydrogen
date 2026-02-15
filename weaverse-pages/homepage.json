@@ -195,9 +195,7 @@
     {
       "id": "home-iwt-about-images",
       "type": "image-with-text--images",
-      "children": [
-        { "id": "home-iwt-about-image" }
-      ],
+      "children": [{ "id": "home-iwt-about-image" }],
       "data": {
         "imageAspectRatio": "3/4"
       }
@@ -259,10 +257,7 @@
     {
       "id": "home-video",
       "type": "video-embed",
-      "children": [
-        { "id": "home-video-content" },
-        { "id": "home-video-item" }
-      ]
+      "children": [{ "id": "home-video-content" }, { "id": "home-video-item" }]
     },
     {
       "id": "home-video-content",

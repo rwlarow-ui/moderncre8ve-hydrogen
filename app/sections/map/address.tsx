@@ -316,8 +316,7 @@ export let schema: HydrogenComponentSchema = {
           type: "text",
           name: "address",
           label: "Address",
-          defaultValue:
-            "1400 E 36th Street, Suite 2802A, Cleveland, OH 44114",
+          defaultValue: "1400 E 36th Street, Suite 2802A, Cleveland, OH 44114",
         },
         {
           type: "text",

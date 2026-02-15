@@ -405,7 +405,7 @@ export function QuickShopTrigger({
             "lg:px-6 lg:py-5",
             "lg:border-(--btn-secondary-bg) lg:bg-(--btn-secondary-bg) lg:text-(--btn-secondary-text)",
             showOnHover
-              ? "lg:-translate-y-1.5 lg:-translate-x-2 lg:group-hover:translate-x-0 lg:group-hover:translate-y-2 lg:group-hover:opacity-100"
+              ? "lg:-translate-x-2 lg:-translate-y-1.5 lg:group-hover:translate-x-0 lg:group-hover:translate-y-2 lg:group-hover:opacity-100"
               : "",
             "lg:whitespace-nowrap lg:font-normal lg:leading-3.5",
           )}

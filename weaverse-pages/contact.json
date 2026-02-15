@@ -49,9 +49,7 @@
     {
       "id": "contact-map",
       "type": "map",
-      "children": [
-        { "id": "contact-address" }
-      ],
+      "children": [{ "id": "contact-address" }],
       "data": {
         "heading": "Visit Our Showroom",
         "layoutMap": "list"
@@ -85,9 +83,7 @@
     {
       "id": "contact-iwt-custom-images",
       "type": "image-with-text--images",
-      "children": [
-        { "id": "contact-iwt-custom-image" }
-      ],
+      "children": [{ "id": "contact-iwt-custom-image" }],
       "data": {
         "imageAspectRatio": "1/1"
       }
@@ -162,9 +158,7 @@
     {
       "id": "contact-iwt-ship-images",
       "type": "image-with-text--images",
-      "children": [
-        { "id": "contact-iwt-ship-image" }
-      ],
+      "children": [{ "id": "contact-iwt-ship-image" }],
       "data": {
         "imageAspectRatio": "1/1"
       }

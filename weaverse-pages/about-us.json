@@ -17,10 +17,7 @@
     {
       "id": "about-hero",
       "type": "hero-image",
-      "children": [
-        { "id": "about-hero-sub" },
-        { "id": "about-hero-heading" }
-      ],
+      "children": [{ "id": "about-hero-sub" }, { "id": "about-hero-heading" }],
       "data": {
         "height": "large",
         "contentPosition": "center center",
@@ -64,9 +61,7 @@
     {
       "id": "about-iwt-story-images",
       "type": "image-with-text--images",
-      "children": [
-        { "id": "about-iwt-story-image" }
-      ],
+      "children": [{ "id": "about-iwt-story-image" }],
       "data": {
         "imageAspectRatio": "3/4"
       }
@@ -166,9 +161,7 @@
     {
       "id": "about-iwt-phil-images",
       "type": "image-with-text--images",
-      "children": [
-        { "id": "about-iwt-phil-image" }
-      ],
+      "children": [{ "id": "about-iwt-phil-image" }],
       "data": {
         "imageAspectRatio": "3/4"
       }
@@ -312,9 +305,7 @@
     {
       "id": "about-iwt-charity-images",
       "type": "image-with-text--images",
-      "children": [
-        { "id": "about-iwt-charity-image" }
-      ],
+      "children": [{ "id": "about-iwt-charity-image" }],
       "data": {
         "imageAspectRatio": "1/1"
       }

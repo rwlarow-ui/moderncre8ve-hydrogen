@@ -226,7 +226,7 @@ const BeforeAndAfter = forwardRef<HTMLDivElement, BeforeAndAfterProps>(
 
             {/* List Icon */}
             {showList && (
-              <div className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 z-20 flex items-center justify-center">
+              <div className="absolute top-1/2 left-1/2 z-20 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center">
                 <List
                   size={32}
                   className="rotate-90 transform rounded-full bg-[var(--separator-color)] p-1 text-[var(--list-color)]"

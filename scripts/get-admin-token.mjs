@@ -13,12 +13,17 @@
  *   node scripts/get-admin-token.mjs <client_id> <client_secret>
  */
 
-import { createServer } from "node:https";
 import { execSync } from "node:child_process";
-import { readFileSync, appendFileSync, writeFileSync, existsSync } from "node:fs";
-import { resolve, dirname } from "node:path";
+import { generateKeyPairSync, randomBytes } from "node:crypto";
+import {
+  appendFileSync,
+  existsSync,
+  readFileSync,
+  writeFileSync,
+} from "node:fs";
+import { createServer } from "node:https";
+import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { randomBytes, generateKeyPairSync } from "node:crypto";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ENV_PATH = resolve(__dirname, "..", ".env");
@@ -32,9 +37,11 @@ const clientSecret = process.argv[3];
 
 if (!clientId || !clientSecret) {
   console.error(
-    "\nUsage: node scripts/get-admin-token.mjs <client_id> <client_secret>\n"
+    "\nUsage: node scripts/get-admin-token.mjs <client_id> <client_secret>\n",
   );
-  console.error("Get these from Dev Dashboard → your app → Client credentials\n");
+  console.error(
+    "Get these from Dev Dashboard → your app → Client credentials\n",
+  );
   process.exit(1);
 }
 
@@ -52,7 +59,7 @@ function generateSelfSignedCert() {
   writeFileSync(keyPath, privateKey);
 
   execSync(
-    `openssl req -new -x509 -key "${keyPath}" -out "${certPath}" -days 1 -subj "/CN=localhost" 2>/dev/null`
+    `openssl req -new -x509 -key "${keyPath}" -out "${certPath}" -days 1 -subj "/CN=localhost" 2>/dev/null`,
   );
 
   const key = readFileSync(keyPath, "utf-8");
@@ -105,18 +112,15 @@ const server = createServer({ key, cert }, async (req, res) => {
   console.log(`\nReceived auth code from ${shop}. Exchanging for token...`);
 
   try {
-    const tokenRes = await fetch(
-      `https://${shop}/admin/oauth/access_token`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          client_id: clientId,
-          client_secret: clientSecret,
-          code,
-        }),
-      }
-    );
+    const tokenRes = await fetch(`https://${shop}/admin/oauth/access_token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        client_id: clientId,
+        client_secret: clientSecret,
+        code,
+      }),
+    });
 
     if (!tokenRes.ok) {
       const text = await tokenRes.text();
@@ -132,13 +136,18 @@ const server = createServer({ key, cert }, async (req, res) => {
       const envContent = readFileSync(ENV_PATH, "utf-8");
       if (envContent.includes("SHOPIFY_ADMIN_API_TOKEN")) {
         console.warn(
-          "\nWARNING: SHOPIFY_ADMIN_API_TOKEN already exists in .env."
+          "\nWARNING: SHOPIFY_ADMIN_API_TOKEN already exists in .env.",
         );
-        console.warn("The new token will be appended — remove the old line manually.\n");
+        console.warn(
+          "The new token will be appended — remove the old line manually.\n",
+        );
       }
     }
 
-    appendFileSync(ENV_PATH, `\n# Shopify Admin API (OAuth — ${new Date().toISOString().slice(0, 10)})\nSHOPIFY_ADMIN_API_TOKEN=${access_token}\n`);
+    appendFileSync(
+      ENV_PATH,
+      `\n# Shopify Admin API (OAuth — ${new Date().toISOString().slice(0, 10)})\nSHOPIFY_ADMIN_API_TOKEN=${access_token}\n`,
+    );
     console.log(`Token saved to .env as SHOPIFY_ADMIN_API_TOKEN`);
 
     res.writeHead(200, { "Content-Type": "text/html" });
@@ -169,12 +178,16 @@ server.listen(3000, () => {
   console.log(`Scopes: ${SCOPES}`);
   console.log(`\nOpening browser...\n`);
   console.log(`If it doesn't open, visit:\n${authUrl}\n`);
-  console.log("NOTE: Your browser will show a security warning for the self-signed cert.");
+  console.log(
+    "NOTE: Your browser will show a security warning for the self-signed cert.",
+  );
   console.log("Click 'Advanced' → 'Proceed to localhost' to continue.\n");
 
   try {
     execSync(`open "${authUrl}"`);
   } catch {}
 
-  console.log("Waiting for OAuth callback on https://localhost:3000/callback ...\n");
+  console.log(
+    "Waiting for OAuth callback on https://localhost:3000/callback ...\n",
+  );
 });

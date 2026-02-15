@@ -103,8 +103,7 @@ export let schema = createSchema({
         children: [
           {
             type: "paragraph",
-            content:
-              "Domestic-sourced lumber, built to last for generations.",
+            content: "Domestic-sourced lumber, built to last for generations.",
             color: "#29231E",
           },
         ],

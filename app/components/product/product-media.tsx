@@ -502,7 +502,7 @@ function ProductMediaDots({
 
   return (
     <div
-      className="-translate-x-1/2 absolute bottom-6 left-1/2 z-[5] flex items-center justify-center gap-0"
+      className="absolute bottom-6 left-1/2 z-[5] flex -translate-x-1/2 items-center justify-center gap-0"
       style={{
         maxWidth: maxContainerWidth,
         width: "fit-content",

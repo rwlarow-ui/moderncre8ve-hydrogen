@@ -170,7 +170,7 @@ export function ScrollingAnnouncement() {
 
           <button
             type="button"
-            className="announcement-prev -translate-y-1/2 absolute top-1/2 left-0 z-10 p-2"
+            className="announcement-prev absolute top-1/2 left-0 z-10 -translate-y-1/2 p-2"
             style={{ backgroundColor: topbarBgColor } as React.CSSProperties}
             aria-label="Previous slide"
           >
@@ -191,7 +191,7 @@ export function ScrollingAnnouncement() {
 
           <button
             type="button"
-            className="announcement-next -translate-y-1/2 absolute top-1/2 right-0 z-10 p-2"
+            className="announcement-next absolute top-1/2 right-0 z-10 -translate-y-1/2 p-2"
             style={{ backgroundColor: topbarBgColor } as React.CSSProperties}
             aria-label="Next slide"
           >

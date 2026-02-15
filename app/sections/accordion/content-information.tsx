@@ -78,7 +78,8 @@ export const schema = createSchema({
       },
       {
         type: "subheading",
-        content: "Everything you need to know about ordering from ModernCre8ve.",
+        content:
+          "Everything you need to know about ordering from ModernCre8ve.",
         alignment: "left",
       },
       {

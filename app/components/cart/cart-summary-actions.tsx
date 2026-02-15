@@ -33,7 +33,7 @@ function CenteredModal({
             <Dialog.Content
               forceMount
               onCloseAutoFocus={(e) => e.preventDefault()}
-              className="-translate-x-1/2 -translate-y-1/2 fixed top-1/2 left-1/2 z-50 w-full max-w-md"
+              className="fixed top-1/2 left-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2"
               aria-describedby={undefined}
             >
               <motion.div

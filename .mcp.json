@@ -15,7 +15,9 @@
     "shopify": {
       "type": "stdio",
       "command": "node",
-      "args": ["/Users/rwlarow/.global-node-modules/node_modules/@wolfielabs/shopify-storefront-mcp-server/dist/index.js"],
+      "args": [
+        "/Users/rwlarow/.global-node-modules/node_modules/@wolfielabs/shopify-storefront-mcp-server/dist/index.js"
+      ],
       "env": {
         "SHOPIFY_STOREFRONT_ACCESS_TOKEN": "${PUBLIC_STOREFRONT_API_TOKEN}",
         "SHOPIFY_STORE_DOMAIN": "${PUBLIC_STORE_DOMAIN}"

@@ -17,7 +17,7 @@ export function PopularSearch() {
           <li key={index}>
             <Link
               to={`/search?q=${encodeURIComponent(search)}`}
-              className="hover:-translate-y-1 block w-fit transition-transform duration-200"
+              className="block w-fit transition-transform duration-200 hover:-translate-y-1"
             >
               <span>{search}</span>
             </Link>

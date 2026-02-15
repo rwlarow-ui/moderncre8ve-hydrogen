@@ -7,7 +7,7 @@ import type React from "react";
 let variants = cva(
   [
     "block",
-    "-translate-y-1/2 absolute top-1/2 z-10",
+    "absolute top-1/2 z-10 -translate-y-1/2",
     "cursor-pointer p-3",
     "border border-transparent",
     "transition-all duration-200",

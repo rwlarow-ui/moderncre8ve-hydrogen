@@ -234,8 +234,8 @@ const TabsLayout = forwardRef<HTMLDivElement, any>((props, ref) => {
                 <div
                   className={`absolute inset-x-0 h-1 origin-center bg-white transition-all duration-500 ease-in-out ${
                     activeTab === index
-                      ? "sm:-translate-y-1 bottom-0 opacity-100 sm:top-1"
-                      : "sm:group-hover:-translate-y-1 bottom-0 translate-y-1 opacity-0 group-hover:opacity-100 sm:top-1 sm:translate-y-0"
+                      ? "bottom-0 opacity-100 sm:top-1 sm:-translate-y-1"
+                      : "bottom-0 translate-y-1 opacity-0 group-hover:opacity-100 sm:top-1 sm:translate-y-0 sm:group-hover:-translate-y-1"
                   }`}
                 />
 

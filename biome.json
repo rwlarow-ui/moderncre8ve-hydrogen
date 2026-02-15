@@ -1,6 +1,6 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
-  "extends": ["ultracite", "./node_modules/@weaverse/biome/biome.json"],
+  "$schema": "https://biomejs.dev/schemas/2.3.15/schema.json",
+  "extends": ["./node_modules/@weaverse/biome/biome.json"],
   "linter": {
     "rules": {
       "style": {
@@ -15,15 +15,13 @@
         "noArrayIndexKey": "off"
       },
       "nursery": {
-        "useUniqueElementIds": "off",
         "useSortedClasses": {
           "level": "on",
           "fix": "safe",
           "options": {
             "functions": ["clsx", "cva", "cn"]
           }
-        },
-        "noNoninteractiveElementInteractions": "off"
+        }
       },
       "correctness": {
         "noUnusedVariables": "off"

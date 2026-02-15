@@ -1,7 +1,7 @@
 import "@fontsource-variable/jost";
 import "@fontsource/spectral/400.css";
-import jostWoff2Url from "@fontsource-variable/jost/files/jost-latin-wght-normal.woff2?url";
 import spectralWoff2Url from "@fontsource/spectral/files/spectral-latin-400-normal.woff2?url";
+import jostWoff2Url from "@fontsource-variable/jost/files/jost-latin-wght-normal.woff2?url";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import type { SeoConfig } from "@shopify/hydrogen";
 import { Analytics, getSeoMeta, useNonce } from "@shopify/hydrogen";

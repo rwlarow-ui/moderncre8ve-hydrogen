@@ -153,7 +153,7 @@ let MapSection = forwardRef<HTMLElement, MapSectionProps>((props, ref) => {
             className={clsx(
               layoutMap === "list"
                 ? "flex w-full flex-col gap-10 md:w-1/3 md:gap-16"
-                : "md:-translate-x-1/2 z-1 flex w-full flex-col gap-8 bg-(--form-bg-color) p-10 md:absolute md:w-1/2 md:gap-8",
+                : "z-1 flex w-full flex-col gap-8 bg-(--form-bg-color) p-10 md:absolute md:w-1/2 md:-translate-x-1/2 md:gap-8",
             )}
             style={{ "--form-bg-color": highlightBg } as React.CSSProperties}
           >

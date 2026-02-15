@@ -68,7 +68,7 @@ export function CartDrawer() {
               {cart?.totalQuantity > 0 && (
                 <div
                   className={clsx(
-                    "-right-2 -top-1 absolute",
+                    "absolute -top-1 -right-2",
                     "flex h-5 min-w-5 items-center justify-center",
                     "font-medium text-[11px] leading-none",
                     "px-1 py-0.5",

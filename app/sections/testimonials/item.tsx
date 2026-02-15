@@ -82,7 +82,7 @@ let TestimonialHotspotsItem = forwardRef<
       <div
         ref={ref}
         {...rest}
-        className="-translate-x-1/2 -translate-y-1/2 absolute hover:z-[1]"
+        className="absolute -translate-x-1/2 -translate-y-1/2 hover:z-[1]"
         style={
           {
             top: `${offsetY}%`,
@@ -96,7 +96,7 @@ let TestimonialHotspotsItem = forwardRef<
         <div className="group relative flex cursor-pointer">
           <span
             className={clsx("absolute inline-flex animate-ping rounded-full", {
-              "-translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 h-3/4 w-3/4 bg-white opacity-100 group-hover:opacity-100":
+              "top-1/2 left-1/2 h-3/4 w-3/4 -translate-x-1/2 -translate-y-1/2 bg-white opacity-100 group-hover:opacity-100":
                 icon === "circle",
               "h-full w-full bg-gray-700 opacity-75": icon !== "circle",
             })}

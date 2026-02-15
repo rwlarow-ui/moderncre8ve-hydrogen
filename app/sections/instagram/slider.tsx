@@ -148,7 +148,7 @@ let InstagramSlider = forwardRef<HTMLDivElement, InstagramSliderProps>(
         </Swiper>
 
         {showNavigation && (
-          <div className="md:-translate-y-1/2 pointer-events-none z-10 flex items-center justify-center gap-4 px-0 md:absolute md:top-1/2 md:right-0 md:left-0 md:justify-between md:gap-0 md:px-5 lg:px-0">
+          <div className="pointer-events-none z-10 flex items-center justify-center gap-4 px-0 md:absolute md:top-1/2 md:right-0 md:left-0 md:-translate-y-1/2 md:justify-between md:gap-0 md:px-5 lg:px-0">
             <button
               type="button"
               onClick={() => swiperRef.current?.slidePrev()}

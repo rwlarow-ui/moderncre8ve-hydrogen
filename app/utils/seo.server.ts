@@ -21,7 +21,10 @@ function root({
   return {
     title: shop?.name,
     titleTemplate: "%s | ModernCre8ve",
-    description: truncate(shop?.description ?? "Handcrafted modern furniture made in Cleveland, Ohio"),
+    description: truncate(
+      shop?.description ??
+        "Handcrafted modern furniture made in Cleveland, Ohio",
+    ),
     handle: "@moderncre8ve",
     url,
     robots: {
