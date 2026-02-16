@@ -6,6 +6,7 @@ import type { MetaFunction } from "react-router";
 import type { ShopQuery } from "storefront-api.generated";
 import { routeHeaders } from "~/utils/cache";
 import { seoPayload } from "~/utils/seo.server";
+import { loadPageWithFallback } from "~/utils/weaverse-fallback.server";
 import { validateWeaverseData, WeaverseContent } from "~/weaverse";
 
 export const headers = routeHeaders;
@@ -26,7 +27,7 @@ export async function loader(args: LoaderFunctionArgs) {
 
   // Load async data in parallel for better performance
   const [weaverseData, { shop }] = await Promise.all([
-    context.weaverse.loadPage({ type }),
+    loadPageWithFallback(context.weaverse, { type }),
     context.storefront.query<ShopQuery>(SHOP_QUERY),
   ]);
 

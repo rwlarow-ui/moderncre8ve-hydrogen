@@ -28,6 +28,7 @@ import {
   redirectIfHandleIsLocalized,
 } from "~/utils/redirect";
 import { seoPayload } from "~/utils/seo.server";
+import { loadPageWithFallback } from "~/utils/weaverse-fallback.server";
 import { WeaverseContent } from "~/weaverse";
 
 export const headers = routeHeaders;
@@ -48,7 +49,7 @@ export async function loader({ params, request, context }: LoaderFunctionArgs) {
         language: storefront.i18n.language,
       },
     }),
-    weaverse.loadPage({ type: "PRODUCT", handle }),
+    loadPageWithFallback(weaverse, { type: "PRODUCT", handle }),
     getJudgeMeProductReviews({ context, handle }),
     // Add other queries here, so that they are loaded in parallel
   ]);

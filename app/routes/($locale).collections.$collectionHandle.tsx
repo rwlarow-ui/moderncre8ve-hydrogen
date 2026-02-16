@@ -23,6 +23,7 @@ import { PAGINATION_SIZE } from "~/utils/const";
 import { FILTER_URL_PREFIX, type SortParam } from "~/utils/filter";
 import { redirectIfHandleIsLocalized } from "~/utils/redirect";
 import { seoPayload } from "~/utils/seo.server";
+import { loadPageWithFallback } from "~/utils/weaverse-fallback.server";
 import { WeaverseContent } from "~/weaverse";
 
 export const headers = routeHeaders;
@@ -75,7 +76,7 @@ export async function loader({ params, request, context }: LoaderFunctionArgs) {
       .catch((_e) => {
         return { collection: null, collections: [] };
       }),
-    context.weaverse.loadPage({
+    loadPageWithFallback(context.weaverse, {
       type: "COLLECTION",
       handle: collectionHandle,
     }),

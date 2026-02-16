@@ -8,6 +8,7 @@ import invariant from "tiny-invariant";
 import { routeHeaders } from "~/utils/cache";
 import { redirectIfHandleIsLocalized } from "~/utils/redirect";
 import { seoPayload } from "~/utils/seo.server";
+import { loadPageWithFallback } from "~/utils/weaverse-fallback.server";
 import { validateWeaverseData, WeaverseContent } from "~/weaverse";
 
 export const headers = routeHeaders;
@@ -24,7 +25,7 @@ export async function loader({ request, params, context }: RouteLoaderArgs) {
         language: storefront.i18n.language,
       },
     }),
-    context.weaverse.loadPage({
+    loadPageWithFallback(context.weaverse, {
       type: "PAGE",
       handle: params.pageHandle,
     }),
