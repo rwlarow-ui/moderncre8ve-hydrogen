@@ -8,7 +8,7 @@ import invariant from "tiny-invariant";
 import { routeHeaders } from "~/utils/cache";
 import { redirectIfHandleIsLocalized } from "~/utils/redirect";
 import { seoPayload } from "~/utils/seo.server";
-import { WeaverseContent } from "~/weaverse";
+import { validateWeaverseData, WeaverseContent } from "~/weaverse";
 
 export const headers = routeHeaders;
 
@@ -31,7 +31,19 @@ export async function loader({ request, params, context }: RouteLoaderArgs) {
   ]);
 
   if (!page) {
-    throw new Response(null, { status: 404 });
+    // No Shopify page — fall back to Weaverse-only rendering
+    validateWeaverseData(weaverseData);
+    const title = params.pageHandle
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (c) => c.toUpperCase());
+    return {
+      page: null,
+      seo: seoPayload.page({
+        page: { title, seo: { title, description: "" } },
+        url: request.url,
+      }),
+      weaverseData,
+    };
   }
   redirectIfHandleIsLocalized(request, {
     handle: params.pageHandle,

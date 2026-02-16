@@ -19,8 +19,8 @@ import dns from "node:dns";
 import {
   existsSync,
   mkdirSync,
-  readFileSync,
   readdirSync,
+  readFileSync,
   writeFileSync,
 } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -47,7 +47,10 @@ function loadEnv() {
     const eq = trimmed.indexOf("=");
     if (eq === -1) continue;
     const key = trimmed.slice(0, eq).trim();
-    const val = trimmed.slice(eq + 1).trim().replace(/^["']|["']$/g, "");
+    const val = trimmed
+      .slice(eq + 1)
+      .trim()
+      .replace(/^["']|["']$/g, "");
     env[key] = val;
   }
   return env;
@@ -59,8 +62,10 @@ function parseArgs() {
   const opts = { dryRun: false, startFrom: null, delay: 2000 };
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--dry-run") opts.dryRun = true;
-    else if (args[i] === "--start-from" && args[i + 1]) opts.startFrom = args[++i];
-    else if (args[i] === "--delay" && args[i + 1]) opts.delay = parseInt(args[++i], 10);
+    else if (args[i] === "--start-from" && args[i + 1])
+      opts.startFrom = args[++i];
+    else if (args[i] === "--delay" && args[i + 1])
+      opts.delay = parseInt(args[++i], 10);
   }
   return opts;
 }
@@ -114,7 +119,9 @@ async function processImage(apiKey, filePath, fileName, retries = 3) {
           });
           return Buffer.from(await imgRes.arrayBuffer());
         }
-        throw new Error(`Unexpected JSON response: ${JSON.stringify(json).slice(0, 300)}`);
+        throw new Error(
+          `Unexpected JSON response: ${JSON.stringify(json).slice(0, 300)}`,
+        );
       }
 
       return Buffer.from(await response.arrayBuffer());
@@ -123,7 +130,7 @@ async function processImage(apiKey, filePath, fileName, retries = 3) {
         console.log(`  Timeout on attempt ${attempt}/${retries}`);
       }
       if (attempt < retries) {
-        const backoff = Math.pow(2, attempt) * 1000;
+        const backoff = 2 ** attempt * 1000;
         console.log(
           `  Attempt ${attempt}/${retries} failed: ${err.message}. Retrying in ${backoff / 1000}s...`,
         );
@@ -236,7 +243,9 @@ async function main() {
 
   // Summary
   console.log("\n========================================");
-  console.log(`  Results: ${results.success.length}/${images.length} succeeded`);
+  console.log(
+    `  Results: ${results.success.length}/${images.length} succeeded`,
+  );
   if (results.failed.length > 0) {
     console.log(`  Failed (${results.failed.length}):`);
     for (const { fileName, error } of results.failed) {

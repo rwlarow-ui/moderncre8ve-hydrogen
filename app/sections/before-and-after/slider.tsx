@@ -1,5 +1,4 @@
 import { List } from "@phosphor-icons/react";
-// import { IconArrowSlideRight, IconArrowSlideLeft, IconImageBlank } from '~/components/Icon';
 import { Image } from "@shopify/hydrogen";
 import {
   type HydrogenComponentProps,
