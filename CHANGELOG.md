@@ -1,6 +1,32 @@
 # ModernCre8ve Hydrogen Storefront
 
-## Migration Status: Phase 4 — Complete | Phase 5 — Launch (Pending)
+## Migration Status: Phase 3 — In Progress | Phase 5 — Launch (Pending)
+
+---
+
+## 1.1.0 — 2026-02-17
+
+### Brand Color Palette Added
+- Added official 6-color ModernCre8ve brand palette to CLAUDE.md
+  - Dark Charcoal `#323640` — primary dark / text
+  - Emerald Green `#2CBF96` — accent / CTA
+  - Warm Cream `#F2EBD5` — background / neutral
+  - Amber Gold `#F2AC29` — highlight / secondary accent
+  - Coral Red `#D35055` — alert / accent
+  - Cool Gray `#9DA0A7` — muted / borders
+- Source: `MC82.0_FINALCOLORS_081123.png` (finalized Aug 2023)
+
+### Phase 3 TODO — Homepage Build in Weaverse Studio
+- [ ] **Slideshow** — 3 hero slides (brand, dining, Scandinavian) with lifestyle images
+- [ ] **Highlights** — 3 value prop badges (Handcrafted, Solid Hardwood, Custom Orders)
+- [ ] **Featured Products** — "Best Sellers" carousel (4 per view, 8 products)
+- [ ] **Collection List** — "Shop by Category" grid
+- [ ] **Image with Text** — "Our Story" about teaser with workshop photo
+- [ ] **Video Embed** — "See Our Workshop" studio video
+- [ ] **Testimonials** — 3 customer reviews (John D., Susan M., Alex P.)
+- [ ] **Newsletter** — "Join the ModernCre8ve Family" email signup
+- [ ] Assign slide background images from Shopify media library
+- [ ] Apply brand color palette to theme settings
 
 ---
 

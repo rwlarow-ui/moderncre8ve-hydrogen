@@ -16,8 +16,19 @@ Replacement for moderncre8ve.com — handcrafted modern furniture (mid-century, 
 
 ### Branding
 - **Fonts:** Jost (headings, `--font-sans`) / Spectral (body, `--font-serif`)
-- **Colors:** Black/white/gray palette — footer is black bg with white text
 - **Logo:** `public/logo.png` (dark), `public/logo-alt.png` (light variant)
+
+#### Color Palette
+| Swatch | Hex | RGB | Usage |
+|--------|-----|-----|-------|
+| Dark Charcoal | `#323640` | 50, 54, 64 | Primary dark / text |
+| Emerald Green | `#2CBF96` | 44, 191, 150 | Accent / CTA |
+| Warm Cream | `#F2EBD5` | 242, 235, 213 | Background / neutral |
+| Amber Gold | `#F2AC29` | 242, 172, 41 | Highlight / secondary accent |
+| Coral Red | `#D35055` | 211, 80, 85 | Alert / accent |
+| Cool Gray | `#9DA0A7` | 157, 160, 167 | Muted / borders |
+
+Source: `MC82.0_FINALCOLORS_081123.png`
 
 ### Key Files
 | File | Purpose |
