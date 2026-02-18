@@ -367,7 +367,7 @@ export let loader = async ({
 export let schema: HydrogenComponentSchema = {
   type: "collection-list-dynamic-items",
   title: "Collection items",
-  inspector: [
+  settings: [
     {
       group: "Collection List",
       inputs: [

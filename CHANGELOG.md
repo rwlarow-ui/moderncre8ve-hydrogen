@@ -4,6 +4,15 @@
 
 ---
 
+## 1.2.1 — 2026-02-18
+
+### Fix Deprecated Schema Warnings
+- Renamed `inspector` → `settings` in all 20 section schemas across the codebase
+- Eliminates all Weaverse schema deprecation warnings at dev server startup
+- Affected sections: instagram, map, address-item, accordion, content-information, accordion-group, accordion-item, information-item, before-and-after, slider, videos, video, testimonials, hotspot-item, testimonials-item, content, scrolling-text, collection-list-dynamic, collection-items, articles
+
+---
+
 ## 1.2.0 — 2026-02-18
 
 ### Phase 3 Complete: All Pages Live via Local JSON Fallback
