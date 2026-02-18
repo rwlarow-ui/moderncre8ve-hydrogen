@@ -1,6 +1,36 @@
 # ModernCre8ve Hydrogen Storefront
 
-## Migration Status: Phase 3 — In Progress | Phase 5 — Launch (Pending)
+## Migration Status: Phase 3 — Done | Phase 5 — Launch (Pending)
+
+---
+
+## 1.2.0 — 2026-02-18
+
+### Phase 3 Complete: All Pages Live via Local JSON Fallback
+- Verified all 13 Weaverse page JSONs render correctly from local fallback system
+- Weaverse Studio has no public write API — pages served via `app/utils/weaverse-fallback.server.ts`
+- Studio pages will automatically take priority if created later
+
+**Pages verified (11 pages + 2 templates):**
+- [x] Homepage — Slideshow, Highlights, Featured Products, Collection List, Image with Text, Video, Testimonials, Newsletter
+- [x] About Us — Hero, Story, Video, Philosophy, Team, Charities
+- [x] Contact — Hero, Map, Custom Orders CTA, Shipping CTA
+- [x] FAQ — Hero, 4 accordion groups (16 Q&A items)
+- [x] Custom Orders — Hero, intro, 4-step process, highlights, CTA
+- [x] Our Materials — Hero, 4 wood types, mixed walnut
+- [x] Assembly & Care — Hero, assembly accordion, care accordion
+- [x] Shipping Policy — Hero, delivery methods, policies accordion
+- [x] Order Policies — Hero, 8-item policies accordion
+- [x] Press — Hero, intro, 9 press logos, inquiry CTA
+- [x] Reviews — Hero, 4 testimonials, highlights badges
+- [x] Product Template — Main Product (grid) + Related Products
+- [x] Collection Template — Collection Filters + cross-sell
+
+**Deployed to Oxygen** — all pages live at `moderncre8ve-v2-6aebe5cb62e16d9300dd.o2.myshopify.dev`
+
+### Visual Polish TODO (Optional)
+- [ ] Assign hero/slide background images from Shopify media library
+- [ ] Apply brand color palette to Weaverse theme settings
 
 ---
 
@@ -15,18 +45,6 @@
   - Coral Red `#D35055` — alert / accent
   - Cool Gray `#9DA0A7` — muted / borders
 - Source: `MC82.0_FINALCOLORS_081123.png` (finalized Aug 2023)
-
-### Phase 3 TODO — Homepage Build in Weaverse Studio
-- [ ] **Slideshow** — 3 hero slides (brand, dining, Scandinavian) with lifestyle images
-- [ ] **Highlights** — 3 value prop badges (Handcrafted, Solid Hardwood, Custom Orders)
-- [ ] **Featured Products** — "Best Sellers" carousel (4 per view, 8 products)
-- [ ] **Collection List** — "Shop by Category" grid
-- [ ] **Image with Text** — "Our Story" about teaser with workshop photo
-- [ ] **Video Embed** — "See Our Workshop" studio video
-- [ ] **Testimonials** — 3 customer reviews (John D., Susan M., Alex P.)
-- [ ] **Newsletter** — "Join the ModernCre8ve Family" email signup
-- [ ] Assign slide background images from Shopify media library
-- [ ] Apply brand color palette to theme settings
 
 ---
 
@@ -194,7 +212,7 @@ All files use flat `items[]` array with `children: [{id}]` references matching `
 - [x] Default Product — Main Product + Related Products
 - [x] Default Collection — Collection Filters + cross-sell
 
-**Remaining:** All 13 JSON files need to be imported into Weaverse Studio. Images to be assigned in Studio.
+**Status:** All 13 JSON files rendering via local fallback (v1.2.0). Images and brand palette to be assigned in Studio as visual polish.
 
 ### Phase 4 — Shopify Admin Cleanup (Completed v1.0.8)
 - [x] Upload 27 background-removed product images to Shopify

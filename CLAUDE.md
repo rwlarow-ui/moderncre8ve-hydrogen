@@ -46,7 +46,7 @@ Source: `MC82.0_FINALCOLORS_081123.png`
 |-------|--------|
 | 1. Foundation (branding, SEO, redirects, MCP) | Done |
 | 2. Content migration (presets, audit, remove.bg, content extraction) | Done |
-| 3. Page building (11 pages + 2 templates in Weaverse Studio) | **In Progress** — 3 done in Studio, 8 page + 2 template JSONs generated in `weaverse-pages/` |
+| 3. Page building (11 pages + 2 templates) | **Done** — All 13 JSONs rendering via local fallback, deployed to Oxygen |
 | 4. Shopify Admin cleanup (images, redirects, collections, SEO) | **Done** — All 6 tasks completed via Admin API |
 | 5. Launch (final deploy, DNS cutover) | Pending |
 
