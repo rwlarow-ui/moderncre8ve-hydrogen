@@ -6,9 +6,10 @@
 
 ## 1.2.1 — 2026-02-18
 
-### Fix Deprecated Schema Warnings
+### Fix All Schema Warnings
 - Renamed `inspector` → `settings` in all 20 section schemas across the codebase
-- Eliminates all Weaverse schema deprecation warnings at dev server startup
+- Removed empty `settings: []` from testimonial-item schema (was triggering "At least one input is required" validation error)
+- Dev server now starts with zero Weaverse schema warnings
 - Affected sections: instagram, map, address-item, accordion, content-information, accordion-group, accordion-item, information-item, before-and-after, slider, videos, video, testimonials, hotspot-item, testimonials-item, content, scrolling-text, collection-list-dynamic, collection-items, articles
 
 ---
