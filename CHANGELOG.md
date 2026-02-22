@@ -4,6 +4,40 @@
 
 ---
 
+## 1.2.2 — 2026-02-22
+
+### Lint Audit (Biome — Suggested Fixes for Dev Analysis)
+- Ran `biome check` — **0 errors**, **20 suggestions** across 10 files (14 auto-fixable)
+- No changes applied; logged here for future cleanup consideration
+
+**By rule (20 total):**
+| Count | Rule | Category | Fixable | Notes |
+|-------|------|----------|---------|-------|
+| 5 | `useConsistentTypeDefinitions` | style | Yes | `type` → `interface` preference |
+| 5 | `useBlockStatements` | style | Yes | Inline `if` returns → block `{}` |
+| 4 | `noReactForwardRef` | nursery | Yes | `forwardRef` deprecated in React 19 — pass `ref` as prop |
+| 3 | `noImplicitCoercions` | complexity | Yes | `!!val` → `Boolean(val)` |
+| 5 | `noMagicNumbers` | style | No | Extract numeric literals to named constants |
+| 1 | `useExhaustiveDependencies` | correctness | Yes | Missing dependency in `useEffect` |
+| 1 | `noNoninteractiveElementInteractions` | a11y | No | Non-interactive element has click handler |
+
+**By file:**
+| File | Issues |
+|------|--------|
+| `app/components/cart/cart.tsx` | 5 (coercions, magic numbers, block statements, type defs) |
+| `app/components/layout/predictive-search/search-desktop/PopularSearch.tsx` | 4 (block statements, magic numbers, exhaustive deps) |
+| `app/components/background-image.tsx` | 2 (implicit coercions) |
+| `app/components/button.tsx` | 1 (forwardRef) |
+| `app/components/heading.tsx` | 1 (forwardRef) |
+| `app/components/image.tsx` | 1 (forwardRef) |
+| `app/components/layout/mobile-menu.tsx` | 2 (block statement, forwardRef) |
+| `app/components/layout/country-selector.tsx` | 1 (block statement) |
+| `app/components/layout/desktop-menu.tsx` | 1 (a11y: non-interactive element interaction) |
+| `app/components/layout/header.tsx` | 1 (magic number) |
+| `app/components/customer/orders.tsx` | 1 (type → interface) |
+
+---
+
 ## 1.2.1 — 2026-02-18
 
 ### Fix All Schema Warnings
