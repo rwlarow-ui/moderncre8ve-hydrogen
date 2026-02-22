@@ -17,7 +17,6 @@
   - 5x `noMagicNumbers` — extract numeric literals to named constants
   - 1x `useExhaustiveDependencies` — fix missing `useEffect` dependency
   - 1x `noNoninteractiveElementInteractions` — add a11y role to click handler element
-- [ ] Address 14 missing standard Shopify routes (`npx shopify hydrogen check routes`)
 
 ## Visual Polish
 
