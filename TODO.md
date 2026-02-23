@@ -27,11 +27,12 @@
 
 Repo: [moderncre8ve-seo-truth-layer](https://github.com/rwlarow-ui/moderncre8ve-seo-truth-layer)
 
-- [ ] Create Google Cloud project (`moderncre8ve-seo-truth`) and enable Search Console + GA4 Data APIs
-- [ ] Create service account (`seo-truth-agent`) and download JSON key
-- [ ] Grant service account access to Search Console (Full) and GA4 (Viewer)
+- [x] Create Google Cloud project (`mindful-quasar-486518-r9`) and enable Search Console + GA4 Data APIs
+- [x] Create service account (`moderncre8ve-829`) and download JSON key
+- [x] Grant service account access to Search Console (Full) and GA4 (Viewer)
+- [x] Run pipeline locally — 5,551 GSC rows, 111 GA4 rows, 57 actions generated
 - [ ] Add GitHub Secrets: `GOOGLE_SERVICE_ACCOUNT_JSON`, `GA4_PROPERTY_ID`, `SITE_URL`
-- [ ] Run workflow manually to verify pipeline works
+- [ ] Run GitHub Actions workflow manually to verify
 - [ ] Phase 2: Supabase integration for historical trendlines and delta reporting
 
 ## Shopify Admin (Optional)
