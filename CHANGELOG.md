@@ -4,6 +4,22 @@
 
 ---
 
+## 1.2.3 — 2026-02-22
+
+### SEO Truth Layer — Pipeline Operational
+- Set up [moderncre8ve-seo-truth-layer](https://github.com/rwlarow-ui/moderncre8ve-seo-truth-layer) repo
+- Configured Google Cloud service account (`moderncre8ve-829@mindful-quasar-486518-r9.iam.gserviceaccount.com`)
+- Granted access to Google Search Console (Full) and GA4 (Viewer)
+- GA4 Property ID: `251836602` | Measurement ID: `G-G4Q4Z6MM4B`
+- First pipeline run successful:
+  - GSC: 5,551 query rows (Feb 13–20)
+  - GA4: 111 page rows (Feb 15–22)
+  - Merged truth table: 140 pages
+  - 57 action items generated (29 low CTR, 24 striking distance, 3 thin content, 1 revenue opportunity)
+- Weekly brief auto-generates every Monday at 11:00 UTC
+
+---
+
 ## 1.2.2 — 2026-02-22
 
 ### Lint Audit (Biome — Suggested Fixes for Dev Analysis)

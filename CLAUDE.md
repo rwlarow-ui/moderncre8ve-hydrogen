@@ -86,6 +86,15 @@ All tasks executed via Admin GraphQL API (v1.0.8):
 - **OAuth script:** `scripts/get-admin-token.mjs` (HTTPS localhost with self-signed cert)
 - **Scopes:** write_products, write_redirects, write_files, and all other admin scopes
 
+### SEO Truth Layer
+- **Repo:** [moderncre8ve-seo-truth-layer](https://github.com/rwlarow-ui/moderncre8ve-seo-truth-layer)
+- **Local:** `~/Desktop/moderncre8ve-seo-truth-layer` (also `~/Desktop/UW/moderncre8ve-seo-truth-layer`)
+- **Service account:** `moderncre8ve-829@mindful-quasar-486518-r9.iam.gserviceaccount.com`
+- **GA4 Property ID:** `251836602` | Measurement ID: `G-G4Q4Z6MM4B`
+- **Schedule:** Weekly pipeline runs every Monday 11:00 UTC via GitHub Actions
+- **Outputs:** `data/gsc_raw.csv`, `data/ga4_raw.csv`, `data/seo_truth_merged.csv`, `data/seo_actions.csv`, `reports/weekly_brief.md`
+- **Run locally:** `cd ~/Desktop/UW/moderncre8ve-seo-truth-layer && python3 -m src.main`
+
 ### MCP Servers (This Project)
 Configured in `~/Desktop/my-hydrogen-storefront/.mcp.json`:
 - **Ahrefs** — SEO analysis
