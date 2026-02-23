@@ -4,6 +4,37 @@
 
 ---
 
+## 1.2.4 — 2026-02-23
+
+### Pre-Launch SEO Migration Audit & Critical Fixes
+
+**Full audit:** `SEO_MIGRATION_AUDIT.md` — cross-referenced Google-indexed URLs against new Hydrogen routes and redirect CSV.
+
+**Redirect CSV updated** (77 → 88 redirects):
+- Added `/pages/custom-kitchen-cabinets-cleveland` → `/pages/custom-furniture-crafted-to-perfection` (was indexed by Google but marked "skip")
+- Added `/collections/all` → `/collections/all-products` (handle mismatch)
+- Added 4 indexed-but-missing collections: `scandinavian-design-furniture`, `mid-century-modern`, `mid-century-modern-dining-tables`, `modern-dining-chairs` → `/collections/all-products`
+- Added `/collections/all/custom` → `/collections/custom-made-furniture`
+- Added 2 tagged blog URL redirects (`/tagged/vintagefurniture`, `/tagged/japandi-bedroom`)
+- **Fixed 4 blanket blog redirects** — changed article → blog index to article → article (1:1 preserving URL path under new blog handle)
+
+**Structured data enhancements** (`app/utils/seo.server.ts`):
+- Added `FurnitureStore` (LocalBusiness) schema — address, phone, email, geo, hours, priceRange
+- Added `author` + `publisher` fields to Article schema (Organization: ModernCre8ve)
+
+**AMP subdomain strategy:**
+- `amp.moderncre8ve.com` is Shopify auto-generated; will stop serving when DNS cuts over to Hydrogen/Oxygen
+- Post-launch: monitor GSC for stale AMP index entries; remove AMP property from GSC if separate
+
+**Remaining for launch:**
+- [ ] Re-import updated redirects CSV to Shopify Admin (88 redirects via `urlRedirectCreate`)
+- [ ] Final deploy to Oxygen
+- [ ] Assign moderncre8ve.com domain in Shopify Admin
+- [ ] DNS cutover
+- [ ] Post-launch: verify redirects, monitor GSC crawl errors
+
+---
+
 ## 1.2.3 — 2026-02-22
 
 ### SEO Truth Layer — Pipeline Operational

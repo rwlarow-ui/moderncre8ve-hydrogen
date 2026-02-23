@@ -31,22 +31,64 @@ function root({
       noIndex: false,
       noFollow: false,
     },
-    jsonLd: {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      name: "ModernCre8ve",
-      logo: shop.brand?.logo?.image?.url,
-      sameAs: [
-        "https://www.instagram.com/moderncre8ve",
-        "https://www.facebook.com/moderncre8ve",
-      ],
-      url,
-      potentialAction: {
-        "@type": "SearchAction",
-        target: `${url}search?q={search_term}`,
-        query: "required name='search_term'",
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: "ModernCre8ve",
+        logo: shop.brand?.logo?.image?.url,
+        sameAs: [
+          "https://www.instagram.com/moderncre8ve",
+          "https://www.facebook.com/moderncre8ve",
+        ],
+        url,
+        potentialAction: {
+          "@type": "SearchAction",
+          target: `${url}search?q={search_term}`,
+          query: "required name='search_term'",
+        },
       },
-    },
+      {
+        "@context": "https://schema.org",
+        "@type": "FurnitureStore",
+        name: "ModernCre8ve",
+        description:
+          "Handcrafted modern furniture made in Cleveland, Ohio. Mid-century, Scandinavian, and Japandi designs by Amish artisans.",
+        url,
+        telephone: "(216) 502-0755",
+        email: "info@moderncre8ve.com",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "1400 E 36th Street, Suite 2802A",
+          addressLocality: "Cleveland",
+          addressRegion: "OH",
+          postalCode: "44114",
+          addressCountry: "US",
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: 41.5074,
+          longitude: -81.6641,
+        },
+        openingHoursSpecification: {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+          ],
+          opens: "09:00",
+          closes: "17:00",
+        },
+        priceRange: "$$",
+        sameAs: [
+          "https://www.instagram.com/moderncre8ve",
+          "https://www.facebook.com/moderncre8ve",
+        ],
+      },
+    ],
   };
 }
 
@@ -351,6 +393,16 @@ function article({
       headline: articleData?.seo?.title || "",
       image: articleData?.image?.url,
       url,
+      author: {
+        "@type": "Organization",
+        name: "ModernCre8ve",
+        url: "https://moderncre8ve.com",
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "ModernCre8ve",
+        url: "https://moderncre8ve.com",
+      },
     },
   };
 }
