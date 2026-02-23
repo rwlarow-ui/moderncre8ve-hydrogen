@@ -16,14 +16,14 @@ if (!ADMIN_TOKEN) {
 }
 const API_VERSION = "2024-10";
 
-// --- 11 NEW redirects to create ---
+// --- 8 NEW redirects to create ---
+// Note: /collections/all is Shopify's built-in all-products page — no redirect needed FROM it
 const NEW_REDIRECTS = [
   { from: "/pages/custom-kitchen-cabinets-cleveland", to: "/pages/custom-furniture-crafted-to-perfection" },
-  { from: "/collections/all", to: "/collections/all-products" },
-  { from: "/collections/scandinavian-design-furniture", to: "/collections/all-products" },
-  { from: "/collections/mid-century-modern", to: "/collections/all-products" },
-  { from: "/collections/mid-century-modern-dining-tables", to: "/collections/all-products" },
-  { from: "/collections/modern-dining-chairs", to: "/collections/all-products" },
+  { from: "/collections/scandinavian-design-furniture", to: "/collections/all" },
+  { from: "/collections/mid-century-modern", to: "/collections/all" },
+  { from: "/collections/mid-century-modern-dining-tables", to: "/collections/all" },
+  { from: "/collections/modern-dining-chairs", to: "/collections/all" },
   { from: "/collections/all/custom", to: "/collections/custom-made-furniture" },
   { from: "/blogs/mid-century-modern-scandi-japandi-design-blog/tagged/vintagefurniture", to: "/blogs/mid-century-modern-scandi-japandi-design-blog" },
   { from: "/blogs/mid-century-modern-scandi-japandi-design-blog/tagged/japandi-bedroom", to: "/blogs/mid-century-modern-scandi-japandi-design-blog" },
@@ -31,11 +31,7 @@ const NEW_REDIRECTS = [
 
 // --- 4 EXISTING blog redirects to fix (delete old blanket → create 1:1) ---
 const BLOG_REDIRECT_FIXES = [
-  {
-    oldFrom: "/blogs/mid-century-modern-scandi-japandi-design-blog/how-to-choose-the-perfect-dining-table",
-    oldTo: "/blogs/mid-century-modern-scandi-japandi-design-blog",
-    newTo: "/blogs/mid-century-modern-scandi-japandi-design-blog/how-to-choose-the-perfect-dining-table",
-  },
+  // Removed: /blogs/.../how-to-choose-the-perfect-dining-table — article lives at native URL, no redirect needed
   {
     oldFrom: "/blogs/news/solid-wood-furniture-care-guide",
     oldTo: "/blogs/mid-century-modern-scandi-japandi-design-blog",
@@ -147,8 +143,8 @@ async function deleteRedirect(id) {
 async function main() {
   console.log("=== ModernCre8ve SEO Redirect Import (v1.2.4) ===\n");
 
-  // --- Phase 1: Create 9 new redirects ---
-  console.log("--- Phase 1: Creating 9 new redirects ---\n");
+  // --- Phase 1: Create 8 new redirects ---
+  console.log("--- Phase 1: Creating 8 new redirects ---\n");
 
   let created = 0;
   let skipped = 0;
