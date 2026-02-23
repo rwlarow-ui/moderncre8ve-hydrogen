@@ -23,6 +23,17 @@
 - [ ] Assign hero/slide background images from Shopify media library
 - [ ] Apply brand color palette to Weaverse theme settings
 
+## SEO Truth Layer
+
+Repo: [moderncre8ve-seo-truth-layer](https://github.com/rwlarow-ui/moderncre8ve-seo-truth-layer)
+
+- [ ] Create Google Cloud project (`moderncre8ve-seo-truth`) and enable Search Console + GA4 Data APIs
+- [ ] Create service account (`seo-truth-agent`) and download JSON key
+- [ ] Grant service account access to Search Console (Full) and GA4 (Viewer)
+- [ ] Add GitHub Secrets: `GOOGLE_SERVICE_ACCOUNT_JSON`, `GA4_PROPERTY_ID`, `SITE_URL`
+- [ ] Run workflow manually to verify pipeline works
+- [ ] Phase 2: Supabase integration for historical trendlines and delta reporting
+
 ## Shopify Admin (Optional)
 
 - [ ] Add products to "Mid Century Modern Coffee Tables" collection
