@@ -3,7 +3,7 @@
   "items": [
     {
       "id": "contact-root",
-      "type": "*",
+      "type": "main",
       "children": [
         { "id": "contact-hero" },
         { "id": "contact-map" },

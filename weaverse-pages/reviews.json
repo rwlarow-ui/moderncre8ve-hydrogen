@@ -3,7 +3,7 @@
   "items": [
     {
       "id": "reviews-root",
-      "type": "*",
+      "type": "main",
       "children": [
         {
           "id": "reviews-hero"

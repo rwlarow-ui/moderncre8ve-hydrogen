@@ -3,7 +3,7 @@
   "items": [
     {
       "id": "materials-root",
-      "type": "*",
+      "type": "main",
       "children": [
         {
           "id": "materials-hero"

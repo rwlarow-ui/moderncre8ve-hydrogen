@@ -3,7 +3,7 @@
   "items": [
     {
       "id": "collection-root",
-      "type": "*",
+      "type": "main",
       "children": [
         {
           "id": "collection-filters"

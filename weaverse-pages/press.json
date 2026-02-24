@@ -3,7 +3,7 @@
   "items": [
     {
       "id": "press-root",
-      "type": "*",
+      "type": "main",
       "children": [
         {
           "id": "press-hero"

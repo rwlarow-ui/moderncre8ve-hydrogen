@@ -3,7 +3,7 @@
   "items": [
     {
       "id": "about-root",
-      "type": "*",
+      "type": "main",
       "children": [
         { "id": "about-hero" },
         { "id": "about-iwt-story" },

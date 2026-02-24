@@ -3,7 +3,7 @@
   "items": [
     {
       "id": "custom-root",
-      "type": "*",
+      "type": "main",
       "children": [
         {
           "id": "custom-hero"

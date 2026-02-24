@@ -3,7 +3,7 @@
   "items": [
     {
       "id": "home-root",
-      "type": "*",
+      "type": "main",
       "children": [
         { "id": "home-slideshow" },
         { "id": "home-highlights" },

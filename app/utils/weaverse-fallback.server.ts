@@ -4,6 +4,7 @@ import type {
   WeaverseClient,
   WeaverseLoaderData,
 } from "@weaverse/hydrogen";
+import { getRequestQueries } from "@weaverse/hydrogen";
 import type { PageType } from "@weaverse/schema";
 
 /**
@@ -81,10 +82,29 @@ export async function loadPageWithFallback(
   );
   page.items = itemsWithData;
 
+  // Build configs — prefer the API result but fall back to the client's own
+  // basePageConfigs so that projectId, weaverseHost, and requestInfo are always
+  // present.  Without a valid projectId the SDK's WeaverseRoot renders nothing.
+  const configs =
+    result?.configs ??
+    ({
+      ...(weaverse as any).basePageConfigs,
+      requestInfo: {
+        i18n: (weaverse as any).storefront.i18n,
+        queries: getRequestQueries((weaverse as any).request),
+        pathname: new URL((weaverse as any).request.url).pathname,
+        search: new URL((weaverse as any).request.url).search,
+      },
+    } as any);
+
   return {
-    configs: result?.configs ?? ({} as any),
+    configs,
     page,
-    project: result?.project ?? ({} as any),
+    project: result?.project ?? ({
+      id: configs.projectId ?? "",
+      name: "ModernCre8ve",
+      weaverseShopId: "",
+    } as any),
     pageAssignment: result?.pageAssignment,
   };
 }

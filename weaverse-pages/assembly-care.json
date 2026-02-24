@@ -3,7 +3,7 @@
   "items": [
     {
       "id": "assembly-root",
-      "type": "*",
+      "type": "main",
       "children": [
         {
           "id": "assembly-hero"

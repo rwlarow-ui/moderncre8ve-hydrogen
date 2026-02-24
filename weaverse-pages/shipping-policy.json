@@ -3,7 +3,7 @@
   "items": [
     {
       "id": "shipping-root",
-      "type": "*",
+      "type": "main",
       "children": [
         {
           "id": "shipping-hero"

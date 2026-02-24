@@ -3,7 +3,7 @@
   "items": [
     {
       "id": "faq-root",
-      "type": "*",
+      "type": "main",
       "children": [
         {
           "id": "faq-hero"

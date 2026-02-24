@@ -3,7 +3,7 @@
   "items": [
     {
       "id": "product-root",
-      "type": "*",
+      "type": "main",
       "children": [
         {
           "id": "product-main"
