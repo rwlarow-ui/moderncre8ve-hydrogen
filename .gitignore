@@ -17,4 +17,5 @@ pnpm-lock.yaml
 .DS_Store
 .react-router
 h2_deploy_log.json
+app-connector/
 product-images-bg/*.bak
