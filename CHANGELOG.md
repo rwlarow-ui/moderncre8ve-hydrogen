@@ -4,6 +4,14 @@
 
 ---
 
+## 1.2.7 — 2026-02-24
+
+### Pre-Launch Documentation
+- Added `LAUNCH.md` — domain assignment, DNS cutover steps, full Phase 5 launch checklist, migration status overview
+- Added `PRELAUNCH-REPORT.md` — codebase health audit, SEO/structured data verification, redirect analysis, manual spot-check checklist
+
+---
+
 ## 1.2.6 — 2026-02-24
 
 ### CLAUDE.md Cleanup
