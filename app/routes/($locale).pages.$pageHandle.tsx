@@ -32,8 +32,13 @@ export async function loader({ request, params, context }: RouteLoaderArgs) {
   ]);
 
   if (!page) {
-    // No Shopify page — fall back to Weaverse-only rendering
-    validateWeaverseData(weaverseData);
+        // No Shopify page — only render if we have a local Weaverse fallback
+        // (page ID starts with "local_"). Otherwise 404 so Shopify's URL
+        // redirects can fire (e.g. /pages/contact → /pages/contact-us).
+        if (!weaverseData?.page?.id?.startsWith("local_")) {
+                throw new Response(null, { status: 404 });
+        }
+        validateWeaverseData(weaverseData);
     const title = params.pageHandle
       .replace(/-/g, " ")
       .replace(/\b\w/g, (c) => c.toUpperCase());
