@@ -4,6 +4,17 @@
 
 ---
 
+## 1.2.6 — 2026-02-24
+
+### CLAUDE.md Cleanup
+- Trimmed from 275 lines to 148 lines (~46% reduction)
+- Removed completed Phase 1-4 task logs, Shopify Admin history, and remaining collections tables
+- Condensed Admin API, SEO Truth Layer, MCP Servers, and Environment sections
+- Merged redundant subsections (Development Commands, Common Tasks, Component Architecture)
+- Kept all actionable development guidance: branding, architecture, import rules, Weaverse workflows
+
+---
+
 ## 1.2.5 — 2026-02-23
 
 ### Shopify CLI Integration & Env Sync
