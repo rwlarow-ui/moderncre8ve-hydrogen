@@ -14,7 +14,7 @@ import type { PageType } from "@weaverse/schema";
 const JSON_LOADERS: Record<string, () => Promise<{ default: any }>> = {
   INDEX: () => import("../../weaverse-pages/homepage.json"),
   "PAGE:about-us": () => import("../../weaverse-pages/about-us.json"),
-  "PAGE:contact": () => import("../../weaverse-pages/contact.json"),
+  "PAGE:contact-us": () => import("../../weaverse-pages/contact.json"),
   "PAGE:contact-and-inquiry": () => import("../../weaverse-pages/contact.json"),
   "PAGE:faq": () => import("../../weaverse-pages/faq.json"),
   "PAGE:custom-furniture-crafted-to-perfection": () =>
