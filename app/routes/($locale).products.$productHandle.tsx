@@ -55,9 +55,30 @@ export async function loader({ params, request, context }: LoaderFunctionArgs) {
   ]);
 
   if (!product?.id) {
-    throw new Response("product", { status: 404 });
+    // No Shopify product — only render if we have a local Weaverse fallback
+    // (page ID starts with "local_"). Otherwise 404 so Shopify's URL
+    // redirects can fire.
+    if (!weaverseData?.page?.id?.startsWith("local_")) {
+      throw new Response("product", { status: 404 });
+    }
   }
-  redirectIfHandleIsLocalized(request, { handle, data: product });
+  if (product) {
+    redirectIfHandleIsLocalized(request, { handle, data: product });
+  }
+
+  if (!product?.id) {
+    // Local Weaverse fallback only — no Shopify product data
+    return {
+      shop,
+      product: null,
+      weaverseData,
+      productReviews,
+      storeDomain: shop.primaryDomain.url,
+      seo: {},
+      recommended: Promise.resolve([]),
+      selectedOptions,
+    };
+  }
 
   if (COMBINED_LISTINGS_CONFIGS.redirectToFirstVariant) {
     redirectIfCombinedListing(request, product);

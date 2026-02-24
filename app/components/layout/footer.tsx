@@ -367,8 +367,8 @@ export function Footer() {
     footerWidth,
     footerLogoData,
     footerLogoWidth,
-    bio,
-    copyright,
+    bio: _bio,
+    copyright: _copyright,
     addressTitle: _addressTitle,
     storeAddress: _storeAddress,
     storeEmail: _storeEmail,
@@ -387,9 +387,18 @@ export function Footer() {
     showGooglePayIcon,
     showShopPayIcon,
   } = useThemeSettings();
+  // Hardcode store info to prevent Weaverse Studio demo values from leaking
   const addressTitle = "OUR SHOP";
   const storeAddress = "1400 E 36th Street, Suite 2802A, Cleveland, OH 44114";
   const storeEmail = "info@moderncre8ve.com";
+  const bio =
+    _bio && !_bio.includes("Weaverse")
+      ? _bio
+      : '<p>Handcrafted modern furniture made in Cleveland, Ohio. We specialize in mid-century modern, Scandinavian, and Japandi-inspired solid wood furniture.</p><p>Phone: (216) 502-0755</p>';
+  const copyright =
+    _copyright && !_copyright.includes("Weaverse")
+      ? _copyright
+      : "© 2026 ModernCre8ve. All rights reserved.";
   const fetcher = useFetcher<{ ok: boolean; error: string }>();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
