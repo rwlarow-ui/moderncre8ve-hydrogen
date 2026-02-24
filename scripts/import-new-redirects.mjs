@@ -1,19 +1,48 @@
 #!/usr/bin/env node
 
 /**
- * Import 11 new SEO redirects to Shopify Admin via GraphQL API
+ * Import new SEO redirects to Shopify Admin via GraphQL API
  * These are the gaps found in the SEO Migration Audit (v1.2.4)
  *
- * Also updates 4 existing blog redirects from blanket (→ index) to 1:1 (→ article)
+ * Also updates existing blog redirects from blanket (→ index) to 1:1 (→ article)
+ *
+ * Usage: node scripts/import-new-redirects.mjs
  */
+
+import { readFileSync } from "fs";
+import { resolve, dirname } from "path";
+import { fileURLToPath } from "url";
+
+// Load .env from project root
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const envPath = resolve(__dirname, "..", ".env");
+try {
+  const envFile = readFileSync(envPath, "utf-8");
+  for (const line of envFile.split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const eqIdx = trimmed.indexOf("=");
+    if (eqIdx === -1) continue;
+    const key = trimmed.slice(0, eqIdx).trim();
+    let val = trimmed.slice(eqIdx + 1).trim();
+    // Strip surrounding quotes
+    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+      val = val.slice(1, -1);
+    }
+    if (!process.env[key]) process.env[key] = val;
+  }
+  console.log("✅ Loaded .env from", envPath);
+} catch {
+  console.warn("⚠️  Could not load .env file, using existing environment variables");
+}
 
 const SHOPIFY_STORE = "moderncre8ve.myshopify.com";
 const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_API_TOKEN;
 if (!ADMIN_TOKEN) {
-  console.error("Error: SHOPIFY_ADMIN_API_TOKEN environment variable is not set.");
-  console.error("Set it in your .env file or export it before running this script.");
+  console.error("Error: SHOPIFY_ADMIN_API_TOKEN not found in .env or environment.");
   process.exit(1);
 }
+console.log(`🔑 Using token: shpat_...${ADMIN_TOKEN.slice(-6)}`);
 const API_VERSION = "2024-10";
 
 // --- 8 NEW redirects to create ---
@@ -140,8 +169,48 @@ async function deleteRedirect(id) {
   return data.urlRedirectDelete;
 }
 
+async function testAuth() {
+  console.log("🔍 Testing Admin API auth...");
+  try {
+    const res = await fetch(ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Shopify-Access-Token": ADMIN_TOKEN,
+      },
+      body: JSON.stringify({ query: "{ shop { name } }" }),
+    });
+
+    if (res.status === 401) {
+      console.error("\n❌ 401 Unauthorized — your Admin API token is invalid or revoked.");
+      console.error("\nTo fix this, generate a new token:");
+      console.error("  1. Go to https://admin.shopify.com/store/moderncre8ve/settings/apps/development");
+      console.error("  2. Click your 'Claude2' app (or create a new custom app)");
+      console.error("  3. Go to 'API credentials' tab");
+      console.error("  4. Under 'Admin API access token', click 'Reveal token once'");
+      console.error("     (If no token shown, click 'Install app' first)");
+      console.error("  5. Copy the shpat_... token to your .env as SHOPIFY_ADMIN_API_TOKEN");
+      console.error("\nAlternatively, run: node scripts/get-admin-token.mjs");
+      process.exit(1);
+    }
+
+    if (!res.ok) {
+      const body = await res.text();
+      console.error(`\n❌ HTTP ${res.status}: ${body}`);
+      process.exit(1);
+    }
+
+    const json = await res.json();
+    console.log(`✅ Connected to: ${json.data.shop.name}\n`);
+  } catch (err) {
+    console.error(`\n❌ Connection failed: ${err.message}`);
+    process.exit(1);
+  }
+}
+
 async function main() {
   console.log("=== ModernCre8ve SEO Redirect Import (v1.2.4) ===\n");
+  await testAuth();
 
   // --- Phase 1: Create 8 new redirects ---
   console.log("--- Phase 1: Creating 8 new redirects ---\n");

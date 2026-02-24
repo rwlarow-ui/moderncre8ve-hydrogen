@@ -29,7 +29,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ENV_PATH = resolve(__dirname, "..", ".env");
 const SHOP = "moderncre8ve.myshopify.com";
 const SCOPES =
-  "write_products,read_products,write_redirects,read_redirects,write_files,read_files";
+  "write_products,read_products,write_online_store_navigation,read_online_store_navigation,write_files,read_files";
 const REDIRECT_URI = "https://localhost:3000/callback";
 
 const clientId = process.argv[2];

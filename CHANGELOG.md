@@ -1,6 +1,18 @@
 # ModernCre8ve Hydrogen Storefront
 
-## Migration Status: Phase 3 — Done | Phase 5 — Launch (Pending)
+## Migration Status: Phase 4 — Done | Phase 5 — Launch (Pending)
+
+---
+
+## 1.2.5 — 2026-02-23
+
+### Shopify CLI Integration & Env Sync
+- Installed Shopify CLI 3.91.0 and authenticated via `shopify auth login`
+- Project already linked to **Moderncre8ve v2** Hydrogen storefront
+- Pulled Oxygen environment variables via `shopify hydrogen env pull`
+- New env vars from Oxygen: `PUBLIC_STOREFRONT_ID`, `PRIVATE_STOREFRONT_API_TOKEN`, `PUBLIC_CUSTOMER_ACCOUNT_API_URL`, `SHOP_ID`
+- Admin API token now Shopify-managed (`shpss_` prefix) via CLI auth
+- Updated scripts: `get-admin-token.mjs` scopes (redirects → navigation), `import-new-redirects.mjs` with .env loader and auth test
 
 ---
 
