@@ -4,6 +4,41 @@
 
 ---
 
+## 1.3.0 — 2026-02-24
+
+### Hero Images & Homepage Slideshow
+- Added 9 optimized hero images (1920x1080 JPEG, 156–375 KB each) to `public/images/heroes/`
+- Set `backgroundImage` on hero-image sections across all 10 page JSONs
+- Set `backgroundImage` on 3 homepage slideshow slides
+- Images resized from 4096x4096 PNG originals
+
+### SEO Redirect Fix
+- Pages route now returns 404 when no Shopify page exists and no local Weaverse fallback is present (page ID must start with `local_`)
+- Allows Shopify's URL redirect system to handle old paths (e.g. `/pages/contact` → `/pages/contact-us`)
+- Fixed fallback map: `PAGE:contact` → `PAGE:contact-us` to match actual Shopify page handle
+
+### Weaverse Fallback & Config Fixes
+- Built proper configs with `projectId` and `requestInfo` when Weaverse API returns empty
+- Fixed root item type from `"*"` to `"main"` across all 13 page JSONs
+
+### Contact Page & Footer Fixes
+- Added `contact-and-inquiry` handle to Weaverse fallback map
+- Local JSON now preferred over Studio demo data for all pages
+- Overrode footer store info (was showing Toronto demo address)
+- Replaced blank Instagram placeholders with static product images
+- Updated Instagram content presets to `@moderncre8ve`
+
+### Pre-Launch Documentation
+- Added `LAUNCH.md` — domain assignment, DNS cutover steps, full Phase 5 launch checklist
+- Added `PRELAUNCH-REPORT.md` — codebase health audit, SEO/structured data verification, redirect analysis
+
+### Housekeeping
+- Trimmed `CLAUDE.md` from 275 to 148 lines (~46% reduction)
+- Added `app-connector` to `.gitignore`
+- Added Shopify CLI integration and synced Oxygen env vars
+
+---
+
 ## 1.2.7 — 2026-02-24
 
 ### Pre-Launch Documentation
