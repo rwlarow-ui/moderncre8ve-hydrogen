@@ -76,11 +76,44 @@ let InstagramSlider = forwardRef<HTMLDivElement, InstagramSliderProps>(
       );
     };
 
-    const defaultInstagramData = Array.from({ length: 6 }).map((_, i) => ({
-      id: `default-${i}`,
-      media_url: "",
-      username: "",
-    }));
+    const defaultInstagramData = [
+      {
+        id: "static-1",
+        media_url:
+          "https://cdn.shopify.com/s/files/1/1015/2577/files/bossa-nova-modern-dining-table-small-handmade-ohio_796b4a3d-c37e-4251-b660-ced6b6deb6ac.png?v=1771025782",
+        username: "moderncre8ve",
+      },
+      {
+        id: "static-2",
+        media_url:
+          "https://cdn.shopify.com/s/files/1/1015/2577/files/SantaMonicExt.png?v=1695405601",
+        username: "moderncre8ve",
+      },
+      {
+        id: "static-3",
+        media_url:
+          "https://cdn.shopify.com/s/files/1/1015/2577/files/Santa_M_cutoutSantaMonica90Walnutsq.jpg?v=1722613744",
+        username: "moderncre8ve",
+      },
+      {
+        id: "static-4",
+        media_url:
+          "https://cdn.shopify.com/s/files/1/1015/2577/products/isabelle-walnut-dining-table-tables-moderncre8ve_235-sw.jpg?v=1685906986",
+        username: "moderncre8ve",
+      },
+      {
+        id: "static-5",
+        media_url:
+          "https://cdn.shopify.com/s/files/1/1015/2577/files/SQ_IMG_3863.jpg?v=1696528360",
+        username: "moderncre8ve",
+      },
+      {
+        id: "static-6",
+        media_url:
+          "https://cdn.shopify.com/s/files/1/1015/2577/products/santa-monica-cherry-dining-table-tables-moderncre8ve_125-sw.jpg?v=1685906995",
+        username: "moderncre8ve",
+      },
+    ];
 
     let res = loaderData?.data ?? defaultInstagramData;
     let displayedImages = res?.slice(0, 6);

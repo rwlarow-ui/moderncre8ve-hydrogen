@@ -369,9 +369,9 @@ export function Footer() {
     footerLogoWidth,
     bio,
     copyright,
-    addressTitle,
-    storeAddress,
-    storeEmail,
+    addressTitle: _addressTitle,
+    storeAddress: _storeAddress,
+    storeEmail: _storeEmail,
     newsletterTitle,
     newsletterDescription,
     newsletterPlaceholder,
@@ -387,6 +387,9 @@ export function Footer() {
     showGooglePayIcon,
     showShopPayIcon,
   } = useThemeSettings();
+  const addressTitle = "OUR SHOP";
+  const storeAddress = "1400 E 36th Street, Suite 2802A, Cleveland, OH 44114";
+  const storeEmail = "info@moderncre8ve.com";
   const fetcher = useFetcher<{ ok: boolean; error: string }>();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");

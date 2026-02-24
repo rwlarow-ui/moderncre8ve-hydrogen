@@ -14,6 +14,7 @@ const JSON_LOADERS: Record<string, () => Promise<{ default: any }>> = {
   INDEX: () => import("../../weaverse-pages/homepage.json"),
   "PAGE:about-us": () => import("../../weaverse-pages/about-us.json"),
   "PAGE:contact": () => import("../../weaverse-pages/contact.json"),
+  "PAGE:contact-and-inquiry": () => import("../../weaverse-pages/contact.json"),
   "PAGE:faq": () => import("../../weaverse-pages/faq.json"),
   "PAGE:custom-furniture-crafted-to-perfection": () =>
     import("../../weaverse-pages/custom-orders.json"),
@@ -48,17 +49,12 @@ export async function loadPageWithFallback(
 ): Promise<WeaverseLoaderData | null> {
   const result = await weaverse.loadPage(params);
 
-  // If Studio returned a real page, use it
-  if (result?.page?.id && !result.page.id.includes("fallback")) {
-    return result;
-  }
-
   // Design mode should always use Studio data
   if (result?.configs?.requestInfo?.queries?.isDesignMode) {
     return result;
   }
 
-  // Look up the local JSON
+  // Look up the local JSON — prefer local over Studio when available
   const key = getLookupKey(params?.type, params?.handle);
   const loader = JSON_LOADERS[key];
   if (!loader) {
