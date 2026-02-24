@@ -38,7 +38,8 @@
         "contentPosition": "center center",
         "backgroundFit": "cover",
         "enableOverlay": true,
-        "overlayOpacity": 40
+        "overlayOpacity": 40,
+        "backgroundImage": "/images/heroes/dsc_1417-edit.jpg"
       }
     },
     {

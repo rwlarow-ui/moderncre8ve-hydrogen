@@ -5,24 +5,45 @@
       "id": "home-root",
       "type": "main",
       "children": [
-        { "id": "home-slideshow" },
-        { "id": "home-highlights" },
-        { "id": "home-featured" },
-        { "id": "home-collections" },
-        { "id": "home-iwt-about" },
-        { "id": "home-video" },
-        { "id": "home-testimonials" },
-        { "id": "home-newsletter" }
+        {
+          "id": "home-slideshow"
+        },
+        {
+          "id": "home-highlights"
+        },
+        {
+          "id": "home-featured"
+        },
+        {
+          "id": "home-collections"
+        },
+        {
+          "id": "home-iwt-about"
+        },
+        {
+          "id": "home-video"
+        },
+        {
+          "id": "home-testimonials"
+        },
+        {
+          "id": "home-newsletter"
+        }
       ]
     },
-
     {
       "id": "home-slideshow",
       "type": "slideshow",
       "children": [
-        { "id": "home-slide-1" },
-        { "id": "home-slide-2" },
-        { "id": "home-slide-3" }
+        {
+          "id": "home-slide-1"
+        },
+        {
+          "id": "home-slide-2"
+        },
+        {
+          "id": "home-slide-3"
+        }
       ],
       "data": {
         "height": "full",
@@ -39,11 +60,12 @@
       "data": {
         "headingContent": "Handcrafted Modern Furniture",
         "subheadingContent": "Made by Amish Artisans in Ohio",
-        "paragraphContent": "Solid hardwood furniture designed for modern living — built one piece at a time in Ohio.",
+        "paragraphContent": "Solid hardwood furniture designed for modern living \u2014 built one piece at a time in Ohio.",
         "buttonContent": "Shop Collections",
         "to": "/collections",
         "enableOverlay": true,
-        "overlayOpacity": 40
+        "overlayOpacity": 40,
+        "backgroundImage": "/images/heroes/dsc_1417-edit_1.jpg"
       }
     },
     {
@@ -52,11 +74,12 @@
       "data": {
         "headingContent": "Mid-Century Modern Dining",
         "subheadingContent": "Solid Hardwood. Built to Last.",
-        "paragraphContent": "Gather around a table built to last for generations — handcrafted from domestic hardwoods.",
+        "paragraphContent": "Gather around a table built to last for generations \u2014 handcrafted from domestic hardwoods.",
         "buttonContent": "Explore Dining",
         "to": "/collections/dining",
         "enableOverlay": true,
-        "overlayOpacity": 40
+        "overlayOpacity": 40,
+        "backgroundImage": "/images/heroes/img_1524.jpg"
       }
     },
     {
@@ -65,21 +88,27 @@
       "data": {
         "headingContent": "Scandinavian & Japandi Design",
         "subheadingContent": "Where Simplicity Meets Craftsmanship",
-        "paragraphContent": "Clean lines, natural materials, and timeless design — furniture that brings calm to every room.",
+        "paragraphContent": "Clean lines, natural materials, and timeless design \u2014 furniture that brings calm to every room.",
         "buttonContent": "View Collection",
         "to": "/collections/scandinavian-design-furniture",
         "enableOverlay": true,
-        "overlayOpacity": 40
+        "overlayOpacity": 40,
+        "backgroundImage": "/images/heroes/20241114_202310_img_2586_4af8f63f-4ad5-4678-af69-b36481707fe1.jpg"
       }
     },
-
     {
       "id": "home-highlights",
       "type": "highlights",
       "children": [
-        { "id": "home-badge-1" },
-        { "id": "home-badge-2" },
-        { "id": "home-badge-3" }
+        {
+          "id": "home-badge-1"
+        },
+        {
+          "id": "home-badge-2"
+        },
+        {
+          "id": "home-badge-3"
+        }
       ],
       "data": {
         "alignment": "center",
@@ -115,17 +144,20 @@
         "iconType": "triangle",
         "badgeTextColor": "#29231E",
         "headingContent": "Custom Orders",
-        "content": "Personalize any piece to fit your space — choose your wood, finish, and dimensions.",
+        "content": "Personalize any piece to fit your space \u2014 choose your wood, finish, and dimensions.",
         "color": "#29231E"
       }
     },
-
     {
       "id": "home-featured",
       "type": "featured-products",
       "children": [
-        { "id": "home-featured-content" },
-        { "id": "home-featured-items" }
+        {
+          "id": "home-featured-content"
+        },
+        {
+          "id": "home-featured-items"
+        }
       ]
     },
     {
@@ -135,7 +167,7 @@
         "displayMode": "vertical",
         "contentPosition": "center center",
         "headingContent": "Best Sellers",
-        "paragraphContent": "Handcrafted with care, these are our most loved pieces — built to last for generations.",
+        "paragraphContent": "Handcrafted with care, these are our most loved pieces \u2014 built to last for generations.",
         "buttonContent": "SHOP ALL",
         "to": "/collections/best-sellers"
       }
@@ -149,13 +181,16 @@
         "productsToShow": 8
       }
     },
-
     {
       "id": "home-collections",
       "type": "feature-collection",
       "children": [
-        { "id": "home-collections-content" },
-        { "id": "home-collections-items" }
+        {
+          "id": "home-collections-content"
+        },
+        {
+          "id": "home-collections-items"
+        }
       ]
     },
     {
@@ -165,7 +200,7 @@
         "displayMode": "vertical",
         "contentPosition": "center center",
         "headingContent": "Shop by Category",
-        "paragraphContent": "From dining tables to bedroom furniture — explore our handcrafted collections.",
+        "paragraphContent": "From dining tables to bedroom furniture \u2014 explore our handcrafted collections.",
         "buttonContent": "VIEW ALL",
         "to": "/collections"
       }
@@ -178,13 +213,16 @@
         "gap": 20
       }
     },
-
     {
       "id": "home-iwt-about",
       "type": "image-with-text",
       "children": [
-        { "id": "home-iwt-about-images" },
-        { "id": "home-iwt-about-content" }
+        {
+          "id": "home-iwt-about-images"
+        },
+        {
+          "id": "home-iwt-about-content"
+        }
       ],
       "data": {
         "verticalPadding": "none",
@@ -195,7 +233,11 @@
     {
       "id": "home-iwt-about-images",
       "type": "image-with-text--images",
-      "children": [{ "id": "home-iwt-about-image" }],
+      "children": [
+        {
+          "id": "home-iwt-about-image"
+        }
+      ],
       "data": {
         "imageAspectRatio": "3/4"
       }
@@ -212,10 +254,18 @@
       "id": "home-iwt-about-content",
       "type": "image-with-text--content",
       "children": [
-        { "id": "home-iwt-about-sub" },
-        { "id": "home-iwt-about-heading" },
-        { "id": "home-iwt-about-paragraph" },
-        { "id": "home-iwt-about-button" }
+        {
+          "id": "home-iwt-about-sub"
+        },
+        {
+          "id": "home-iwt-about-heading"
+        },
+        {
+          "id": "home-iwt-about-paragraph"
+        },
+        {
+          "id": "home-iwt-about-button"
+        }
       ],
       "data": {
         "gap": "5",
@@ -253,11 +303,17 @@
         "variant": "primary"
       }
     },
-
     {
       "id": "home-video",
       "type": "video-embed",
-      "children": [{ "id": "home-video-content" }, { "id": "home-video-item" }]
+      "children": [
+        {
+          "id": "home-video-content"
+        },
+        {
+          "id": "home-video-item"
+        }
+      ]
     },
     {
       "id": "home-video-content",
@@ -277,22 +333,31 @@
         "borderRadius": 0
       }
     },
-
     {
       "id": "home-testimonials",
       "type": "testimonial",
       "children": [
-        { "id": "home-test-1" },
-        { "id": "home-test-2" },
-        { "id": "home-test-3" }
+        {
+          "id": "home-test-1"
+        },
+        {
+          "id": "home-test-2"
+        },
+        {
+          "id": "home-test-3"
+        }
       ]
     },
     {
       "id": "home-test-1",
       "type": "testimonial--item",
       "children": [
-        { "id": "home-test-1-content" },
-        { "id": "home-test-1-hotspot" }
+        {
+          "id": "home-test-1-content"
+        },
+        {
+          "id": "home-test-1-hotspot"
+        }
       ]
     },
     {
@@ -316,8 +381,12 @@
       "id": "home-test-2",
       "type": "testimonial--item",
       "children": [
-        { "id": "home-test-2-content" },
-        { "id": "home-test-2-hotspot" }
+        {
+          "id": "home-test-2-content"
+        },
+        {
+          "id": "home-test-2-hotspot"
+        }
       ]
     },
     {
@@ -341,8 +410,12 @@
       "id": "home-test-3",
       "type": "testimonial--item",
       "children": [
-        { "id": "home-test-3-content" },
-        { "id": "home-test-3-hotspot" }
+        {
+          "id": "home-test-3-content"
+        },
+        {
+          "id": "home-test-3-hotspot"
+        }
       ]
     },
     {
@@ -362,14 +435,19 @@
         "aspectRatio": "1/1"
       }
     },
-
     {
       "id": "home-newsletter",
       "type": "newsletter",
       "children": [
-        { "id": "home-newsletter-heading" },
-        { "id": "home-newsletter-paragraph" },
-        { "id": "home-newsletter-form" }
+        {
+          "id": "home-newsletter-heading"
+        },
+        {
+          "id": "home-newsletter-paragraph"
+        },
+        {
+          "id": "home-newsletter-form"
+        }
       ]
     },
     {

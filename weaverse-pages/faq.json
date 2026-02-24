@@ -41,7 +41,8 @@
         "contentPosition": "center center",
         "backgroundFit": "cover",
         "enableOverlay": true,
-        "overlayOpacity": 40
+        "overlayOpacity": 40,
+        "backgroundImage": "/images/heroes/img_2158.jpg"
       }
     },
     {

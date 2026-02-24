@@ -5,26 +5,38 @@
       "id": "contact-root",
       "type": "main",
       "children": [
-        { "id": "contact-hero" },
-        { "id": "contact-map" },
-        { "id": "contact-iwt-custom" },
-        { "id": "contact-iwt-shipping" }
+        {
+          "id": "contact-hero"
+        },
+        {
+          "id": "contact-map"
+        },
+        {
+          "id": "contact-iwt-custom"
+        },
+        {
+          "id": "contact-iwt-shipping"
+        }
       ]
     },
-
     {
       "id": "contact-hero",
       "type": "hero-image",
       "children": [
-        { "id": "contact-hero-sub" },
-        { "id": "contact-hero-heading" }
+        {
+          "id": "contact-hero-sub"
+        },
+        {
+          "id": "contact-hero-heading"
+        }
       ],
       "data": {
         "height": "large",
         "contentPosition": "center center",
         "backgroundFit": "cover",
         "enableOverlay": true,
-        "overlayOpacity": 40
+        "overlayOpacity": 40,
+        "backgroundImage": "/images/heroes/the-vista.jpg"
       }
     },
     {
@@ -45,11 +57,14 @@
         "size": "default"
       }
     },
-
     {
       "id": "contact-map",
       "type": "map",
-      "children": [{ "id": "contact-address" }],
+      "children": [
+        {
+          "id": "contact-address"
+        }
+      ],
       "data": {
         "heading": "Visit Our Showroom",
         "layoutMap": "list"
@@ -66,13 +81,16 @@
         "openingHoursSat": "Sat - Sun: Closed"
       }
     },
-
     {
       "id": "contact-iwt-custom",
       "type": "image-with-text",
       "children": [
-        { "id": "contact-iwt-custom-images" },
-        { "id": "contact-iwt-custom-content" }
+        {
+          "id": "contact-iwt-custom-images"
+        },
+        {
+          "id": "contact-iwt-custom-content"
+        }
       ],
       "data": {
         "verticalPadding": "none",
@@ -83,7 +101,11 @@
     {
       "id": "contact-iwt-custom-images",
       "type": "image-with-text--images",
-      "children": [{ "id": "contact-iwt-custom-image" }],
+      "children": [
+        {
+          "id": "contact-iwt-custom-image"
+        }
+      ],
       "data": {
         "imageAspectRatio": "1/1"
       }
@@ -100,10 +122,18 @@
       "id": "contact-iwt-custom-content",
       "type": "image-with-text--content",
       "children": [
-        { "id": "contact-iwt-custom-sub" },
-        { "id": "contact-iwt-custom-heading" },
-        { "id": "contact-iwt-custom-paragraph" },
-        { "id": "contact-iwt-custom-button" }
+        {
+          "id": "contact-iwt-custom-sub"
+        },
+        {
+          "id": "contact-iwt-custom-heading"
+        },
+        {
+          "id": "contact-iwt-custom-paragraph"
+        },
+        {
+          "id": "contact-iwt-custom-button"
+        }
       ],
       "data": {
         "gap": "5",
@@ -129,7 +159,7 @@
       "id": "contact-iwt-custom-paragraph",
       "type": "paragraph",
       "data": {
-        "content": "About 60% of our orders are custom. Tell us your vision — dimensions, wood species, finish — and we'll create an all-inclusive quote with no hidden fees. Shipping included."
+        "content": "About 60% of our orders are custom. Tell us your vision \u2014 dimensions, wood species, finish \u2014 and we'll create an all-inclusive quote with no hidden fees. Shipping included."
       }
     },
     {
@@ -141,13 +171,16 @@
         "variant": "primary"
       }
     },
-
     {
       "id": "contact-iwt-shipping",
       "type": "image-with-text",
       "children": [
-        { "id": "contact-iwt-ship-content" },
-        { "id": "contact-iwt-ship-images" }
+        {
+          "id": "contact-iwt-ship-content"
+        },
+        {
+          "id": "contact-iwt-ship-images"
+        }
       ],
       "data": {
         "verticalPadding": "none",
@@ -158,7 +191,11 @@
     {
       "id": "contact-iwt-ship-images",
       "type": "image-with-text--images",
-      "children": [{ "id": "contact-iwt-ship-image" }],
+      "children": [
+        {
+          "id": "contact-iwt-ship-image"
+        }
+      ],
       "data": {
         "imageAspectRatio": "1/1"
       }
@@ -175,10 +212,18 @@
       "id": "contact-iwt-ship-content",
       "type": "image-with-text--content",
       "children": [
-        { "id": "contact-iwt-ship-sub" },
-        { "id": "contact-iwt-ship-heading" },
-        { "id": "contact-iwt-ship-paragraph" },
-        { "id": "contact-iwt-ship-button" }
+        {
+          "id": "contact-iwt-ship-sub"
+        },
+        {
+          "id": "contact-iwt-ship-heading"
+        },
+        {
+          "id": "contact-iwt-ship-paragraph"
+        },
+        {
+          "id": "contact-iwt-ship-button"
+        }
       ],
       "data": {
         "gap": "5",
