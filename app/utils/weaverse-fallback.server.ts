@@ -19,9 +19,13 @@ const JSON_LOADERS: Record<string, () => Promise<{ default: any }>> = {
   "PAGE:faq": () => import("../../weaverse-pages/faq.json"),
   "PAGE:custom-furniture-crafted-to-perfection": () =>
     import("../../weaverse-pages/custom-orders.json"),
+  "PAGE:custom-orders": () =>
+    import("../../weaverse-pages/custom-orders.json"),
   "PAGE:our-materials": () => import("../../weaverse-pages/our-materials.json"),
   "PAGE:assembly-care": () => import("../../weaverse-pages/assembly-care.json"),
   "PAGE:shipping-policy-and-customer-responsibilities": () =>
+    import("../../weaverse-pages/shipping-policy.json"),
+  "PAGE:shipping-policy": () =>
     import("../../weaverse-pages/shipping-policy.json"),
   "PAGE:ordering-policies": () =>
     import("../../weaverse-pages/order-policies.json"),
