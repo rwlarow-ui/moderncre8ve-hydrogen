@@ -391,10 +391,11 @@ export function Footer() {
   const addressTitle = "OUR SHOP";
   const storeAddress = "1400 E 36th Street, Suite 2802A, Cleveland, OH 44114";
   const storeEmail = "info@moderncre8ve.com";
-  const bio =
-    _bio && !_bio.includes("Weaverse")
-      ? _bio
-      : '<p>Handcrafted modern furniture made in Cleveland, Ohio. We specialize in mid-century modern, Scandinavian, and Japandi-inspired solid wood furniture.</p><p>Phone: (216) 502-0755</p>';
+  const bioIsUsable =
+    _bio && !_bio.includes("Weaverse") && _bio.replace(/<[^>]*>/g, "").trim();
+  const bio = bioIsUsable
+    ? _bio
+    : '<p>Handcrafted modern furniture made in Cleveland, Ohio. We specialize in mid-century modern, Scandinavian, and Japandi-inspired solid wood furniture.</p><p>Phone: (216) 502-0755</p>';
   const copyright =
     _copyright && !_copyright.includes("Weaverse")
       ? _copyright
