@@ -4,6 +4,23 @@
 
 ---
 
+## 1.3.4 — 2026-02-25
+
+### TypeScript Typecheck Fixes
+- Removed non-standard `msUserSelect` CSS property from predictive search results
+- Removed extra `buttonType` and `panelType` props from `QuickShopTrigger` (not in component interface)
+- Fixed `CollectionsByIdsQuery` → `CollectionByIdsQuery` typo in collection list dynamic section
+- Updated `GenericError` component to accept `unknown` error type to match Weaverse `errorComponent` contract
+- Made `featuredImage` fields (`id`, `width`, `height`) optional to match Storefront API generated types
+
+### Breadcrumbs Structured Data Fix
+- Fixed JSON-LD breadcrumb `@id` and `item` URLs to use absolute URLs (prefixed with store domain) instead of relative paths
+
+### Weaverse Page Aliases
+- Added short-handle aliases (`custom-orders`, `shipping-policy`) so both the full Shopify handle and short handle resolve to the correct fallback page JSON
+
+---
+
 ## 1.3.3 — 2026-02-25
 
 ### Mobile Menu Freeze Fix
