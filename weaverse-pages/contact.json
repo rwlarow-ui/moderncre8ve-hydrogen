@@ -114,6 +114,7 @@
       "id": "contact-iwt-custom-image",
       "type": "image-with-text--image",
       "data": {
+        "image": "/images/heroes/img_1426.jpg",
         "objectFit": "cover",
         "borderRadius": 0
       }
@@ -204,6 +205,7 @@
       "id": "contact-iwt-ship-image",
       "type": "image-with-text--image",
       "data": {
+        "image": "/images/heroes/img_2158.jpg",
         "objectFit": "cover",
         "borderRadius": 0
       }

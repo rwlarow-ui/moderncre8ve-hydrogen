@@ -257,6 +257,7 @@
       "id": "home-iwt-about-image",
       "type": "image-with-text--image",
       "data": {
+        "image": "/images/heroes/dsc_1417-edit.jpg",
         "objectFit": "cover",
         "borderRadius": 0
       }
@@ -385,6 +386,7 @@
       "id": "home-test-1-hotspot",
       "type": "testimonial--hotspots-item",
       "data": {
+        "image": "/images/heroes/img_1426.jpg",
         "aspectRatio": "1/1"
       }
     },
@@ -414,6 +416,7 @@
       "id": "home-test-2-hotspot",
       "type": "testimonial--hotspots-item",
       "data": {
+        "image": "/images/heroes/img_1524.jpg",
         "aspectRatio": "1/1"
       }
     },
@@ -443,6 +446,7 @@
       "id": "home-test-3-hotspot",
       "type": "testimonial--hotspots-item",
       "data": {
+        "image": "/images/heroes/img_2158.jpg",
         "aspectRatio": "1/1"
       }
     },

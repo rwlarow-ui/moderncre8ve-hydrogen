@@ -90,6 +90,7 @@
       "id": "press-iwt-intro-image",
       "type": "image-with-text--image",
       "data": {
+        "image": "/images/heroes/img_1524.jpg",
         "objectFit": "cover",
         "borderRadius": 0
       }
@@ -189,6 +190,7 @@
       "id": "press-col-1",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/img_1426.jpg",
         "size": "medium",
         "heading": "HGTV",
         "content": "",
@@ -199,6 +201,7 @@
       "id": "press-col-2",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/img_1524.jpg",
         "size": "medium",
         "heading": "Domino Magazine",
         "content": "",
@@ -209,6 +212,7 @@
       "id": "press-col-3",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/dsc_1417-edit.jpg",
         "size": "medium",
         "heading": "Apartment Therapy",
         "content": "",
@@ -219,6 +223,7 @@
       "id": "press-col-4",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/img_2158.jpg",
         "size": "medium",
         "heading": "Buzzfeed",
         "content": "",
@@ -229,6 +234,7 @@
       "id": "press-col-5",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/img_1426_1.jpg",
         "size": "medium",
         "heading": "Etsy",
         "content": "",
@@ -239,6 +245,7 @@
       "id": "press-col-6",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/dsc_1417-edit_1.jpg",
         "size": "medium",
         "heading": "Dwell",
         "content": "",
@@ -249,6 +256,7 @@
       "id": "press-col-7",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/img_1426_2.jpg",
         "size": "medium",
         "heading": "Atomic Ranch",
         "content": "",
@@ -259,6 +267,7 @@
       "id": "press-col-8",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/the-vista.jpg",
         "size": "medium",
         "heading": "The Plain Dealer",
         "content": "",
@@ -269,6 +278,7 @@
       "id": "press-col-9",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/20241114_202310_img_2586_4af8f63f-4ad5-4678-af69-b36481707fe1.jpg",
         "size": "medium",
         "heading": "Refinery 29",
         "content": "",
@@ -308,6 +318,7 @@
       "id": "press-iwt-cta-image",
       "type": "image-with-text--image",
       "data": {
+        "image": "/images/heroes/img_1426.jpg",
         "objectFit": "cover",
         "borderRadius": 0
       }

@@ -467,6 +467,7 @@
       "id": "faq-iwt-image",
       "type": "image-with-text--image",
       "data": {
+        "image": "/images/heroes/img_1426_2.jpg",
         "objectFit": "cover",
         "borderRadius": 0
       }

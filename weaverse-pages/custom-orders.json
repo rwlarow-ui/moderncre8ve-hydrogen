@@ -93,6 +93,7 @@
       "id": "custom-iwt-intro-image",
       "type": "image-with-text--image",
       "data": {
+        "image": "/images/heroes/img_1426.jpg",
         "objectFit": "cover",
         "borderRadius": 0
       }
@@ -177,6 +178,7 @@
       "id": "custom-col-1",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/img_1524.jpg",
         "size": "medium",
         "heading": "1. Start the Conversation",
         "content": "Have a custom furniture idea? Connect with us through our contact page, a quick phone call, or our online chat. Your dream furniture piece begins with a conversation.",
@@ -187,6 +189,7 @@
       "id": "custom-col-2",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/img_2158.jpg",
         "size": "medium",
         "heading": "2. Transparent Pricing",
         "content": "Once we understand your vision, we offer an all-inclusive quote with no hidden fees, shipping included.",
@@ -197,6 +200,7 @@
       "id": "custom-col-3",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/img_1426_2.jpg",
         "size": "medium",
         "heading": "3. Collaborative Design",
         "content": "We partner with you in designing your custom furniture, refining every detail, and then present a finalized invoice.",
@@ -207,6 +211,7 @@
       "id": "custom-col-4",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/dsc_1417-edit_1.jpg",
         "size": "medium",
         "heading": "4. Creation Begins",
         "content": "After payment confirmation, your custom piece enters our dedicated production line, crafted with precision and passion.",
@@ -295,6 +300,7 @@
       "id": "custom-iwt-cta-image",
       "type": "image-with-text--image",
       "data": {
+        "image": "/images/heroes/the-vista.jpg",
         "objectFit": "cover",
         "borderRadius": 0
       }

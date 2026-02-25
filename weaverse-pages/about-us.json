@@ -96,6 +96,7 @@
       "id": "about-iwt-story-image",
       "type": "image-with-text--image",
       "data": {
+        "image": "/images/heroes/dsc_1417-edit.jpg",
         "objectFit": "cover",
         "borderRadius": 0
       }
@@ -214,6 +215,7 @@
       "id": "about-iwt-phil-image",
       "type": "image-with-text--image",
       "data": {
+        "image": "/images/heroes/img_1524.jpg",
         "objectFit": "cover",
         "borderRadius": 0
       }
@@ -325,6 +327,7 @@
       "id": "about-team-1",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/img_2158.jpg",
         "size": "medium",
         "heading": "Randy Larow",
         "content": "Founder & Designer \u2014 Randy launched ModernCre8ve in 2013 with a vision to make handcrafted modern furniture accessible to everyone.",
@@ -335,6 +338,7 @@
       "id": "about-team-2",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/dsc_1417-edit_1.jpg",
         "size": "medium",
         "heading": "The Artisans",
         "content": "Our team of Amish craftsmen bring decades of woodworking expertise to every piece, using traditional joinery and modern precision.",
@@ -345,6 +349,7 @@
       "id": "about-team-3",
       "type": "column-with-image--item",
       "data": {
+        "imageSrc": "/images/heroes/img_1426_2.jpg",
         "size": "medium",
         "heading": "Customer Experience",
         "content": "From your first inquiry to white-glove delivery, our team is dedicated to making your experience seamless and personal.",
@@ -384,6 +389,7 @@
       "id": "about-iwt-charity-image",
       "type": "image-with-text--image",
       "data": {
+        "image": "/images/heroes/img_1426.jpg",
         "objectFit": "cover",
         "borderRadius": 0
       }
