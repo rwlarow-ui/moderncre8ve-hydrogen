@@ -4,6 +4,19 @@
 
 ---
 
+## 1.3.2 — 2026-02-24
+
+### Homepage — Real Data for Featured Sections
+- Wired `best-sellers` collection to the featured products carousel (was showing "Product Title" / "$0" placeholders)
+- Added 6 Shopify collection IDs to the collection grid section (Dining Tables, Bedroom, Living, Coffee Tables, Dining Chairs, Scandinavian)
+
+### Placeholder Images Replaced Site-Wide
+- Replaced 34 FPO placeholder SVGs with hero photos across 7 page fallback JSONs
+- Pages fixed: Homepage, About Us, Contact, Custom Orders, FAQ, Press, Reviews
+- Covers image-with-text sections, team columns, testimonial hotspots, and press columns
+
+---
+
 ## 1.3.1 — 2026-02-24
 
 ### Footer Hardening
