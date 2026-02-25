@@ -108,6 +108,8 @@ import { useLoaderData, Link, Form } from '@remix-run/react';
 - Theme settings in `app/weaverse/schema.server.ts`
 - Global styles in `app/weaverse/style.tsx` driven by theme settings
 - Use `withWeaverse` HOC on root App component
+- **Fallback types:** PAGE fallbacks are per-handle (`local_PAGE_about_us`), but PRODUCT/COLLECTION fallbacks are templates (`local_PRODUCT`) that always match — cannot be used as "page exists" signals
+- **Studio overrides:** `useThemeSettings()` values from Studio can contain demo data; footer hardcodes store info as fallbacks (see `app/components/layout/footer.tsx`)
 
 ### Component Architecture
 - **Components**: Reusable UI elements (`app/components/`)

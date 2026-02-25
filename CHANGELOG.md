@@ -4,6 +4,22 @@
 
 ---
 
+## 1.3.1 — 2026-02-24
+
+### Footer Hardening
+- Hardened footer against Weaverse Studio demo values leaking through `useThemeSettings()` (Toronto address, Weaverse copyright, empty bio)
+- Store address, email, and copyright now use code-level fallbacks that override Studio demo data
+- Bio fallback strips HTML tags to detect empty `<p></p>` content from Studio
+
+### Weaverse Product Fallback Fix
+- Reverted product route fallback guard — PRODUCT Weaverse fallback is a template (`local_PRODUCT`) that always loads for every product route, unlike per-handle page fallbacks
+- Product 404 behavior restored: `throw new Response("product", { status: 404 })`
+
+### SEO Keyword Targeting
+- Added SEO keyword targeting to Weaverse page section text content
+
+---
+
 ## 1.3.0 — 2026-02-24
 
 ### Hero Images & Homepage Slideshow
