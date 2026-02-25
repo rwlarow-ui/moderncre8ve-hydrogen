@@ -4,11 +4,15 @@ import { Section } from "~/components/section";
 export function GenericError({
   error,
 }: {
-  error?: { message: string; stack?: string };
+  error?: unknown;
 }) {
   const heading = "Something's wrong here.";
   const description = "We found an error while loading this page.";
   const isDev = import.meta.env.DEV;
+  const errorObj =
+    error && typeof error === "object" && "message" in error
+      ? (error as { message: string; stack?: string })
+      : undefined;
 
   return (
     <Section
@@ -18,7 +22,7 @@ export function GenericError({
     >
       <h4 className="font-medium">{heading}</h4>
       <p>{description}</p>
-      {isDev && error?.stack && (
+      {isDev && errorObj?.stack && (
         <pre
           style={{
             padding: "2rem",
@@ -29,7 +33,7 @@ export function GenericError({
           }}
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
-            __html: addLinksToStackTrace(error.stack),
+            __html: addLinksToStackTrace(errorObj.stack),
           }}
         />
       )}
