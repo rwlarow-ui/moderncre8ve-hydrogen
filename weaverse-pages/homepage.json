@@ -166,8 +166,8 @@
       "data": {
         "displayMode": "vertical",
         "contentPosition": "center center",
-        "headingContent": "Best Sellers",
-        "paragraphContent": "Handcrafted with care, these are our most loved pieces \u2014 built to last for generations.",
+        "headingContent": "Best-Selling Handcrafted Furniture",
+        "paragraphContent": "Our most loved solid wood pieces \u2014 handcrafted by Amish artisans and built to last for generations.",
         "buttonContent": "SHOP ALL",
         "to": "/collections/best-sellers"
       }
@@ -199,8 +199,8 @@
       "data": {
         "displayMode": "vertical",
         "contentPosition": "center center",
-        "headingContent": "Shop by Category",
-        "paragraphContent": "From dining tables to bedroom furniture \u2014 explore our handcrafted collections.",
+        "headingContent": "Shop Handcrafted Wood Furniture by Room",
+        "paragraphContent": "From solid hardwood dining tables to bedroom furniture \u2014 explore our handcrafted collections.",
         "buttonContent": "VIEW ALL",
         "to": "/collections"
       }
@@ -462,7 +462,7 @@
       "id": "home-newsletter-paragraph",
       "type": "paragraph",
       "data": {
-        "content": "Be the first to know about new designs, exclusive offers, and behind-the-scenes looks at our workshop."
+        "content": "Be the first to know about new handcrafted furniture designs, exclusive offers, and behind-the-scenes looks at our Cleveland workshop."
       }
     },
     {
