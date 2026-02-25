@@ -43,7 +43,7 @@ export function MobileMenu() {
             <>
               <Dialog.Overlay forceMount>
                 <motion.div
-                  className="fixed inset-0 z-10 bg-black/50 backdrop-blur-xs"
+                  className="fixed inset-0 z-10 bg-black/50"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
@@ -52,40 +52,74 @@ export function MobileMenu() {
               <Dialog.Content
                 forceMount
                 onCloseAutoFocus={(e) => e.preventDefault()}
+                onPointerDownOutside={closeAllMenus}
                 className="fixed inset-y-0 left-0 z-10"
                 aria-describedby={undefined}
               >
                 <motion.div
-                  initial={{ x: "-100vw" }}
+                  initial={{ x: "-360px" }}
                   animate={{ x: 0 }}
-                  exit={{ x: "-100vw" }}
+                  exit={{ x: "-360px" }}
                   transition={{
-                    type: "spring",
-                    damping: 25,
-                    stiffness: 150,
+                    type: "tween",
+                    duration: 0.25,
+                    ease: "easeOut",
                   }}
-                  className="h-full w-[360px] bg-(--color-header-bg-hover) pt-4 pb-2 uppercase"
+                  className="relative h-full w-[360px] max-w-[85vw] bg-(--color-header-bg-hover) pt-4 pb-2 uppercase"
                 >
-                  <Dialog.Title asChild>
-                    <div className="px-4 font-semibold uppercase">Menu</div>
-                  </Dialog.Title>
-                  <Dialog.Close asChild>
-                    <button type="button" className="fixed top-4 right-4">
-                      <XIcon className="h-5 w-5" />
-                    </button>
-                  </Dialog.Close>
+                  {/* Header area */}
+                  <div className="flex items-center justify-between px-4">
+                    {activeSubMenu ? (
+                      <div className="flex items-center gap-3">
+                        <button
+                          type="button"
+                          onClick={closeSubMenu}
+                          className="flex h-6 w-6 items-center justify-center"
+                        >
+                          <CaretLeftIcon className="h-5 w-5" />
+                        </button>
+                        <Dialog.Title asChild>
+                          <div className="font-semibold uppercase">
+                            {activeSubMenu.title}
+                          </div>
+                        </Dialog.Title>
+                      </div>
+                    ) : (
+                      <Dialog.Title asChild>
+                        <div className="font-semibold uppercase">Menu</div>
+                      </Dialog.Title>
+                    )}
+                    <Dialog.Close asChild>
+                      <button
+                        type="button"
+                        className="flex h-6 w-6 items-center justify-center"
+                      >
+                        <XIcon className="h-5 w-5" />
+                      </button>
+                    </Dialog.Close>
+                  </div>
                   <div className="mt-4 border-line-subtle border-t" />
+
+                  {/* Menu content — main or sub */}
                   <div className="py-2">
                     <ScrollArea className="h-[calc(100vh-5rem)]">
                       <div className="flex w-full flex-col gap-1 px-4">
-                        {headerMenu.items.map((item) => (
-                          <TopLevelMenuItem
-                            key={item.id}
-                            item={item as unknown as SingleMenuItem}
-                            onOpenSubMenu={setActiveSubMenu}
-                            onCloseAll={closeAllMenus}
-                          />
-                        ))}
+                        {activeSubMenu
+                          ? activeSubMenu.items?.map((subItem) => (
+                              <CollapsibleMenuItem
+                                key={subItem.id}
+                                item={subItem}
+                                onClose={closeAllMenus}
+                              />
+                            ))
+                          : headerMenu.items.map((item) => (
+                              <TopLevelMenuItem
+                                key={item.id}
+                                item={item as unknown as SingleMenuItem}
+                                onOpenSubMenu={setActiveSubMenu}
+                                onCloseAll={closeAllMenus}
+                              />
+                            ))}
                       </div>
                     </ScrollArea>
                   </div>
@@ -95,15 +129,6 @@ export function MobileMenu() {
           )}
         </AnimatePresence>
       </Dialog.Portal>
-
-      {/* SubMenu Dialog */}
-      {activeSubMenu && (
-        <SubMenuDialog
-          item={activeSubMenu}
-          onClose={closeSubMenu}
-          onCloseAll={closeAllMenus}
-        />
-      )}
     </Dialog.Root>
   );
 }
@@ -137,104 +162,6 @@ function TopLevelMenuItem({
       <span className="uppercase">{title}</span>
       <CaretRightIcon className="h-4 w-4" />
     </button>
-  );
-}
-
-// SubMenu Dialog Component
-function SubMenuDialog({
-  item,
-  onClose,
-  onCloseAll,
-}: {
-  item: SingleMenuItem;
-  onClose: () => void;
-  onCloseAll: () => void;
-}) {
-  const [open, setOpen] = useState(true);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpenChange = (nextOpen: boolean) => {
-    setOpen(nextOpen);
-  };
-
-  return (
-    <Dialog.Root open={open} onOpenChange={handleOpenChange}>
-      <Dialog.Portal forceMount>
-        <AnimatePresence onExitComplete={onClose}>
-          {open && (
-            <>
-              <Dialog.Overlay forceMount>
-                <motion.div
-                  className="fixed inset-0 z-20 bg-black/50 backdrop-blur-xs"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                />
-              </Dialog.Overlay>
-              <Dialog.Content
-                forceMount
-                onCloseAutoFocus={(e) => e.preventDefault()}
-                className="fixed inset-y-0 left-0 z-20"
-                aria-describedby={undefined}
-              >
-                <motion.div
-                  initial={{ x: "-100vw" }}
-                  animate={{ x: 0 }}
-                  exit={{ x: "-100vw" }}
-                  transition={{
-                    type: "spring",
-                    damping: 25,
-                    stiffness: 150,
-                  }}
-                  className="h-full w-[360px] bg-(--color-header-bg-hover) pt-4 pb-2 uppercase"
-                >
-                  <div className="flex items-center justify-between px-4">
-                    <div className="flex items-center gap-3">
-                      <button
-                        type="button"
-                        onClick={handleClose}
-                        className="flex h-6 w-6 items-center justify-center"
-                      >
-                        <CaretLeftIcon className="h-5 w-5" />
-                      </button>
-                      <Dialog.Title asChild>
-                        <div className="font-semibold uppercase">
-                          {item.title}
-                        </div>
-                      </Dialog.Title>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={onCloseAll}
-                      className="flex h-6 w-6 items-center justify-center"
-                    >
-                      <XIcon className="h-5 w-5" />
-                    </button>
-                  </div>
-                  <div className="mt-4 border-line-subtle border-t" />
-                  <div className="py-2">
-                    <ScrollArea className="h-[calc(100vh-5rem)]">
-                      <div className="flex w-full flex-col gap-1 px-4">
-                        {item.items?.map((subItem) => (
-                          <CollapsibleMenuItem
-                            key={subItem.id}
-                            item={subItem}
-                            onClose={onCloseAll}
-                          />
-                        ))}
-                      </div>
-                    </ScrollArea>
-                  </div>
-                </motion.div>
-              </Dialog.Content>
-            </>
-          )}
-        </AnimatePresence>
-      </Dialog.Portal>
-    </Dialog.Root>
   );
 }
 
