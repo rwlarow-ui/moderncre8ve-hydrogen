@@ -234,13 +234,13 @@ function collectionJsonLd({
   url: Request["url"];
   collection: CollectionRequiredFields;
 }): SeoConfig["jsonLd"] {
-  const siteUrl = new URL(url);
+  const origin = new URL(url).origin;
   const itemListElement: CollectionPage["mainEntity"] =
     collectionData.products.nodes.map((prod, index) => {
       return {
         "@type": "ListItem",
         position: index + 1,
-        url: `/products/${prod.handle}`,
+        url: `${origin}/products/${prod.handle}`,
       };
     });
 
@@ -253,7 +253,7 @@ function collectionJsonLd({
           "@type": "ListItem",
           position: 1,
           name: "Collections",
-          item: `${siteUrl.host}/collections`,
+          item: `${origin}/collections`,
         },
         {
           "@type": "ListItem",
@@ -270,7 +270,7 @@ function collectionJsonLd({
         collectionData?.seo?.description ?? collectionData?.description ?? "",
       ),
       image: collectionData?.image?.url,
-      url: `/collections/${collectionData.handle}`,
+      url: `${origin}/collections/${collectionData.handle}`,
       mainEntity: {
         "@type": "ItemList",
         itemListElement,
@@ -315,12 +315,13 @@ function collectionsJsonLd({
   url: Request["url"];
   collections: CollectionListRequiredFields;
 }): SeoConfig["jsonLd"] {
+  const origin = new URL(url).origin;
   const itemListElement: CollectionPage["mainEntity"] = collections.nodes.map(
     (col, index) => {
       return {
         "@type": "ListItem",
         position: index + 1,
-        url: `/collections/${col.handle}`,
+        url: `${origin}/collections/${col.handle}`,
       };
     },
   );
