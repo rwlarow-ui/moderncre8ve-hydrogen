@@ -4,6 +4,22 @@
 
 ---
 
+## 1.3.3 — 2026-02-25
+
+### Mobile Menu Freeze Fix
+- Eliminated nested `Dialog.Root` in mobile menu — the submenu was a second Radix Dialog inside the first, creating conflicting focus traps and duplicate scroll locks that froze touch interaction
+- Restructured to a single Dialog with internal state (`activeSubMenu`) to swap between main and submenu views
+- Switched from spring to tween animation (250ms ease-out) — spring animations block the main thread on mobile
+- Changed initial offset from `-100vw` to `-360px` to match actual panel width
+- Removed `backdrop-blur-xs` overlay (GPU-heavy on mobile)
+- Added `max-w-[85vw]` to prevent overflow on small screens
+
+### Newsletter Form Fix
+- Fixed "Something went wrong" text appearing in DOM before any form submission
+- Changed from always-rendered invisible div to conditional render — message only appears after actual submit response
+
+---
+
 ## 1.3.2 — 2026-02-24
 
 ### Homepage — Real Data for Featured Sections
