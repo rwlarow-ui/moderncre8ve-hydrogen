@@ -176,6 +176,9 @@
       "id": "home-featured-items",
       "type": "featured-products-items",
       "data": {
+        "collection": {
+          "handle": "best-sellers"
+        },
         "layout": "carousel",
         "slidesPerView": 4,
         "productsToShow": 8
@@ -209,6 +212,14 @@
       "id": "home-collections-items",
       "type": "collection-list-dynamic-items",
       "data": {
+        "collections": [
+          { "id": "97332420" },
+          { "id": "95565188" },
+          { "id": "262749847654" },
+          { "id": "94999492" },
+          { "id": "449574109483" },
+          { "id": "459433967915" }
+        ],
         "layout": "grid",
         "gap": 20
       }
