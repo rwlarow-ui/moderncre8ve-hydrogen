@@ -78,7 +78,7 @@ const ProductInformation = forwardRef<
     showShippingPolicy,
     showRefundPolicy,
     showLeadTime = true,
-    leadTimeText = "Handcrafted to order. Please allow 2\u20134 weeks for production and delivery. Custom orders may require additional time.",
+    leadTimeText = "Handcrafted to order. Please allow 12\u201316 weeks for production and delivery. Custom orders may require additional time.",
     mediaLayout,
     gridSize,
     imageAspectRatio,
@@ -633,7 +633,7 @@ export const schema = createSchema({
           label: "Lead time text",
           name: "leadTimeText",
           defaultValue:
-            "Handcrafted to order. Please allow 2\u20134 weeks for production and delivery. Custom orders may require additional time.",
+            "Handcrafted to order. Please allow 12\u201316 weeks for production and delivery. Custom orders may require additional time.",
           condition: (data: ProductInformationData) => data.showLeadTime,
         },
       ],
