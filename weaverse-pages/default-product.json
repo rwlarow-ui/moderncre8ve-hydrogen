@@ -31,7 +31,9 @@
         "showSalePrice": true,
         "showShortDescription": true,
         "showShippingPolicy": true,
-        "showRefundPolicy": true
+        "showRefundPolicy": true,
+        "showLeadTime": true,
+        "leadTimeText": "Handcrafted to order. Please allow 2\u20134 weeks for production and delivery. Custom orders may require additional time."
       }
     },
     {

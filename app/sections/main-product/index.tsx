@@ -12,7 +12,7 @@ import type {
 import { createSchema } from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { forwardRef, useState } from "react";
-import { useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
 import { AddToCartButton } from "~/components/product/add-to-cart-button";
 import { ProductBadges } from "~/components/product/badges";
 import { BundledVariants } from "~/components/product/bundled-variants";
@@ -44,6 +44,8 @@ interface ProductInformationData
   showShippingPolicy: boolean;
   showRefundPolicy: boolean;
   showBadgesOnProductMedia?: boolean;
+  showLeadTime: boolean;
+  leadTimeText: string;
   arrowsZoomColor?: "primary" | "secondary" | "outline";
   arrowsZoomShape?: "rounded-sm" | "circle" | "square";
 }
@@ -75,6 +77,8 @@ const ProductInformation = forwardRef<
     showShortDescription,
     showShippingPolicy,
     showRefundPolicy,
+    showLeadTime,
+    leadTimeText,
     mediaLayout,
     gridSize,
     imageAspectRatio,
@@ -312,6 +316,29 @@ const ProductInformation = forwardRef<
                       storeDomain={storeDomain}
                     />
                   )}
+                </div>
+              )}
+
+              {showLeadTime && (
+                <div className="rounded border border-line-subtle bg-[var(--color-background-subtle,#f9f8f4)] px-4 py-3 text-sm text-body-subtle">
+                  <p className="mb-1.5 font-semibold uppercase tracking-wide text-body">
+                    Lead Time
+                  </p>
+                  <p className="mb-2">{leadTimeText}</p>
+                  <p className="flex flex-wrap gap-x-3 gap-y-1">
+                    <Link
+                      to="/pages/shipping-policy"
+                      className="border-b border-line-subtle pb-px hover:border-body"
+                    >
+                      Shipping details
+                    </Link>
+                    <Link
+                      to="/pages/faq"
+                      className="border-b border-line-subtle pb-px hover:border-body"
+                    >
+                      FAQ
+                    </Link>
+                  </p>
                 </div>
               )}
 
@@ -594,6 +621,20 @@ export const schema = createSchema({
           label: "Show refund policy",
           name: "showRefundPolicy",
           defaultValue: true,
+        },
+        {
+          type: "switch",
+          label: "Show lead time notice",
+          name: "showLeadTime",
+          defaultValue: true,
+        },
+        {
+          type: "textarea",
+          label: "Lead time text",
+          name: "leadTimeText",
+          defaultValue:
+            "Handcrafted to order. Please allow 2\u20134 weeks for production and delivery. Custom orders may require additional time.",
+          condition: (data: ProductInformationData) => data.showLeadTime,
         },
       ],
     },

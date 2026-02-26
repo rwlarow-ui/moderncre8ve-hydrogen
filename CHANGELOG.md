@@ -4,6 +4,17 @@
 
 ---
 
+## 1.3.5 — 2026-02-25
+
+### Lead Time Notice on Product Pages
+- Added lead time callout to all product detail pages, positioned between the Add to Cart button and the accordion details
+- Default text: "Handcrafted to order. Please allow 2–4 weeks for production and delivery. Custom orders may require additional time."
+- Includes links to the Shipping details and FAQ pages
+- Configurable via Weaverse Studio: toggle on/off and customize the lead time text
+- Updated product fallback JSON to include lead time by default
+
+---
+
 ## 1.3.4 — 2026-02-25
 
 ### TypeScript Typecheck Fixes
