@@ -4,6 +4,15 @@
 
 ---
 
+## 1.3.7 — 2026-02-26
+
+### Lead Time Notice SSR Fix
+- Added destructuring defaults for `showLeadTime` and `leadTimeText` in the main-product section component
+- Fixes the lead time notice not rendering when Weaverse Studio data predates the field (Studio data lacks the property, so the prop was `undefined`)
+- Lead time notice now renders out-of-the-box without requiring manual Studio configuration
+
+---
+
 ## 1.3.6 — 2026-02-25
 
 ### Klaviyo Removed — Newsletter Uses Shopify Customer API
