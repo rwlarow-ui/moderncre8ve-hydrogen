@@ -4,133 +4,105 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project: ModernCre8ve Hydrogen Storefront
 
-Replacement for moderncre8ve.com — handcrafted modern furniture (mid-century, Scandinavian, Japandi).
+Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8ve.com rebuild.
 
 - **Store:** moderncre8ve.myshopify.com (26 active + 3 draft products, 16 collections)
 - **Template:** Weaverse Aspen (furniture-focused Hydrogen theme)
 - **Repo:** github.com/rwlarow-ui/moderncre8ve-hydrogen
 - **Deploy target:** Shopify Oxygen
-- **Shopify Admin (Hydrogen):** https://admin.shopify.com/store/moderncre8ve/hydrogen/1000097972
-- **Weaverse Studio:** https://studio.weaverse.io/dashboard/projects/gkv7k7xwkbfez2rdmkbbzxuw
-- **Oxygen URL:** https://moderncre8ve-v2-6aebe5cb62e16d9300dd.o2.myshopify.dev
-- **Status:** Phases 1-4 complete. Phase 5 (launch — final deploy, DNS cutover) pending.
+- **Current version:** 1.3.8 (see `CHANGELOG.md` for full history)
+- **Status:** Phases 1–4 complete. Phase 5 (launch — DNS cutover to moderncre8ve.com) pending.
+
+### Links
+| Resource | URL |
+|----------|-----|
+| Oxygen (live) | https://moderncre8ve-v2-6aebe5cb62e16d9300dd.o2.myshopify.dev |
+| Shopify Admin | https://admin.shopify.com/store/moderncre8ve/hydrogen/1000097972 |
+| Weaverse Studio | https://studio.weaverse.io/dashboard/projects/gkv7k7xwkbfez2rdmkbbzxuw |
+
+### Store Knowledge
+- **Lead times:** All furniture 12–16 weeks (handcrafted to order). Wax products ship in 3–5 business days.
+- **Newsletter:** Uses Shopify Customer API (`/api/customer`). Klaviyo was removed in v1.3.6.
+- **Delivery:** White glove in-home delivery with assembly for 95%+ of orders.
 
 ### Branding
 - **Fonts:** Jost (headings, `--font-sans`) / Spectral (body, `--font-serif`)
 - **Logo:** `public/logo.png` (dark), `public/logo-alt.png` (light variant)
 
 #### Color Palette
-| Swatch | Hex | RGB | Usage |
-|--------|-----|-----|-------|
-| Dark Charcoal | `#323640` | 50, 54, 64 | Primary dark / text |
-| Emerald Green | `#2CBF96` | 44, 191, 150 | Accent / CTA |
-| Warm Cream | `#F2EBD5` | 242, 235, 213 | Background / neutral |
-| Amber Gold | `#F2AC29` | 242, 172, 41 | Highlight / secondary accent |
-| Coral Red | `#D35055` | 211, 80, 85 | Alert / accent |
-| Cool Gray | `#9DA0A7` | 157, 160, 167 | Muted / borders |
+| Swatch | Hex | Usage |
+|--------|-----|-------|
+| Dark Charcoal | `#323640` | Primary dark / text |
+| Emerald Green | `#2CBF96` | Accent / CTA |
+| Warm Cream | `#F2EBD5` | Background / neutral |
+| Amber Gold | `#F2AC29` | Highlight / secondary accent |
+| Coral Red | `#D35055` | Alert / accent |
+| Cool Gray | `#9DA0A7` | Muted / borders |
 
 ### Key Files
 | File | Purpose |
 |------|---------|
-| `app/weaverse/schema.server.ts` | Theme settings (colors, fonts, footer, social links, store info) |
-| `app/utils/seo.server.ts` | SEO config (title templates, org schema, descriptions) |
-| `app/styles/app.css` | Global styles, font-face declarations, CSS custom properties |
+| `app/weaverse/schema.server.ts` | Theme settings (colors, fonts, footer, social links) |
+| `app/weaverse/style.tsx` | Global CSS driven by theme settings |
+| `app/utils/seo.server.ts` | SEO config (title templates, org schema) |
+| `app/utils/weaverse-fallback.server.ts` | Page handle → fallback JSON mapping |
+| `app/sections/main-product/index.tsx` | Product page template (lead time, variants, ATC) |
+| `app/styles/app.css` | Global styles, font-face, CSS custom properties |
 | `app/root.tsx` | Root layout, font preloads |
-| `redirects-for-shopify.csv` | SEO redirects for Shopify Admin bulk import |
-| `scripts/get-admin-token.mjs` | One-time OAuth script for Shopify Admin API token |
 
 ### Admin API Access
 - **Token:** `SHOPIFY_ADMIN_API_TOKEN` in `.env` (full admin write scopes)
 - **App:** "Claude2" in Shopify Dev Dashboard (Client ID: `fd5964839bc3fb47703bafb47d25d3fc`)
-- **OAuth script:** `scripts/get-admin-token.mjs` (HTTPS localhost with self-signed cert)
-
-### SEO Truth Layer
-Separate project for weekly SEO pipeline (GSC + GA4 data).
-- **Repo:** [moderncre8ve-seo-truth-layer](https://github.com/rwlarow-ui/moderncre8ve-seo-truth-layer)
-- **Local:** `~/Desktop/UW/moderncre8ve-seo-truth-layer`
-- **Run locally:** `cd ~/Desktop/UW/moderncre8ve-seo-truth-layer && python3 -m src.main`
 
 ### MCP Servers
 Configured in `.mcp.json`: Ahrefs, Figma, Shopify (Storefront API), Shopify Dev (docs/schema).
-Composer and Crypto.com servers visible in sessions are from OWS project — irrelevant here.
+Composer and Crypto.com servers visible in sessions are from another project — irrelevant here.
 
 ## Development Commands
 
 - `npm run dev` — Dev server on port 3456 with codegen
-- `npm run build` — Production build with codegen
-- `npm run preview` — Preview production build
+- `npm run build` — Production build
 - `npm run typecheck` — TypeScript type checking
-- `npm run codegen` — Generate GraphQL types and schema
-- `npm run biome` / `npm run biome:fix` — Lint / auto-fix
-- `npm run format` / `npm run format:check` — Format with Biome
-- `npm run e2e` / `npm run e2e:ui` — Playwright tests
-- `npm run clean` — Remove build artifacts and dependencies
+- `npm run codegen` — Regenerate GraphQL types after schema changes
+- `npm run biome:fix` — Lint and auto-fix with Biome
 
-## Architecture Overview
+## Architecture
 
 **Shopify Hydrogen** storefront with **React Router v7** (not Remix) and **Weaverse** visual page builder.
 
-### Framework Stack
-- **Hydrogen 2025.5.0** — Shopify's React commerce framework
-- **React Router v7** — File-based routing (NOT Remix)
-- **Weaverse** — Visual page builder with component system
-- **Vite** — Build tool and dev server
-- **Biome** — Linting and formatting
-- **TailwindCSS v4** — Styling
+### Stack
+Hydrogen 2025.5.0, React Router v7, Weaverse, Vite, Biome, TailwindCSS v4
 
-### Key Directory Structure
+### Directory Structure
 ```
 app/
-├── components/          # Reusable UI components
-├── sections/           # Weaverse page-building sections
-├── routes/             # File-based routing (React Router)
-├── weaverse/           # Weaverse integration and config
-├── hooks/              # Custom React hooks
-├── utils/              # Utility functions
-├── graphql/            # GraphQL fragments and queries
-└── styles/             # Global styles
+├── components/     # Reusable UI (layout, product, cart)
+├── sections/       # Weaverse page-building sections
+├── routes/         # File-based routing (React Router v7)
+├── weaverse/       # Weaverse integration and config
+├── hooks/          # Custom React hooks
+├── utils/          # Utility functions
+├── graphql/        # GraphQL fragments and queries
+└── styles/         # Global styles
+weaverse-pages/     # 13 local fallback JSONs (11 pages + 2 templates)
 ```
 
-### Critical Import Rules
-**ALWAYS use React Router imports, NEVER Remix:**
+### Critical: React Router, Not Remix
 ```js
 // CORRECT
 import { useLoaderData, Link, Form } from 'react-router';
-
-// WRONG — do not use
+// WRONG — never use
 import { useLoaderData, Link, Form } from '@remix-run/react';
 ```
 
-### Weaverse Integration
-- All page content managed through Weaverse's visual builder
-- Components registered in `app/weaverse/components.ts`
-- Section components in `app/sections/` with schema exports
-- Theme settings in `app/weaverse/schema.server.ts`
-- Global styles in `app/weaverse/style.tsx` driven by theme settings
-- Use `withWeaverse` HOC on root App component
-- **Fallback types:** PAGE fallbacks are per-handle (`local_PAGE_about_us`), but PRODUCT/COLLECTION fallbacks are templates (`local_PRODUCT`) that always match — cannot be used as "page exists" signals
-- **Studio overrides:** `useThemeSettings()` values from Studio can contain demo data; footer hardcodes store info as fallbacks (see `app/components/layout/footer.tsx`)
+### Weaverse Data Flow
+- **Studio data takes precedence** over local fallback JSON and schema `defaultValue`
+- If a schema field is added after Studio data was saved, the component receives `undefined` for that field — use **destructuring defaults** (e.g., `showLeadTime = true`) to handle this
+- Fallback JSONs in `weaverse-pages/` serve as baseline when Studio has no data
+- PAGE fallbacks are per-handle (`local_PAGE_about_us`); PRODUCT/COLLECTION fallbacks are templates (`local_PRODUCT`) that always match
+- `useThemeSettings()` values from Studio can contain demo data; footer hardcodes store info as fallbacks
 
-### Component Architecture
-- **Components**: Reusable UI elements (`app/components/`)
-- **Sections**: Full-width page-building blocks (`app/sections/`)
-- Every section exports a `schema` via `createSchema()` and a `loader` for data fetching
-
-### GraphQL & Data Fetching
-- **Generated types** in `storefront-api.generated.d.ts` (DO NOT edit directly)
-- **Fragments** in `app/graphql/fragments.ts`, **queries** in `app/graphql/queries.ts`
-- Regenerate with `npm run codegen` after schema changes
-
-## Development Workflows
-
-### Adding New Weaverse Sections
-1. Create component in `app/sections/[section-name]/index.tsx`
-2. Export default component with `forwardRef`
-3. Export `schema` object with `createSchema()`
-4. Optionally export `loader` function for data fetching
-5. Register in `app/weaverse/components.ts`
-
-### Component Schema Requirements
+### Component Schema
 ```tsx
 export let schema = createSchema({
   type: 'my-section',
@@ -138,36 +110,29 @@ export let schema = createSchema({
   settings: [  // Use "settings", NOT "inspector"
     {
       group: 'Content',
-      inputs: [
-        {
-          type: 'text',
-          name: 'heading',
-          label: 'Heading',
-          defaultValue: 'Default heading',
-        },
-      ],
+      inputs: [{ type: 'text', name: 'heading', label: 'Heading', defaultValue: 'Default' }],
     },
   ],
 });
 ```
 
-### File-based Routing
+### Routing
 - Routes in `app/routes/` follow React Router v7 conventions
 - Locale-aware: `($locale).page-name.tsx`
 - Dynamic: `($locale).products.$productHandle.tsx`
 - API: `($locale).api.endpoint.ts`
 
-### Code Quality Standards
-- **TypeScript**: Strict mode disabled, but use types where beneficial
-- **Biome**: Config in `biome.json` (extends `@weaverse/biome`)
-- **Formatting**: Double quotes, semicolons required
-- **Imports**: Use `~/*` alias for app directory imports
+### Code Standards
+- **TypeScript**: Strict mode disabled; use types where beneficial
+- **Biome**: Double quotes, semicolons required. Config extends `@weaverse/biome`
+- **Imports**: Use `~/*` alias for app directory
 
-### Environment Configuration
-Required env vars: `PUBLIC_STORE_DOMAIN`, `PUBLIC_STOREFRONT_API_TOKEN`, `WEAVERSE_PROJECT_ID`, `SESSION_SECRET`, `SHOPIFY_ADMIN_API_TOKEN`
+### Environment
+Required: `PUBLIC_STORE_DOMAIN`, `PUBLIC_STOREFRONT_API_TOKEN`, `WEAVERSE_PROJECT_ID`, `SESSION_SECRET`, `SHOPIFY_ADMIN_API_TOKEN`
 
 ### Common Tasks
 - **Update GraphQL**: Edit `app/graphql/`, run `npm run codegen`
-- **Add theme settings**: Edit `app/weaverse/schema.server.ts` + `app/weaverse/style.tsx`, use `useThemeSettings()` hook
-- **Debug**: GraphiQL at `localhost:3456/graphiql`, network at `localhost:3456/debug-network`
-- **Deploy**: Build with `npm run build`, deploy to Shopify Oxygen
+- **Add theme settings**: Edit `schema.server.ts` + `style.tsx`, use `useThemeSettings()`
+- **New Weaverse section**: Create in `app/sections/`, export `schema` via `createSchema()`, register in `app/weaverse/components.ts`
+- **Debug**: GraphiQL at `localhost:3456/graphiql`
+- **Deploy**: Use `~/.claude/scripts/deploy.sh` (see global CLAUDE.md for flags)
