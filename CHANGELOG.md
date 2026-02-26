@@ -4,6 +4,15 @@
 
 ---
 
+## 1.3.8 — 2026-02-26
+
+### Lead Time Updates — 12–16 Weeks Furniture, 3–5 Days Wax
+- Updated lead time from 2–4 weeks to 12–16 weeks across product pages, FAQ, and order policies
+- Added wax product exception: ships within 3–5 business days
+- Aligned all shipping/lead time messaging site-wide (product notice, FAQ, order policies, shipping policy)
+
+---
+
 ## 1.3.7 — 2026-02-26
 
 ### Lead Time Notice SSR Fix
