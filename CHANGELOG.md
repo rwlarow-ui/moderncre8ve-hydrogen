@@ -4,6 +4,16 @@
 
 ---
 
+## 1.3.6 — 2026-02-25
+
+### Klaviyo Removed — Newsletter Uses Shopify Customer API
+- Deleted Klaviyo API route (`app/routes/($locale).api.klaviyo.ts`)
+- Switched footer and popup newsletter forms from `/api/klaviyo` to `/api/customer` (Shopify's built-in customer creation with marketing opt-in)
+- Updated response handling to match the customer API's `errorMessage` field
+- Removed `KLAVIYO_PRIVATE_API_TOKEN` from `env.d.ts` and `.env.example`
+
+---
+
 ## 1.3.5 — 2026-02-25
 
 ### Lead Time Notice on Product Pages
