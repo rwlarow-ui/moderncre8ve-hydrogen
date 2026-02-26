@@ -41,14 +41,14 @@ export function NewsletterPopup() {
   } = useThemeSettings();
 
   const [open, setOpen] = useState(false);
-  const fetcher = useFetcher<{ ok: boolean; error: string }>();
+  const fetcher = useFetcher<{ ok: boolean; errorMessage?: string }>();
   const isDesignMode = useWeaverseStudioCheck();
 
   // Compute message and error from fetcher data
-  const message = fetcher.data?.ok ? "Thank you for signing up! 🎉" : "";
+  const message = fetcher.data?.ok ? "Thank you for signing up!" : "";
   const error =
     fetcher.data && !fetcher.data.ok
-      ? fetcher.data.error || "An error occurred while signing up."
+      ? fetcher.data.errorMessage || "An error occurred while signing up."
       : "";
 
   // Close popup after successful submission
@@ -182,7 +182,7 @@ export function NewsletterPopup() {
                 </p>
 
                 <fetcher.Form
-                  action="/api/klaviyo"
+                  action="/api/customer"
                   method="POST"
                   encType="multipart/form-data"
                   className="space-y-4"

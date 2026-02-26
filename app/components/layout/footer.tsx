@@ -400,7 +400,7 @@ export function Footer() {
     _copyright && !_copyright.includes("Weaverse")
       ? _copyright
       : "© 2026 ModernCre8ve. All rights reserved.";
-  const fetcher = useFetcher<{ ok: boolean; error: string }>();
+  const fetcher = useFetcher<{ ok: boolean; errorMessage?: string }>();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const newsLetterResponse = fetcher.data;
@@ -408,10 +408,10 @@ export function Footer() {
   useEffect(() => {
     if (newsLetterResponse) {
       if (newsLetterResponse.ok) {
-        setMessage("Thank you for signing up! 🎉");
+        setMessage("Thank you for signing up!");
       } else {
         setError(
-          newsLetterResponse.error || "An error occurred while signing up.",
+          newsLetterResponse.errorMessage || "An error occurred while signing up.",
         );
       }
     }
@@ -503,7 +503,7 @@ export function Footer() {
                       setError("");
                       fetcher.submit(event.currentTarget);
                     }}
-                    action="/api/klaviyo"
+                    action="/api/customer"
                     method="POST"
                     encType="multipart/form-data"
                     className="flex h-[54px] gap-3"
@@ -568,7 +568,7 @@ export function Footer() {
                     setError("");
                     fetcher.submit(event.currentTarget);
                   }}
-                  action="/api/klaviyo"
+                  action="/api/customer"
                   method="POST"
                   encType="multipart/form-data"
                   className="flex h-[54px] gap-2"
