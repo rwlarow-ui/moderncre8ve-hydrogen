@@ -52,7 +52,15 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 
 ### Admin API Access
 - **Token:** `SHOPIFY_ADMIN_API_TOKEN` in `.env` (full admin write scopes)
+- **Weaverse Admin Proxy:** `https://weaverse.io/api/admin-graphql` with Bearer token (manages Shopify Admin API calls)
 - **App:** "Claude2" in Shopify Dev Dashboard (Client ID: `fd5964839bc3fb47703bafb47d25d3fc`)
+
+### Google Analytics / GTM
+- **GTM ID:** `G-R1KFYYKE48` (set via `PUBLIC_GOOGLE_GTM_ID` env var)
+- **GA4 Property:** `251836602` / Measurement ID: `G-G4Q4Z6MM4B`
+- **Google Cloud Project:** `mindful-quasar-486518-r9`
+- **Service Account:** `moderncre8ve-829@mindful-quasar-486518-r9.iam.gserviceaccount.com`
+- **SEO Truth Layer:** `github.com/rwlarow-ui/moderncre8ve-seo-truth-layer` (weekly pipeline)
 
 ### MCP Servers
 Configured in `.mcp.json`: Ahrefs, Figma, Shopify (Storefront API), Shopify Dev (docs/schema).
@@ -128,7 +136,7 @@ export let schema = createSchema({
 - **Imports**: Use `~/*` alias for app directory
 
 ### Environment
-Required: `PUBLIC_STORE_DOMAIN`, `PUBLIC_STOREFRONT_API_TOKEN`, `WEAVERSE_PROJECT_ID`, `SESSION_SECRET`, `SHOPIFY_ADMIN_API_TOKEN`
+Required: `PUBLIC_STORE_DOMAIN`, `PUBLIC_STOREFRONT_API_TOKEN`, `WEAVERSE_PROJECT_ID`, `SESSION_SECRET`, `SHOPIFY_ADMIN_API_TOKEN`, `PUBLIC_GOOGLE_GTM_ID`
 
 ### Common Tasks
 - **Update GraphQL**: Edit `app/graphql/`, run `npm run codegen`
