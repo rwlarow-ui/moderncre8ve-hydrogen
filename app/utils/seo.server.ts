@@ -210,7 +210,7 @@ function product({
   );
   const selectedVariant = productData?.selectedOrFirstAvailableVariant;
   return {
-    title: productData?.seo?.title ?? productData?.title,
+    title: stripBrandSuffix(productData?.seo?.title) || productData?.title,
     description,
     media: selectedVariant?.image,
     jsonLd: productJsonLd({ product: productData, selectedVariant, url }),
@@ -307,7 +307,8 @@ function collection({
   url: Request["url"];
 }): SeoConfig {
   return {
-    title: collectionData?.seo?.title,
+    title:
+      stripBrandSuffix(collectionData?.seo?.title) || collectionData?.title,
     description: truncate(
       collectionData?.seo?.description ?? collectionData?.description ?? "",
     ),
@@ -391,7 +392,7 @@ function article({
   url: Request["url"];
 }): SeoConfig {
   return {
-    title: articleData?.seo?.title ?? articleData?.title,
+    title: stripBrandSuffix(articleData?.seo?.title) || articleData?.title,
     description: truncate(articleData?.seo?.description ?? ""),
     titleTemplate: "%s | ModernCre8ve",
     url,
@@ -436,7 +437,7 @@ function blog({
   url: Request["url"];
 }): SeoConfig {
   return {
-    title: blogData?.seo?.title,
+    title: stripBrandSuffix(blogData?.seo?.title) || blogData?.title,
     description: truncate(blogData?.seo?.description || ""),
     titleTemplate: "%s | ModernCre8ve",
     url,
@@ -459,7 +460,7 @@ function page({
 }): SeoConfig {
   return {
     description: truncate(pageData?.seo?.description || ""),
-    title: pageData?.seo?.title ?? pageData?.title,
+    title: stripBrandSuffix(pageData?.seo?.title) || pageData?.title,
     titleTemplate: "%s | ModernCre8ve",
     url,
     jsonLd: {
@@ -536,6 +537,18 @@ export const seoPayload = {
   product,
   root,
 };
+
+/**
+ * Strip trailing brand-name suffix from Shopify SEO titles to avoid
+ * duplication when the titleTemplate already appends "| ModernCre8ve".
+ * Handles variations like "| Moderncre8ve", "| ModernCre8ve", " - moderncre8ve".
+ */
+function stripBrandSuffix(title: string | undefined | null): string {
+  if (!title) {
+    return "";
+  }
+  return title.replace(/\s*[|\-–—]\s*modern\s*cre8ve\s*$/i, "").trim();
+}
 
 /**
  * Truncate a string to a given length, adding an ellipsis if it was truncated
