@@ -61,8 +61,9 @@ export async function loader({
   };
 }
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  return getEnhancedSeoMeta(data.seo as SeoConfig);
+export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
+  const canonical = `https://moderncre8ve.com${location.pathname.replace(/\/+$/, "") || "/"}`;
+  return getEnhancedSeoMeta(data.seo as SeoConfig, { canonicalUrl: canonical });
 };
 export default function AllProducts() {
   return <WeaverseContent />;

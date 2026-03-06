@@ -19,9 +19,33 @@ const DEFAULT_OG_IMAGE =
  * Drop-in replacement for `getSeoMeta()` in route meta functions.
  * Lives outside `.server.ts` so it can be used in client-side meta exports.
  */
+/**
+ * Options bag for extras that `getSeoMeta` can't derive from `SeoConfig`.
+ * Pass as the **last** argument (it's detected by the presence of the
+ * `canonicalUrl` key, so it won't collide with SeoConfig objects).
+ */
+interface EnhancedSeoOptions {
+  /** Canonical URL to inject if `getSeoMeta` didn't already produce one. */
+  canonicalUrl?: string;
+}
+
+function isOptions(
+  v: SeoConfig | EnhancedSeoOptions | undefined,
+): v is EnhancedSeoOptions {
+  return v !== undefined && "canonicalUrl" in v;
+}
+
 export function getEnhancedSeoMeta(
-  ...configs: (SeoConfig | undefined)[]
+  ...args: (SeoConfig | EnhancedSeoOptions | undefined)[]
 ): Record<string, string>[] {
+  // Separate the optional options bag from the SeoConfig entries
+  const last = args[args.length - 1];
+  const options: EnhancedSeoOptions = isOptions(last) ? last : {};
+  const configs = (isOptions(last) ? args.slice(0, -1) : args) as (
+    | SeoConfig
+    | undefined
+  )[];
+
   const seoMeta = getSeoMeta(
     ...configs.filter(Boolean),
   ) as Record<string, string>[];
@@ -69,6 +93,18 @@ export function getEnhancedSeoMeta(
     property: "twitter:image",
     content: ogImageTag?.content ?? DEFAULT_OG_IMAGE,
   });
+
+  // Ensure exactly one canonical link exists
+  const hasCanonical = seoMeta.some(
+    (tag) => tag.tagName === "link" && tag.rel === "canonical",
+  );
+  if (!hasCanonical && options.canonicalUrl) {
+    extra.push({
+      tagName: "link",
+      rel: "canonical",
+      href: options.canonicalUrl,
+    } as unknown as Record<string, string>);
+  }
 
   return [...seoMeta, ...extra];
 }

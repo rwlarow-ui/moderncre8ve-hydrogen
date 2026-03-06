@@ -84,23 +84,11 @@ export async function loader(args: LoaderFunctionArgs) {
 }
 
 export const meta = ({ data, location }: MetaArgs<typeof loader>) => {
-  const seoMeta = getEnhancedSeoMeta(data?.seo as SeoConfig);
-
-  // Build canonical URL from the current location
   const origin = "https://moderncre8ve.com";
   const canonicalPath = location.pathname.replace(/\/+$/, "") || "/";
   const canonical = `${origin}${canonicalPath}`;
 
-  // Only add canonical if getSeoMeta didn't already generate one
-  // (child routes with `url` in their SeoConfig get one automatically)
-  const hasCanonical = seoMeta.some(
-    (tag) => tag.tagName === "link" && tag.rel === "canonical",
-  );
-
-  return [
-    ...seoMeta,
-    ...(hasCanonical ? [] : [{ tagName: "link", rel: "canonical", href: canonical }]),
-  ];
+  return getEnhancedSeoMeta(data?.seo as SeoConfig, { canonicalUrl: canonical });
 };
 
 function App() {

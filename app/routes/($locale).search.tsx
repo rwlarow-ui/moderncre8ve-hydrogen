@@ -194,9 +194,11 @@ export async function loader({
   };
 }
 
-export const meta = ({ matches }: MetaArgs<typeof loader>) => {
+export const meta = ({ matches, location }: MetaArgs<typeof loader>) => {
+  const canonical = `https://moderncre8ve.com${location.pathname.replace(/\/+$/, "") || "/"}`;
   return getEnhancedSeoMeta(
     ...matches.map((match) => (match.data as any)?.seo).filter(Boolean),
+    { canonicalUrl: canonical },
   );
 };
 

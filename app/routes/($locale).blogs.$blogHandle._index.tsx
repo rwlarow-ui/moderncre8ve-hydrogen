@@ -65,8 +65,9 @@ export const loader = async (args: LoaderFunctionArgs) => {
   });
 };
 
-export const meta: MetaFunction<typeof loader> = ({ data: loaderData }) => {
-  return getEnhancedSeoMeta(loaderData?.seo as SeoConfig);
+export const meta: MetaFunction<typeof loader> = ({ data: loaderData, location }) => {
+  const canonical = `https://moderncre8ve.com${location.pathname.replace(/\/+$/, "") || "/"}`;
+  return getEnhancedSeoMeta(loaderData?.seo as SeoConfig, { canonicalUrl: canonical });
 };
 
 export default function Blogs() {
