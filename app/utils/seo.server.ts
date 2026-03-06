@@ -548,10 +548,16 @@ function stripBrandSuffix(title: string | undefined | null): string {
   if (!title) {
     return "";
   }
-  return title
+  const cleaned = title
     .replace(/\s*[|\-–—]\s*modern\s*cre8ve\s*$/i, "")
     .replace(/\s+(?:from|by)\s+modern\s*cre8ve\s*$/i, "")
     .trim();
+  // If after stripping the entire title is just the brand name, discard it
+  // so the fallback (e.g. collection.title) is used instead.
+  if (/^modern\s*cre8ve$/i.test(cleaned)) {
+    return "";
+  }
+  return cleaned;
 }
 
 /**
