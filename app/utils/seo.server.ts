@@ -98,6 +98,7 @@ function home(): SeoConfig {
     title: "Home",
     titleTemplate: "%s | ModernCre8ve",
     description: "Handcrafted modern furniture made in Cleveland, Ohio",
+    handle: "@moderncre8ve",
     robots: {
       noIndex: false,
       noFollow: false,
@@ -212,6 +213,8 @@ function product({
   return {
     title: stripBrandSuffix(productData?.seo?.title) || productData?.title,
     description,
+    handle: "@moderncre8ve",
+    url,
     media: selectedVariant?.image,
     jsonLd: productJsonLd({ product: productData, selectedVariant, url }),
   };
