@@ -20,19 +20,21 @@ import { layoutInputs } from "~/components/section";
 import { useAnimation } from "~/hooks/use-animation";
 import { cn } from "~/utils/cn";
 
-const variants = cva("flex h-full w-full items-end justify-center", {
-  variants: {
-    width: {
-      full: "",
-      stretch: "px-3 md:px-10 lg:px-16",
-      fixed: "mx-auto max-w-(--page-width) px-3 md:px-10 lg:px-16",
-    },
-    verticalPadding: {
-      none: "",
-      small: "py-4 md:py-6 lg:py-8",
-      medium: "py-16 md:py-16 lg:py-20",
-      large: "py-12 md:py-24 lg:py-32",
-    },
+const variants = cva(
+  "flex h-full w-full items-end justify-center pb-14 md:pb-0",
+  {
+    variants: {
+      width: {
+        full: "",
+        stretch: "px-3 md:px-10 lg:px-16",
+        fixed: "mx-auto max-w-(--page-width) px-3 md:px-10 lg:px-16",
+      },
+      verticalPadding: {
+        none: "",
+        small: "py-4 md:py-6 lg:py-8",
+        medium: "py-16 md:py-16 lg:py-20",
+        large: "py-8 md:py-24 lg:py-32",
+      },
     gap: {
       0: "",
       4: "space-y-1",
@@ -165,9 +167,9 @@ const Slide = forwardRef<HTMLDivElement, SlideProps>((props, ref) => {
     >
       <OverlayAndBackground {...props} />
       <div className={cn(variants({ width, gap, verticalPadding }))}>
-        <div className="flex max-w-full flex-col gap-4 md:flex-row md:gap-6">
-          {/* Left Column */}
-          <div className="flex w-full flex-col gap-(--gap) md:w-1/2">
+        <div className="flex max-w-full flex-col gap-3 md:flex-row md:gap-6">
+          {/* Left Column: Heading + Subheading */}
+          <div className="flex w-full flex-col gap-1 md:w-1/2 md:gap-(--gap)">
             {headingContent && (
               <Heading
                 content={headingContent}
@@ -194,8 +196,8 @@ const Slide = forwardRef<HTMLDivElement, SlideProps>((props, ref) => {
             )}
           </div>
 
-          {/* Right Column */}
-          <div className="flex w-full flex-col gap-(--gap) md:w-1/2 [&_.paragraph]:mx-[unset]">
+          {/* Right Column: Description + CTA */}
+          <div className="flex w-full flex-col gap-3 md:w-1/2 md:gap-(--gap) [&_.paragraph]:mx-[unset]">
             {paragraphContent && (
               <Paragraph
                 content={paragraphContent}
