@@ -19,6 +19,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
   useRouteError,
   useRouteLoaderData,
 } from "react-router";
@@ -34,7 +35,7 @@ import { GenericError } from "./components/root/generic-error";
 import { GlobalLoading } from "./components/root/global-loading";
 import { NotFound } from "./components/root/not-found";
 import styles from "./styles/app.css?url";
-import { DEFAULT_LOCALE } from "./utils/const";
+import { COUNTRIES, DEFAULT_LOCALE } from "./utils/const";
 import { loadCriticalData, loadDeferredData } from "./utils/root.server";
 import { getEnhancedSeoMeta } from "./utils/enhanced-seo-meta";
 import { GlobalStyle } from "./weaverse/style";
@@ -118,6 +119,50 @@ export function ErrorBoundary({ error }: { error: Error }) {
   );
 }
 
+const ORIGIN = "https://moderncre8ve.com";
+
+/**
+ * Generates `<link rel="alternate" hreflang="…">` tags for every locale
+ * defined in COUNTRIES, plus an `x-default` pointing at the US (default)
+ * version.  Rendered inside `<head>` by the Layout component so they
+ * appear on every page regardless of child-route meta overrides.
+ */
+function HreflangLinks() {
+  const { pathname } = useLocation();
+  // Strip trailing slashes for consistent URLs
+  const cleanPath = pathname.replace(/\/+$/, "") || "/";
+
+  // Build alternate links for all locales
+  const links: { hreflang: string; href: string }[] = [];
+
+  for (const [prefix, loc] of Object.entries(COUNTRIES)) {
+    const lang = loc.language.toLowerCase();
+    const country = loc.country.toLowerCase();
+    const hreflang = `${lang}-${country}`;
+
+    if (prefix === "default") {
+      // Default locale (US) has no prefix
+      links.push({ hreflang, href: `${ORIGIN}${cleanPath}` });
+    } else {
+      // Prefixed locales: /en-au, /en-ca, etc.
+      const localePath =
+        cleanPath === "/" ? prefix : `${prefix}${cleanPath}`;
+      links.push({ hreflang, href: `${ORIGIN}${localePath}` });
+    }
+  }
+
+  // x-default points to the default (US) version
+  links.push({ hreflang: "x-default", href: `${ORIGIN}${cleanPath}` });
+
+  return (
+    <>
+      {links.map(({ hreflang, href }) => (
+        <link key={hreflang} rel="alternate" hrefLang={hreflang} href={href} />
+      ))}
+    </>
+  );
+}
+
 export function Layout({ children }: { children?: React.ReactNode }) {
   const nonce = useNonce();
   const data = useRouteLoaderData<RootLoader>("root");
@@ -133,6 +178,7 @@ export function Layout({ children }: { children?: React.ReactNode }) {
         <link rel="stylesheet" href={styles} />
         <Meta />
         <Links />
+        <HreflangLinks />
         <GlobalStyle />
       </head>
       <body
