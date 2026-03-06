@@ -541,13 +541,17 @@ export const seoPayload = {
 /**
  * Strip trailing brand-name suffix from Shopify SEO titles to avoid
  * duplication when the titleTemplate already appends "| ModernCre8ve".
- * Handles variations like "| Moderncre8ve", "| ModernCre8ve", " - moderncre8ve".
+ * Handles variations like "| Moderncre8ve", "- ModernCre8ve",
+ * "from Moderncre8ve", "by moderncre8ve".
  */
 function stripBrandSuffix(title: string | undefined | null): string {
   if (!title) {
     return "";
   }
-  return title.replace(/\s*[|\-–—]\s*modern\s*cre8ve\s*$/i, "").trim();
+  return title
+    .replace(/\s*[|\-–—]\s*modern\s*cre8ve\s*$/i, "")
+    .replace(/\s+(?:from|by)\s+modern\s*cre8ve\s*$/i, "")
+    .trim();
 }
 
 /**
