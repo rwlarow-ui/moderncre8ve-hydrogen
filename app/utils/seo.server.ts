@@ -598,3 +598,4 @@ function truncate(str: string, num = 155): string {
   }
   return `${str.slice(0, num - 3)}...`;
 }
+

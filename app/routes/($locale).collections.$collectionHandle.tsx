@@ -2,7 +2,6 @@ import {
   Analytics,
   flattenConnection,
   getPaginationVariables,
-  getSeoMeta,
 } from "@shopify/hydrogen";
 import type {
   ProductCollectionSortKeys,
@@ -22,6 +21,7 @@ import { routeHeaders } from "~/utils/cache";
 import { PAGINATION_SIZE } from "~/utils/const";
 import { FILTER_URL_PREFIX, type SortParam } from "~/utils/filter";
 import { redirectIfHandleIsLocalized } from "~/utils/redirect";
+import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { seoPayload } from "~/utils/seo.server";
 import { loadPageWithFallback } from "~/utils/weaverse-fallback.server";
 import { WeaverseContent } from "~/weaverse";
@@ -158,7 +158,7 @@ export async function loader({ params, request, context }: LoaderFunctionArgs) {
 }
 
 export const meta = ({ matches }: MetaArgs<typeof loader>) => {
-  return getSeoMeta(
+  return getEnhancedSeoMeta(
     ...matches.map((match) => (match.data as any)?.seo).filter(Boolean),
   );
 };

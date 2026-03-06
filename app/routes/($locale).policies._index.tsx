@@ -1,6 +1,5 @@
 import { FileTextIcon } from "@phosphor-icons/react";
 import type { SeoConfig } from "@shopify/hydrogen";
-import { getSeoMeta } from "@shopify/hydrogen";
 import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import type { MetaFunction } from "react-router";
 import { useLoaderData } from "react-router";
@@ -10,6 +9,7 @@ import { BreadCrumb } from "~/components/breadcrumb";
 import { Link } from "~/components/link";
 import { Section } from "~/components/section";
 import { routeHeaders } from "~/utils/cache";
+import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { seoPayload } from "~/utils/seo.server";
 
 export const headers = routeHeaders;
@@ -43,7 +43,7 @@ export async function loader({
 }
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  return getSeoMeta(data.seo as SeoConfig);
+  return getEnhancedSeoMeta(data.seo as SeoConfig);
 };
 
 export default function Policies() {

@@ -1,7 +1,6 @@
 import {
   Analytics,
   getAdjacentAndFirstAvailableVariants,
-  getSeoMeta,
   useOptimisticVariant,
 } from "@shopify/hydrogen";
 import type {
@@ -27,6 +26,7 @@ import {
   redirectIfCombinedListing,
   redirectIfHandleIsLocalized,
 } from "~/utils/redirect";
+import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { seoPayload } from "~/utils/seo.server";
 import { loadPageWithFallback } from "~/utils/weaverse-fallback.server";
 import { WeaverseContent } from "~/weaverse";
@@ -100,7 +100,7 @@ export async function action({
 }
 
 export const meta = ({ matches }: MetaArgs<typeof loader>) => {
-  return getSeoMeta(
+  return getEnhancedSeoMeta(
     ...matches.map((match) => (match.data as any)?.seo).filter(Boolean),
   );
 };

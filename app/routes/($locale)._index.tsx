@@ -1,10 +1,11 @@
 import type { SeoConfig } from "@shopify/hydrogen";
-import { AnalyticsPageType, getSeoMeta } from "@shopify/hydrogen";
+import { AnalyticsPageType } from "@shopify/hydrogen";
 import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import type { PageType } from "@weaverse/hydrogen";
 import type { MetaFunction } from "react-router";
 import type { ShopQuery } from "storefront-api.generated";
 import { routeHeaders } from "~/utils/cache";
+import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { seoPayload } from "~/utils/seo.server";
 import { loadPageWithFallback } from "~/utils/weaverse-fallback.server";
 import { validateWeaverseData, WeaverseContent } from "~/weaverse";
@@ -45,7 +46,7 @@ export async function loader(args: LoaderFunctionArgs) {
 }
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
-  return getSeoMeta(data?.seo as SeoConfig);
+  return getEnhancedSeoMeta(data?.seo as SeoConfig);
 };
 export default function Homepage() {
   return <WeaverseContent />;

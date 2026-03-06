@@ -3,7 +3,6 @@ import * as Dialog from "@radix-ui/react-dialog";
 import {
   Analytics,
   getPaginationVariables,
-  getSeoMeta,
   Pagination,
 } from "@shopify/hydrogen";
 import type { ProductFilter } from "@shopify/hydrogen/storefront-api-types";
@@ -30,6 +29,7 @@ import { cn } from "~/utils/cn";
 import { PAGINATION_SIZE } from "~/utils/const";
 import type { SortParam } from "~/utils/filter";
 import { FILTER_URL_PREFIX } from "~/utils/filter";
+import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { seoPayload } from "~/utils/seo.server";
 
 export async function loader({
@@ -195,7 +195,7 @@ export async function loader({
 }
 
 export const meta = ({ matches }: MetaArgs<typeof loader>) => {
-  return getSeoMeta(
+  return getEnhancedSeoMeta(
     ...matches.map((match) => (match.data as any)?.seo).filter(Boolean),
   );
 };
