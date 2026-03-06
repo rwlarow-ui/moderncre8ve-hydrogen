@@ -266,7 +266,11 @@ function collectionJsonLd({
     {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      name: collectionData?.seo?.title ?? collectionData?.title ?? "",
+      name:
+        stripBrandSuffix(collectionData?.seo?.title) ||
+        stripBrandSuffix(collectionData?.title) ||
+        collectionData?.title ||
+        "",
       description: truncate(
         collectionData?.seo?.description ?? collectionData?.description ?? "",
       ),
@@ -308,7 +312,9 @@ function collection({
 }): SeoConfig {
   return {
     title:
-      stripBrandSuffix(collectionData?.seo?.title) || collectionData?.title,
+      stripBrandSuffix(collectionData?.seo?.title) ||
+      stripBrandSuffix(collectionData?.title) ||
+      collectionData?.title,
     description: truncate(
       collectionData?.seo?.description ?? collectionData?.description ?? "",
     ),
@@ -549,8 +555,18 @@ function stripBrandSuffix(title: string | undefined | null): string {
     return "";
   }
   const cleaned = title
+    // 1. Strip trailing brand after a separator: "… | Moderncre8ve"
     .replace(/\s*[|\-–—]\s*modern\s*cre8ve\s*$/i, "")
+    // 2. Strip trailing "from/by Moderncre8ve"
     .replace(/\s+(?:from|by)\s+modern\s*cre8ve\s*$/i, "")
+    // 3. Strip mid-string brand between separators:
+    //    "… | MODERNCRE8VE | …" or "… | MODERNCRE8VE: …"
+    .replace(
+      /\s*[|\-–—]\s*modern\s*cre8ve\s*[:||\-–—]\s*/i,
+      " | ",
+    )
+    // 4. Strip leading brand with separator: "MODERNCRE8VE: …" or "MODERNCRE8VE | …"
+    .replace(/^modern\s*cre8ve\s*[:||\-–—]\s*/i, "")
     .trim();
   // If after stripping the entire title is just the brand name, discard it
   // so the fallback (e.g. collection.title) is used instead.
