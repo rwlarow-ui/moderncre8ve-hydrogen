@@ -311,7 +311,7 @@ function collection({
     description: truncate(
       collectionData?.seo?.description ?? collectionData?.description ?? "",
     ),
-    titleTemplate: "%s | Collection",
+    titleTemplate: "%s | ModernCre8ve",
     url,
     media: {
       type: "image",
@@ -368,7 +368,7 @@ function listCollections({
 }): SeoConfig {
   return {
     title: "Collections",
-    titleTemplate: "%s | Collections",
+    titleTemplate: "%s | ModernCre8ve",
     description: "All collections",
     url,
     jsonLd: collectionsJsonLd({ collections, url }),
@@ -393,7 +393,7 @@ function article({
   return {
     title: articleData?.seo?.title ?? articleData?.title,
     description: truncate(articleData?.seo?.description ?? ""),
-    titleTemplate: "%s | Journal",
+    titleTemplate: "%s | ModernCre8ve",
     url,
     media: {
       type: "image",
@@ -438,7 +438,7 @@ function blog({
   return {
     title: blogData?.seo?.title,
     description: truncate(blogData?.seo?.description || ""),
-    titleTemplate: "%s | Blog",
+    titleTemplate: "%s | ModernCre8ve",
     url,
     jsonLd: {
       "@context": "https://schema.org",
@@ -460,7 +460,7 @@ function page({
   return {
     description: truncate(pageData?.seo?.description || ""),
     title: pageData?.seo?.title ?? pageData?.title,
-    titleTemplate: "%s | Page",
+    titleTemplate: "%s | ModernCre8ve",
     url,
     jsonLd: {
       "@context": "https://schema.org",
@@ -480,7 +480,7 @@ function policy({
   return {
     description: truncate(policyData?.body ?? ""),
     title: policyData?.title,
-    titleTemplate: "%s | Policy",
+    titleTemplate: "%s | ModernCre8ve",
     url,
   };
 }
@@ -505,7 +505,7 @@ function policies({
     });
   return {
     title: "Policies",
-    titleTemplate: "%s | Policies",
+    titleTemplate: "%s | ModernCre8ve",
     description: "ModernCre8ve store policies",
     jsonLd: [
       {

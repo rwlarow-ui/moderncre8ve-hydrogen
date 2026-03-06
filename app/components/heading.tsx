@@ -101,7 +101,7 @@ const Heading = forwardRef<
   HeadingProps & Partial<HydrogenComponentProps>
 >((props, ref) => {
   const {
-    as: Tag = "h4",
+    as: Tag = "h2",
     content,
     size,
     mobileSize,
@@ -168,7 +168,7 @@ export const headingInputs: InspectorGroup["inputs"] = [
         { value: "h6", label: "<h6> (Heading 6)" },
       ],
     },
-    defaultValue: "h4",
+    defaultValue: "h2",
   },
   {
     type: "color",

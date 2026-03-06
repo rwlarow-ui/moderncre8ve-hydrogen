@@ -174,9 +174,9 @@ const ProductInformation = forwardRef<
                 {showVendor && vendor && (
                   <span className="text-body-subtle">{vendor}</span>
                 )}
-                <h3 className="font-normal uppercase tracking-tight">
+                <h1 className="font-normal uppercase tracking-tight">
                   {title}
-                </h3>
+                </h1>
               </div>
 
               <div className="space-y-5 divide-y divide-line-subtle [&>*:not(:last-child)]:pb-3">

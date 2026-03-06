@@ -34,9 +34,8 @@ export function ToolsBar({
     <div className="py-3">
       <div className="flex items-stretch justify-between gap-4 md:gap-8">
         <div className="hidden flex-col justify-start gap-4 self-stretch md:flex">
-          <h4 className="uppercase tracking-tighter">{collection.title}</h4>
           {showProductsCount && (
-            <span className="hidden py-2 uppercase md:inline">
+            <span className="py-2 uppercase">
               products ({collection?.products.nodes.length})
             </span>
           )}

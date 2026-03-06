@@ -82,8 +82,18 @@ export async function loader(args: LoaderFunctionArgs) {
   };
 }
 
-export const meta = ({ data }: MetaArgs<typeof loader>) => {
-  return getSeoMeta(data?.seo as SeoConfig);
+export const meta = ({ data, location }: MetaArgs<typeof loader>) => {
+  const seoMeta = getSeoMeta(data?.seo as SeoConfig);
+
+  // Build canonical URL from the current location
+  const origin = "https://moderncre8ve.com";
+  const canonicalPath = location.pathname.replace(/\/+$/, "") || "/";
+  const canonical = `${origin}${canonicalPath}`;
+
+  return [
+    ...seoMeta,
+    { tagName: "link", rel: "canonical", href: canonical },
+  ];
 };
 
 function App() {

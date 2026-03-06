@@ -68,6 +68,17 @@ export default {
     executionContext: ExecutionContext,
   ): Promise<Response> {
     try {
+      // Trailing-slash normalization: redirect /path/ → /path (except root /)
+      const url = new URL(request.url);
+      if (url.pathname !== "/" && url.pathname.endsWith("/")) {
+        const cleanUrl = new URL(url);
+        cleanUrl.pathname = url.pathname.replace(/\/+$/, "");
+        return new Response(null, {
+          status: 301,
+          headers: { Location: cleanUrl.toString() },
+        });
+      }
+
       const appLoadContext = await createAppLoadContext(
         request,
         env,
