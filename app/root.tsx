@@ -127,12 +127,25 @@ const ORIGIN = "https://moderncre8ve.com";
  * version.  Rendered inside `<head>` by the Layout component so they
  * appear on every page regardless of child-route meta overrides.
  */
+/** All known locale prefixes (e.g. "/en-au", "/en-gb") */
+const LOCALE_PREFIXES = Object.keys(COUNTRIES).filter((k) => k !== "default");
+
 function HreflangLinks() {
   const { pathname } = useLocation();
-  // Strip trailing slashes for consistent URLs
-  const cleanPath = pathname.replace(/\/+$/, "") || "/";
 
-  // Build alternate links for all locales
+  // Strip the current locale prefix (if any) to get the base path.
+  // E.g. "/en-gb/products/foo" → "/products/foo", "/en-gb" → "/"
+  let basePath = pathname;
+  for (const prefix of LOCALE_PREFIXES) {
+    if (pathname === prefix || pathname.startsWith(`${prefix}/`)) {
+      basePath = pathname.slice(prefix.length) || "/";
+      break;
+    }
+  }
+  // Normalise trailing slashes
+  basePath = basePath.replace(/\/+$/, "") || "/";
+
+  // Build alternate links for every locale
   const links: { hreflang: string; href: string }[] = [];
 
   for (const [prefix, loc] of Object.entries(COUNTRIES)) {
@@ -142,17 +155,17 @@ function HreflangLinks() {
 
     if (prefix === "default") {
       // Default locale (US) has no prefix
-      links.push({ hreflang, href: `${ORIGIN}${cleanPath}` });
+      links.push({ hreflang, href: `${ORIGIN}${basePath}` });
     } else {
       // Prefixed locales: /en-au, /en-ca, etc.
       const localePath =
-        cleanPath === "/" ? prefix : `${prefix}${cleanPath}`;
+        basePath === "/" ? prefix : `${prefix}${basePath}`;
       links.push({ hreflang, href: `${ORIGIN}${localePath}` });
     }
   }
 
   // x-default points to the default (US) version
-  links.push({ hreflang: "x-default", href: `${ORIGIN}${cleanPath}` });
+  links.push({ hreflang: "x-default", href: `${ORIGIN}${basePath}` });
 
   return (
     <>
