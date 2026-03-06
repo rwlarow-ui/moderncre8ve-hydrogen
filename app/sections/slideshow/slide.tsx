@@ -167,9 +167,9 @@ const Slide = forwardRef<HTMLDivElement, SlideProps>((props, ref) => {
     >
       <OverlayAndBackground {...props} />
       <div className={cn(variants({ width, gap, verticalPadding }))}>
-        <div className="flex max-w-full flex-col gap-3 md:flex-row md:gap-6">
+        <div className="flex max-w-full flex-col gap-3 lg:flex-row lg:gap-6 [text-shadow:_0_1px_8px_rgba(0,0,0,0.4)]">
           {/* Left Column: Heading + Subheading */}
-          <div className="flex w-full flex-col gap-1 md:w-1/2 md:gap-(--gap)">
+          <div className="flex w-full flex-col gap-1 lg:w-1/2 lg:gap-(--gap)">
             {headingContent && (
               <Heading
                 content={headingContent}
@@ -197,7 +197,7 @@ const Slide = forwardRef<HTMLDivElement, SlideProps>((props, ref) => {
           </div>
 
           {/* Right Column: Description + CTA */}
-          <div className="flex w-full flex-col gap-3 md:w-1/2 md:gap-(--gap) [&_.paragraph]:mx-[unset]">
+          <div className="flex w-full flex-col gap-3 lg:w-1/2 lg:gap-(--gap) [&_.paragraph]:mx-[unset]">
             {paragraphContent && (
               <Paragraph
                 content={paragraphContent}
