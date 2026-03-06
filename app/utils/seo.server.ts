@@ -10,6 +10,7 @@ import type {
 } from "@shopify/hydrogen/storefront-api-types";
 import type { BreadcrumbList, CollectionPage, Offer } from "schema-dts";
 import type { ProductQuery, ShopFragment } from "storefront-api.generated";
+import { collectionFaqs } from "~/utils/collection-faqs";
 
 function root({
   shop,
@@ -244,7 +245,7 @@ function collectionJsonLd({
       };
     });
 
-  return [
+  const jsonLdItems: SeoConfig["jsonLd"] = [
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
@@ -277,6 +278,25 @@ function collectionJsonLd({
       },
     },
   ];
+
+  // Inject FAQPage schema if FAQs exist for this collection
+  const faqs = collectionFaqs[collectionData.handle];
+  if (faqs?.length) {
+    (jsonLdItems as any[]).push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    });
+  }
+
+  return jsonLdItems;
 }
 
 function collection({

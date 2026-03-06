@@ -48,28 +48,40 @@ let HighlightsBadge = forwardRef<HTMLDivElement, HighlightsBadgeProps>(
     const renderIcon = (type: string) => {
       switch (type) {
         case "circle":
+          // Hand / Craftsmanship icon
           return (
-            <div
-              className="h-10 w-10 flex-shrink-0 rounded-full"
-              style={{ backgroundColor: badgeTextColor }}
-            />
+            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={badgeTextColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2" />
+                <path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2" />
+                <path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8" />
+                <path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 16" />
+              </svg>
+            </div>
           );
         case "square":
+          // Tree / Solid wood icon
           return (
-            <div
-              className="h-9 w-9 flex-shrink-0"
-              style={{ backgroundColor: badgeTextColor }}
-            />
+            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={badgeTextColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 22v-7" />
+                <path d="M17 8v.8A6 6 0 0 1 13.8 20H10.2A6 6 0 0 1 7 8.8V8a5 5 0 1 1 10 0Z" />
+              </svg>
+            </div>
           );
         case "triangle":
+          // Ruler + Pencil / Custom design icon
           return (
-            <div
-              className="h-12 w-12 flex-shrink-0"
-              style={{
-                clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
-                backgroundColor: badgeTextColor,
-              }}
-            />
+            <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={badgeTextColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="m15 5 4 4" />
+                <path d="M13 7 8.7 2.7a1 1 0 0 0-1.4 0l-4 4a1 1 0 0 0 0 1.4L8 13" />
+                <path d="m8 6 2-2" />
+                <path d="m2 22 5.5-1.5L21.17 6.83a2.82 2.82 0 0 0-4-4L3.5 16.5Z" />
+                <path d="m18 16 2-2" />
+                <path d="m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17" />
+              </svg>
+            </div>
           );
         case "custom":
           if (!customIcon) {
@@ -172,9 +184,9 @@ export let schema = createSchema({
           label: "Icon Type",
           configs: {
             options: [
-              { value: "circle", label: "Circle" },
-              { value: "square", label: "Square" },
-              { value: "triangle", label: "Triangle" },
+              { value: "circle", label: "Craftsmanship (Hand)" },
+              { value: "square", label: "Hardwood (Tree)" },
+              { value: "triangle", label: "Custom Design (Ruler)" },
               { value: "custom", label: "Custom Image" },
             ],
           },
