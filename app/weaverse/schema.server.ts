@@ -1200,7 +1200,7 @@ export const themeSchema: HydrogenThemeSchema = {
           name: "bio",
           label: "Store bio",
           defaultValue:
-            "<p>Handcrafted modern furniture made in Cleveland, Ohio. We specialize in mid-century modern, Scandinavian, and Japandi-inspired solid wood furniture.</p><p>Phone: (216) 502-0755</p>",
+            "<p>Design-forward furniture crafted from American hardwoods. Designed in Cleveland, built by hand in Ohio.</p><p>Phone: (216) 502-0755</p>",
         },
         {
           type: "heading",

@@ -254,7 +254,7 @@ export const schema = createSchema({
           type: "text",
           name: "headingContent",
           label: "Heading content",
-          defaultValue: "Handcrafted Modern Furniture",
+          defaultValue: "Furniture for People Who Notice",
           placeholder: "Enter heading text",
         },
         ...headingInputs.map((input) => {
@@ -275,7 +275,7 @@ export const schema = createSchema({
           type: "text",
           name: "subheadingContent",
           label: "Subheading content",
-          defaultValue: "Made by Amish Artisans in Ohio",
+          defaultValue: "Modern Design. Old-World Craft. No Compromise.",
           placeholder: "Enter subheading text",
         },
         {
@@ -349,7 +349,7 @@ export const schema = createSchema({
           name: "paragraphContent",
           label: "Paragraph content",
           defaultValue:
-            "Solid hardwood furniture designed for modern living — built one piece at a time in Ohio.",
+            "Every piece is designed in Cleveland and built by hand from American hardwood — because good taste deserves real craftsmanship.",
           placeholder: "Enter paragraph text",
         },
         {
@@ -463,16 +463,16 @@ export const schema = createSchema({
     backgroundFit: "cover",
     enableOverlay: true,
     overlayOpacity: 50,
-    headingContent: "Handcrafted Modern Furniture",
+    headingContent: "Furniture for People Who Notice",
     color: "#fff",
     size: "scale",
-    subheadingContent: "Made by Amish Artisans in Ohio",
+    subheadingContent: "Modern Design. Old-World Craft. No Compromise.",
     subheadingColor: "#fff",
     paragraphContent:
-      "Solid hardwood furniture designed for modern living — built one piece at a time in Ohio.",
+      "Every piece is designed in Cleveland and built by hand from American hardwood — because good taste deserves real craftsmanship.",
     paragraphColor: "#fff",
     paragraphWidth: "full",
-    buttonContent: "Shop Collections",
+    buttonContent: "Explore the Collection",
     to: "/collections",
     variant: "decor",
     textColorDecor: "#fff",

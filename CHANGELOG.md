@@ -1,6 +1,24 @@
 # ModernCre8ve Hydrogen Storefront
 
-## Migration Status: Phase 4 — Done | Phase 5 — Launch (Pending)
+## Migration Status: Phase 5 — Launch Complete
+
+---
+
+## 1.4.0 — 2026-03-05
+
+### Phase 5: Launch — DNS Cutover to moderncre8ve.com
+- Assigned `moderncre8ve.com` domain in Shopify Admin
+- DNS cutover complete — site live at [moderncre8ve.com](https://moderncre8ve.com/)
+- Removed password protection from old site
+
+---
+
+## 1.3.9 — 2026-03-05
+
+### GA4 / GTM Implementation
+- Integrated Google Tag Manager (`G-R1KFYYKE48`) via `PUBLIC_GOOGLE_GTM_ID` env var
+- GA4 property `251836602` (Measurement ID: `G-G4Q4Z6MM4B`) connected for site-wide analytics
+- Google Cloud project: `mindful-quasar-486518-r9`
 
 ---
 

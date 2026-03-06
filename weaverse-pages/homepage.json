@@ -58,42 +58,42 @@
       "id": "home-slide-1",
       "type": "slideshow-slide",
       "data": {
-        "headingContent": "Handcrafted Modern Furniture",
-        "subheadingContent": "Made by Amish Artisans in Ohio",
-        "paragraphContent": "Solid hardwood furniture designed for modern living \u2014 built one piece at a time in Ohio.",
-        "buttonContent": "Shop Collections",
+        "headingContent": "Furniture for People Who Notice",
+        "subheadingContent": "Modern Design. Old-World Craft. No Compromise.",
+        "paragraphContent": "Every piece is designed in Cleveland and built by hand from American hardwood \u2014 because good taste deserves real craftsmanship.",
+        "buttonContent": "Explore the Collection",
         "to": "/collections",
         "enableOverlay": true,
         "overlayOpacity": 40,
-        "backgroundImage": "/images/heroes/dsc_1417-edit_1.jpg"
+        "backgroundImage": "/images/heroes/hero-credenza-lifestyle.jpg"
       }
     },
     {
       "id": "home-slide-2",
       "type": "slideshow-slide",
       "data": {
-        "headingContent": "Mid-Century Modern Dining",
-        "subheadingContent": "Solid Hardwood. Built to Last.",
-        "paragraphContent": "Gather around a table built to last for generations \u2014 handcrafted from domestic hardwoods.",
-        "buttonContent": "Explore Dining",
+        "headingContent": "The Dining Table You'll Never Replace",
+        "subheadingContent": "Mid-Century. Solid Walnut. Built for the Long Haul.",
+        "paragraphContent": "Designed to anchor your home for decades \u2014 not just pass through it.",
+        "buttonContent": "Shop Dining",
         "to": "/collections/dining",
         "enableOverlay": true,
         "overlayOpacity": 40,
-        "backgroundImage": "/images/heroes/img_1524.jpg"
+        "backgroundImage": "/images/heroes/hero-oval-dining-table.jpg"
       }
     },
     {
       "id": "home-slide-3",
       "type": "slideshow-slide",
       "data": {
-        "headingContent": "Scandinavian & Japandi Design",
-        "subheadingContent": "Where Simplicity Meets Craftsmanship",
-        "paragraphContent": "Clean lines, natural materials, and timeless design \u2014 furniture that brings calm to every room.",
+        "headingContent": "Scandinavian Calm. Japandi Soul.",
+        "subheadingContent": "For Spaces That Breathe",
+        "paragraphContent": "Minimal lines and warm hardwoods \u2014 furniture that makes a room feel finished, not filled.",
         "buttonContent": "View Collection",
         "to": "/collections/scandinavian-design-furniture",
         "enableOverlay": true,
         "overlayOpacity": 40,
-        "backgroundImage": "/images/heroes/20241114_202310_img_2586_4af8f63f-4ad5-4678-af69-b36481707fe1.jpg"
+        "backgroundImage": "/images/heroes/hero-japandi-sideboard.jpg"
       }
     },
     {
@@ -121,8 +121,8 @@
       "data": {
         "iconType": "circle",
         "badgeTextColor": "#29231E",
-        "headingContent": "Handcrafted in Ohio",
-        "content": "Every piece built by skilled Amish artisans using time-honored techniques.",
+        "headingContent": "Designed, Not Decorated",
+        "content": "Every detail is intentional \u2014 from the grain direction to the joint.",
         "color": "#29231E"
       }
     },
@@ -132,8 +132,8 @@
       "data": {
         "iconType": "square",
         "badgeTextColor": "#29231E",
-        "headingContent": "Solid Hardwood",
-        "content": "Domestic-sourced lumber, built to last for generations.",
+        "headingContent": "Real Hardwood, No Shortcuts",
+        "content": "Walnut, white oak, maple, cherry \u2014 sourced from American mills.",
         "color": "#29231E"
       }
     },
@@ -143,8 +143,8 @@
       "data": {
         "iconType": "triangle",
         "badgeTextColor": "#29231E",
-        "headingContent": "Custom Orders",
-        "content": "Personalize any piece to fit your space \u2014 choose your wood, finish, and dimensions.",
+        "headingContent": "Built to Your Specs",
+        "content": "60% of our orders are custom. Dimensions, species, finish \u2014 your call.",
         "color": "#29231E"
       }
     },
@@ -166,8 +166,8 @@
       "data": {
         "displayMode": "vertical",
         "contentPosition": "center center",
-        "headingContent": "Best-Selling Handcrafted Furniture",
-        "paragraphContent": "Our most loved solid wood pieces \u2014 handcrafted by Amish artisans and built to last for generations.",
+        "headingContent": "Designs Worth the Wait",
+        "paragraphContent": "The pieces our customers keep coming back for \u2014 and that never go out of style.",
         "buttonContent": "SHOP ALL",
         "to": "/collections/best-sellers"
       }
@@ -202,8 +202,8 @@
       "data": {
         "displayMode": "vertical",
         "contentPosition": "center center",
-        "headingContent": "Shop Handcrafted Wood Furniture by Room",
-        "paragraphContent": "From solid hardwood dining tables to bedroom furniture \u2014 explore our handcrafted collections.",
+        "headingContent": "Find Your Style",
+        "paragraphContent": "Mid-century. Scandinavian. Japandi. Explore the collections that define modern living.",
         "buttonContent": "VIEW ALL",
         "to": "/collections"
       }
@@ -288,14 +288,14 @@
       "id": "home-iwt-about-sub",
       "type": "subheading",
       "data": {
-        "content": "Our Story"
+        "content": "The Studio"
       }
     },
     {
       "id": "home-iwt-about-heading",
       "type": "heading",
       "data": {
-        "content": "Where Heritage Meets Modern Design",
+        "content": "Design-Obsessed Since 2013",
         "as": "h2"
       }
     },
@@ -303,7 +303,7 @@
       "id": "home-iwt-about-paragraph",
       "type": "paragraph",
       "data": {
-        "content": "Founded in Cleveland, Ohio in 2013, ModernCre8ve marries modern design with the world-class execution of old-world Amish craftsmen. Every piece is handmade one at a time using domestic-sourced hardwood lumber."
+        "content": "ModernCre8ve started with a simple belief: great design shouldn\u2019t require a compromise on quality. We design every piece in our Cleveland studio and build with Amish craftsmen who\u2019ve been perfecting their technique for generations. The result is furniture that looks as intentional as it feels."
       }
     },
     {
@@ -333,8 +333,8 @@
       "data": {
         "displayMode": "vertical",
         "contentPosition": "center center",
-        "headingContent": "See Our Workshop",
-        "paragraphContent": "Step inside our Cleveland studio and see how every piece of ModernCre8ve furniture comes to life."
+        "headingContent": "From Sketch to Sawdust",
+        "paragraphContent": "See how a design becomes a piece of furniture \u2014 from our Cleveland studio to the workshop floor."
       }
     },
     {
@@ -469,7 +469,7 @@
       "id": "home-newsletter-heading",
       "type": "heading",
       "data": {
-        "content": "Join the ModernCre8ve Family",
+        "content": "Design Notes",
         "as": "h2"
       }
     },
@@ -477,7 +477,7 @@
       "id": "home-newsletter-paragraph",
       "type": "paragraph",
       "data": {
-        "content": "Be the first to know about new handcrafted furniture designs, exclusive offers, and behind-the-scenes looks at our Cleveland workshop."
+        "content": "New designs, material deep-dives, and studio updates \u2014 no spam, just substance."
       }
     },
     {

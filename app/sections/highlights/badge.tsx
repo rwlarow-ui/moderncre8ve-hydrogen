@@ -218,7 +218,7 @@ export let schema = createSchema({
           name: "headingContent",
           label: "Heading content",
           defaultValue:
-            "Quality furniture made to last through moves and milestones.",
+            "Every detail is intentional — from the grain direction to the joint.",
           placeholder: "Enter heading text",
         },
         ...headingInputs.map((input) => {
@@ -236,7 +236,7 @@ export let schema = createSchema({
   presets: {
     iconType: "circle",
     badgeTextColor: "#29231E",
-    headingContent: "Handcrafted in Ohio",
+    headingContent: "Designed, Not Decorated",
     color: "#29231E",
   },
 });
