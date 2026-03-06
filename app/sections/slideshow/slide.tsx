@@ -108,7 +108,7 @@ const Slide = forwardRef<HTMLDivElement, SlideProps>((props, ref) => {
     // Heading props
     headingContent,
     headingTagName,
-    color,
+    color = "#fff",
     size,
     mobileSize,
     desktopSize,
@@ -121,14 +121,14 @@ const Slide = forwardRef<HTMLDivElement, SlideProps>((props, ref) => {
     // Subheading props
     subheadingContent,
     subheadingTag = "p",
-    subheadingColor,
+    subheadingColor = "#fff",
     subheadingSize,
     subheadingWeight,
     subheadingAlignment,
     // Paragraph props
     paragraphContent,
     paragraphTag = "p",
-    paragraphColor,
+    paragraphColor = "#fff",
     paragraphSize,
     paragraphAlignment,
     paragraphWidth,
