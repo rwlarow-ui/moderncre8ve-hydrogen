@@ -91,9 +91,15 @@ export const meta = ({ data, location }: MetaArgs<typeof loader>) => {
   const canonicalPath = location.pathname.replace(/\/+$/, "") || "/";
   const canonical = `${origin}${canonicalPath}`;
 
+  // Only add canonical if getSeoMeta didn't already generate one
+  // (child routes with `url` in their SeoConfig get one automatically)
+  const hasCanonical = seoMeta.some(
+    (tag) => tag.tagName === "link" && tag.rel === "canonical",
+  );
+
   return [
     ...seoMeta,
-    { tagName: "link", rel: "canonical", href: canonical },
+    ...(hasCanonical ? [] : [{ tagName: "link", rel: "canonical", href: canonical }]),
   ];
 };
 
