@@ -615,6 +615,14 @@ export function Footer() {
             <div className="grid grid-cols-1 items-center justify-center gap-y-6 pt-6 pb-6 md:grid-cols-2 md:pt-0 lg:grid-cols-3">
               <p className="order-3 md:col-span-2 lg:order-none lg:col-span-1">
                 {copyright}
+                <span className="mx-2">·</span>
+                <Link
+                  to="/sitemap-html"
+                  className="text-body-subtle underline-offset-2 hover:underline"
+                  prefetch="intent"
+                >
+                  Sitemap
+                </Link>
               </p>
               <div className="order-1 flex items-center justify-start lg:justify-center">
                 <CountrySelector
