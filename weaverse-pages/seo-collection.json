@@ -1,17 +1,17 @@
 {
-  "rootId": "collection-root",
+  "rootId": "seo-collection-root",
   "items": [
     {
-      "id": "collection-root",
+      "id": "seo-collection-root",
       "type": "main",
       "children": [
-        { "id": "collection-filters" },
-        { "id": "collection-seo-content" },
-        { "id": "collection-faq-section" }
+        { "id": "seo-coll-filters" },
+        { "id": "seo-coll-content" },
+        { "id": "seo-coll-faq" }
       ]
     },
     {
-      "id": "collection-filters",
+      "id": "seo-coll-filters",
       "type": "collection-filters",
       "data": {
         "showBreadcrumb": true,
@@ -28,14 +28,14 @@
         "showFiltersCount": true,
         "enableSwatches": true,
         "displayAsButtonFor": "Size, More filters",
-        "productsPerRowDesktop": "2",
+        "productsPerRowDesktop": "3",
         "productsPerRowMobile": "1",
         "loadPrevText": "Load previous",
         "loadMoreText": "Load more products"
       }
     },
     {
-      "id": "collection-seo-content",
+      "id": "seo-coll-content",
       "type": "collection-seo-block",
       "data": {
         "showHeading": true,
@@ -44,7 +44,7 @@
       }
     },
     {
-      "id": "collection-faq-section",
+      "id": "seo-coll-faq",
       "type": "collection-faq",
       "data": {
         "heading": "Frequently Asked Questions",

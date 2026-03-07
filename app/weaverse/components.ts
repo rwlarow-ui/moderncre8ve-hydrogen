@@ -15,8 +15,10 @@ import * as BeforeAndAfter from "~/sections/before-and-after";
 import * as BeforeAndAfterSlide from "~/sections/before-and-after/slider";
 import * as BlogPost from "~/sections/blog-post";
 import * as Blogs from "~/sections/blogs";
+import * as CollectionFaq from "~/sections/collection-faq";
 import * as CollectionFilters from "~/sections/collection-filters";
 import * as CollectionListDynamic from "~/sections/collection-list-dynamic";
+import * as CollectionSeoBlock from "~/sections/collection-seo-block";
 import * as CollectionListDynamicItems from "~/sections/collection-list-dynamic/collection-items";
 import * as CollectionContentDynamic from "~/sections/collection-list-dynamic/content";
 import * as CollectionListItems from "~/sections/collection-list-page";
@@ -149,12 +151,14 @@ export const components: HydrogenComponent[] = [
   ProductInformation,
   RelatedProducts,
   RelatedArticles,
+  CollectionFaq,
   CollectionFilters,
   CollectionList,
   CollectionListItems,
   CollectionListDynamic,
   CollectionContentDynamic,
   CollectionListDynamicItems,
+  CollectionSeoBlock,
   SingleProduct,
   Judgeme,
   JudgemeReview,

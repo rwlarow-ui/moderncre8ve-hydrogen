@@ -1253,9 +1253,14 @@ export type CollectionQuery = {
   collection?: StorefrontAPI.Maybe<
     Pick<
       StorefrontAPI.Collection,
-      'id' | 'handle' | 'title' | 'description'
+      'id' | 'handle' | 'title' | 'description' | 'descriptionHtml'
     > & {
       seo: Pick<StorefrontAPI.Seo, 'description' | 'title'>;
+      seoMetafields: Array<
+        StorefrontAPI.Maybe<
+          Pick<StorefrontAPI.Metafield, 'key' | 'namespace' | 'value'>
+        >
+      >;
       metafield?: StorefrontAPI.Maybe<
         Pick<
           StorefrontAPI.Metafield,
@@ -1973,6 +1978,50 @@ export type SearchQuery = {
     pageInfo: Pick<
       StorefrontAPI.PageInfo,
       'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'
+    >;
+  };
+};
+
+export type SitemapCollectionsQueryVariables = StorefrontAPI.Exact<{
+  country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
+  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
+}>;
+
+export type SitemapCollectionsQuery = {
+  collections: {
+    nodes: Array<Pick<StorefrontAPI.Collection, 'title' | 'handle'>>;
+  };
+};
+
+export type SitemapProductsQueryVariables = StorefrontAPI.Exact<{
+  country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
+  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
+}>;
+
+export type SitemapProductsQuery = {
+  products: {nodes: Array<Pick<StorefrontAPI.Product, 'title' | 'handle'>>};
+};
+
+export type SitemapPagesQueryVariables = StorefrontAPI.Exact<{
+  country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
+  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
+}>;
+
+export type SitemapPagesQuery = {
+  pages: {nodes: Array<Pick<StorefrontAPI.Page, 'title' | 'handle'>>};
+};
+
+export type SitemapArticlesQueryVariables = StorefrontAPI.Exact<{
+  country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
+  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
+}>;
+
+export type SitemapArticlesQuery = {
+  articles: {
+    nodes: Array<
+      Pick<StorefrontAPI.Article, 'title' | 'handle'> & {
+        blog: Pick<StorefrontAPI.Blog, 'handle'>;
+      }
     >;
   };
 };
@@ -3101,7 +3150,7 @@ interface GeneratedQueryTypes {
     return: BlogQuery;
     variables: BlogQueryVariables;
   };
-  '#graphql\n  query collection(\n    $handle: String!\n    $country: CountryCode\n    $language: LanguageCode\n    $filters: [ProductFilter!]\n    $sortKey: ProductCollectionSortKeys!\n    $reverse: Boolean\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n    $customBannerNamespace: String!\n    $customBannerKey: String!\n  ) @inContext(country: $country, language: $language) {\n    collection(handle: $handle) {\n      id\n      handle\n      title\n      description\n      seo {\n        description\n        title\n      }\n      metafield(namespace: $customBannerNamespace, key: $customBannerKey) {\n        id\n        type\n        description\n        value\n        reference {\n          ... on MediaImage {\n            image {\n              id\n              url\n            }\n          }\n        }\n      }\n      image {\n        id\n        url\n        width\n        height\n        altText\n      }\n      products(\n        first: $first,\n        last: $last,\n        before: $startCursor,\n        after: $endCursor,\n        filters: $filters,\n        sortKey: $sortKey,\n        reverse: $reverse\n      ) {\n        filters {\n          id\n          label\n          type\n          values {\n            id\n            label\n            count\n            input\n          }\n        }\n        nodes {\n          ...ProductCard\n        }\n        pageInfo {\n          hasPreviousPage\n          hasNextPage\n          endCursor\n          startCursor\n        }\n      }\n      highestPriceProduct: products(first: 1, sortKey: PRICE, reverse: true) {\n        nodes {\n          id\n          title\n          handle\n          priceRange {\n            minVariantPrice {\n              amount\n              currencyCode\n            }\n            maxVariantPrice {\n              amount\n              currencyCode\n            }\n          }\n        }\n      }\n      lowestPriceProduct: products(first: 1, sortKey: PRICE) {\n        nodes {\n          id\n          title\n          handle\n          priceRange {\n            minVariantPrice {\n              amount\n              currencyCode\n            }\n            maxVariantPrice {\n              amount\n              currencyCode\n            }\n          }\n        }\n      }\n    }\n    collections(first: 100) {\n      edges {\n        node {\n          title\n          handle\n        }\n      }\n    }\n  }\n  #graphql\n  fragment ProductCard on Product {\n    id\n    title\n    publishedAt\n    handle\n    vendor\n    productType\n    tags\n    images(first: 50) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n    options {\n      ...ProductOption\n    }\n    badges: metafields(identifiers: [\n      { namespace: "custom", key: "best_seller" }\n    ]) {\n      key\n      namespace\n      value\n    }\n    priceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    selectedOrFirstAvailableVariant(\n      selectedOptions: []\n      ignoreUnknownOptions: true\n      caseInsensitiveMatch: true\n    ) {\n      ...ProductVariant\n    }\n    # Check if the product is a bundle\n    isBundle: selectedOrFirstAvailableVariant(ignoreUnknownOptions: true, selectedOptions: { name: "", value: ""}) {\n      ...on ProductVariant {\n        requiresComponents\n      }\n    }\n  }\n  #graphql\n  fragment ProductOption on ProductOption {\n    name\n    optionValues {\n      name\n      firstSelectableVariant {\n        ...ProductVariant\n      }\n      swatch {\n        color\n        image {\n          previewImage {\n            url\n            altText\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment ProductVariant on ProductVariant {\n    id\n    availableForSale\n    quantityAvailable\n    selectedOptions {\n      name\n      value\n    }\n    image {\n      id\n      url\n      altText\n      width\n      height\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    sku\n    title\n    unitPrice {\n      amount\n      currencyCode\n    }\n    product {\n      title\n      handle\n    }\n    requiresComponents\n    components(first: 10) {\n      nodes {\n        productVariant {\n          id\n          title\n          product {\n            handle\n          }\n        }\n        quantity\n      }\n    }\n    groupedBy(first: 10) {\n      nodes {\n        id\n        title\n        product {\n          handle\n        }\n      }\n    }\n    }\n\n\n\n': {
+  '#graphql\n  query collection(\n    $handle: String!\n    $country: CountryCode\n    $language: LanguageCode\n    $filters: [ProductFilter!]\n    $sortKey: ProductCollectionSortKeys!\n    $reverse: Boolean\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n    $customBannerNamespace: String!\n    $customBannerKey: String!\n  ) @inContext(country: $country, language: $language) {\n    collection(handle: $handle) {\n      id\n      handle\n      title\n      description\n      descriptionHtml\n      seo {\n        description\n        title\n      }\n      seoMetafields: metafields(identifiers: [\n        { namespace: "custom", key: "seo_subtitle" }\n        { namespace: "custom", key: "seo_rich_description" }\n      ]) {\n        key\n        namespace\n        value\n      }\n      metafield(namespace: $customBannerNamespace, key: $customBannerKey) {\n        id\n        type\n        description\n        value\n        reference {\n          ... on MediaImage {\n            image {\n              id\n              url\n            }\n          }\n        }\n      }\n      image {\n        id\n        url\n        width\n        height\n        altText\n      }\n      products(\n        first: $first,\n        last: $last,\n        before: $startCursor,\n        after: $endCursor,\n        filters: $filters,\n        sortKey: $sortKey,\n        reverse: $reverse\n      ) {\n        filters {\n          id\n          label\n          type\n          values {\n            id\n            label\n            count\n            input\n          }\n        }\n        nodes {\n          ...ProductCard\n        }\n        pageInfo {\n          hasPreviousPage\n          hasNextPage\n          endCursor\n          startCursor\n        }\n      }\n      highestPriceProduct: products(first: 1, sortKey: PRICE, reverse: true) {\n        nodes {\n          id\n          title\n          handle\n          priceRange {\n            minVariantPrice {\n              amount\n              currencyCode\n            }\n            maxVariantPrice {\n              amount\n              currencyCode\n            }\n          }\n        }\n      }\n      lowestPriceProduct: products(first: 1, sortKey: PRICE) {\n        nodes {\n          id\n          title\n          handle\n          priceRange {\n            minVariantPrice {\n              amount\n              currencyCode\n            }\n            maxVariantPrice {\n              amount\n              currencyCode\n            }\n          }\n        }\n      }\n    }\n    collections(first: 100) {\n      edges {\n        node {\n          title\n          handle\n        }\n      }\n    }\n  }\n  #graphql\n  fragment ProductCard on Product {\n    id\n    title\n    publishedAt\n    handle\n    vendor\n    productType\n    tags\n    images(first: 50) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n    options {\n      ...ProductOption\n    }\n    badges: metafields(identifiers: [\n      { namespace: "custom", key: "best_seller" }\n    ]) {\n      key\n      namespace\n      value\n    }\n    priceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    selectedOrFirstAvailableVariant(\n      selectedOptions: []\n      ignoreUnknownOptions: true\n      caseInsensitiveMatch: true\n    ) {\n      ...ProductVariant\n    }\n    # Check if the product is a bundle\n    isBundle: selectedOrFirstAvailableVariant(ignoreUnknownOptions: true, selectedOptions: { name: "", value: ""}) {\n      ...on ProductVariant {\n        requiresComponents\n      }\n    }\n  }\n  #graphql\n  fragment ProductOption on ProductOption {\n    name\n    optionValues {\n      name\n      firstSelectableVariant {\n        ...ProductVariant\n      }\n      swatch {\n        color\n        image {\n          previewImage {\n            url\n            altText\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment ProductVariant on ProductVariant {\n    id\n    availableForSale\n    quantityAvailable\n    selectedOptions {\n      name\n      value\n    }\n    image {\n      id\n      url\n      altText\n      width\n      height\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    sku\n    title\n    unitPrice {\n      amount\n      currencyCode\n    }\n    product {\n      title\n      handle\n    }\n    requiresComponents\n    components(first: 10) {\n      nodes {\n        productVariant {\n          id\n          title\n          product {\n            handle\n          }\n        }\n        quantity\n      }\n    }\n    groupedBy(first: 10) {\n      nodes {\n        id\n        title\n        product {\n          handle\n        }\n      }\n    }\n    }\n\n\n\n': {
     return: CollectionQuery;
     variables: CollectionQueryVariables;
   };
@@ -3128,6 +3177,22 @@ interface GeneratedQueryTypes {
   '#graphql\n  query search(\n    $country: CountryCode\n    $endCursor: String\n    $first: Int\n    $language: LanguageCode\n    $last: Int\n    $searchTerm: String\n    $startCursor: String\n    $sortKey: ProductSortKeys\n    $reverse: Boolean\n  ) @inContext(country: $country, language: $language) {\n    products(\n      first: $first,\n      last: $last,\n      before: $startCursor,\n      after: $endCursor,\n      sortKey: $sortKey,\n      reverse: $reverse,\n      query: $searchTerm\n    ) {\n      filters {\n        id\n        label\n        type\n        values {\n          id\n          label\n          count\n          input\n        }\n      }\n      nodes {\n        ...ProductCard\n      }\n      pageInfo {\n        startCursor\n        endCursor\n        hasNextPage\n        hasPreviousPage\n      }\n    }\n  }\n  #graphql\n  fragment ProductCard on Product {\n    id\n    title\n    publishedAt\n    handle\n    vendor\n    productType\n    tags\n    images(first: 50) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n    options {\n      ...ProductOption\n    }\n    badges: metafields(identifiers: [\n      { namespace: "custom", key: "best_seller" }\n    ]) {\n      key\n      namespace\n      value\n    }\n    priceRange {\n      maxVariantPrice {\n        amount\n        currencyCode\n      }\n      minVariantPrice {\n        amount\n        currencyCode\n      }\n    }\n    selectedOrFirstAvailableVariant(\n      selectedOptions: []\n      ignoreUnknownOptions: true\n      caseInsensitiveMatch: true\n    ) {\n      ...ProductVariant\n    }\n    # Check if the product is a bundle\n    isBundle: selectedOrFirstAvailableVariant(ignoreUnknownOptions: true, selectedOptions: { name: "", value: ""}) {\n      ...on ProductVariant {\n        requiresComponents\n      }\n    }\n  }\n  #graphql\n  fragment ProductOption on ProductOption {\n    name\n    optionValues {\n      name\n      firstSelectableVariant {\n        ...ProductVariant\n      }\n      swatch {\n        color\n        image {\n          previewImage {\n            url\n            altText\n          }\n        }\n      }\n    }\n  }\n  #graphql\n  fragment ProductVariant on ProductVariant {\n    id\n    availableForSale\n    quantityAvailable\n    selectedOptions {\n      name\n      value\n    }\n    image {\n      id\n      url\n      altText\n      width\n      height\n    }\n    price {\n      amount\n      currencyCode\n    }\n    compareAtPrice {\n      amount\n      currencyCode\n    }\n    sku\n    title\n    unitPrice {\n      amount\n      currencyCode\n    }\n    product {\n      title\n      handle\n    }\n    requiresComponents\n    components(first: 10) {\n      nodes {\n        productVariant {\n          id\n          title\n          product {\n            handle\n          }\n        }\n        quantity\n      }\n    }\n    groupedBy(first: 10) {\n      nodes {\n        id\n        title\n        product {\n          handle\n        }\n      }\n    }\n    }\n\n\n\n': {
     return: SearchQuery;
     variables: SearchQueryVariables;
+  };
+  '#graphql\n  query SitemapCollections(\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    collections(first: 250, sortKey: TITLE) {\n      nodes {\n        title\n        handle\n      }\n    }\n  }\n': {
+    return: SitemapCollectionsQuery;
+    variables: SitemapCollectionsQueryVariables;
+  };
+  '#graphql\n  query SitemapProducts(\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    products(first: 250, sortKey: TITLE) {\n      nodes {\n        title\n        handle\n      }\n    }\n  }\n': {
+    return: SitemapProductsQuery;
+    variables: SitemapProductsQueryVariables;
+  };
+  '#graphql\n  query SitemapPages(\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    pages(first: 250, sortKey: TITLE) {\n      nodes {\n        title\n        handle\n      }\n    }\n  }\n': {
+    return: SitemapPagesQuery;
+    variables: SitemapPagesQueryVariables;
+  };
+  '#graphql\n  query SitemapArticles(\n    $country: CountryCode\n    $language: LanguageCode\n  ) @inContext(country: $country, language: $language) {\n    articles(first: 250, sortKey: TITLE) {\n      nodes {\n        title\n        handle\n        blog {\n          handle\n        }\n      }\n    }\n  }\n': {
+    return: SitemapArticlesQuery;
+    variables: SitemapArticlesQueryVariables;
   };
   '#graphql\n  query StoreRobots($country: CountryCode, $language: LanguageCode)\n   @inContext(country: $country, language: $language) {\n    shop {\n      id\n    }\n  }\n': {
     return: StoreRobotsQuery;
