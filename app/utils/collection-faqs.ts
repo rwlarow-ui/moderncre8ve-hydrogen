@@ -150,4 +150,177 @@ export const collectionFaqs: Record<string, FAQ[]> = {
         "Yes, we deliver custom furniture throughout the continental United States. All furniture orders include white glove in-home delivery with placement and assembly, ensuring your piece arrives safely and is set up exactly where you want it.",
     },
   ],
+
+  "mid-century-modern-credenza": [
+    {
+      question: "What is a credenza used for?",
+      answer:
+        "A credenza is a versatile storage piece typically placed in living rooms, dining rooms, or home offices. It offers closed cabinet storage, drawers, and sometimes open shelving for displaying decorative objects. Modern credenzas also serve as media consoles, bar carts, or entryway consoles depending on size and configuration.",
+    },
+    {
+      question:
+        "What is the difference between a credenza, sideboard, and buffet?",
+      answer:
+        "A credenza typically sits lower and longer with sliding or hinged doors and minimal legs. A sideboard is similar but often taller with more storage. A buffet tends to be taller still and is specifically designed for dining room use. In modern design, the terms are often used interchangeably. Our Astrid piece works beautifully as all three.",
+    },
+    {
+      question: "What size credenza do I need?",
+      answer:
+        "Measure your wall space and leave at least 4–6 inches on each side for visual breathing room. Standard credenzas range from 48 to 72 inches wide. For a media console, ensure the credenza is wider than your TV. Our mid-century modern credenzas are handcrafted to order, so custom dimensions are available.",
+    },
+    {
+      question: "What wood is best for a mid-century modern credenza?",
+      answer:
+        "Walnut is the quintessential mid-century credenza wood, prized for its warmth and dramatic grain. White oak and teak are also period-appropriate choices. Our credenzas are crafted from solid American walnut by Amish artisans — no veneers or particle board — ensuring they look stunning and last for generations.",
+    },
+    {
+      question: "How do I style a mid-century modern credenza?",
+      answer:
+        "Keep it minimal and intentional. Place a statement lamp or sculptural object on one end, a small stack of design books in the middle, and a plant or vase on the opposite side. For wall decor above, try a large abstract print or a round mirror. The goal is to let the credenza's craftsmanship be the focal point.",
+    },
+  ],
+
+  japandi: [
+    {
+      question: "What is Japandi style?",
+      answer:
+        "Japandi is a design aesthetic that merges Japanese minimalism with Scandinavian warmth. It combines the wabi-sabi appreciation for imperfection and natural materials from Japanese design with the hygge-driven coziness and clean lines of Scandinavian interiors. The result is a calm, uncluttered space that feels both refined and inviting.",
+    },
+    {
+      question: "How is Japandi different from minimalism?",
+      answer:
+        "While both value simplicity, Japandi focuses on warmth and natural texture rather than stark emptiness. Japandi interiors use rich wood tones, handcrafted ceramics, linen textiles, and earthy colors — creating spaces that feel intentional and lived-in rather than cold and sparse.",
+    },
+    {
+      question: "What colors are used in Japandi design?",
+      answer:
+        "Japandi palettes center on warm neutrals: cream, sand, taupe, and soft gray. These are accented with rich wood tones like walnut and oak, muted greens from plants, and occasional touches of black or charcoal for contrast. The overall effect is calming, grounded, and natural.",
+    },
+    {
+      question: "What furniture works in a Japandi interior?",
+      answer:
+        "Japandi furniture features clean, low profiles with natural wood construction. Think walnut dining tables with gentle organic curves, simple bed frames with minimal headboards, and unadorned credenzas. Our pieces are handcrafted from solid hardwoods by Amish artisans, making them perfect for Japandi-inspired spaces.",
+    },
+    {
+      question: "Is Japandi a long-lasting design trend?",
+      answer:
+        "Japandi has proven to be more than a trend — it reflects a growing cultural preference for intentional living, sustainable materials, and timeless design. Both Japanese and Scandinavian design philosophies have endured for centuries, so their fusion is built on deep aesthetic foundations that outlast passing fads.",
+    },
+  ],
+
+  "handmade-modern-bed-frames": [
+    {
+      question: "What size bed frames does ModernCre8ve offer?",
+      answer:
+        "Our handmade bed frames are available in Queen, King, and California King sizes. Since every piece is made to order, we can also accommodate custom dimensions. Contact us to discuss your specific requirements.",
+    },
+    {
+      question: "Do your bed frames require a box spring?",
+      answer:
+        "No, our bed frames are designed with a solid slat support system that eliminates the need for a box spring. Simply place your mattress directly on the frame. This also gives the bed a lower, more modern profile that complements mid-century and Scandinavian aesthetics.",
+    },
+    {
+      question: "How long does it take to receive a handmade bed frame?",
+      answer:
+        "Our bed frames are handcrafted to order with a lead time of 12–16 weeks. Once complete, we provide white glove in-home delivery including placement and assembly in your bedroom at no additional charge.",
+    },
+    {
+      question: "What styles of bed frames do you offer?",
+      answer:
+        "We offer bed frames across three design aesthetics: mid-century modern (like the Bosco with its walnut headboard and tapered legs), Scandinavian-inspired (like the Upton with its minimal profile and Danish lines), and boho (like the Van Aiken with its woven headboard detail). Each is crafted from solid hardwood.",
+    },
+    {
+      question: "Are handmade bed frames worth the investment?",
+      answer:
+        "Solid hardwood bed frames built with traditional joinery will outlast mass-produced alternatives by decades. Our customers report that the quality of sleep improves with a sturdy, non-creaking frame, and the natural materials create a calming bedroom atmosphere. These are heirloom pieces designed to last 50+ years.",
+    },
+  ],
+
+  "mid-century-modern-coffee-tables": [
+    {
+      question: "What makes a coffee table mid-century modern?",
+      answer:
+        "Mid-century modern coffee tables feature clean geometric or organic shapes, tapered or splayed legs, and natural wood construction with minimal ornamentation. The style favors low profiles, warm wood tones like walnut, and functional design that balances beauty with everyday use.",
+    },
+    {
+      question: "What is the right coffee table height?",
+      answer:
+        "A standard coffee table should be 16–18 inches tall, roughly the same height as your sofa seat cushions. This creates a comfortable reach for drinks and décor. Our mid-century modern coffee tables are designed at 16 inches for that classic low-slung MCM aesthetic.",
+    },
+    {
+      question: "How do I choose the right coffee table size for my space?",
+      answer:
+        "Your coffee table should be about two-thirds the length of your sofa, with 16–18 inches of clearance on all sides for walkways. For sectionals, a round or oval table works well. Measure your space first — our team can help you select the right dimensions.",
+    },
+    {
+      question: "Can I use a round coffee table with a sectional?",
+      answer:
+        "Yes, round and oval coffee tables pair beautifully with sectional sofas. The curved shape softens the angular lines of a sectional and is accessible from all seating positions. Our round walnut coffee tables are popular choices for open-concept living rooms.",
+    },
+    {
+      question: "How do I care for a walnut coffee table?",
+      answer:
+        "Use coasters to prevent water rings, wipe spills immediately, and dust regularly with a soft cloth. Avoid placing your table in direct sunlight, which can fade the wood. Apply our ModernCre8ve furniture wax every 6–12 months to nourish the wood and maintain its rich finish.",
+    },
+  ],
+
+  "modern-dining-chairs": [
+    {
+      question: "What makes a dining chair comfortable for long meals?",
+      answer:
+        "A comfortable dining chair has a seat height of 17–19 inches, a slight recline in the backrest (around 5 degrees), adequate seat depth (15–18 inches), and firm cushioning that supports without bottoming out. Our dining chairs are ergonomically designed for extended dinner parties and daily use.",
+    },
+    {
+      question: "How many dining chairs do I need?",
+      answer:
+        "Plan for one chair per 24 inches of table perimeter. A 60-inch rectangular table comfortably seats 6, while a 72-inch table seats 8. For round tables, a 48-inch diameter seats 4 and a 54-inch diameter seats 6. Consider purchasing one or two extras for guests.",
+    },
+    {
+      question:
+        "Can I mix different dining chair styles at one table?",
+      answer:
+        "Yes, mixing chair styles is a popular design approach. A common strategy is to use matching side chairs with contrasting head chairs, or to pair two complementary styles in alternating positions. The key is maintaining a consistent material or color thread — like all walnut wood — so the mix feels intentional.",
+    },
+    {
+      question: "What is the lead time for handmade dining chairs?",
+      answer:
+        "Our handcrafted dining chairs have a lead time of 12–16 weeks per set. Since they are built alongside your table, ordering a complete dining set ensures perfectly matched wood tones and proportions. White glove delivery is included.",
+    },
+    {
+      question: "Are solid wood dining chairs durable enough for daily use?",
+      answer:
+        "Solid hardwood dining chairs built with mortise-and-tenon joinery are among the most durable seating options available. Unlike mass-produced chairs with dowel or glue-only joints, our traditional joinery creates mechanical bonds that strengthen over time. These chairs are built to handle decades of daily meals and gatherings.",
+    },
+  ],
+
+  "custom-made-expandable-dining-tables": [
+    {
+      question: "How do extendable dining tables work?",
+      answer:
+        "Our extendable tables use precision-engineered leaf mechanisms. You pull the two halves of the tabletop apart to reveal the stored leaf, then lift it into position. The mechanism is smooth and can be operated by one person. The leaf stores invisibly within the table when not in use.",
+    },
+    {
+      question:
+        "How much extra seating does an extension leaf add?",
+      answer:
+        "Each extension leaf typically adds 18–20 inches to the table length, providing room for 2 additional guests. Our tables expand from seating 6 to seating 8–10, depending on the model. The Payne oval table, for example, extends from 63 to 83 inches.",
+    },
+    {
+      question:
+        "Does the extension mechanism affect the table's appearance?",
+      answer:
+        "Not at all. When closed, our extension tables look identical to fixed-top tables — the seam is virtually invisible thanks to precision milling. The wood grain on the leaf is selected to match the main tabletop for a seamless appearance when extended.",
+    },
+    {
+      question: "What shapes are available for extendable tables?",
+      answer:
+        "We offer extendable dining tables in rectangular, oval, and round shapes. The Parsons and Santa Monica models are rectangular, the Payne and Mar Vista are oval, and the Corcovado is round. Each can be customized in walnut, oak, or cherry.",
+    },
+    {
+      question:
+        "Can I get a custom size for an extendable dining table?",
+      answer:
+        "Yes, we can adjust the base dimensions and extension length to fit your specific space. Our Amish craftspeople will build the extension mechanism to your exact specifications. Contact us with your measurements and we will provide a custom quote.",
+    },
+  ],
 };
