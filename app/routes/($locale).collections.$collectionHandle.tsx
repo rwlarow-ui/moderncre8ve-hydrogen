@@ -24,6 +24,7 @@ import { redirectIfHandleIsLocalized } from "~/utils/redirect";
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { seoPayload } from "~/utils/seo.server";
 import { loadPageWithFallback } from "~/utils/weaverse-fallback.server";
+import { CollectionSeoContent } from "~/components/CollectionSeoContent";
 import { WeaverseContent } from "~/weaverse";
 
 export const headers = routeHeaders;
@@ -174,6 +175,7 @@ export default function Collection() {
           Uses sr-only so it doesn't affect visual layout. */}
       <h1 className="sr-only">{collection.title}</h1>
       <WeaverseContent />
+      <CollectionSeoContent handle={collection.handle} />
       <Analytics.CollectionView
         data={{
           collection: {

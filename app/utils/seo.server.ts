@@ -11,6 +11,7 @@ import type {
 import type { BreadcrumbList, CollectionPage, Offer } from "schema-dts";
 import type { ProductQuery, ShopFragment } from "storefront-api.generated";
 import { collectionFaqs } from "~/utils/collection-faqs";
+import { collectionSeoDescriptions } from "~/utils/collection-seo-descriptions";
 
 function root({
   shop,
@@ -275,7 +276,10 @@ function collectionJsonLd({
         collectionData?.title ||
         "",
       description: truncate(
-        collectionData?.seo?.description ?? collectionData?.description ?? "",
+        collectionData?.seo?.description ??
+          collectionData?.description ??
+          collectionSeoDescriptions[collectionData?.handle ?? ""]?.rich ??
+          "",
       ),
       image: collectionData?.image?.url,
       url: `${origin}/collections/${collectionData.handle}`,
@@ -320,7 +324,10 @@ function collection({
       collectionData?.title || "",
     ),
     description: truncate(
-      collectionData?.seo?.description ?? collectionData?.description ?? "",
+      collectionData?.seo?.description ??
+        collectionData?.description ??
+        collectionSeoDescriptions[collectionData?.handle ?? ""]?.meta ??
+        "",
     ),
     titleTemplate: "%s | ModernCre8ve",
     url,
