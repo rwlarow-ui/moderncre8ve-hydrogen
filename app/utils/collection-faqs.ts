@@ -323,4 +323,90 @@ export const collectionFaqs: Record<string, FAQ[]> = {
         "Yes, we can adjust the base dimensions and extension length to fit your specific space. Our Amish craftspeople will build the extension mechanism to your exact specifications. Contact us with your measurements and we will provide a custom quote.",
     },
   ],
+
+  // ─── Content gap collections (ready for Shopify collection creation) ───
+
+  "oval-dining-tables": [
+    {
+      question: "Why choose an oval dining table over rectangular?",
+      answer:
+        "Oval dining tables offer several advantages: they eliminate sharp corners (safer for kids and small spaces), create a more intimate conversational atmosphere since everyone faces the center, and fit more flexibly in narrow or open-plan rooms. The curved edges also give a sculptural, mid-century modern feel that a rectangle cannot match.",
+    },
+    {
+      question: "How many people can sit at an oval dining table?",
+      answer:
+        "A 60-inch oval table comfortably seats 6, while a 72-inch oval seats 8. Oval tables can actually seat more people than rectangular tables of the same length because guests can scoot closer together along the curves. Our Mar Vista oval table seats 6 in its standard form.",
+    },
+    {
+      question: "What is the best wood for an oval dining table?",
+      answer:
+        "Walnut is our top recommendation for oval dining tables — the flowing grain patterns complement the organic curved shape beautifully. White oak is another excellent choice with its lighter tone and prominent ray fleck. Both woods are extremely durable for daily use.",
+    },
+    {
+      question: "Do you make oval extendable dining tables?",
+      answer:
+        "Yes, several of our oval dining tables include built-in extension mechanisms. The Payne oval table extends from 63 to 83 inches with a butterfly leaf that stores within the table. This lets you go from comfortable daily dining to hosting large gatherings with a simple pull.",
+    },
+    {
+      question: "How do I choose the right size oval dining table?",
+      answer:
+        "Measure your dining area and allow at least 36 inches of clearance on all sides for chairs and movement. For the table itself, plan 24 inches of table edge per person. A 54-inch oval works for 4–6, and a 72-inch oval seats 8 comfortably. We build to custom dimensions if your space demands it.",
+    },
+  ],
+
+  "minimalist-bed-frames": [
+    {
+      question: "What is a minimalist bed frame?",
+      answer:
+        "A minimalist bed frame strips bedroom furniture down to its essentials — a clean-lined platform, solid wood construction, and a low profile that creates a grounded, calming aesthetic. No ornamental carvings, no bulky footboards, no unnecessary hardware. The beauty is in the wood grain and precise proportions.",
+    },
+    {
+      question: "Do minimalist bed frames need a box spring?",
+      answer:
+        "No. Minimalist platform bed frames include a built-in slat support system that replaces the box spring entirely. This keeps the overall height low and eliminates the dated, bulky look of a box spring. Simply place your mattress directly on the slats for proper support and airflow.",
+    },
+    {
+      question: "Are minimalist bed frames sturdy enough?",
+      answer:
+        "Solid hardwood minimalist bed frames are among the sturdiest you can buy. Our frames use mortise-and-tenon joinery and thick hardwood slats rated for mattress weights well above standard. The minimalist design does not mean minimal construction — every joint is engineered for decades of daily use.",
+    },
+    {
+      question: "What sizes do minimalist bed frames come in?",
+      answer:
+        "Our minimalist bed frames are available in Twin, Full, Queen, King, and California King. Since each frame is handcrafted to order, we can also accommodate non-standard dimensions or extra-long requirements. Contact us for custom sizing.",
+    },
+    {
+      question: "How do I style a minimalist bed frame?",
+      answer:
+        "Let the frame breathe. Use crisp white or neutral linen bedding to complement the wood grain. Add one or two textured throw pillows, a simple nightstand on each side, and a single piece of art above the headboard. The goal is an uncluttered, restful retreat that highlights the craftsmanship of the frame itself.",
+    },
+  ],
+
+  "scandinavian-bed-frames": [
+    {
+      question: "What defines a Scandinavian bed frame?",
+      answer:
+        "Scandinavian bed frames are characterized by warm wood tones, gently rounded edges, tapered or splayed legs, and an overall sense of lightness. Inspired by Danish and Swedish design traditions, they create a cozy (hygge) bedroom atmosphere through natural materials and clean proportions rather than heavy ornamentation.",
+    },
+    {
+      question: "What is the difference between Scandinavian and mid-century modern bed frames?",
+      answer:
+        "While both share clean lines, Scandinavian bed frames tend toward softer curves, lighter wood tones, and a more understated presence. Mid-century modern frames often feature bolder lines, darker walnut wood, and more pronounced design elements like angled headboards. Our Upton bed bridges both styles with its Danish-inspired silhouette in choice of walnut or oak.",
+    },
+    {
+      question: "What wood works best for a Scandinavian bed frame?",
+      answer:
+        "White oak and ash are the most traditional choices for Scandinavian bed frames, offering the light, warm tones associated with Nordic design. However, walnut has become increasingly popular for a richer, contemporary Scandinavian look. All three woods are extremely durable and develop beautiful patina over time.",
+    },
+    {
+      question: "Are Scandinavian bed frames good for small bedrooms?",
+      answer:
+        "Yes — Scandinavian design is particularly well-suited to smaller spaces. The clean lines and lower profiles create a sense of openness, while the warm wood adds warmth without visual heaviness. A Scandinavian bed frame with tapered legs allows light to flow underneath, making the room feel larger.",
+    },
+    {
+      question: "How long does a handcrafted Scandinavian bed frame last?",
+      answer:
+        "A solid hardwood Scandinavian bed frame built with traditional joinery will last 50 years or more with proper care. Unlike mass-produced frames with dowel joints and particleboard, our frames use mortise-and-tenon construction that actually tightens with use. These are pieces you can hand down to the next generation.",
+    },
+  ],
 };
