@@ -169,6 +169,10 @@ export default function Collection() {
   const { collection } = useLoaderData<typeof loader>();
   return (
     <>
+      {/* SEO fallback H1 — visually hidden but ensures every collection page
+          has an H1 tag even if the Weaverse section doesn't render one.
+          Uses sr-only so it doesn't affect visual layout. */}
+      <h1 className="sr-only">{collection.title}</h1>
       <WeaverseContent />
       <Analytics.CollectionView
         data={{

@@ -211,7 +211,7 @@ function product({
   );
   const selectedVariant = productData?.selectedOrFirstAvailableVariant;
   return {
-    title: stripBrandSuffix(productData?.seo?.title) || productData?.title,
+    title: truncateTitle(stripBrandSuffix(productData?.seo?.title) || productData?.title || ""),
     description,
     handle: "@moderncre8ve",
     url,
@@ -314,10 +314,11 @@ function collection({
   url: Request["url"];
 }): SeoConfig {
   return {
-    title:
+    title: truncateTitle(
       stripBrandSuffix(collectionData?.seo?.title) ||
       stripBrandSuffix(collectionData?.title) ||
-      collectionData?.title,
+      collectionData?.title || "",
+    ),
     description: truncate(
       collectionData?.seo?.description ?? collectionData?.description ?? "",
     ),
@@ -401,7 +402,7 @@ function article({
   url: Request["url"];
 }): SeoConfig {
   return {
-    title: stripBrandSuffix(articleData?.seo?.title) || articleData?.title,
+    title: truncateTitle(stripBrandSuffix(articleData?.seo?.title) || articleData?.title || ""),
     description: truncate(articleData?.seo?.description ?? ""),
     titleTemplate: "%s | ModernCre8ve",
     url,
@@ -446,7 +447,7 @@ function blog({
   url: Request["url"];
 }): SeoConfig {
   return {
-    title: stripBrandSuffix(blogData?.seo?.title) || blogData?.title,
+    title: truncateTitle(stripBrandSuffix(blogData?.seo?.title) || blogData?.title || ""),
     description: truncate(blogData?.seo?.description || ""),
     titleTemplate: "%s | ModernCre8ve",
     url,
@@ -460,16 +461,36 @@ function blog({
   };
 }
 
+/** Fallback meta descriptions for pages that lack one in Shopify */
+const PAGE_META_DESCRIPTIONS: Record<string, string> = {
+  "about-us":
+    "ModernCre8ve handcrafts mid-century modern, Scandinavian, and Japandi furniture from solid hardwoods in Cleveland, Ohio. 12–16 week lead times, white glove delivery.",
+  "about-us-1":
+    "ModernCre8ve handcrafts mid-century modern, Scandinavian, and Japandi furniture from solid hardwoods in Cleveland, Ohio. 12–16 week lead times, white glove delivery.",
+  "trade-1":
+    "Interior designers and architects: apply for the ModernCre8ve trade program. Exclusive pricing on handcrafted modern furniture for your residential and commercial projects.",
+  "shipping-policy":
+    "ModernCre8ve shipping details: white glove in-home delivery with assembly for furniture orders. Wax products ship in 3–5 business days. Free shipping on most orders.",
+  "wrong-turn":
+    "The page you're looking for has moved or doesn't exist. Browse our handcrafted modern furniture collections or contact us for help.",
+};
+
 function page({
   page: pageData,
   url,
 }: {
-  page: Pick<Page, "title" | "seo">;
+  page: Pick<Page, "title" | "seo"> & { handle?: string | null };
   url: Request["url"];
 }): SeoConfig {
+  // Use the page handle or extract from URL for fallback lookup
+  const handle =
+    pageData?.handle || new URL(url).pathname.split("/pages/").pop() || "";
+  const fallbackDesc = PAGE_META_DESCRIPTIONS[handle] || "";
   return {
-    description: truncate(pageData?.seo?.description || ""),
-    title: stripBrandSuffix(pageData?.seo?.title) || pageData?.title,
+    description: truncate(
+      pageData?.seo?.description || fallbackDesc,
+    ),
+    title: truncateTitle(stripBrandSuffix(pageData?.seo?.title) || pageData?.title || ""),
     titleTemplate: "%s | ModernCre8ve",
     url,
     jsonLd: {
@@ -552,6 +573,8 @@ export const seoPayload = {
  * duplication when the titleTemplate already appends "| ModernCre8ve".
  * Handles variations like "| Moderncre8ve", "- ModernCre8ve",
  * "from Moderncre8ve", "by moderncre8ve".
+ * Also strips Shopify-appended resource-type suffixes like "| Collection",
+ * "| Page", "| Journal", "| Product" that bloat title length.
  */
 function stripBrandSuffix(title: string | undefined | null): string {
   if (!title) {
@@ -570,6 +593,9 @@ function stripBrandSuffix(title: string | undefined | null): string {
     )
     // 4. Strip leading brand with separator: "MODERNCRE8VE: …" or "MODERNCRE8VE | …"
     .replace(/^modern\s*cre8ve\s*[:||\-–—]\s*/i, "")
+    // 5. Strip trailing Shopify resource-type suffixes:
+    //    "… | Collection", "… | Page", "… | Journal", "… | Product"
+    .replace(/\s*[|\-–—]\s*(?:Collection|Page|Journal|Product|Blog)\s*$/i, "")
     .trim();
   // If after stripping the entire title is just the brand name, discard it
   // so the fallback (e.g. collection.title) is used instead.
@@ -577,6 +603,24 @@ function stripBrandSuffix(title: string | undefined | null): string {
     return "";
   }
   return cleaned;
+}
+
+/**
+ * Truncate a title to fit within the SEO budget.
+ * The titleTemplate appends " | ModernCre8ve" (16 chars), so the base title
+ * must stay under (maxFinal - 16) = 104 chars to keep the rendered title ≤ 120.
+ * Truncates at the last whole word and appends "…" if needed.
+ */
+function truncateTitle(title: string, maxFinal = 120): string {
+  const SUFFIX_LEN = " | ModernCre8ve".length; // 16
+  const maxBase = maxFinal - SUFFIX_LEN; // 104
+
+  if (!title || title.length <= maxBase) {
+    return title;
+  }
+  // Truncate at word boundary
+  const trimmed = title.slice(0, maxBase - 1).replace(/[\s|,\-–—]+\S*$/, "");
+  return `${trimmed}…`;
 }
 
 /**

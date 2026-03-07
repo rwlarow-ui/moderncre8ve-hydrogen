@@ -163,6 +163,9 @@ export default function Product() {
 
   return (
     <>
+      {/* SEO fallback H1 — visually hidden but ensures every product page
+          has an H1 tag even if the Weaverse section doesn't render one. */}
+      <h1 className="sr-only">{product.title}</h1>
       <WeaverseContent />
       {selectedVariant && (
         <Analytics.ProductView

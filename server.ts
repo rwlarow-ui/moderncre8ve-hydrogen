@@ -79,6 +79,25 @@ export default {
         });
       }
 
+      // Redirect unsupported locale prefixes (e.g. /FR-CA/, /EN-US/) to their
+      // supported equivalents. FR-CA → EN-CA (we don't serve French content).
+      // EN-US is the default locale (no prefix needed).
+      const LOCALE_REDIRECTS: Record<string, string> = {
+        "/fr-ca": "/en-ca",   // French-Canadian → English-Canadian
+        "/en-us": "",          // EN-US is default, strip prefix
+      };
+      const firstSeg = `/${url.pathname.substring(1).split("/")[0].toLowerCase()}`;
+      if (firstSeg in LOCALE_REDIRECTS) {
+        const rest = url.pathname.substring(firstSeg.length); // e.g. /articles/slug
+        const target = LOCALE_REDIRECTS[firstSeg] + (rest || "/");
+        const redirectUrl = new URL(target || "/", url.origin);
+        redirectUrl.search = url.search;
+        return new Response(null, {
+          status: 301,
+          headers: { Location: redirectUrl.toString() },
+        });
+      }
+
       const appLoadContext = await createAppLoadContext(
         request,
         env,
