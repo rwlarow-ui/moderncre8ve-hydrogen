@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useFetcher, useLocation, useRouteLoaderData } from "react-router";
 import { Button } from "~/components/button";
 import { Image } from "~/components/image";
+import { HoneypotField, TurnstileWidget } from "~/components/turnstile-widget";
 import { useWeaverseStudioCheck } from "~/hooks/use-weaverse-studio-check";
 import type { RootLoader } from "~/root";
 import { cn } from "~/utils/cn";
@@ -43,6 +44,9 @@ export function NewsletterPopup() {
   const [open, setOpen] = useState(false);
   const fetcher = useFetcher<{ ok: boolean; errorMessage?: string }>();
   const isDesignMode = useWeaverseStudioCheck();
+  const rootData = useRouteLoaderData<RootLoader>("root");
+  const turnstileSiteKey = rootData?.turnstileSiteKey || "";
+  const [turnstileToken, setTurnstileToken] = useState("");
 
   // Compute message and error from fetcher data
   const message = fetcher.data?.ok ? "Thank you for signing up!" : "";
@@ -187,6 +191,12 @@ export function NewsletterPopup() {
                   encType="multipart/form-data"
                   className="space-y-4"
                 >
+                  <HoneypotField />
+                  <input
+                    type="hidden"
+                    name="cf-turnstile-response"
+                    value={turnstileToken}
+                  />
                   <input
                     name="email"
                     type="email"
@@ -194,6 +204,15 @@ export function NewsletterPopup() {
                     placeholder="Enter your email"
                     className="w-full border border-gray-300 px-4 py-2.5 focus:border-gray-500 focus:outline-hidden"
                   />
+                  {turnstileSiteKey && (
+                    <TurnstileWidget
+                      siteKey={turnstileSiteKey}
+                      onVerify={setTurnstileToken}
+                      onExpire={() => setTurnstileToken("")}
+                      size="normal"
+                      appearance="interaction-only"
+                    />
+                  )}
                   <Button
                     type="submit"
                     className="w-full"

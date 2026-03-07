@@ -22,6 +22,8 @@ declare global {
     METAOBJECT_COLOR_NAME_KEY: string;
     METAOBJECT_COLOR_VALUE_KEY: string;
     PUBLIC_SHOPIFY_INBOX_SHOP_ID: string;
+    PUBLIC_TURNSTILE_SITE_KEY?: string;
+    TURNSTILE_SECRET_KEY?: string;
     WEAVERSE_HOST?: string;
   }
 }

@@ -6,10 +6,12 @@ import { cva } from "class-variance-authority";
 import clsx from "clsx";
 import type React from "react";
 import { type FormEvent, useEffect, useState } from "react";
-import { Link, useFetcher } from "react-router";
+import { Link, useFetcher, useRouteLoaderData } from "react-router";
 import { Button } from "~/components/button";
+import { HoneypotField, TurnstileWidget } from "~/components/turnstile-widget";
 import { useShopMenu } from "~/hooks/use-shop-menu";
 import { RevealUnderline } from "~/reveal-underline";
+import type { RootLoader } from "~/root";
 import type { SingleMenuItem } from "~/types/menu";
 import { cn } from "~/utils/cn";
 import { CountrySelector } from "./country-selector";
@@ -395,7 +397,7 @@ export function Footer() {
     _bio && !_bio.includes("Weaverse") && _bio.replace(/<[^>]*>/g, "").trim();
   const bio = bioIsUsable
     ? _bio
-    : '<p>Handcrafted modern furniture made in Cleveland, Ohio. We specialize in mid-century modern, Scandinavian, and Japandi-inspired solid wood furniture.</p><p>Phone: (216) 502-0755</p>';
+    : "<p>Handcrafted modern furniture made in Cleveland, Ohio. We specialize in mid-century modern, Scandinavian, and Japandi-inspired solid wood furniture.</p><p>Phone: (216) 502-0755</p>";
   const copyright =
     _copyright && !_copyright.includes("Weaverse")
       ? _copyright
@@ -404,6 +406,9 @@ export function Footer() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const newsLetterResponse = fetcher.data;
+  const rootData = useRouteLoaderData<RootLoader>("root");
+  const turnstileSiteKey = rootData?.turnstileSiteKey || "";
+  const [turnstileToken, setTurnstileToken] = useState("");
 
   useEffect(() => {
     if (newsLetterResponse) {
@@ -411,7 +416,8 @@ export function Footer() {
         setMessage("Thank you for signing up!");
       } else {
         setError(
-          newsLetterResponse.errorMessage || "An error occurred while signing up.",
+          newsLetterResponse.errorMessage ||
+            "An error occurred while signing up.",
         );
       }
     }
@@ -508,6 +514,12 @@ export function Footer() {
                     encType="multipart/form-data"
                     className="flex h-[54px] gap-3"
                   >
+                    <HoneypotField />
+                    <input
+                      type="hidden"
+                      name="cf-turnstile-response"
+                      value={turnstileToken}
+                    />
                     <input
                       name="email"
                       type="email"
@@ -524,6 +536,16 @@ export function Footer() {
                       {newsletterButtonText}
                     </Button>
                   </fetcher.Form>
+                  {turnstileSiteKey && (
+                    <TurnstileWidget
+                      siteKey={turnstileSiteKey}
+                      onVerify={setTurnstileToken}
+                      onExpire={() => setTurnstileToken("")}
+                      size="compact"
+                      appearance="interaction-only"
+                      className="mt-1"
+                    />
+                  )}
                   <div className="h-8">
                     {error && (
                       <div className="mb-6 flex w-fit gap-1 border-red-500 border-l-4 bg-red-100 px-2 py-1 text-red-700">
@@ -573,6 +595,12 @@ export function Footer() {
                   encType="multipart/form-data"
                   className="flex h-[54px] gap-2"
                 >
+                  <HoneypotField />
+                  <input
+                    type="hidden"
+                    name="cf-turnstile-response"
+                    value={turnstileToken}
+                  />
                   <input
                     name="email"
                     type="email"
@@ -589,6 +617,16 @@ export function Footer() {
                     {newsletterButtonText}
                   </Button>
                 </fetcher.Form>
+                {turnstileSiteKey && (
+                  <TurnstileWidget
+                    siteKey={turnstileSiteKey}
+                    onVerify={setTurnstileToken}
+                    onExpire={() => setTurnstileToken("")}
+                    size="compact"
+                    appearance="interaction-only"
+                    className="mt-1"
+                  />
+                )}
                 {error ||
                   (message && (
                     <div className="h-8">

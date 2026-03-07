@@ -52,6 +52,10 @@ export const links: LinksFunction = () => {
       rel: "preconnect",
       href: "https://shop.app",
     },
+    {
+      rel: "preconnect",
+      href: "https://challenges.cloudflare.com",
+    },
     // Preload self-hosted fonts emitted by Vite to minimize flash
     {
       rel: "preload",
@@ -193,6 +197,13 @@ export function Layout({ children }: { children?: React.ReactNode }) {
         <Links />
         <HreflangLinks />
         <GlobalStyle />
+        {/* Cloudflare Turnstile — anti-spam for newsletter forms */}
+        <script
+          src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+          async
+          defer
+          nonce={nonce}
+        />
       </head>
       <body
         style={

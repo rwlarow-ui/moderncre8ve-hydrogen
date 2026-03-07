@@ -45,6 +45,7 @@ export async function loadCriticalData({
     selectedLocale: storefront.i18n,
     weaverseTheme,
     googleGtmID: env.PUBLIC_GOOGLE_GTM_ID,
+    turnstileSiteKey: env.PUBLIC_TURNSTILE_SITE_KEY || "",
     swatchesConfigs,
   };
 }
