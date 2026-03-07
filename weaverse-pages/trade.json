@@ -1,0 +1,225 @@
+{
+  "rootId": "trade-root",
+  "items": [
+    {
+      "id": "trade-root",
+      "type": "main",
+      "children": [
+        { "id": "trade-hero" },
+        { "id": "trade-map" },
+        { "id": "trade-iwt-custom" },
+        { "id": "trade-iwt-shipping" }
+      ]
+    },
+    {
+      "id": "trade-hero",
+      "type": "hero-image",
+      "children": [
+        { "id": "trade-hero-sub" },
+        { "id": "trade-hero-heading" }
+      ],
+      "data": {
+        "height": "large",
+        "contentPosition": "center center",
+        "backgroundFit": "cover",
+        "enableOverlay": true,
+        "overlayOpacity": 40,
+        "backgroundImage": "/images/heroes/the-vista.jpg"
+      }
+    },
+    {
+      "id": "trade-hero-sub",
+      "type": "subheading",
+      "data": {
+        "content": "Cleveland Furniture Showroom — By Appointment Only",
+        "color": "#ffffff"
+      }
+    },
+    {
+      "id": "trade-hero-heading",
+      "type": "heading",
+      "data": {
+        "content": "Visit & Contact Us",
+        "as": "h1",
+        "color": "#ffffff",
+        "size": "default"
+      }
+    },
+    {
+      "id": "trade-map",
+      "type": "map",
+      "children": [
+        { "id": "trade-address" }
+      ],
+      "data": {
+        "heading": "Our Showroom",
+        "layoutMap": "list"
+      }
+    },
+    {
+      "id": "trade-address",
+      "type": "address-item",
+      "data": {
+        "nameStore": "MODERNCRE8VE SHOWROOM — By Appointment Only",
+        "address": "1400 E 36th Street, Suite 2802A, Cleveland, OH 44114",
+        "phoneNumber": "(216) 502-0755",
+        "openingHours": "Mon - Fri: 9:00AM - 5:00PM (By Appointment)",
+        "openingHoursSat": "Sat - Sun: Closed"
+      }
+    },
+    {
+      "id": "trade-iwt-custom",
+      "type": "image-with-text",
+      "children": [
+        { "id": "trade-iwt-custom-images" },
+        { "id": "trade-iwt-custom-content" }
+      ],
+      "data": {
+        "verticalPadding": "none",
+        "backgroundColor": "#F0F0EF",
+        "backgroundFor": "content"
+      }
+    },
+    {
+      "id": "trade-iwt-custom-images",
+      "type": "image-with-text--images",
+      "children": [
+        { "id": "trade-iwt-custom-image" }
+      ],
+      "data": {
+        "imageAspectRatio": "1/1"
+      }
+    },
+    {
+      "id": "trade-iwt-custom-image",
+      "type": "image-with-text--image",
+      "data": {
+        "image": "/images/heroes/img_1426.jpg",
+        "objectFit": "cover",
+        "borderRadius": 0
+      }
+    },
+    {
+      "id": "trade-iwt-custom-content",
+      "type": "image-with-text--content",
+      "children": [
+        { "id": "trade-iwt-contact-sub" },
+        { "id": "trade-iwt-contact-heading" },
+        { "id": "trade-iwt-contact-paragraph" },
+        { "id": "trade-iwt-contact-button" }
+      ],
+      "data": {
+        "gap": "5",
+        "contentPosition": "center center"
+      }
+    },
+    {
+      "id": "trade-iwt-contact-sub",
+      "type": "subheading",
+      "data": {
+        "content": "Get in Touch"
+      }
+    },
+    {
+      "id": "trade-iwt-contact-heading",
+      "type": "heading",
+      "data": {
+        "content": "Schedule a Showroom Visit or Send Us a Message",
+        "as": "h2"
+      }
+    },
+    {
+      "id": "trade-iwt-contact-paragraph",
+      "type": "paragraph",
+      "data": {
+        "content": "Our showroom is open by appointment — email us at info@moderncre8ve.com or call (216) 502-0755 to schedule a visit. We'd love to walk you through our handcrafted collections in person. About 60% of our orders are custom, so bring your ideas!"
+      }
+    },
+    {
+      "id": "trade-iwt-contact-button",
+      "type": "button",
+      "data": {
+        "text": "Email Us to Schedule a Visit",
+        "to": "mailto:info@moderncre8ve.com?subject=Showroom%20Visit%20Request",
+        "variant": "primary"
+      }
+    },
+    {
+      "id": "trade-iwt-shipping",
+      "type": "image-with-text",
+      "children": [
+        { "id": "trade-iwt-ship-content" },
+        { "id": "trade-iwt-ship-images" }
+      ],
+      "data": {
+        "verticalPadding": "none",
+        "backgroundColor": "#FFFFFF",
+        "backgroundFor": "content"
+      }
+    },
+    {
+      "id": "trade-iwt-ship-images",
+      "type": "image-with-text--images",
+      "children": [
+        { "id": "trade-iwt-ship-image" }
+      ],
+      "data": {
+        "imageAspectRatio": "1/1"
+      }
+    },
+    {
+      "id": "trade-iwt-ship-image",
+      "type": "image-with-text--image",
+      "data": {
+        "image": "/images/heroes/img_2158.jpg",
+        "objectFit": "cover",
+        "borderRadius": 0
+      }
+    },
+    {
+      "id": "trade-iwt-ship-content",
+      "type": "image-with-text--content",
+      "children": [
+        { "id": "trade-iwt-ship-sub" },
+        { "id": "trade-iwt-ship-heading" },
+        { "id": "trade-iwt-ship-paragraph" },
+        { "id": "trade-iwt-ship-button" }
+      ],
+      "data": {
+        "gap": "5",
+        "contentPosition": "center center"
+      }
+    },
+    {
+      "id": "trade-iwt-ship-sub",
+      "type": "subheading",
+      "data": {
+        "content": "White Glove Delivery"
+      }
+    },
+    {
+      "id": "trade-iwt-ship-heading",
+      "type": "heading",
+      "data": {
+        "content": "Nationwide Shipping & In-Home Setup",
+        "as": "h2"
+      }
+    },
+    {
+      "id": "trade-iwt-ship-paragraph",
+      "type": "paragraph",
+      "data": {
+        "content": "Over 95% of our deliveries include in-home delivery with assembly. We'll bring your furniture to your preferred room, assemble it, and remove all packing materials."
+      }
+    },
+    {
+      "id": "trade-iwt-ship-button",
+      "type": "button",
+      "data": {
+        "text": "Shipping Policy",
+        "to": "/pages/shipping-policy-and-customer-responsibilities",
+        "variant": "primary"
+      }
+    }
+  ]
+}

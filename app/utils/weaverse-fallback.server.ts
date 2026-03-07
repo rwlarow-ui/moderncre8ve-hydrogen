@@ -29,6 +29,7 @@ const JSON_LOADERS: Record<string, () => Promise<{ default: any }>> = {
     import("../../weaverse-pages/shipping-policy.json"),
   "PAGE:ordering-policies": () =>
     import("../../weaverse-pages/order-policies.json"),
+  "PAGE:trade-1": () => import("../../weaverse-pages/trade.json"),
   "PAGE:mid-century-modern-press-coverage": () =>
     import("../../weaverse-pages/press.json"),
   "PAGE:reviews": () => import("../../weaverse-pages/reviews.json"),
