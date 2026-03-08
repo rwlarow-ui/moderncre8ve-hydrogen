@@ -5,8 +5,8 @@ import type { PageDetailsQuery } from "storefront-api.generated";
 import invariant from "tiny-invariant";
 
 import { routeHeaders } from "~/utils/cache";
-import { redirectIfHandleIsLocalized } from "~/utils/redirect";
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
+import { redirectIfHandleIsLocalized } from "~/utils/redirect";
 import { seoPayload } from "~/utils/seo.server";
 import { loadPageWithFallback } from "~/utils/weaverse-fallback.server";
 import { validateWeaverseData, WeaverseContent } from "~/weaverse";
@@ -67,7 +67,9 @@ export async function loader({ request, params, context }: RouteLoaderArgs) {
 
 export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
   const canonical = `https://moderncre8ve.com${location.pathname.replace(/\/+$/, "") || "/"}`;
-  return getEnhancedSeoMeta(data?.seo as SeoConfig, { canonicalUrl: canonical });
+  return getEnhancedSeoMeta(data?.seo as SeoConfig, {
+    canonicalUrl: canonical,
+  });
 };
 
 export default function Page() {

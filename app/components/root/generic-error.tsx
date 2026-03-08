@@ -1,11 +1,7 @@
 import Link from "~/components/link";
 import { Section } from "~/components/section";
 
-export function GenericError({
-  error,
-}: {
-  error?: unknown;
-}) {
+export function GenericError({ error }: { error?: unknown }) {
   const heading = "Something's wrong here.";
   const description = "We found an error while loading this page.";
   const isDev = import.meta.env.DEV;

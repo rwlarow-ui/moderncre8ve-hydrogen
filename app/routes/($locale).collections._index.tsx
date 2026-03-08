@@ -1,5 +1,5 @@
 import type { SeoConfig } from "@shopify/hydrogen";
-import { getPaginationVariables,  } from "@shopify/hydrogen";
+import { getPaginationVariables } from "@shopify/hydrogen";
 import type { RouteLoaderArgs } from "@weaverse/hydrogen";
 import type { MetaFunction } from "react-router";
 import type { CollectionsQuery } from "storefront-api.generated";
@@ -49,7 +49,9 @@ export const loader = async (args: RouteLoaderArgs) => {
 
 export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
   const canonical = `https://moderncre8ve.com${location.pathname.replace(/\/+$/, "") || "/"}`;
-  return getEnhancedSeoMeta(data?.seo as SeoConfig, { canonicalUrl: canonical });
+  return getEnhancedSeoMeta(data?.seo as SeoConfig, {
+    canonicalUrl: canonical,
+  });
 };
 
 export default function Collections() {

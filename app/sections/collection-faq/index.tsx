@@ -13,7 +13,12 @@ interface CollectionFaqProps extends SectionProps {
 
 const CollectionFaq = forwardRef<HTMLElement, CollectionFaqProps>(
   (props, ref) => {
-    const { heading = "Frequently Asked Questions", headingSize = "h2", maxQuestions = 10, ...rest } = props;
+    const {
+      heading = "Frequently Asked Questions",
+      headingSize = "h2",
+      maxQuestions = 10,
+      ...rest
+    } = props;
     const loaderData = useLoaderData<any>();
     const collection = loaderData?.collection;
     const handle = collection?.handle ?? "";
@@ -27,7 +32,7 @@ const CollectionFaq = forwardRef<HTMLElement, CollectionFaqProps>(
     return (
       <Section ref={ref} {...rest}>
         <div className="mx-auto w-full max-w-4xl px-4 py-8 md:py-12">
-          <HeadingTag className="mb-8 text-center font-sans text-2xl font-semibold tracking-tight md:text-3xl">
+          <HeadingTag className="mb-8 text-center font-sans font-semibold text-2xl tracking-tight md:text-3xl">
             {heading}
           </HeadingTag>
           <div className="divide-y divide-gray-200">
@@ -65,7 +70,7 @@ function FaqItem({
         onClick={() => setOpen(!open)}
         aria-expanded={open}
       >
-        <span className="pr-4 font-sans text-base font-medium text-gray-900 md:text-lg">
+        <span className="pr-4 font-medium font-sans text-base text-gray-900 md:text-lg">
           {question}
         </span>
         <span
@@ -88,7 +93,7 @@ function FaqItem({
         </span>
       </button>
       {open && (
-        <div className="mt-3 pr-8 font-serif text-sm leading-relaxed text-gray-600 md:text-base">
+        <div className="mt-3 pr-8 font-serif text-gray-600 text-sm leading-relaxed md:text-base">
           {answer}
         </div>
       )}

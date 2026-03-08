@@ -13,7 +13,9 @@
 const SHOPIFY_STORE = "moderncre8ve.myshopify.com";
 const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_API_TOKEN;
 if (!ADMIN_TOKEN) {
-  console.error("Error: SHOPIFY_ADMIN_API_TOKEN environment variable is not set.");
+  console.error(
+    "Error: SHOPIFY_ADMIN_API_TOKEN environment variable is not set.",
+  );
   process.exit(1);
 }
 const API_VERSION = "2024-10";
@@ -137,7 +139,9 @@ async function main() {
 
   // --- Phase 1: Update 37 existing redirects targeting /collections/all-products ---
   console.log("--- Phase 1: Fix existing chain redirects ---");
-  console.log("    Updating target: /collections/all-products → /collections/all\n");
+  console.log(
+    "    Updating target: /collections/all-products → /collections/all\n",
+  );
 
   const chained = await getAllRedirectsTargeting("/collections/all-products");
   console.log(`  Found ${chained.length} redirects to update\n`);
@@ -165,7 +169,9 @@ async function main() {
   // --- Phase 2: Fix /collections/mid-century-modern-dining-tables ---
   console.log("--- Phase 2: Fix stale redirect ---\n");
 
-  const stale = await findRedirectByPath("/collections/mid-century-modern-dining-tables");
+  const stale = await findRedirectByPath(
+    "/collections/mid-century-modern-dining-tables",
+  );
   if (stale) {
     try {
       const result = await updateRedirect(stale.id, CORRECT_TARGET);
@@ -174,7 +180,9 @@ async function main() {
         console.log(`  ❌ ${stale.path} → FAILED: ${msg}`);
         failed++;
       } else {
-        console.log(`  ✅ ${stale.path} → ${CORRECT_TARGET} (was: ${stale.target})`);
+        console.log(
+          `  ✅ ${stale.path} → ${CORRECT_TARGET} (was: ${stale.target})`,
+        );
         updated++;
       }
     } catch (err) {
@@ -227,10 +235,13 @@ async function main() {
   // --- Phase 4: Blog self-redirect ---
   console.log("\n--- Phase 4: Blog self-redirect check ---\n");
 
-  const blogPath = "/blogs/mid-century-modern-scandi-japandi-design-blog/how-to-choose-the-perfect-dining-table";
+  const blogPath =
+    "/blogs/mid-century-modern-scandi-japandi-design-blog/how-to-choose-the-perfect-dining-table";
   const blogRedirect = await findRedirectByPath(blogPath);
   if (blogRedirect) {
-    console.log(`  Found redirect: ${blogRedirect.path} → ${blogRedirect.target}`);
+    console.log(
+      `  Found redirect: ${blogRedirect.path} → ${blogRedirect.target}`,
+    );
     console.log("  Deleting (article lives at this URL natively)...");
     try {
       await deleteRedirect(blogRedirect.id);
@@ -241,7 +252,9 @@ async function main() {
       failed++;
     }
   } else {
-    console.log("  ✅ No redirect exists — article accessible at its native URL");
+    console.log(
+      "  ✅ No redirect exists — article accessible at its native URL",
+    );
     skipped++;
   }
 
@@ -252,10 +265,18 @@ async function main() {
   console.log(`Skipped:  ${skipped}`);
   console.log(`Failed:   ${failed}`);
 
-  console.log("\nNote: /collections/all → /collections/all-products redirect was NOT created");
-  console.log("      because /collections/all is Shopify's built-in all-products page.");
-  console.log("      The /collections/all-products → /collections/all redirect is kept");
-  console.log("      for any external links still pointing to /collections/all-products.");
+  console.log(
+    "\nNote: /collections/all → /collections/all-products redirect was NOT created",
+  );
+  console.log(
+    "      because /collections/all is Shopify's built-in all-products page.",
+  );
+  console.log(
+    "      The /collections/all-products → /collections/all redirect is kept",
+  );
+  console.log(
+    "      for any external links still pointing to /collections/all-products.",
+  );
 }
 
 main().catch((err) => {

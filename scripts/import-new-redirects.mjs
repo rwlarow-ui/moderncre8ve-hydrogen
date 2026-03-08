@@ -10,7 +10,7 @@
  */
 
 import { readFileSync } from "fs";
-import { resolve, dirname } from "path";
+import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 
 // Load .env from project root
@@ -26,20 +26,27 @@ try {
     const key = trimmed.slice(0, eqIdx).trim();
     let val = trimmed.slice(eqIdx + 1).trim();
     // Strip surrounding quotes
-    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+    if (
+      (val.startsWith('"') && val.endsWith('"')) ||
+      (val.startsWith("'") && val.endsWith("'"))
+    ) {
       val = val.slice(1, -1);
     }
     if (!process.env[key]) process.env[key] = val;
   }
   console.log("✅ Loaded .env from", envPath);
 } catch {
-  console.warn("⚠️  Could not load .env file, using existing environment variables");
+  console.warn(
+    "⚠️  Could not load .env file, using existing environment variables",
+  );
 }
 
 const SHOPIFY_STORE = "moderncre8ve.myshopify.com";
 const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_API_TOKEN;
 if (!ADMIN_TOKEN) {
-  console.error("Error: SHOPIFY_ADMIN_API_TOKEN not found in .env or environment.");
+  console.error(
+    "Error: SHOPIFY_ADMIN_API_TOKEN not found in .env or environment.",
+  );
   process.exit(1);
 }
 console.log(`🔑 Using token: shpat_...${ADMIN_TOKEN.slice(-6)}`);
@@ -48,14 +55,29 @@ const API_VERSION = "2024-10";
 // --- 8 NEW redirects to create ---
 // Note: /collections/all is Shopify's built-in all-products page — no redirect needed FROM it
 const NEW_REDIRECTS = [
-  { from: "/pages/custom-kitchen-cabinets-cleveland", to: "/pages/custom-furniture-crafted-to-perfection" },
-  { from: "/collections/scandinavian-design-furniture", to: "/collections/all" },
+  {
+    from: "/pages/custom-kitchen-cabinets-cleveland",
+    to: "/pages/custom-furniture-crafted-to-perfection",
+  },
+  {
+    from: "/collections/scandinavian-design-furniture",
+    to: "/collections/all",
+  },
   { from: "/collections/mid-century-modern", to: "/collections/all" },
-  { from: "/collections/mid-century-modern-dining-tables", to: "/collections/all" },
+  {
+    from: "/collections/mid-century-modern-dining-tables",
+    to: "/collections/all",
+  },
   { from: "/collections/modern-dining-chairs", to: "/collections/all" },
   { from: "/collections/all/custom", to: "/collections/custom-made-furniture" },
-  { from: "/blogs/mid-century-modern-scandi-japandi-design-blog/tagged/vintagefurniture", to: "/blogs/mid-century-modern-scandi-japandi-design-blog" },
-  { from: "/blogs/mid-century-modern-scandi-japandi-design-blog/tagged/japandi-bedroom", to: "/blogs/mid-century-modern-scandi-japandi-design-blog" },
+  {
+    from: "/blogs/mid-century-modern-scandi-japandi-design-blog/tagged/vintagefurniture",
+    to: "/blogs/mid-century-modern-scandi-japandi-design-blog",
+  },
+  {
+    from: "/blogs/mid-century-modern-scandi-japandi-design-blog/tagged/japandi-bedroom",
+    to: "/blogs/mid-century-modern-scandi-japandi-design-blog",
+  },
 ];
 
 // --- 4 EXISTING blog redirects to fix (delete old blanket → create 1:1) ---
@@ -64,17 +86,21 @@ const BLOG_REDIRECT_FIXES = [
   {
     oldFrom: "/blogs/news/solid-wood-furniture-care-guide",
     oldTo: "/blogs/mid-century-modern-scandi-japandi-design-blog",
-    newTo: "/blogs/mid-century-modern-scandi-japandi-design-blog/solid-wood-furniture-care-guide",
+    newTo:
+      "/blogs/mid-century-modern-scandi-japandi-design-blog/solid-wood-furniture-care-guide",
   },
   {
     oldFrom: "/blogs/news/58430660-we-are-an-etsy-featured-shop-sept-2015",
     oldTo: "/blogs/mid-century-modern-scandi-japandi-design-blog",
-    newTo: "/blogs/mid-century-modern-scandi-japandi-design-blog/58430660-we-are-an-etsy-featured-shop-sept-2015",
+    newTo:
+      "/blogs/mid-century-modern-scandi-japandi-design-blog/58430660-we-are-an-etsy-featured-shop-sept-2015",
   },
   {
-    oldFrom: "/blogs/news/uncovering-the-beauty-and-durability-of-black-walnut-wood-the-ultimate-guide",
+    oldFrom:
+      "/blogs/news/uncovering-the-beauty-and-durability-of-black-walnut-wood-the-ultimate-guide",
     oldTo: "/blogs/mid-century-modern-scandi-japandi-design-blog",
-    newTo: "/blogs/mid-century-modern-scandi-japandi-design-blog/uncovering-the-beauty-and-durability-of-black-walnut-wood-the-ultimate-guide",
+    newTo:
+      "/blogs/mid-century-modern-scandi-japandi-design-blog/uncovering-the-beauty-and-durability-of-black-walnut-wood-the-ultimate-guide",
   },
 ];
 
@@ -145,9 +171,7 @@ async function findRedirectByPath(path) {
   `;
 
   const data = await shopifyGraphQL(query, { query: `path:${path}` });
-  const matches = data.urlRedirects.nodes.filter(
-    (r) => r.path === path
-  );
+  const matches = data.urlRedirects.nodes.filter((r) => r.path === path);
   return matches.length > 0 ? matches[0] : null;
 }
 
@@ -182,14 +206,24 @@ async function testAuth() {
     });
 
     if (res.status === 401) {
-      console.error("\n❌ 401 Unauthorized — your Admin API token is invalid or revoked.");
+      console.error(
+        "\n❌ 401 Unauthorized — your Admin API token is invalid or revoked.",
+      );
       console.error("\nTo fix this, generate a new token:");
-      console.error("  1. Go to https://admin.shopify.com/store/moderncre8ve/settings/apps/development");
-      console.error("  2. Click your 'Claude2' app (or create a new custom app)");
+      console.error(
+        "  1. Go to https://admin.shopify.com/store/moderncre8ve/settings/apps/development",
+      );
+      console.error(
+        "  2. Click your 'Claude2' app (or create a new custom app)",
+      );
       console.error("  3. Go to 'API credentials' tab");
-      console.error("  4. Under 'Admin API access token', click 'Reveal token once'");
+      console.error(
+        "  4. Under 'Admin API access token', click 'Reveal token once'",
+      );
       console.error("     (If no token shown, click 'Install app' first)");
-      console.error("  5. Copy the shpat_... token to your .env as SHOPIFY_ADMIN_API_TOKEN");
+      console.error(
+        "  5. Copy the shpat_... token to your .env as SHOPIFY_ADMIN_API_TOKEN",
+      );
       console.error("\nAlternatively, run: node scripts/get-admin-token.mjs");
       process.exit(1);
     }
@@ -244,7 +278,9 @@ async function main() {
     await new Promise((r) => setTimeout(r, 300));
   }
 
-  console.log(`\nPhase 1 complete: ${created} created, ${skipped} skipped, ${failed} failed\n`);
+  console.log(
+    `\nPhase 1 complete: ${created} created, ${skipped} skipped, ${failed} failed\n`,
+  );
 
   // --- Phase 2: Fix 4 blog article redirects (blanket → 1:1) ---
   console.log("--- Phase 2: Fixing 4 blog article redirects ---\n");
@@ -290,13 +326,21 @@ async function main() {
     await new Promise((r) => setTimeout(r, 300));
   }
 
-  console.log(`\nPhase 2 complete: ${fixed} fixed, ${blogSkipped} already correct, ${blogFailed} failed\n`);
+  console.log(
+    `\nPhase 2 complete: ${fixed} fixed, ${blogSkipped} already correct, ${blogFailed} failed\n`,
+  );
 
   // --- Summary ---
   console.log("=== SUMMARY ===");
-  console.log(`New redirects:   ${created} created, ${skipped} skipped, ${failed} failed`);
-  console.log(`Blog fixes:      ${fixed} fixed, ${blogSkipped} already correct, ${blogFailed} failed`);
-  console.log(`Total redirects: 77 existing + ${created + fixed} new = ${77 + created + fixed} total`);
+  console.log(
+    `New redirects:   ${created} created, ${skipped} skipped, ${failed} failed`,
+  );
+  console.log(
+    `Blog fixes:      ${fixed} fixed, ${blogSkipped} already correct, ${blogFailed} failed`,
+  );
+  console.log(
+    `Total redirects: 77 existing + ${created + fixed} new = ${77 + created + fixed} total`,
+  );
 }
 
 main().catch((err) => {

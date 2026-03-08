@@ -20,13 +20,13 @@ import {
   COMBINED_LISTINGS_CONFIGS,
   isCombinedListing,
 } from "~/utils/combined-listings";
+import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { createJudgeMeReview, getJudgeMeProductReviews } from "~/utils/judgeme";
 import { getRecommendedProducts } from "~/utils/product";
 import {
   redirectIfCombinedListing,
   redirectIfHandleIsLocalized,
 } from "~/utils/redirect";
-import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { seoPayload } from "~/utils/seo.server";
 import { loadPageWithFallback } from "~/utils/weaverse-fallback.server";
 import { WeaverseContent } from "~/weaverse";

@@ -74,13 +74,7 @@ function root({
         },
         openingHoursSpecification: {
           "@type": "OpeningHoursSpecification",
-          dayOfWeek: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-          ],
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
           opens: "09:00",
           closes: "17:00",
         },
@@ -212,7 +206,9 @@ function product({
   );
   const selectedVariant = productData?.selectedOrFirstAvailableVariant;
   return {
-    title: truncateTitle(stripBrandSuffix(productData?.seo?.title) || productData?.title || ""),
+    title: truncateTitle(
+      stripBrandSuffix(productData?.seo?.title) || productData?.title || "",
+    ),
     description,
     handle: "@moderncre8ve",
     url,
@@ -320,8 +316,9 @@ function collection({
   return {
     title: truncateTitle(
       stripBrandSuffix(collectionData?.seo?.title) ||
-      stripBrandSuffix(collectionData?.title) ||
-      collectionData?.title || "",
+        stripBrandSuffix(collectionData?.title) ||
+        collectionData?.title ||
+        "",
     ),
     description: truncate(
       collectionData?.seo?.description ??
@@ -409,7 +406,9 @@ function article({
   url: Request["url"];
 }): SeoConfig {
   return {
-    title: truncateTitle(stripBrandSuffix(articleData?.seo?.title) || articleData?.title || ""),
+    title: truncateTitle(
+      stripBrandSuffix(articleData?.seo?.title) || articleData?.title || "",
+    ),
     description: truncate(articleData?.seo?.description ?? ""),
     titleTemplate: "%s | ModernCre8ve",
     url,
@@ -454,7 +453,9 @@ function blog({
   url: Request["url"];
 }): SeoConfig {
   return {
-    title: truncateTitle(stripBrandSuffix(blogData?.seo?.title) || blogData?.title || ""),
+    title: truncateTitle(
+      stripBrandSuffix(blogData?.seo?.title) || blogData?.title || "",
+    ),
     description: truncate(blogData?.seo?.description || ""),
     titleTemplate: "%s | ModernCre8ve",
     url,
@@ -494,10 +495,10 @@ function page({
     pageData?.handle || new URL(url).pathname.split("/pages/").pop() || "";
   const fallbackDesc = PAGE_META_DESCRIPTIONS[handle] || "";
   return {
-    description: truncate(
-      pageData?.seo?.description || fallbackDesc,
+    description: truncate(pageData?.seo?.description || fallbackDesc),
+    title: truncateTitle(
+      stripBrandSuffix(pageData?.seo?.title) || pageData?.title || "",
     ),
-    title: truncateTitle(stripBrandSuffix(pageData?.seo?.title) || pageData?.title || ""),
     titleTemplate: "%s | ModernCre8ve",
     url,
     jsonLd: {
@@ -594,10 +595,7 @@ function stripBrandSuffix(title: string | undefined | null): string {
     .replace(/\s+(?:from|by)\s+modern\s*cre8ve\s*$/i, "")
     // 3. Strip mid-string brand between separators:
     //    "… | MODERNCRE8VE | …" or "… | MODERNCRE8VE: …"
-    .replace(
-      /\s*[|\-–—]\s*modern\s*cre8ve\s*[:||\-–—]\s*/i,
-      " | ",
-    )
+    .replace(/\s*[|\-–—]\s*modern\s*cre8ve\s*[:||\-–—]\s*/i, " | ")
     // 4. Strip leading brand with separator: "MODERNCRE8VE: …" or "MODERNCRE8VE | …"
     .replace(/^modern\s*cre8ve\s*[:||\-–—]\s*/i, "")
     // 5. Strip trailing Shopify resource-type suffixes:
@@ -649,4 +647,3 @@ function truncate(str: string, num = 155): string {
   }
   return `${str.slice(0, num - 3)}...`;
 }
-

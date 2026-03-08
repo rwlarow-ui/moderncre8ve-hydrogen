@@ -335,7 +335,8 @@ export const schema = createSchema({
         headingContent: "The Dining Table You'll Never Replace",
         color: "#fff",
         size: "scale",
-        subheadingContent: "Mid-Century. Solid Walnut. Built for the Long Haul.",
+        subheadingContent:
+          "Mid-Century. Solid Walnut. Built for the Long Haul.",
         subheadingColor: "#fff",
         paragraphContent:
           "Designed to anchor your home for decades — not just pass through it.",

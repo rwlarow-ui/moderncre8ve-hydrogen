@@ -35,26 +35,27 @@ const variants = cva(
         medium: "py-16 md:py-16 lg:py-20",
         large: "py-8 md:py-24 lg:py-32",
       },
-    gap: {
-      0: "",
-      4: "space-y-1",
-      8: "space-y-2",
-      12: "space-y-3",
-      16: "space-y-4",
-      20: "space-y-5",
-      24: "space-y-3 lg:space-y-6",
-      28: "space-y-3.5 lg:space-y-7",
-      32: "space-y-4 lg:space-y-8",
-      36: "space-y-4 lg:space-y-9",
-      40: "space-y-5 lg:space-y-10",
-      44: "space-y-5 lg:space-y-11",
-      48: "space-y-6 lg:space-y-12",
-      52: "space-y-6 lg:space-y-[52px]",
-      56: "space-y-7 lg:space-y-14",
-      60: "space-y-7 lg:space-y-[60px]",
+      gap: {
+        0: "",
+        4: "space-y-1",
+        8: "space-y-2",
+        12: "space-y-3",
+        16: "space-y-4",
+        20: "space-y-5",
+        24: "space-y-3 lg:space-y-6",
+        28: "space-y-3.5 lg:space-y-7",
+        32: "space-y-4 lg:space-y-8",
+        36: "space-y-4 lg:space-y-9",
+        40: "space-y-5 lg:space-y-10",
+        44: "space-y-5 lg:space-y-11",
+        48: "space-y-6 lg:space-y-12",
+        52: "space-y-6 lg:space-y-[52px]",
+        56: "space-y-7 lg:space-y-14",
+        60: "space-y-7 lg:space-y-[60px]",
+      },
     },
   },
-});
+);
 
 export interface SlideProps
   extends VariantProps<typeof variants>,
@@ -167,7 +168,7 @@ const Slide = forwardRef<HTMLDivElement, SlideProps>((props, ref) => {
     >
       <OverlayAndBackground {...props} />
       <div className={cn(variants({ width, gap, verticalPadding }))}>
-        <div className="flex max-w-full flex-col gap-3 lg:flex-row lg:gap-6 [text-shadow:_0_1px_8px_rgba(0,0,0,0.4)]">
+        <div className="flex max-w-full flex-col gap-3 [text-shadow:_0_1px_8px_rgba(0,0,0,0.4)] lg:flex-row lg:gap-6">
           {/* Left Column: Heading + Subheading */}
           <div className="flex w-full flex-col gap-1 lg:w-1/2 lg:gap-(--gap)">
             {headingContent && (

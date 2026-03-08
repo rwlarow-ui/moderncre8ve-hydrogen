@@ -51,7 +51,17 @@ let HighlightsBadge = forwardRef<HTMLDivElement, HighlightsBadgeProps>(
           // Hand / Craftsmanship icon
           return (
             <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={badgeTextColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={badgeTextColor}
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2" />
                 <path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2" />
                 <path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8" />
@@ -63,7 +73,17 @@ let HighlightsBadge = forwardRef<HTMLDivElement, HighlightsBadgeProps>(
           // Tree / Solid wood icon
           return (
             <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={badgeTextColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={badgeTextColor}
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M12 22v-7" />
                 <path d="M17 8v.8A6 6 0 0 1 13.8 20H10.2A6 6 0 0 1 7 8.8V8a5 5 0 1 1 10 0Z" />
               </svg>
@@ -73,7 +93,17 @@ let HighlightsBadge = forwardRef<HTMLDivElement, HighlightsBadgeProps>(
           // Ruler + Pencil / Custom design icon
           return (
             <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={badgeTextColor} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={badgeTextColor}
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="m15 5 4 4" />
                 <path d="M13 7 8.7 2.7a1 1 0 0 0-1.4 0l-4 4a1 1 0 0 0 0 1.4L8 13" />
                 <path d="m8 6 2-2" />

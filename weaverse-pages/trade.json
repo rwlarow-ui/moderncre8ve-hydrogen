@@ -14,10 +14,7 @@
     {
       "id": "trade-hero",
       "type": "hero-image",
-      "children": [
-        { "id": "trade-hero-sub" },
-        { "id": "trade-hero-heading" }
-      ],
+      "children": [{ "id": "trade-hero-sub" }, { "id": "trade-hero-heading" }],
       "data": {
         "height": "large",
         "contentPosition": "center center",
@@ -48,9 +45,7 @@
     {
       "id": "trade-map",
       "type": "map",
-      "children": [
-        { "id": "trade-address" }
-      ],
+      "children": [{ "id": "trade-address" }],
       "data": {
         "heading": "Our Showroom",
         "layoutMap": "list"
@@ -83,9 +78,7 @@
     {
       "id": "trade-iwt-custom-images",
       "type": "image-with-text--images",
-      "children": [
-        { "id": "trade-iwt-custom-image" }
-      ],
+      "children": [{ "id": "trade-iwt-custom-image" }],
       "data": {
         "imageAspectRatio": "1/1"
       }
@@ -160,9 +153,7 @@
     {
       "id": "trade-iwt-ship-images",
       "type": "image-with-text--images",
-      "children": [
-        { "id": "trade-iwt-ship-image" }
-      ],
+      "children": [{ "id": "trade-iwt-ship-image" }],
       "data": {
         "imageAspectRatio": "1/1"
       }

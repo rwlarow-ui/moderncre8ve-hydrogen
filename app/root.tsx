@@ -36,8 +36,8 @@ import { GlobalLoading } from "./components/root/global-loading";
 import { NotFound } from "./components/root/not-found";
 import styles from "./styles/app.css?url";
 import { COUNTRIES, DEFAULT_LOCALE } from "./utils/const";
-import { loadCriticalData, loadDeferredData } from "./utils/root.server";
 import { getEnhancedSeoMeta } from "./utils/enhanced-seo-meta";
+import { loadCriticalData, loadDeferredData } from "./utils/root.server";
 import { GlobalStyle } from "./weaverse/style";
 
 export type RootLoader = typeof loader;
@@ -93,7 +93,9 @@ export const meta = ({ data, location }: MetaArgs<typeof loader>) => {
   const canonicalPath = location.pathname.replace(/\/+$/, "") || "/";
   const canonical = `${origin}${canonicalPath}`;
 
-  return getEnhancedSeoMeta(data?.seo as SeoConfig, { canonicalUrl: canonical });
+  return getEnhancedSeoMeta(data?.seo as SeoConfig, {
+    canonicalUrl: canonical,
+  });
 };
 
 function App() {
@@ -162,8 +164,7 @@ function HreflangLinks() {
       links.push({ hreflang, href: `${ORIGIN}${basePath}` });
     } else {
       // Prefixed locales: /en-au, /en-ca, etc.
-      const localePath =
-        basePath === "/" ? prefix : `${prefix}${basePath}`;
+      const localePath = basePath === "/" ? prefix : `${prefix}${basePath}`;
       links.push({ hreflang, href: `${ORIGIN}${localePath}` });
     }
   }

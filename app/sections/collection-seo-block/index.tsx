@@ -48,17 +48,17 @@ const CollectionSeoBlock = forwardRef<HTMLElement, CollectionSeoBlockProps>(
       <Section ref={ref} {...rest}>
         <div className="mx-auto w-full max-w-4xl px-4 py-8 md:py-12">
           {showHeading && (
-            <HeadingTag className="mb-6 font-sans text-xl font-semibold tracking-tight md:text-2xl">
+            <HeadingTag className="mb-6 font-sans font-semibold text-xl tracking-tight md:text-2xl">
               {heading}
             </HeadingTag>
           )}
           {metafieldDesc || localDesc ? (
-            <p className="font-serif text-sm leading-relaxed text-gray-600 md:text-base">
+            <p className="font-serif text-gray-600 text-sm leading-relaxed md:text-base">
               {metafieldDesc || localDesc}
             </p>
           ) : (
             <div
-              className="collection-seo-prose font-serif text-sm leading-relaxed text-gray-600 md:text-base [&_p]:mb-4 [&_strong]:font-semibold [&_strong]:text-gray-800"
+              className="collection-seo-prose font-serif text-gray-600 text-sm leading-relaxed md:text-base [&_p]:mb-4 [&_strong]:font-semibold [&_strong]:text-gray-800"
               dangerouslySetInnerHTML={{ __html: shopifyDesc }}
             />
           )}
