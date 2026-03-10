@@ -83,8 +83,8 @@ export default {
       // supported equivalents. FR-CA → EN-CA (we don't serve French content).
       // EN-US is the default locale (no prefix needed).
       const LOCALE_REDIRECTS: Record<string, string> = {
-        "/fr-ca": "/en-ca",   // French-Canadian → English-Canadian
-        "/en-us": "",          // EN-US is default, strip prefix
+        "/fr-ca": "/en-ca", // French-Canadian → English-Canadian
+        "/en-us": "", // EN-US is default, strip prefix
       };
       const firstSeg = `/${url.pathname.substring(1).split("/")[0].toLowerCase()}`;
       if (firstSeg in LOCALE_REDIRECTS) {

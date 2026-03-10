@@ -30,13 +30,12 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
       storefront.query(ARTICLES_QUERY),
     ]);
 
-  const collections: SitemapItem[] =
-    collectionsResult.collections.nodes.map(
-      (c: { title: string; handle: string }) => ({
-        title: c.title,
-        url: `/collections/${c.handle}`,
-      }),
-    );
+  const collections: SitemapItem[] = collectionsResult.collections.nodes.map(
+    (c: { title: string; handle: string }) => ({
+      title: c.title,
+      url: `/collections/${c.handle}`,
+    }),
+  );
 
   const products: SitemapItem[] = productsResult.products.nodes.map(
     (p: { title: string; handle: string }) => ({
@@ -97,7 +96,7 @@ function SitemapSection({
   if (!items.length) return null;
   return (
     <section className="mb-10">
-      <h2 className="mb-4 font-sans text-xl font-semibold">{title}</h2>
+      <h2 className="mb-4 font-sans font-semibold text-xl">{title}</h2>
       <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
           <li key={item.url}>
@@ -121,7 +120,7 @@ export default function HtmlSitemap() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6">
-      <h1 className="mb-8 font-sans text-3xl font-bold">Sitemap</h1>
+      <h1 className="mb-8 font-bold font-sans text-3xl">Sitemap</h1>
       <SitemapSection title="Collections" items={collections} />
       <SitemapSection title="Products" items={products} />
       <SitemapSection title="Pages" items={pages} />

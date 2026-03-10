@@ -54,8 +54,7 @@ export const collectionFaqs: Record<string, FAQ[]> = {
         "Traditional mid-century modern furniture features natural hardwoods like walnut, teak, and oak, often paired with materials such as leather, brass, and woven textiles. ModernCre8ve pieces are crafted from solid American walnut and other premium hardwoods by Amish artisans.",
     },
     {
-      question:
-        "How do I mix mid-century modern furniture with other styles?",
+      question: "How do I mix mid-century modern furniture with other styles?",
       answer:
         "Mid-century modern pieces pair beautifully with Scandinavian, Japandi, and contemporary styles because they share an appreciation for simplicity and natural materials. Start with a statement piece like a walnut credenza or dining table, and layer in complementary textures like linen, wool, and ceramics.",
     },
@@ -276,8 +275,7 @@ export const collectionFaqs: Record<string, FAQ[]> = {
         "Plan for one chair per 24 inches of table perimeter. A 60-inch rectangular table comfortably seats 6, while a 72-inch table seats 8. For round tables, a 48-inch diameter seats 4 and a 54-inch diameter seats 6. Consider purchasing one or two extras for guests.",
     },
     {
-      question:
-        "Can I mix different dining chair styles at one table?",
+      question: "Can I mix different dining chair styles at one table?",
       answer:
         "Yes, mixing chair styles is a popular design approach. A common strategy is to use matching side chairs with contrasting head chairs, or to pair two complementary styles in alternating positions. The key is maintaining a consistent material or color thread — like all walnut wood — so the mix feels intentional.",
     },
@@ -300,14 +298,12 @@ export const collectionFaqs: Record<string, FAQ[]> = {
         "Our extendable tables use precision-engineered leaf mechanisms. You pull the two halves of the tabletop apart to reveal the stored leaf, then lift it into position. The mechanism is smooth and can be operated by one person. The leaf stores invisibly within the table when not in use.",
     },
     {
-      question:
-        "How much extra seating does an extension leaf add?",
+      question: "How much extra seating does an extension leaf add?",
       answer:
         "Each extension leaf typically adds 18–20 inches to the table length, providing room for 2 additional guests. Our tables expand from seating 6 to seating 8–10, depending on the model. The Payne oval table, for example, extends from 63 to 83 inches.",
     },
     {
-      question:
-        "Does the extension mechanism affect the table's appearance?",
+      question: "Does the extension mechanism affect the table's appearance?",
       answer:
         "Not at all. When closed, our extension tables look identical to fixed-top tables — the seam is virtually invisible thanks to precision milling. The wood grain on the leaf is selected to match the main tabletop for a seamless appearance when extended.",
     },
@@ -317,8 +313,7 @@ export const collectionFaqs: Record<string, FAQ[]> = {
         "We offer extendable dining tables in rectangular, oval, and round shapes. The Parsons and Santa Monica models are rectangular, the Payne and Mar Vista are oval, and the Corcovado is round. Each can be customized in walnut, oak, or cherry.",
     },
     {
-      question:
-        "Can I get a custom size for an extendable dining table?",
+      question: "Can I get a custom size for an extendable dining table?",
       answer:
         "Yes, we can adjust the base dimensions and extension length to fit your specific space. Our Amish craftspeople will build the extension mechanism to your exact specifications. Contact us with your measurements and we will provide a custom quote.",
     },
@@ -389,7 +384,8 @@ export const collectionFaqs: Record<string, FAQ[]> = {
         "Scandinavian bed frames are characterized by warm wood tones, gently rounded edges, tapered or splayed legs, and an overall sense of lightness. Inspired by Danish and Swedish design traditions, they create a cozy (hygge) bedroom atmosphere through natural materials and clean proportions rather than heavy ornamentation.",
     },
     {
-      question: "What is the difference between Scandinavian and mid-century modern bed frames?",
+      question:
+        "What is the difference between Scandinavian and mid-century modern bed frames?",
       answer:
         "While both share clean lines, Scandinavian bed frames tend toward softer curves, lighter wood tones, and a more understated presence. Mid-century modern frames often feature bolder lines, darker walnut wood, and more pronounced design elements like angled headboards. Our Upton bed bridges both styles with its Danish-inspired silhouette in choice of walnut or oak.",
     },

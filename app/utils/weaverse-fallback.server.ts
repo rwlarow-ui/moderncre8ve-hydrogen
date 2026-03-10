@@ -19,8 +19,7 @@ const JSON_LOADERS: Record<string, () => Promise<{ default: any }>> = {
   "PAGE:faq": () => import("../../weaverse-pages/faq.json"),
   "PAGE:custom-furniture-crafted-to-perfection": () =>
     import("../../weaverse-pages/custom-orders.json"),
-  "PAGE:custom-orders": () =>
-    import("../../weaverse-pages/custom-orders.json"),
+  "PAGE:custom-orders": () => import("../../weaverse-pages/custom-orders.json"),
   "PAGE:our-materials": () => import("../../weaverse-pages/our-materials.json"),
   "PAGE:assembly-care": () => import("../../weaverse-pages/assembly-care.json"),
   "PAGE:shipping-policy-and-customer-responsibilities": () =>
@@ -29,6 +28,7 @@ const JSON_LOADERS: Record<string, () => Promise<{ default: any }>> = {
     import("../../weaverse-pages/shipping-policy.json"),
   "PAGE:ordering-policies": () =>
     import("../../weaverse-pages/order-policies.json"),
+  "PAGE:trade-1": () => import("../../weaverse-pages/trade.json"),
   "PAGE:mid-century-modern-press-coverage": () =>
     import("../../weaverse-pages/press.json"),
   "PAGE:reviews": () => import("../../weaverse-pages/reviews.json"),
@@ -104,11 +104,13 @@ export async function loadPageWithFallback(
   return {
     configs,
     page,
-    project: result?.project ?? ({
-      id: configs.projectId ?? "",
-      name: "ModernCre8ve",
-      weaverseShopId: "",
-    } as any),
+    project:
+      result?.project ??
+      ({
+        id: configs.projectId ?? "",
+        name: "ModernCre8ve",
+        weaverseShopId: "",
+      } as any),
     pageAssignment: result?.pageAssignment,
   };
 }

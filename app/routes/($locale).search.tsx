@@ -27,9 +27,9 @@ import { LayoutSwitcher } from "~/sections/collection-filters/layout-switcher";
 import { Sort } from "~/sections/collection-filters/sort";
 import { cn } from "~/utils/cn";
 import { PAGINATION_SIZE } from "~/utils/const";
+import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import type { SortParam } from "~/utils/filter";
 import { FILTER_URL_PREFIX } from "~/utils/filter";
-import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { seoPayload } from "~/utils/seo.server";
 
 export async function loader({

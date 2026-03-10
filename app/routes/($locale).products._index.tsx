@@ -1,5 +1,5 @@
 import type { SeoConfig } from "@shopify/hydrogen";
-import { getPaginationVariables,  } from "@shopify/hydrogen";
+import { getPaginationVariables } from "@shopify/hydrogen";
 import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import type { MetaFunction } from "react-router";
 import invariant from "tiny-invariant";

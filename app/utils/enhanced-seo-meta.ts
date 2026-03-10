@@ -46,17 +46,16 @@ export function getEnhancedSeoMeta(
     | undefined
   )[];
 
-  const seoMeta = getSeoMeta(
-    ...configs.filter(Boolean),
-  ) as Record<string, string>[];
+  const seoMeta = getSeoMeta(...configs.filter(Boolean)) as Record<
+    string,
+    string
+  >[];
 
   const hasOgImage = seoMeta.some(
     (tag) => tag.property === "og:image" || tag.property === "og:image:url",
   );
 
-  const hasTwitterSite = seoMeta.some(
-    (tag) => tag.property === "twitter:site",
-  );
+  const hasTwitterSite = seoMeta.some((tag) => tag.property === "twitter:site");
 
   const extra: Record<string, string>[] = [
     { property: "og:type", content: "website" },

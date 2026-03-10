@@ -320,21 +320,21 @@ const ProductInformation = forwardRef<
               )}
 
               {showLeadTime && (
-                <div className="rounded border border-line-subtle bg-[var(--color-background-subtle,#f9f8f4)] px-4 py-3 text-sm text-body-subtle">
-                  <p className="mb-1.5 font-semibold uppercase tracking-wide text-body">
+                <div className="rounded border border-line-subtle bg-[var(--color-background-subtle,#f9f8f4)] px-4 py-3 text-body-subtle text-sm">
+                  <p className="mb-1.5 font-semibold text-body uppercase tracking-wide">
                     Lead Time
                   </p>
                   <p className="mb-2">{leadTimeText}</p>
                   <p className="flex flex-wrap gap-x-3 gap-y-1">
                     <Link
                       to="/pages/shipping-policy"
-                      className="border-b border-line-subtle pb-px hover:border-body"
+                      className="border-line-subtle border-b pb-px hover:border-body"
                     >
                       Shipping details
                     </Link>
                     <Link
                       to="/pages/faq"
-                      className="border-b border-line-subtle pb-px hover:border-body"
+                      className="border-line-subtle border-b pb-px hover:border-body"
                     >
                       FAQ
                     </Link>
