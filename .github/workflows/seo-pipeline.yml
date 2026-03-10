@@ -1,0 +1,44 @@
+name: "SEO Truth Layer — Weekly Pipeline"
+
+on:
+  schedule:
+    - cron: "0 14 */2 * *"  # Every 2 days at 2pm UTC
+  workflow_dispatch:
+
+jobs:
+  seo-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Write service account file
+        run: echo '${{ secrets.GOOGLE_SA_JSON }}' > service_account.json
+
+      - name: Run SEO Truth Layer pipeline
+        env:
+          SITE_URL: ${{ secrets.SITE_URL }}
+          GA4_PROPERTY_ID: ${{ secrets.GA4_PROPERTY_ID }}
+          GOOGLE_SA_PATH: service_account.json
+        run: python -m src.main
+
+      - name: Email weekly brief
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: python -m src.send_email rob@moderncre8ve.com
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: seo-reports
+          path: |
+            data/
+            reports/
