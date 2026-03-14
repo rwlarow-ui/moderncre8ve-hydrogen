@@ -13,20 +13,38 @@ export function getWeaverseCsp(request: Request, context: AppLoadContext) {
   const updatedCsp: {
     [x: string]: string[] | string | boolean;
   } = {
-    defaultSrc: [
+    defaultSrc: [...weaverseHosts],
+    imgSrc: [
       "data:",
+      "cdn.alireviews.io",
+      ...weaverseHosts,
+    ],
+    mediaSrc: [
       "*.youtube.com",
       "*.youtu.be",
       "*.vimeo.com",
-      "*.google.com",
-      "*.google-analytics.com",
-      "*.googletagmanager.com",
-      "cdn.alireviews.io",
-      "cdn.jsdelivr.net",
-      "*.alicdn.com",
       ...weaverseHosts,
     ],
-    connectSrc: ["vimeo.com", "*.google-analytics.com", ...weaverseHosts],
+    frameSrc: [
+      "*.youtube.com",
+      "*.youtu.be",
+      "*.vimeo.com",
+      "challenges.cloudflare.com",
+      ...weaverseHosts,
+    ],
+    scriptSrc: [
+      "*.googletagmanager.com",
+      "*.google-analytics.com",
+      "challenges.cloudflare.com",
+      ...weaverseHosts,
+    ],
+    connectSrc: [
+      "vimeo.com",
+      "*.google-analytics.com",
+      "*.googletagmanager.com",
+      "challenges.cloudflare.com",
+      ...weaverseHosts,
+    ],
     styleSrc: weaverseHosts,
   };
   if (isDesignMode) {

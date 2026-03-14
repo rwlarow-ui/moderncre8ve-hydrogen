@@ -45,9 +45,13 @@ export async function loader({ params, request, context }: LoaderFunctionArgs) {
   const filters = [...searchParams.entries()].reduce((flt, [key, value]) => {
     if (key.startsWith(FILTER_URL_PREFIX)) {
       const filterKey = key.substring(FILTER_URL_PREFIX.length);
-      flt.push({
-        [filterKey]: JSON.parse(value),
-      });
+      try {
+        flt.push({
+          [filterKey]: JSON.parse(value),
+        });
+      } catch {
+        // Skip malformed filter values
+      }
     }
     return flt;
   }, [] as ProductFilter[]);

@@ -1,6 +1,7 @@
 import type { ActionFunction, ActionFunctionArgs } from "react-router";
 import { data } from "react-router";
 import type { CustomerCreateMutation } from "storefront-api.generated";
+import { verifyTurnstile } from "~/utils/turnstile.server";
 
 const CUSTOMER_CREATE = `#graphql
   mutation customerCreate($input: CustomerCreateInput!) {
@@ -20,48 +21,6 @@ const CUSTOMER_CREATE = `#graphql
     }
   }
 ` as const;
-
-/**
- * Verify a Cloudflare Turnstile token server-side.
- * Returns true if valid, false otherwise.
- * If no secret key is configured, returns true (graceful degradation).
- */
-async function verifyTurnstile(
-  token: string | null,
-  secretKey: string | undefined,
-  remoteIp?: string,
-): Promise<boolean> {
-  if (!secretKey) {
-    // No Turnstile secret configured — skip verification (honeypot still active)
-    return true;
-  }
-  if (!token) {
-    return false;
-  }
-
-  try {
-    const formData = new URLSearchParams();
-    formData.append("secret", secretKey);
-    formData.append("response", token);
-    if (remoteIp) {
-      formData.append("remoteip", remoteIp);
-    }
-
-    const result = await fetch(
-      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-      {
-        method: "POST",
-        body: formData,
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      },
-    );
-    const outcome = (await result.json()) as { success: boolean };
-    return outcome.success;
-  } catch {
-    // If Turnstile verification fails (network issue etc), block by default
-    return false;
-  }
-}
 
 export const action: ActionFunction = async ({
   request,
@@ -105,7 +64,7 @@ export const action: ActionFunction = async ({
   const { customerCreate, errors: queryErrors } =
     await context.storefront.mutate<CustomerCreateMutation>(CUSTOMER_CREATE, {
       variables: {
-        input: { email, password: "5hopify" },
+        input: { email, password: crypto.randomUUID() },
       },
     });
 

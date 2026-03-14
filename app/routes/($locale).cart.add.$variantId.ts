@@ -1,13 +1,14 @@
-import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
-import { data, redirect } from "@shopify/remix-oxygen";
+import type { ActionFunctionArgs } from "react-router";
+import { data } from "react-router";
+import type { CartLineInput } from "@shopify/hydrogen/storefront-api-types";
 
-export async function loader({ params, context }: LoaderFunctionArgs) {
+export async function action({ params, context }: ActionFunctionArgs) {
   const { cart, session } = context;
 
   try {
     const variantId = params.variantId;
 
-    const inputLines = [
+    const inputLines: CartLineInput[] = [
       {
         merchandiseId: `gid://shopify/ProductVariant/${variantId}`,
         quantity: 1,

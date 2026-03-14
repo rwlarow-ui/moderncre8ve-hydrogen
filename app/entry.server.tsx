@@ -43,8 +43,7 @@ export default async function handleRequest(
   }
 
   responseHeaders.set("Content-Type", "text/html");
-  // TODO: change to Content-Security-Policy when you ready with your CSP configs.
-  responseHeaders.set("Content-Security-Policy-Report-Only", header);
+  responseHeaders.set("Content-Security-Policy", header);
   return new Response(body, {
     headers: responseHeaders,
     status: responseStatusCode,
