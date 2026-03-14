@@ -116,6 +116,18 @@ export default {
 
       const response = await handleRequest(request);
 
+      // Security headers
+      response.headers.set("X-Frame-Options", "SAMEORIGIN");
+      response.headers.set("X-Content-Type-Options", "nosniff");
+      response.headers.set(
+        "Referrer-Policy",
+        "strict-origin-when-cross-origin",
+      );
+      response.headers.set(
+        "Permissions-Policy",
+        "camera=(), microphone=(), geolocation=()",
+      );
+
       if (appLoadContext.session.isPending) {
         response.headers.set(
           "Set-Cookie",
@@ -202,6 +214,7 @@ class AppSession implements HydrogenSession {
         httpOnly: true,
         path: "/",
         sameSite: "lax",
+        secure: true,
         secrets,
       },
     });

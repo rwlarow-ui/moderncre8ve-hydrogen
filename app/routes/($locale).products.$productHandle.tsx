@@ -23,6 +23,7 @@ import {
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { createJudgeMeReview, getJudgeMeProductReviews } from "~/utils/judgeme";
 import { getRecommendedProducts } from "~/utils/product";
+import { verifyTurnstile } from "~/utils/turnstile.server";
 import {
   redirectIfCombinedListing,
   redirectIfHandleIsLocalized,
@@ -83,13 +84,34 @@ export async function action({
   context: { env },
 }: ActionFunctionArgs) {
   try {
+    const formData = await request.formData();
+
+    // Honeypot check
+    if (formData.get("website")) {
+      return data({ success: true }, { status: 200 });
+    }
+
+    // Turnstile verification
+    const turnstileToken = formData.get("cf-turnstile-response") as string;
+    const turnstileValid = await verifyTurnstile(
+      turnstileToken,
+      env.TURNSTILE_SECRET_KEY,
+      request.headers.get("CF-Connecting-IP") || undefined,
+    );
+    if (!turnstileValid) {
+      return data(
+        { error: "Please complete the verification challenge and try again." },
+        { status: 400 },
+      );
+    }
+
     invariant(
       env.JUDGEME_PRIVATE_API_TOKEN,
       "Missing `JUDGEME_PRIVATE_API_TOKEN`",
     );
 
     const response = await createJudgeMeReview({
-      formData: await request.formData(),
+      formData,
       apiToken: env.JUDGEME_PRIVATE_API_TOKEN,
       shopDomain: env.PUBLIC_STORE_DOMAIN,
     });

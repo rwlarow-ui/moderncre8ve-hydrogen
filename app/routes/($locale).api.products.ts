@@ -39,7 +39,7 @@ export async function loader({
   try {
     const _count = searchParams.get("count");
     if (typeof _count === "string") {
-      count = Number.parseInt(_count, 10);
+      count = Math.min(Math.max(Number.parseInt(_count, 10) || 4, 1), 50);
     }
   } catch (_) {
     // noop

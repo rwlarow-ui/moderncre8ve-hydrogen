@@ -104,10 +104,23 @@ export async function createJudgeMeReview({
   );
 }
 
+const ALLOWED_REVIEW_FIELDS = new Set([
+  "id",
+  "name",
+  "email",
+  "rating",
+  "title",
+  "body",
+  "product_id",
+  "reviewer_name_format",
+]);
+
 function formDataToObject(formData: FormData) {
-  const data = {};
+  const data: Record<string, string> = {};
   for (const [key, value] of formData.entries()) {
-    data[key] = value;
+    if (ALLOWED_REVIEW_FIELDS.has(key) && typeof value === "string") {
+      data[key] = value;
+    }
   }
   return data;
 }

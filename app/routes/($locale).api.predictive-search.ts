@@ -62,7 +62,10 @@ async function fetchPredictiveSearchResults({
     /* */
   }
   const searchTerm = String(body?.get("q") || searchParams.get("q") || "");
-  const limit = Number(body?.get("limit") || searchParams.get("limit") || 10);
+  const limit = Math.min(
+    Number(body?.get("limit") || searchParams.get("limit") || 10) || 10,
+    50,
+  );
   const rawTypes = String(
     body?.get("type") || searchParams.get("type") || "ANY",
   );
