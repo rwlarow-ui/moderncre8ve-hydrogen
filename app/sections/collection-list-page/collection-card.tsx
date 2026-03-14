@@ -63,13 +63,12 @@ export function CollectionCard({
             )}
           />
         ) : null}
+        <div className="absolute inset-0 bg-black/25 transition-opacity duration-500 group-hover:bg-black/40" />
         <span
-          style={{ color: collectionNameColor }}
-          className="absolute bottom-0 left-0 z-1 p-4 uppercase"
+          className="absolute bottom-0 left-0 z-1 p-4 font-medium text-white uppercase drop-shadow-md"
         >
           {collection.title}
         </span>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       </div>
     </Link>
   );

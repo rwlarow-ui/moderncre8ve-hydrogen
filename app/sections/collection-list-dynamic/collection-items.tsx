@@ -113,10 +113,10 @@ let CollectionItems = forwardRef<HTMLDivElement, CollectionItemsProps>(
                   data={collection.image}
                   className={clsx(["h-full w-full object-cover"])}
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="absolute inset-0 bg-black/25 transition-opacity duration-500 group-hover:bg-black/40" />
               </div>
             )}
-            <div className="flex w-full flex-col gap-1 text-(--collection-name-color)">
+            <div className="flex w-full flex-col gap-1 text-white">
               <h3
                 className={clsx(
                   "line-clamp-1 font-medium text-lg uppercase leading-snug group-hover:underline",
@@ -147,13 +147,13 @@ let CollectionItems = forwardRef<HTMLDivElement, CollectionItemsProps>(
                 data={collection.image}
                 className={clsx(["h-full w-full object-cover"])}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div className="absolute inset-0 bg-black/25 transition-opacity duration-500 group-hover:bg-black/40" />
             </div>
           )}
 
           <h3
             className={clsx(
-              "absolute bottom-0 line-clamp-1 w-full bg-(--collection-bg-color) p-4 font-medium text-(--collection-name-color) text-lg uppercase leading-snug",
+              "absolute bottom-0 line-clamp-1 w-full p-4 font-medium text-white text-lg uppercase leading-snug drop-shadow-md",
             )}
           >
             {collection.title}
@@ -232,13 +232,13 @@ let CollectionItems = forwardRef<HTMLDivElement, CollectionItemsProps>(
                       sizes="(max-width: 32em) 100vw, 30vw"
                       className={clsx(["h-full w-full object-cover"])}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="absolute inset-0 bg-black/25 transition-opacity duration-500 group-hover:bg-black/40" />
                   </div>
                 )}
 
                 <h3
                   className={clsx(
-                    "absolute bottom-0 line-clamp-1 w-full bg-(--collection-bg-color) p-4 font-medium text-(--collection-name-color) text-lg uppercase leading-snug",
+                    "absolute bottom-0 line-clamp-1 w-full p-4 font-medium text-white text-lg uppercase leading-snug drop-shadow-md",
                   )}
                 >
                   {third.title}
