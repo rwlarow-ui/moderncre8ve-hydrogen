@@ -19,3 +19,6 @@ pnpm-lock.yaml
 h2_deploy_log.json
 app-connector/
 product-images-bg/*.bak
+
+# Claude Code worktrees
+.claude/worktrees/
