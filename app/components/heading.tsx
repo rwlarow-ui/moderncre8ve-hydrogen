@@ -5,8 +5,7 @@ import {
 } from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import type { CSSProperties } from "react";
-import { forwardRef } from "react";
+import type { CSSProperties, Ref } from "react";
 import { cn } from "~/utils/cn";
 
 const fontSizeVariants = cva("", {
@@ -96,11 +95,9 @@ export interface HeadingProps
   animate?: boolean;
 }
 
-const Heading = forwardRef<
-  HTMLHeadingElement,
-  HeadingProps & Partial<HydrogenComponentProps>
->((props, ref) => {
+function Heading(props: HeadingProps & Partial<HydrogenComponentProps> & { ref?: Ref<HTMLHeadingElement> }) {
   const {
+    ref,
     as: Tag = "h2",
     content,
     size,
@@ -142,7 +139,7 @@ const Heading = forwardRef<
       {content}
     </Tag>
   );
-});
+}
 
 export default Heading;
 

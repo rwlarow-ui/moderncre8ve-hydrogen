@@ -270,13 +270,13 @@ export const themeSchema: HydrogenThemeSchema = {
           type: "color",
           label: "Text",
           name: "colorText",
-          defaultValue: "#000000",
+          defaultValue: "#323640",
         },
         {
           type: "color",
           label: "Text (subtle)",
           name: "colorTextSubtle",
-          defaultValue: "#777777",
+          defaultValue: "#9DA0A7",
         },
         {
           type: "color",
@@ -348,7 +348,7 @@ export const themeSchema: HydrogenThemeSchema = {
           type: "color",
           label: "Footer background",
           name: "footerBgColor",
-          defaultValue: "#000000",
+          defaultValue: "#323640",
         },
         {
           type: "color",
@@ -364,7 +364,7 @@ export const themeSchema: HydrogenThemeSchema = {
           type: "color",
           label: "Background color",
           name: "buttonPrimaryBg",
-          defaultValue: "#333333",
+          defaultValue: "#323640",
         },
         {
           type: "color",
@@ -376,7 +376,7 @@ export const themeSchema: HydrogenThemeSchema = {
           type: "color",
           label: "Background color (hover)",
           name: "buttonPrimaryBgHover",
-          defaultValue: "#555555",
+          defaultValue: "#2CBF96",
         },
         {
           type: "color",
@@ -460,13 +460,13 @@ export const themeSchema: HydrogenThemeSchema = {
           type: "color",
           label: "Discounts",
           name: "saleBadgeColor",
-          defaultValue: "#d3122a",
+          defaultValue: "#D35055",
         },
         {
           type: "color",
           label: "New",
           name: "newBadgeColor",
-          defaultValue: "#67785d",
+          defaultValue: "#2CBF96",
         },
         {
           type: "color",
@@ -494,7 +494,7 @@ export const themeSchema: HydrogenThemeSchema = {
           type: "color",
           label: "Star rating",
           name: "starRatingColor",
-          defaultValue: "#fde047",
+          defaultValue: "#F2AC29",
         },
       ],
     },

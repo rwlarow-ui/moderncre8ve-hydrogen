@@ -13,9 +13,9 @@ export const ORDER_STATUS: Record<FulfillmentStatus, string> = {
   CANCELLED: "Cancelled",
 };
 
-type OrderCardsProps = {
+interface OrderCardsProps {
   orders: OrderCardFragment[];
-};
+}
 
 export function AccountOrderHistory({ orders }: OrderCardsProps) {
   return (

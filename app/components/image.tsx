@@ -1,7 +1,7 @@
 import { Image as HydrogenImage } from "@shopify/hydrogen";
 import type { Image as ImageType } from "@shopify/hydrogen/storefront-api-types";
 import type React from "react";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { type Ref, useEffect, useRef, useState } from "react";
 import { cn } from "~/utils/cn";
 
 type Crop = "center" | "top" | "bottom" | "left" | "right";
@@ -28,8 +28,7 @@ export interface ImageProps extends React.ComponentPropsWithRef<"img"> {
   };
 }
 
-export const Image = forwardRef<HTMLDivElement, ImageProps>(
-  ({ className, onLoad, ...rest }, ref) => {
+export function Image({ className, onLoad, ref, ...rest }: ImageProps & { ref?: Ref<HTMLDivElement> }) {
     /**
      * Use useRef for HydrogenImage, so we can access the HydrogenImage's ref
      * even when using forwardRef for the outer div
@@ -69,5 +68,4 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(
         />
       </div>
     );
-  },
-);
+}

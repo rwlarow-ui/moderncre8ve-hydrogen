@@ -7,7 +7,8 @@ import {
 import * as Collapsible from "@radix-ui/react-collapsible";
 import * as Dialog from "@radix-ui/react-dialog";
 import { AnimatePresence, motion } from "framer-motion";
-import { forwardRef, useState } from "react";
+import type { Ref } from "react";
+import { useState } from "react";
 import { Image } from "~/components/image";
 import Link from "~/components/link";
 import { ScrollArea } from "~/components/scroll-area";
@@ -21,7 +22,7 @@ export function MobileMenu() {
   );
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
 
-  if (!headerMenu) return <MenuTrigger />;
+  if (!headerMenu) { return <MenuTrigger />; }
 
   const closeSubMenu = () => setActiveSubMenu(null);
   const closeAllMenus = () => {
@@ -232,12 +233,10 @@ function CollapsibleMenuItem({
   );
 }
 
-const MenuTrigger = forwardRef<HTMLButtonElement, Dialog.DialogTriggerProps>(
-  (props, ref) => {
+function MenuTrigger({ ref, ...props }: Dialog.DialogTriggerProps & { ref?: Ref<HTMLButtonElement> }) {
     return (
       <button ref={ref} type="button" {...props}>
         <ListIcon className="h-5 w-5" />
       </button>
     );
-  },
-);
+}
