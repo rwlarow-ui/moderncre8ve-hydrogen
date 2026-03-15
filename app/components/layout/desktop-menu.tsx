@@ -143,7 +143,7 @@ function DropdownMenu({ menuItem }: { menuItem: SingleMenuItem }) {
   const { openMenuBy } = useThemeSettings();
   const { items: childItems = [], title } = menuItem;
   return (
-    <div className="h-full" onMouseLeave={() => setOpen(false)}>
+    <div className="h-full" role="navigation" onMouseLeave={() => setOpen(false)}>
       <Root open={open} onOpenChange={setOpen} modal={false}>
         <Trigger
           className={clsx([

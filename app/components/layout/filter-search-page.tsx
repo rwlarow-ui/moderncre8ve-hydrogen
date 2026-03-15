@@ -166,7 +166,7 @@ function FilterItem({
     (flt) => JSON.stringify(flt.filter) === option.input,
   );
 
-  const [checked, setChecked] = useState(!!filter);
+  const [checked, setChecked] = useState(Boolean(filter));
 
   function handleCheckedChange(newChecked: boolean) {
     setChecked(newChecked);

@@ -12,10 +12,10 @@ import type {
 } from "~/types/predictive-search";
 import { isDiscounted } from "~/utils/product";
 
-type SearchResultTypeProps = {
+interface SearchResultTypeProps {
   items?: NormalizedPredictiveSearchResultItem[];
   type: NormalizedPredictiveSearchResults[number]["type"];
-};
+}
 
 export function PredictiveSearchResult({ items, type }: SearchResultTypeProps) {
   const isSuggestions = type === "queries";

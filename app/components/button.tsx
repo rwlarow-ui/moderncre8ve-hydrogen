@@ -1,8 +1,7 @@
 import { ArrowRight, CircleNotchIcon } from "@phosphor-icons/react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import type { HTMLAttributes } from "react";
-import { forwardRef } from "react";
+import type { HTMLAttributes, Ref } from "react";
 import { cn } from "~/utils/cn";
 
 export const variants = cva(
@@ -88,9 +87,9 @@ export interface ButtonProps
   animate?: boolean;
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (props, ref) => {
+export function Button(props: ButtonProps & { ref?: Ref<HTMLButtonElement> }) {
     let {
+      ref,
       type = "button",
       variant,
       loading,
@@ -156,8 +155,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         )}
       </button>
     );
-  },
-);
+}
 
 function Spinner() {
   const style = { "--duration": "500ms" } as React.CSSProperties;

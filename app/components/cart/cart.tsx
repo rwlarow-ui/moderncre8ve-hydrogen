@@ -42,7 +42,7 @@ export function Cart({
 }) {
   const cart = useOptimisticCart<CartApiQueryFragment>(originalCart);
   const linesCount = Boolean(cart?.lines?.nodes?.length || 0);
-  const cartHasItems = !!cart && cart.totalQuantity > 0;
+  const cartHasItems = Boolean(cart) && cart.totalQuantity > 0;
 
   if (cartHasItems) {
     return <CartDetails cart={cart} layout={layout} />;
@@ -425,7 +425,7 @@ function CartCheckoutActions({
   checkoutUrl: string;
   layout: Layouts;
 }) {
-  if (!checkoutUrl) return null;
+  if (!checkoutUrl) { return null; }
 
   return (
     <div className="flex flex-col gap-3">
@@ -492,10 +492,10 @@ function CartSummary({
   );
 }
 
-type OptimisticData = {
+interface OptimisticData {
   action?: string;
   quantity?: number;
-};
+}
 
 function CartLineItem({
   line,
@@ -508,7 +508,7 @@ function CartLineItem({
 }) {
   const optimisticData = useOptimisticData<OptimisticData>(line?.id);
 
-  if (!line?.id) return null;
+  if (!line?.id) { return null; }
 
   const { id, quantity, merchandise, isOptimistic } = line;
 
@@ -858,7 +858,7 @@ function CartLinePrice({
   isLoading?: boolean;
   [key: string]: any;
 }) {
-  if (!(line?.cost?.amountPerQuantity && line?.cost?.totalAmount)) return null;
+  if (!(line?.cost?.amountPerQuantity && line?.cost?.totalAmount)) { return null; }
 
   const moneyV2 =
     priceType === "regular"
