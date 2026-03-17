@@ -4,6 +4,15 @@
 
 ---
 
+## 1.4.1 — 2026-03-16
+
+### Fix: Restore Weaverse Studio → Live Publish Flow
+- Restored Studio-priority guard in `weaverse-fallback.server.ts` that was removed in commit `6da3daf`
+- Pages published in Weaverse Studio now correctly appear on the live site
+- Local fallback JSON is only used when Studio has no page configured (as originally intended)
+
+---
+
 ## 1.4.0 — 2026-03-05
 
 ### Phase 5: Launch — DNS Cutover to moderncre8ve.com

@@ -59,7 +59,12 @@ export async function loadPageWithFallback(
     return result;
   }
 
-  // Look up the local JSON — prefer local over Studio when available
+  // If Studio returned a real (non-fallback) page, use it — Studio takes priority
+  if (result?.page?.id && !result.page.id.includes("fallback")) {
+    return result;
+  }
+
+  // Fall back to local JSON only when Studio has no page configured
   const key = getLookupKey(params?.type, params?.handle);
   const loader = JSON_LOADERS[key];
   if (!loader) {
