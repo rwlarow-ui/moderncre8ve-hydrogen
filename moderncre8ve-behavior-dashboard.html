@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModernCre8ve — User Behavior Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --charcoal: #323640;
+            --emerald: #2CBF96;
+            --cream: #F2EBD5;
+            --amber: #F2AC29;
+            --coral: #D35055;
+            --gray: #9DA0A7;
+            --white: #FFFFFF;
+            --bg: #F7F5F0;
+            --card: #FFFFFF;
+            --shadow: 0 2px 12px rgba(50,54,64,0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--charcoal); line-height: 1.5; }
+        .dashboard { max-width: 1280px; margin: 0 auto; padding: 24px; }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 12px; }
+        header h1 { font-size: 1.6rem; font-weight: 700; color: var(--charcoal); }
+        header h1 span { color: var(--emerald); }
+        .badge { background: var(--emerald); color: white; font-size: 0.72rem; padding: 3px 10px; border-radius: 12px; font-weight: 600; vertical-align: middle; margin-left: 8px; }
+        .period { font-size: 0.85rem; color: var(--gray); font-weight: 500; }
+
+        /* Tab nav */
+        .tab-nav { display: flex; gap: 4px; margin-bottom: 24px; background: var(--card); border-radius: 10px; padding: 4px; box-shadow: var(--shadow); }
+        .tab-btn { padding: 10px 20px; border: none; background: none; cursor: pointer; border-radius: 8px; font-size: 0.85rem; font-weight: 600; color: var(--gray); transition: all 0.2s; }
+        .tab-btn.active { background: var(--emerald); color: white; }
+        .tab-btn:hover:not(.active) { color: var(--charcoal); background: var(--cream); }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* KPI cards */
+        .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 16px; margin-bottom: 28px; }
+        .kpi-card { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); }
+        .kpi-card .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray); font-weight: 600; margin-bottom: 6px; }
+        .kpi-card .value { font-size: 1.65rem; font-weight: 700; color: var(--charcoal); }
+        .kpi-card .sub { font-size: 0.78rem; color: var(--gray); margin-top: 4px; }
+        .kpi-card .up { color: var(--emerald); }
+        .kpi-card .down { color: var(--coral); }
+
+        /* Chart containers */
+        .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+        .chart-card { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); }
+        .chart-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 14px; color: var(--charcoal); }
+        .chart-card.full { grid-column: 1 / -1; }
+        canvas { max-height: 300px; }
+
+        /* Tables */
+        .table-card { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: var(--shadow); margin-bottom: 28px; overflow-x: auto; }
+        .table-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 14px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+        th { text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--cream); color: var(--gray); font-weight: 600; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.04em; }
+        td { padding: 10px 12px; border-bottom: 1px solid #f0ede6; }
+        tr:hover td { background: #faf8f3; }
+        .bar-cell { display: flex; align-items: center; gap: 8px; }
+        .bar { height: 8px; border-radius: 4px; background: var(--emerald); min-width: 2px; }
+        .bar.amber { background: var(--amber); }
+        .bar.coral { background: var(--coral); }
+
+        /* Insight callouts */
+        .insight { background: linear-gradient(135deg, #f0faf6 0%, #e8f7f1 100%); border-left: 4px solid var(--emerald); border-radius: 0 10px 10px 0; padding: 16px 20px; margin-bottom: 20px; }
+        .insight.warning { background: linear-gradient(135deg, #fef7e8 0%, #fdf2d8 100%); border-left-color: var(--amber); }
+        .insight.alert { background: linear-gradient(135deg, #fdf0f0 0%, #fbe8e8 100%); border-left-color: var(--coral); }
+        .insight h4 { font-size: 0.82rem; font-weight: 700; margin-bottom: 4px; }
+        .insight p { font-size: 0.8rem; color: #555; }
+
+        /* Funnel */
+        .funnel { display: flex; flex-direction: column; gap: 0; align-items: center; padding: 20px 0; }
+        .funnel-step { position: relative; text-align: center; padding: 16px 0; }
+        .funnel-bar { height: 44px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.9rem; margin: 0 auto; transition: width 0.3s; }
+        .funnel-label { font-size: 0.78rem; color: var(--gray); margin-top: 6px; }
+        .funnel-drop { font-size: 0.72rem; color: var(--coral); font-weight: 600; padding: 4px 0; }
+
+        footer { text-align: center; color: var(--gray); font-size: 0.75rem; padding: 20px 0; }
+
+        @media (max-width: 768px) {
+            .chart-grid { grid-template-columns: 1fr; }
+            .kpi-row { grid-template-columns: repeat(2, 1fr); }
+            .tab-nav { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+    <header>
+        <h1>ModernCre8ve <span>Behavior Analysis</span> <span class="badge">LIVE DATA</span></h1>
+        <div class="period">Mar 1 – 10, 2026 &middot; GSC + GA4 + Shopify (4,555 customers)</div>
+    </header>
+
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="showTab('overview')">Overview</button>
+        <button class="tab-btn" onclick="showTab('search')">Search Behavior</button>
+        <button class="tab-btn" onclick="showTab('engagement')">Site Engagement</button>
+        <button class="tab-btn" onclick="showTab('funnel')">Conversion Funnel</button>
+        <button class="tab-btn" onclick="showTab('segments')">Visitor Segments</button>
+        <button class="tab-btn" onclick="showTab('customers')">Customers</button>
+    </div>
+
+    <!-- ═══════════ OVERVIEW TAB ═══════════ -->
+    <div id="tab-overview" class="tab-panel active">
+        <div class="kpi-row">
+            <div class="kpi-card"><div class="label">Weekly Sessions</div><div class="value">37</div><div class="sub">23 new users (62%)</div></div>
+            <div class="kpi-card"><div class="label">Engagement Rate</div><div class="value">51.4%</div><div class="sub">19 engaged sessions</div></div>
+            <div class="kpi-card"><div class="label">Search Clicks</div><div class="value">77</div><div class="sub">20,268 impressions</div></div>
+            <div class="kpi-card"><div class="label">Avg CTR</div><div class="value">0.38%</div><div class="sub class="down">Below 1% benchmark</div></div>
+            <div class="kpi-card"><div class="label">Avg Session Duration</div><div class="value">35.8s</div><div class="sub">Product pages: ~38s avg</div></div>
+            <div class="kpi-card"><div class="label">Revenue (Week)</div><div class="value">$0</div><div class="sub class="warning">1 checkout completed</div></div>
+        </div>
+
+        <div class="insight alert">
+            <h4>Key Finding: High Impressions, Very Low Click-Through</h4>
+            <p>Your pages appeared 20,268 times in search results this week but only received 77 clicks (0.38% CTR). The industry average for furniture e-commerce is 1.5–3%. Your product pages specifically show just 0.11% CTR despite 8,004 impressions — indicating titles/descriptions need optimization to stand out in SERPs.</p>
+        </div>
+        <div class="insight warning">
+            <h4>Brand Search is Your Strongest Channel</h4>
+            <p>Brand queries ("modern cre8ve", "moderncre8ve") account for 34% of all clicks with 8.2% CTR — the only cluster performing above benchmarks. However, 62% of visitors are new, suggesting growing brand awareness. Non-brand discovery remains the challenge.</p>
+        </div>
+        <div class="insight">
+            <h4>Product Pages Show Deep Engagement</h4>
+            <p>When visitors do reach product pages, they spend an average of 38 seconds with 0% bounce rate and 100% engagement. This indicates strong product content — the gap is getting visitors there in the first place.</p>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Clicks by Search Intent Cluster</h3>
+                <canvas id="intentChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Impressions vs Clicks by Page Type</h3>
+                <canvas id="pageTypeChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SEARCH BEHAVIOR TAB ═══════════ -->
+    <div id="tab-search" class="tab-panel">
+        <div class="kpi-row">
+            <div class="kpi-card"><div class="label">Total Queries</div><div class="value">5,253</div><div class="sub">Unique search queries</div></div>
+            <div class="kpi-card"><div class="label">Avg Position</div><div class="value">~19</div><div class="sub">Across all queries</div></div>
+            <div class="kpi-card"><div class="label">Top 10 Keywords</div><div class="value">28</div><div class="sub">10 in top 3 positions</div></div>
+            <div class="kpi-card"><div class="label">Desktop vs Mobile</div><div class="value">51% / 49%</div><div class="sub">Click split by device</div></div>
+        </div>
+
+        <div class="insight warning">
+            <h4>Massive Impression Opportunity in Dining Tables</h4>
+            <p>"Mid century modern dining table" alone generated 624 impressions but only 6 clicks (1.0% CTR). The entire dining table cluster shows 6,337 impressions with 20 clicks. Improving meta titles and adding rich snippets could capture significantly more traffic from these high-intent queries.</p>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Top 15 Search Queries (by Clicks)</h3>
+                <canvas id="topQueriesChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Search Intent Distribution (by Impressions)</h3>
+                <canvas id="intentPieChart"></canvas>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>Top 25 Search Queries — Detail</h3>
+            <table id="queryTable">
+                <thead><tr><th>Query</th><th>Clicks</th><th>Impressions</th><th>CTR</th><th>Click Share</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Device Breakdown — Clicks</h3>
+                <canvas id="deviceClicksChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Device Breakdown — Impressions</h3>
+                <canvas id="deviceImprChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ SITE ENGAGEMENT TAB ═══════════ -->
+    <div id="tab-engagement" class="tab-panel">
+        <div class="kpi-row">
+            <div class="kpi-card"><div class="label">Bounce Rate</div><div class="value">48.5%</div><div class="sub">Homepage: 62%</div></div>
+            <div class="kpi-card"><div class="label">Product Engagement</div><div class="value">100%</div><div class="sub">0% bounce on product pages</div></div>
+            <div class="kpi-card"><div class="label">Avg Time on Products</div><div class="value">38.1s</div><div class="sub">Best: Scandi table (42.6s)</div></div>
+            <div class="kpi-card"><div class="label">Pages with Sessions</div><div class="value">9 / 121</div><div class="sub">Only 7.4% received visits</div></div>
+        </div>
+
+        <div class="insight alert">
+            <h4>Homepage Bounce Rate is High (62%)</h4>
+            <p>The homepage has the most sessions (14) but 62% bounce rate and only 8.7s average duration. Visitors are landing and leaving quickly. Consider improving above-the-fold content, adding clearer product category navigation, or featuring best-selling products more prominently.</p>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Product Page Session Duration (seconds)</h3>
+                <canvas id="productDurationChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Page Performance by Type</h3>
+                <canvas id="pagePerformanceChart"></canvas>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>Top Pages — Engagement Detail</h3>
+            <table id="pageTable">
+                <thead><tr><th>Page</th><th>Type</th><th>Search Clicks</th><th>Sessions</th><th>Engaged</th><th>Bounce %</th><th>Duration</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ═══════════ CONVERSION FUNNEL TAB ═══════════ -->
+    <div id="tab-funnel" class="tab-panel">
+        <div class="kpi-row">
+            <div class="kpi-card"><div class="label">Funnel Start</div><div class="value">37</div><div class="sub">Total sessions</div></div>
+            <div class="kpi-card"><div class="label">Product Views</div><div class="value">10</div><div class="sub">27% of sessions</div></div>
+            <div class="kpi-card"><div class="label">Cart Adds</div><div class="value">3</div><div class="sub">30% of product viewers</div></div>
+            <div class="kpi-card"><div class="label">Completed</div><div class="value">1</div><div class="sub">2.7% overall conversion</div></div>
+        </div>
+
+        <div class="insight alert">
+            <h4>Major Drop-off: Sessions → Product Views (73% lost)</h4>
+            <p>Only 27% of sessions reach a product page. This is the biggest leak in the funnel. 14 homepage sessions and most never navigate to a product. The homepage needs stronger CTAs, featured products, or quick-shop functionality to guide visitors deeper.</p>
+        </div>
+        <div class="insight warning">
+            <h4>Cart → Checkout is Healthy</h4>
+            <p>Of those who added to cart, 100% started checkout and 33% completed purchase. The checkout experience appears to work well — the challenge is getting more visitors into the cart in the first place.</p>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card full">
+                <h3>Conversion Funnel</h3>
+                <div class="funnel" id="funnelViz"></div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card full">
+                <h3>Funnel Stage Drop-off Rates</h3>
+                <canvas id="funnelDropoffChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ VISITOR SEGMENTS TAB ═══════════ -->
+    <div id="tab-segments" class="tab-panel">
+        <div class="kpi-row">
+            <div class="kpi-card"><div class="label">New Users</div><div class="value">62%</div><div class="sub">23 of 37 sessions</div></div>
+            <div class="kpi-card"><div class="label">Desktop Clicks</div><div class="value">51%</div><div class="sub">39 of 77 total</div></div>
+            <div class="kpi-card"><div class="label">Brand Searchers</div><div class="value">34%</div><div class="sub">26 clicks, 8.2% CTR</div></div>
+            <div class="kpi-card"><div class="label">Local Interest</div><div class="value">2.6%</div><div class="sub">2 clicks from Cleveland queries</div></div>
+        </div>
+
+        <div class="insight">
+            <h4>Style-Focused Visitors Dominate Impressions</h4>
+            <p>"Mid century", "Scandinavian", "Japandi", and "Danish" queries generated 12,119 impressions (60% of total) but only 36 clicks. These visitors are in early research/discovery mode. Content marketing (blog posts, style guides) and improving collection page SEO could capture more of this audience.</p>
+        </div>
+        <div class="insight warning">
+            <h4>Mobile CTR Outperforms Desktop</h4>
+            <p>Mobile achieves 0.50% CTR vs 0.31% on desktop, despite desktop having 63% more impressions. Consider prioritizing mobile search appearance (shorter titles, Google Merchant Center) and ensuring the mobile shopping experience is seamless.</p>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Visitor Type: New vs Returning</h3>
+                <canvas id="newVsReturnChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Search Intent Segments — CTR Comparison</h3>
+                <canvas id="segmentCtrChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Keyword Position Distribution (584 tracked)</h3>
+                <canvas id="keywordPosChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Content Type — Impression Share</h3>
+                <canvas id="contentTypeChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ CUSTOMERS TAB ═══════════ -->
+    <div id="tab-customers" class="tab-panel">
+        <div class="kpi-row">
+            <div class="kpi-card"><div class="label">Total Customers</div><div class="value">4,555</div><div class="sub">717 paying (15.7%)</div></div>
+            <div class="kpi-card"><div class="label">Lifetime Revenue</div><div class="value">$1.56M</div><div class="sub">817 total orders</div></div>
+            <div class="kpi-card"><div class="label">Avg Order Value</div><div class="value">$1,906</div><div class="sub">High-ticket furniture</div></div>
+            <div class="kpi-card"><div class="label">Repeat Rate</div><div class="value">11.9%</div><div class="sub">85 of 717 buyers</div></div>
+            <div class="kpi-card"><div class="label">Email Opt-in</div><div class="value">79.9%</div><div class="sub">3,641 subscribers</div></div>
+            <div class="kpi-card"><div class="label">SMS Opt-in</div><div class="value">0.8%</div><div class="sub">Only 38 subscribers</div></div>
+        </div>
+
+        <div class="insight">
+            <h4>Whale-Driven Revenue Model</h4>
+            <p>Just 370 customers ($2K+ tier) account for $1.27M — 82% of all revenue. Your top 41 customers ($5K+) alone generated $275K. This is a classic high-AOV, relationship-driven business. Investing in post-purchase nurture, referrals, and white-glove service for these customers would yield outsized returns.</p>
+        </div>
+        <div class="insight warning">
+            <h4>84% of "Customers" Have Never Purchased</h4>
+            <p>3,838 of 4,555 records have zero orders — these are newsletter signups, form submissions, and abandoned carts. The "Churned Shopify signups" tag alone covers 2,597 people. A targeted re-engagement campaign or list cleanup could improve deliverability and reduce costs.</p>
+        </div>
+        <div class="insight alert">
+            <h4>SMS is an Untapped Channel</h4>
+            <p>Only 38 customers (0.8%) are opted into SMS, compared to 79.9% for email. For a high-ticket furniture brand where customers need nudging through a 12–16 week lead time, SMS could drive significant retention and reduce buyer anxiety during the wait.</p>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Customer Spend Tiers</h3>
+                <canvas id="spendTierChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Revenue by Spend Tier</h3>
+                <canvas id="spendTierRevenueChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Order Frequency Distribution (Paying Customers)</h3>
+                <canvas id="orderFreqChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Repeat vs One-Time Buyers</h3>
+                <canvas id="repeatChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-card">
+                <h3>Top 12 States by Revenue</h3>
+                <canvas id="stateRevenueChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3>Top Customer Tags</h3>
+                <canvas id="tagChart"></canvas>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>Top 12 States — Customer Detail</h3>
+            <table id="stateTable">
+                <thead><tr><th>State</th><th>Customers</th><th>Orders</th><th>Revenue</th><th>Rev/Customer</th><th>Revenue Share</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        ModernCre8ve Behavior Dashboard &middot; Data: GSC + GA4 + Shopify Customers &middot; Generated Mar 17, 2026
+    </footer>
+</div>
+
+<script>
+// ═══════════ DATA ═══════════
+const DATA = {
+    topQueries: [
+        {q:'modern cre8ve',clicks:13,impr:141,ctr:9.2},
+        {q:'moderncre8ve',clicks:9,impr:134,ctr:6.7},
+        {q:'mid century modern dining table',clicks:6,impr:624,ctr:1.0},
+        {q:'modern cre8tive',clicks:4,impr:25,ctr:16.0},
+        {q:'japandi mcm',clicks:2,impr:6,ctr:33.3},
+        {q:'scandinavian furniture',clicks:2,impr:775,ctr:0.3},
+        {q:'swedish furniture',clicks:2,impr:57,ctr:3.5},
+        {q:'affordable scandinavian furniture brands',clicks:1,impr:20,ctr:5.0},
+        {q:'best scandinavian furniture brands',clicks:1,impr:12,ctr:8.3},
+        {q:'boho bedframe',clicks:1,impr:26,ctr:3.8},
+        {q:'cleveland custom cabinets',clicks:1,impr:4,ctr:25.0},
+        {q:'cleveland modern furniture',clicks:1,impr:21,ctr:4.8},
+        {q:'custom extension dining table',clicks:1,impr:4,ctr:25.0},
+        {q:'danish dining table extendable',clicks:1,impr:19,ctr:5.3},
+        {q:'dining table mid century modern',clicks:1,impr:38,ctr:2.6},
+    ],
+    intentClusters: [
+        {name:'Brand',clicks:26,impr:316,ctr:8.23,color:'#2CBF96'},
+        {name:'Style (MCM/Scandi/Japandi)',clicks:36,impr:12119,ctr:0.30,color:'#F2AC29'},
+        {name:'Dining Tables',clicks:20,impr:6337,ctr:0.32,color:'#323640'},
+        {name:'Custom/Handmade',clicks:3,impr:1369,ctr:0.22,color:'#9DA0A7'},
+        {name:'Beds & Frames',clicks:2,impr:1176,ctr:0.17,color:'#D35055'},
+        {name:'Chairs',clicks:2,impr:407,ctr:0.49,color:'#8B5CF6'},
+        {name:'Local (Cleveland)',clicks:2,impr:421,ctr:0.48,color:'#0EA5E9'},
+        {name:'Coffee Tables',clicks:1,impr:449,ctr:0.22,color:'#F59E0B'},
+        {name:'Credenza',clicks:0,impr:229,ctr:0.00,color:'#EC4899'},
+    ],
+    pageTypes: [
+        {type:'Homepage',clicks:27,impr:476,sessions:14,engaged:5,ctr:5.67},
+        {type:'Collection',clicks:28,impr:6209,sessions:0,engaged:0,ctr:0.45},
+        {type:'Blog',clicks:12,impr:5050,sessions:0,engaged:0,ctr:0.24},
+        {type:'Product',clicks:9,impr:8004,sessions:10,engaged:10,ctr:0.11},
+        {type:'Page',clicks:1,impr:486,sessions:1,engaged:0,ctr:0.21},
+    ],
+    products: [
+        {name:'Scandinavian Extendable Table',duration:42.6,bounce:0,sessions:1},
+        {name:'Minimalist Bed Frame Ohio',duration:42.4,bounce:0,sessions:1},
+        {name:'Santa Monica MCM Table',duration:41.6,bounce:0,sessions:1},
+        {name:'Van Aiken Boho Bed',duration:40.6,bounce:0,sessions:1},
+        {name:'Seymour Dining Chair',duration:39.6,bounce:0,sessions:1},
+        {name:'Bosco Walnut MCM Bed',duration:37.2,bounce:0,sessions:1},
+        {name:'Round Extendable Table Ohio',duration:36.4,bounce:0,sessions:1},
+        {name:'Santa Monica Mixed',duration:35.7,bounce:0,sessions:1},
+        {name:'MCM Extendable Table SM',duration:33.3,bounce:0,sessions:1},
+        {name:'Vista Dining Chair',duration:7.2,bounce:0,sessions:1},
+    ],
+    funnel: [
+        {stage:'All Sessions',value:37,pct:100},
+        {stage:'Product Views',value:10,pct:27},
+        {stage:'Add to Cart',value:3,pct:8.1},
+        {stage:'Checkout Start',value:3,pct:8.1},
+        {stage:'Purchase Complete',value:1,pct:2.7},
+    ],
+    devices: {
+        desktop:{clicks:39,impr:12482},
+        mobile:{clicks:38,impr:7644},
+        tablet:{clicks:0,impr:142}
+    },
+    keywordPositions: {top3:10,top10:18,top20:16,top50:27,beyond50:15},
+    topPages: [
+        {path:'/',type:'homepage',clicks:27,sessions:14,engaged:5,bounce:62.1,duration:8.7},
+        {path:'/collections/mid-century-modern-dining-tables',type:'collection',clicks:13,sessions:0,engaged:0,bounce:0,duration:0},
+        {path:'/blogs/.../best-scandinavian-furniture-online',type:'blog',clicks:9,sessions:0,engaged:0,bounce:0,duration:0},
+        {path:'/collections/japandi-scandi-mcm-furniture',type:'collection',clicks:5,sessions:0,engaged:0,bounce:0,duration:0},
+        {path:'/collections/all-products',type:'collection',clicks:4,sessions:0,engaged:0,bounce:0,duration:0},
+        {path:'/products/scandinavian-extendable-table',type:'product',clicks:4,sessions:1,engaged:1,bounce:0,duration:42.6},
+        {path:'/collections/scandinavian-design-furniture',type:'collection',clicks:2,sessions:0,engaged:0,bounce:0,duration:0},
+        {path:'/products/round-extendable-table-ohio',type:'product',clicks:2,sessions:1,engaged:1,bounce:0,duration:36.4},
+        {path:'/blogs/.../scandi-vs-mcm-differences',type:'blog',clicks:2,sessions:0,engaged:0,bounce:0,duration:0},
+        {path:'/cart',type:'cart',clicks:0,sessions:3,engaged:1,bounce:75,duration:3.6},
+    ]
+};
+
+// ═══════════ TAB SWITCHING ═══════════
+function showTab(id) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+}
+
+// ═══════════ CHART DEFAULTS ═══════════
+Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
+Chart.defaults.font.size = 12;
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.padding = 16;
+
+// ═══════════ OVERVIEW CHARTS ═══════════
+// Intent cluster bar chart
+new Chart(document.getElementById('intentChart'), {
+    type: 'bar',
+    data: {
+        labels: DATA.intentClusters.map(c => c.name),
+        datasets: [{
+            label: 'Clicks',
+            data: DATA.intentClusters.map(c => c.clicks),
+            backgroundColor: DATA.intentClusters.map(c => c.color),
+            borderRadius: 6,
+            barPercentage: 0.7
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: { legend: { display: false },
+            tooltip: { callbacks: { afterLabel: (ctx) => `${DATA.intentClusters[ctx.dataIndex].impr.toLocaleString()} impressions\nCTR: ${DATA.intentClusters[ctx.dataIndex].ctr}%` }}
+        },
+        scales: { x: { grid: { display: false }, title: { display: true, text: 'Clicks' }}, y: { grid: { display: false }}}
+    }
+});
+
+// Page type impressions vs clicks
+new Chart(document.getElementById('pageTypeChart'), {
+    type: 'bar',
+    data: {
+        labels: DATA.pageTypes.map(p => p.type),
+        datasets: [
+            { label: 'Impressions (÷100)', data: DATA.pageTypes.map(p => Math.round(p.impr/100)), backgroundColor: '#F2EBD5', borderRadius: 6 },
+            { label: 'Clicks', data: DATA.pageTypes.map(p => p.clicks), backgroundColor: '#2CBF96', borderRadius: 6 },
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: { tooltip: { callbacks: { afterLabel: (ctx) => `CTR: ${DATA.pageTypes[ctx.dataIndex].ctr}%` }}},
+        scales: { x: { grid: { display: false }}, y: { grid: { color: '#f0ede6' }}}
+    }
+});
+
+// ═══════════ SEARCH TAB CHARTS ═══════════
+new Chart(document.getElementById('topQueriesChart'), {
+    type: 'bar',
+    data: {
+        labels: DATA.topQueries.map(q => q.q.length > 30 ? q.q.substring(0,30)+'...' : q.q),
+        datasets: [{
+            label: 'Clicks',
+            data: DATA.topQueries.map(q => q.clicks),
+            backgroundColor: DATA.topQueries.map(q => q.ctr > 5 ? '#2CBF96' : q.ctr > 1 ? '#F2AC29' : '#D35055'),
+            borderRadius: 6,
+            barPercentage: 0.7
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { afterLabel: (ctx) => `${DATA.topQueries[ctx.dataIndex].impr} impressions\nCTR: ${DATA.topQueries[ctx.dataIndex].ctr}%` }}},
+        scales: { x: { grid: { display: false }}, y: { grid: { display: false }}}
+    }
+});
+
+new Chart(document.getElementById('intentPieChart'), {
+    type: 'doughnut',
+    data: {
+        labels: DATA.intentClusters.map(c => c.name),
+        datasets: [{ data: DATA.intentClusters.map(c => c.impr), backgroundColor: DATA.intentClusters.map(c => c.color), borderWidth: 2, borderColor: '#fff' }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'right', labels: { font: { size: 11 }}}}}
+});
+
+// Query table
+const tbody = document.querySelector('#queryTable tbody');
+DATA.topQueries.forEach(q => {
+    const barW = Math.max(2, (q.clicks / 13) * 100);
+    tbody.innerHTML += `<tr><td>${q.q}</td><td><strong>${q.clicks}</strong></td><td>${q.impr.toLocaleString()}</td><td>${q.ctr}%</td><td><div class="bar-cell"><div class="bar" style="width:${barW}px"></div>${Math.round(q.clicks/77*100)}%</div></td></tr>`;
+});
+
+// Device charts
+new Chart(document.getElementById('deviceClicksChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Desktop', 'Mobile', 'Tablet'],
+        datasets: [{ data: [39, 38, 0], backgroundColor: ['#323640','#2CBF96','#9DA0A7'], borderWidth: 2, borderColor: '#fff' }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' }}}
+});
+
+new Chart(document.getElementById('deviceImprChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Desktop', 'Mobile', 'Tablet'],
+        datasets: [{ data: [12482, 7644, 142], backgroundColor: ['#323640','#2CBF96','#9DA0A7'], borderWidth: 2, borderColor: '#fff' }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' }}}
+});
+
+// ═══════════ ENGAGEMENT TAB CHARTS ═══════════
+new Chart(document.getElementById('productDurationChart'), {
+    type: 'bar',
+    data: {
+        labels: DATA.products.map(p => p.name),
+        datasets: [{
+            label: 'Duration (s)',
+            data: DATA.products.map(p => p.duration),
+            backgroundColor: DATA.products.map(p => p.duration > 40 ? '#2CBF96' : p.duration > 30 ? '#F2AC29' : '#D35055'),
+            borderRadius: 6,
+            barPercentage: 0.7
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: { legend: { display: false }},
+        scales: { x: { grid: { display: false }, title: { display: true, text: 'Seconds' }}, y: { grid: { display: false }}}
+    }
+});
+
+new Chart(document.getElementById('pagePerformanceChart'), {
+    type: 'bar',
+    data: {
+        labels: DATA.pageTypes.map(p => p.type),
+        datasets: [
+            { label: 'Sessions', data: DATA.pageTypes.map(p => p.sessions), backgroundColor: '#323640', borderRadius: 6 },
+            { label: 'Engaged', data: DATA.pageTypes.map(p => p.engaged), backgroundColor: '#2CBF96', borderRadius: 6 },
+        ]
+    },
+    options: { responsive: true, scales: { x: { grid: { display: false }}, y: { grid: { color: '#f0ede6' }}}}
+});
+
+// Page table
+const pageTbody = document.querySelector('#pageTable tbody');
+DATA.topPages.forEach(p => {
+    pageTbody.innerHTML += `<tr><td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.path}</td><td>${p.type}</td><td>${p.clicks}</td><td>${p.sessions}</td><td>${p.engaged}</td><td>${p.bounce}%</td><td>${p.duration}s</td></tr>`;
+});
+
+// ═══════════ FUNNEL TAB ═══════════
+const funnelEl = document.getElementById('funnelViz');
+const funnelColors = ['#323640','#2CBF96','#F2AC29','#F2AC29','#D35055'];
+DATA.funnel.forEach((step, i) => {
+    const width = Math.max(120, step.pct * 6);
+    let dropHtml = '';
+    if (i > 0) {
+        const prev = DATA.funnel[i-1];
+        const dropPct = Math.round((1 - step.value / prev.value) * 100);
+        dropHtml = `<div class="funnel-drop">▼ ${dropPct}% drop-off (${prev.value - step.value} lost)</div>`;
+    }
+    funnelEl.innerHTML += `${dropHtml}<div class="funnel-step"><div class="funnel-bar" style="width:${width}px;background:${funnelColors[i]}">${step.value}</div><div class="funnel-label">${step.stage} (${step.pct}%)</div></div>`;
+});
+
+new Chart(document.getElementById('funnelDropoffChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Sessions→Product', 'Product→Cart', 'Cart→Checkout', 'Checkout→Purchase'],
+        datasets: [{
+            label: 'Drop-off %',
+            data: [73, 70, 0, 67],
+            backgroundColor: ['#D35055','#D35055','#2CBF96','#F2AC29'],
+            borderRadius: 6,
+            barPercentage: 0.5
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { display: false }},
+        scales: { y: { max: 100, title: { display: true, text: '% Lost' }, grid: { color: '#f0ede6' }}, x: { grid: { display: false }}}
+    }
+});
+
+// ═══════════ SEGMENTS TAB CHARTS ═══════════
+new Chart(document.getElementById('newVsReturnChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['New Users', 'Returning Users'],
+        datasets: [{ data: [23, 14], backgroundColor: ['#2CBF96','#323640'], borderWidth: 2, borderColor: '#fff' }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'bottom' }}}
+});
+
+new Chart(document.getElementById('segmentCtrChart'), {
+    type: 'bar',
+    data: {
+        labels: DATA.intentClusters.map(c => c.name),
+        datasets: [{
+            label: 'CTR %',
+            data: DATA.intentClusters.map(c => c.ctr),
+            backgroundColor: DATA.intentClusters.map(c => c.ctr > 1 ? '#2CBF96' : c.ctr > 0.3 ? '#F2AC29' : '#D35055'),
+            borderRadius: 6,
+            barPercentage: 0.7
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { afterLabel: (ctx) => `${DATA.intentClusters[ctx.dataIndex].clicks} clicks / ${DATA.intentClusters[ctx.dataIndex].impr.toLocaleString()} impressions` }}},
+        scales: { x: { grid: { display: false }, title: { display: true, text: 'CTR %' }}, y: { grid: { display: false }}}
+    }
+});
+
+new Chart(document.getElementById('keywordPosChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Top 3', 'Top 4–10', 'Top 11–20', 'Top 21–50', '50+'],
+        datasets: [{
+            label: 'Keywords',
+            data: [10, 18, 16, 27, 15],
+            backgroundColor: ['#2CBF96','#48D1A8','#F2AC29','#9DA0A7','#D35055'],
+            borderRadius: 6,
+            barPercentage: 0.6
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { display: false }},
+        scales: { y: { title: { display: true, text: 'Number of Keywords' }, grid: { color: '#f0ede6' }}, x: { grid: { display: false }}}
+    }
+});
+
+new Chart(document.getElementById('contentTypeChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Products (8,004)','Collections (6,209)','Blog (5,050)','Homepage (476)','Pages (486)'],
+        datasets: [{ data: [8004, 6209, 5050, 476, 486], backgroundColor: ['#323640','#2CBF96','#F2AC29','#D35055','#9DA0A7'], borderWidth: 2, borderColor: '#fff' }]
+    },
+    options: { responsive: true, plugins: { legend: { position: 'right', labels: { font: { size: 11 }}}}}
+});
+
+// ═══════════ CUSTOMER TAB CHARTS ═══════════
+const CUST = {
+    spendTiers: [
+        {tier:'$0',count:3899,rev:0},
+        {tier:'$0-$50',count:63,rev:1722},
+        {tier:'$50-$200',count:21,rev:1626},
+        {tier:'$200-$500',count:9,rev:2954},
+        {tier:'$500-$1K',count:42,rev:33391},
+        {tier:'$1K-$2K',count:151,rev:247598},
+        {tier:'$2K-$5K',count:329,rev:995197},
+        {tier:'$5K+',count:41,rev:275076},
+    ],
+    states: [
+        {s:'CA',count:234,orders:173,rev:314708},
+        {s:'NY',count:155,orders:99,rev:199386},
+        {s:'OH',count:76,orders:68,rev:124273},
+        {s:'MA',count:61,orders:43,rev:94723},
+        {s:'TX',count:62,orders:40,rev:81884},
+        {s:'WA',count:66,orders:33,rev:67091},
+        {s:'DC',count:29,orders:24,rev:52496},
+        {s:'FL',count:51,orders:28,rev:50744},
+        {s:'IL',count:46,orders:26,rev:47458},
+        {s:'VA',count:28,orders:20,rev:46146},
+        {s:'PA',count:31,orders:22,rev:41598},
+        {s:'OR',count:16,orders:14,rev:37030},
+    ],
+    tags: [
+        {tag:'Churned signups',count:2597},
+        {tag:'Newsletter',count:1652},
+        {tag:'Prospect',count:1403},
+        {tag:'Cleaned email',count:1280},
+        {tag:'Same product buyer',count:367},
+        {tag:'Foxkit popup',count:137},
+        {tag:'Tidio import',count:97},
+        {tag:'Login w/ Shop',count:38},
+    ]
+};
+
+// Spend tier counts (excluding $0)
+const payingTiers = CUST.spendTiers.filter(t => t.tier !== '$0');
+new Chart(document.getElementById('spendTierChart'), {
+    type: 'bar',
+    data: {
+        labels: payingTiers.map(t => t.tier),
+        datasets: [{
+            label: 'Customers',
+            data: payingTiers.map(t => t.count),
+            backgroundColor: ['#9DA0A7','#9DA0A7','#9DA0A7','#F2AC29','#F2AC29','#2CBF96','#2CBF96'],
+            borderRadius: 6, barPercentage: 0.6
+        }]
+    },
+    options: { responsive:true, plugins:{legend:{display:false}}, scales:{y:{grid:{color:'#f0ede6'}},x:{grid:{display:false}}} }
+});
+
+new Chart(document.getElementById('spendTierRevenueChart'), {
+    type: 'bar',
+    data: {
+        labels: payingTiers.map(t => t.tier),
+        datasets: [{
+            label: 'Revenue ($)',
+            data: payingTiers.map(t => t.rev),
+            backgroundColor: ['#9DA0A7','#9DA0A7','#9DA0A7','#F2AC29','#F2AC29','#2CBF96','#2CBF96'],
+            borderRadius: 6, barPercentage: 0.6
+        }]
+    },
+    options: { responsive:true, plugins:{legend:{display:false},tooltip:{callbacks:{label:(ctx)=>'$'+ctx.raw.toLocaleString()}}}, scales:{y:{grid:{color:'#f0ede6'},ticks:{callback:v=>'$'+v.toLocaleString()}},x:{grid:{display:false}}} }
+});
+
+new Chart(document.getElementById('orderFreqChart'), {
+    type: 'bar',
+    data: {
+        labels: ['1 order','2 orders','3 orders','4 orders'],
+        datasets: [{
+            label: 'Customers',
+            data: [632, 72, 11, 2],
+            backgroundColor: ['#323640','#2CBF96','#F2AC29','#D35055'],
+            borderRadius: 6, barPercentage: 0.5
+        }]
+    },
+    options: { responsive:true, plugins:{legend:{display:false}}, scales:{y:{grid:{color:'#f0ede6'}},x:{grid:{display:false}}} }
+});
+
+new Chart(document.getElementById('repeatChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['One-time ($1.29M, 88%)','Repeat ($268K, 12%)'],
+        datasets: [{data:[1289795,267769],backgroundColor:['#323640','#2CBF96'],borderWidth:2,borderColor:'#fff'}]
+    },
+    options: { responsive:true, plugins:{legend:{position:'bottom'}} }
+});
+
+new Chart(document.getElementById('stateRevenueChart'), {
+    type: 'bar',
+    data: {
+        labels: CUST.states.map(s => s.s),
+        datasets: [{
+            label: 'Revenue',
+            data: CUST.states.map(s => s.rev),
+            backgroundColor: CUST.states.map((_,i) => i < 3 ? '#2CBF96' : '#F2AC29'),
+            borderRadius: 6, barPercentage: 0.6
+        }]
+    },
+    options: { responsive:true, plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>'$'+ctx.raw.toLocaleString()}}}, scales:{y:{grid:{color:'#f0ede6'},ticks:{callback:v=>'$'+(v/1000).toFixed(0)+'K'}},x:{grid:{display:false}}} }
+});
+
+const stTbody = document.querySelector('#stateTable tbody');
+CUST.states.forEach(s => {
+    const revPer = Math.round(s.rev / s.count);
+    const share = (s.rev / 1557564 * 100).toFixed(1);
+    stTbody.innerHTML += `<tr><td><strong>${s.s}</strong></td><td>${s.count}</td><td>${s.orders}</td><td>$${s.rev.toLocaleString()}</td><td>$${revPer.toLocaleString()}</td><td><div class="bar-cell"><div class="bar" style="width:${Math.max(2,share*3)}px"></div>${share}%</div></td></tr>`;
+});
+
+new Chart(document.getElementById('tagChart'), {
+    type: 'bar',
+    data: {
+        labels: CUST.tags.map(t => t.tag),
+        datasets: [{
+            label: 'Customers',
+            data: CUST.tags.map(t => t.count),
+            backgroundColor: ['#D35055','#2CBF96','#F2AC29','#9DA0A7','#323640','#8B5CF6','#0EA5E9','#EC4899'],
+            borderRadius: 6, barPercentage: 0.7
+        }]
+    },
+    options: { indexAxis:'y', responsive:true, plugins:{legend:{display:false}}, scales:{x:{grid:{display:false}},y:{grid:{display:false}}} }
+});
+</script>
+</body>
+</html>

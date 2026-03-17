@@ -23,6 +23,10 @@
         "SHOPIFY_STORE_DOMAIN": "${PUBLIC_STORE_DOMAIN}"
       }
     },
+    "weaverse": {
+      "type": "http",
+      "url": "https://docs.weaverse.io/mcp"
+    },
     "shopify-dev": {
       "type": "stdio",
       "command": "npx",

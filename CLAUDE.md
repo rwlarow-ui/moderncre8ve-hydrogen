@@ -60,10 +60,10 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 - **GA4 Property:** `251836602` / Measurement ID: `G-G4Q4Z6MM4B`
 - **Google Cloud Project:** `mindful-quasar-486518-r9`
 - **Service Account:** `moderncre8ve-829@mindful-quasar-486518-r9.iam.gserviceaccount.com`
-- **SEO Truth Layer:** `github.com/rwlarow-ui/moderncre8ve-seo-truth-layer` (weekly pipeline)
+- **SEO Truth Layer:** `seo-truth-layer/` (weekly pipeline, merged into this repo)
 
 ### MCP Servers
-Configured in `.mcp.json`: Ahrefs, Figma, Shopify (Storefront API), Shopify Dev (docs/schema).
+Configured in `.mcp.json`: Ahrefs, Figma, Shopify (Storefront API), Shopify Dev (docs/schema), Weaverse (docs/API at `https://docs.weaverse.io/mcp`).
 Composer and Crypto.com servers visible in sessions are from another project — irrelevant here.
 
 ## Development Commands
