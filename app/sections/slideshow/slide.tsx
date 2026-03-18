@@ -465,7 +465,7 @@ export const schema = createSchema({
     enableOverlay: true,
     overlayOpacity: 50,
     headingContent: "Furniture for People Who Notice",
-    headingTagName: "h2",
+    headingTagName: "h1",
     color: "#fff",
     size: "scale",
     subheadingContent: "Modern Design. Old-World Craft. No Compromise.",

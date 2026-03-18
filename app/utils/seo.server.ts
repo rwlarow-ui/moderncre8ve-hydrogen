@@ -90,9 +90,9 @@ function root({
 
 function home(): SeoConfig {
   return {
-    title: "Home",
+    title: "Handcrafted Mid-Century Modern & Scandinavian Furniture",
     titleTemplate: "%s | ModernCre8ve",
-    description: "Handcrafted modern furniture made in Cleveland, Ohio",
+    description: "Shop handcrafted mid-century modern, Scandinavian & Japandi furniture. Made by Amish artisans in solid hardwoods. 12–16 week lead times. Free white glove delivery.",
     handle: "@moderncre8ve",
     robots: {
       noIndex: false,

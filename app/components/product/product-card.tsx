@@ -12,6 +12,7 @@ import { Link } from "~/components/link";
 import { NavLink } from "~/components/nav-link";
 import { isCombinedListing } from "~/utils/combined-listings";
 import { calculateAspectRatio } from "~/utils/image";
+import { getProductImageAlt } from "~/utils/product-image-alt";
 import { ProductCardBadges } from "./badges";
 import { ProductCardOptions } from "./product-card-options";
 import { QuickShopTrigger } from "./quick-shop";
@@ -130,7 +131,11 @@ export function ProductCard({
                 sizes="(min-width: 64em) 25vw, (min-width: 48em) 30vw, 45vw"
                 data={image}
                 width={700}
-                alt={image.altText || `Picture of ${product.title}`}
+                alt={getProductImageAlt(
+                  image,
+                  { title: product.title, vendor: product.vendor },
+                  selectedVariant,
+                )}
                 loading="lazy"
               />
               {pcardShowImageOnHover && secondImage && (
@@ -142,9 +147,11 @@ export function ProductCard({
                   sizes="auto"
                   width={700}
                   data={secondImage}
-                  alt={
-                    secondImage.altText || `Second picture of ${product.title}`
-                  }
+                  alt={getProductImageAlt(
+                    secondImage,
+                    { title: product.title, vendor: product.vendor },
+                    selectedVariant,
+                  )}
                   loading="lazy"
                 />
               )}

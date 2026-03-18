@@ -50,27 +50,29 @@ export function CustomAnalytics() {
 
   return (
     <>
-      {/* Initialize GTM container */}
+      {/* Initialize GA4 via gtag.js */}
       <script
         nonce={nonce}
         suppressHydrationWarning
         dangerouslySetInnerHTML={{
           __html: `
-              dataLayer = window.dataLayer || [];
+              window.dataLayer = window.dataLayer || [];
 
               function gtag(){
                 dataLayer.push(arguments)
               };
 
               gtag('js', new Date());
-              gtag({'gtm.start': new Date().getTime(),event:'gtm.js'})
-              gtag('config', "${id}");
+              gtag('config', "${id}", {
+                page_path: window.location.pathname,
+                send_page_view: true
+              });
           `,
         }}
       />
 
-      {/* Load GTM script */}
-      <Script async src={`https://www.googletagmanager.com/gtm.js?id=${id}`} />
+      {/* Load gtag.js (GA4) — NOT gtm.js which requires a GTM-XXXXXX container ID */}
+      <Script async src={`https://www.googletagmanager.com/gtag/js?id=${id}`} />
     </>
   );
 }

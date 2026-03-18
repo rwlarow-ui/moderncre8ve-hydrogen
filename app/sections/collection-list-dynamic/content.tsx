@@ -411,6 +411,7 @@ export const schema = createSchema({
     displayMode: "vertical",
     gap: 32,
     headingContent: "Shop by Category",
+    headingTagName: "h2",
     paragraphContent:
       "From dining tables to bedroom furniture — explore our handcrafted collections.",
     buttonContent: "VIEW ALL",

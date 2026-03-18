@@ -156,6 +156,7 @@ const ProductInformation = forwardRef<
             arrowsZoomColor={arrowsZoomColor}
             arrowsZoomShape={arrowsZoomShape}
             showBadges={showBadgesOnProductMedia}
+            product={{ title: product.title, vendor: product.vendor }}
             badges={
               selectedVariant && (
                 <ProductBadges

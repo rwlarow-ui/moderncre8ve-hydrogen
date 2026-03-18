@@ -20,12 +20,12 @@ export const collectionSeoDescriptions: Record<
   CollectionSeoDescription
 > = {
   "mid-century-modern-credenza": {
-    meta: "Handcrafted mid-century modern credenzas & sideboards in solid walnut. Custom sizes, 12–16 week lead time. Free white glove delivery. Made in Ohio.",
+    meta: "Mid-Century Modern Credenzas — Handcrafted Solid Wood Storage. Handcrafted mid-century modern credenzas and sideboards in walnut & oak. Clean lines, tapered legs. Made in Ohio.",
     rich: "Discover our collection of handcrafted mid-century modern credenzas and sideboards, built from solid American walnut by Amish artisans in Ohio. Each modern credenza features clean lines, tapered legs, and push-latch doors inspired by 1950s Scandinavian design. Whether you need a walnut sideboard for the dining room, a modern buffet cabinet for entertaining, or a sleek media credenza for the living room, every piece is made to order with custom sizing available. Our Astrid credenza is the centerpiece of the collection — a low-profile storage piece that works beautifully as a sideboard, buffet, or entryway console table. All pieces ship with white glove in-home delivery and assembly included.",
   },
 
   "mid-century-modern-dining-tables": {
-    meta: "Handcrafted mid-century modern dining tables in solid walnut & white oak. Extendable options available. 12–16 week lead time. Made in Ohio.",
+    meta: "Mid-Century Modern Dining Tables — Handcrafted in Solid Hardwood. Shop handcrafted mid-century modern dining tables in walnut, oak & cherry. Extendable options for 4–12 seats. Made in Ohio.",
     rich: "Shop our collection of handcrafted mid-century modern dining tables, built from solid American walnut and white oak by Amish artisans in Ohio. Each MCM dining table features the clean lines, tapered legs, and organic forms that define mid-century design. Choose from round, oval, and rectangular silhouettes with extendable leaf options for flexible seating. Our mid-century modern extendable dining tables are among our most popular pieces, combining timeless style with everyday functionality. Every table is made to order with custom dimensions available — from intimate 4-seat designs to grand 12-seat gathering tables. Includes white glove in-home delivery and assembly.",
   },
 
@@ -35,7 +35,7 @@ export const collectionSeoDescriptions: Record<
   },
 
   "scandinavian-design-furniture": {
-    meta: "Scandinavian furniture handcrafted in solid hardwoods. Minimalist dining tables, bed frames & storage. Affordable Scandi design made in Ohio.",
+    meta: "Scandinavian Design Furniture — Handcrafted Nordic-Inspired Pieces. Explore handcrafted Scandinavian furniture: dining tables, bed frames & storage. Minimalist Nordic design. Free delivery.",
     rich: "Shop our collection of Scandinavian design furniture, handcrafted from solid hardwoods by Amish artisans in Ohio. Inspired by the minimalist elegance of Danish, Swedish, and Norwegian design traditions, each piece emphasizes clean forms, natural materials, and functional beauty. Our Scandinavian dining tables, bed frames, and storage pieces offer the warmth of Nordic design with the durability of American craftsmanship. As one of the leading affordable Scandinavian furniture brands online, ModernCre8ve proves that exceptional design and solid wood construction don't require a luxury price tag.",
   },
 
@@ -60,12 +60,12 @@ export const collectionSeoDescriptions: Record<
   },
 
   "custom-made-expandable-dining-tables": {
-    meta: "Custom extendable dining tables handcrafted in solid walnut & oak. Mid-century modern design with built-in leaf extensions. Made in Ohio.",
+    meta: "Custom Expandable Dining Tables — Handcrafted & Extendable. Design your custom expandable dining table. Extends from 4 to 12 seats. Solid hardwood, Amish-crafted in Ohio.",
     rich: "Discover our custom extendable dining tables, handcrafted from solid American walnut and white oak by Amish artisans in Ohio. Each mid-century modern extendable dining table features a built-in butterfly leaf mechanism that expands seamlessly, adding 18–24 inches of dining space when you need it. From intimate 6-seat tables that extend to seat 10, to grand designs accommodating 14 guests, our custom expandable dining tables are built for real life — holiday gatherings, dinner parties, and everyday family meals.",
   },
 
   "custom-made-furniture": {
-    meta: "Custom handmade furniture crafted to your specifications. Solid walnut & oak. Dining tables, credenzas, bed frames & more. Made in Ohio.",
+    meta: "Custom Made Furniture — Handcrafted to Your Specifications. Design your own custom furniture in solid hardwood. Choose wood species, finish & dimensions. Free delivery.",
     rich: "Commission custom handmade furniture built to your exact specifications by Amish artisans in Ohio. From custom dining tables and credenzas to bed frames and storage pieces, every ModernCre8ve piece is handcrafted from solid American hardwoods. Choose your wood species, dimensions, and finish for furniture that fits your space perfectly. Our unique handmade furniture combines old-world craftsmanship with mid-century modern, Scandinavian, and Japandi design sensibilities.",
   },
 

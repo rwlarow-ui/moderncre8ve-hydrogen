@@ -410,6 +410,7 @@ export const schema = createSchema({
     displayMode: "vertical",
     gap: 32,
     headingContent: "Video embed",
+    headingTagName: "h2",
     paragraphContent:
       "A picture is worth a thousand words, and a video is worth even more. Utilize this space to engage, inform, and convince your customers.",
   },
