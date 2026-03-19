@@ -82,6 +82,12 @@ import * as VideoEmbedItem from "~/sections/video-embed/video";
 import * as Videos from "~/sections/videos";
 import * as VideoItems from "~/sections/videos/items";
 import * as VideoItem from "~/sections/videos/video";
+import * as CraftsmanshipProcess from "~/sections/craftsmanship-process";
+import * as CraftsmanshipStep from "~/sections/craftsmanship-process/step";
+import * as CustomerGallery from "~/sections/customer-gallery";
+import * as CustomerGalleryItem from "~/sections/customer-gallery/item";
+import * as QualityGuarantee from "~/sections/quality-guarantee";
+import * as GuaranteeItem from "~/sections/quality-guarantee/item";
 
 export const components: HydrogenComponent[] = [
   SubHeading,
@@ -167,4 +173,10 @@ export const components: HydrogenComponent[] = [
   SlideShowSlide,
   Spacer,
   ScrollingText,
+  CraftsmanshipProcess,
+  CraftsmanshipStep,
+  CustomerGallery,
+  CustomerGalleryItem,
+  QualityGuarantee,
+  GuaranteeItem,
 ];
