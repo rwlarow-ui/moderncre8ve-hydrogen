@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ModernCre8ve — Sales Metrics Review (Mar 2025 – Mar 2026)</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root { --charcoal:#323640; --emerald:#2CBF96; --cream:#F2EBD5; --amber:#F2AC29; --coral:#D35055; --gray:#9DA0A7; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',system-ui,sans-serif; background:#f8f7f5; color:var(--charcoal); line-height:1.5; }
+  .container { max-width:1100px; margin:0 auto; padding:24px 20px; }
+  h1 { font-size:28px; font-weight:600; margin-bottom:4px; }
+  .subtitle { color:var(--gray); font-size:14px; margin-bottom:32px; }
+  .kpi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; margin-bottom:32px; }
+  .kpi { background:#fff; border-radius:12px; padding:20px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  .kpi-label { font-size:12px; text-transform:uppercase; letter-spacing:.8px; color:var(--gray); margin-bottom:4px; }
+  .kpi-value { font-size:28px; font-weight:700; }
+  .kpi-sub { font-size:13px; color:var(--gray); margin-top:4px; }
+  .kpi-sub.up { color:var(--emerald); }
+  .kpi-sub.down { color:var(--coral); }
+  .kpi-sub.warn { color:var(--amber); }
+  .chart-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px; }
+  .chart-full { grid-column:1/-1; }
+  .chart-card { background:#fff; border-radius:12px; padding:20px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  .chart-card h3 { font-size:15px; font-weight:600; margin-bottom:12px; }
+  canvas { width:100%!important; }
+  .section-title { font-size:20px; font-weight:600; margin:32px 0 16px; padding-top:16px; border-top:1px solid #e8e6e2; }
+  .insight-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+  .insight { background:#fff; border-radius:12px; padding:20px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
+  .insight.bright { border-left:4px solid var(--emerald); }
+  .insight.concern { border-left:4px solid var(--coral); }
+  .insight.action { border-left:4px solid var(--amber); }
+  .insight h4 { font-size:14px; font-weight:600; margin-bottom:8px; }
+  .insight p { font-size:13px; color:#555; }
+  .table-card { background:#fff; border-radius:12px; padding:20px; box-shadow:0 1px 3px rgba(0,0,0,.06); margin-bottom:24px; overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th { text-align:left; padding:10px 12px; border-bottom:2px solid #e8e6e2; font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.5px; color:var(--gray); }
+  td { padding:10px 12px; border-bottom:1px solid #f0eeec; }
+  tr:last-child td { border-bottom:none; }
+  .status { display:inline-block; padding:2px 10px; border-radius:99px; font-size:11px; font-weight:600; }
+  .status.hit { background:#e6f9f3; color:#0d7a5f; }
+  .status.miss { background:#fde8e9; color:#b91c1c; }
+  .status.risk { background:#fff3d6; color:#a16207; }
+  @media(max-width:768px) { .chart-row,.insight-grid { grid-template-columns:1fr; } .kpi-grid { grid-template-columns:1fr 1fr; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>ModernCre8ve — Sales Metrics Review</h1>
+<p class="subtitle">March 19, 2025 – March 19, 2026 · Shopify Total Sales by Day</p>
+
+<!-- KPI Cards -->
+<div class="kpi-grid">
+  <div class="kpi">
+    <div class="kpi-label">Total Revenue</div>
+    <div class="kpi-value">$90,365</div>
+    <div class="kpi-sub">366-day period</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Active Sale Days</div>
+    <div class="kpi-value">46</div>
+    <div class="kpi-sub down">86.6% of days had zero sales</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Avg Revenue / Sale Day</div>
+    <div class="kpi-value">$1,965</div>
+    <div class="kpi-sub">Median: $2,121</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Best Single Day</div>
+    <div class="kpi-value">$7,540</div>
+    <div class="kpi-sub">Oct 11, 2025</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">Best Month</div>
+    <div class="kpi-value">$15,964</div>
+    <div class="kpi-sub up">May 2025</div>
+  </div>
+  <div class="kpi">
+    <div class="kpi-label">H1 → H2 Trend</div>
+    <div class="kpi-value">-12.6%</div>
+    <div class="kpi-sub down">$47.3K → $41.3K</div>
+  </div>
+</div>
+
+<!-- Charts -->
+<div class="chart-row">
+  <div class="chart-card chart-full">
+    <h3>Weekly Revenue</h3>
+    <canvas id="weeklyChart" height="80"></canvas>
+  </div>
+</div>
+
+<div class="chart-row">
+  <div class="chart-card">
+    <h3>Monthly Revenue</h3>
+    <canvas id="monthlyChart" height="160"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>Seasonal Pattern</h3>
+    <canvas id="seasonChart" height="160"></canvas>
+  </div>
+</div>
+
+<div class="chart-row">
+  <div class="chart-card">
+    <h3>Avg Daily Revenue by Day of Week</h3>
+    <canvas id="dowChart" height="160"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>Sale Days per Month</h3>
+    <canvas id="countChart" height="160"></canvas>
+  </div>
+</div>
+
+<!-- Monthly Scorecard -->
+<h2 class="section-title">Monthly Scorecard</h2>
+<div class="table-card">
+<table>
+  <thead>
+    <tr><th>Month</th><th>Revenue</th><th>MoM Change</th><th>Sale Days</th><th>Avg/Sale Day</th><th>Status</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Mar 2025</td><td>$1,724</td><td>—</td><td>1</td><td>$1,724</td><td><span class="status risk">Partial</span></td></tr>
+    <tr><td>Apr 2025</td><td>$10,551</td><td>+512%</td><td>5</td><td>$2,110</td><td><span class="status hit">Strong</span></td></tr>
+    <tr><td>May 2025</td><td>$15,964</td><td>+51%</td><td>5</td><td>$3,193</td><td><span class="status hit">Peak</span></td></tr>
+    <tr><td>Jun 2025</td><td>$5,352</td><td>-66%</td><td>4</td><td>$1,338</td><td><span class="status risk">Declining</span></td></tr>
+    <tr><td>Jul 2025</td><td>$78</td><td>-99%</td><td>2</td><td>$39</td><td><span class="status miss">Critical</span></td></tr>
+    <tr><td>Aug 2025</td><td>$5,168</td><td>+6,486%</td><td>3</td><td>$1,723</td><td><span class="status risk">Recovery</span></td></tr>
+    <tr><td>Sep 2025</td><td>$10,197</td><td>+97%</td><td>6</td><td>$1,700</td><td><span class="status hit">Strong</span></td></tr>
+    <tr><td>Oct 2025</td><td>$14,853</td><td>+46%</td><td>5</td><td>$2,971</td><td><span class="status hit">Peak</span></td></tr>
+    <tr><td>Nov 2025</td><td>$6,557</td><td>-56%</td><td>3</td><td>$2,186</td><td><span class="status risk">Declining</span></td></tr>
+    <tr><td>Dec 2025</td><td>$5,132</td><td>-22%</td><td>2</td><td>$2,566</td><td><span class="status risk">Slow</span></td></tr>
+    <tr><td>Jan 2026</td><td>$3,006</td><td>-41%</td><td>3</td><td>$1,002</td><td><span class="status miss">Trough</span></td></tr>
+    <tr><td>Feb 2026</td><td>$5,231</td><td>+74%</td><td>4</td><td>$1,308</td><td><span class="status risk">Recovery</span></td></tr>
+    <tr><td>Mar 2026</td><td>$6,550</td><td>+25%</td><td>3</td><td>$2,183</td><td><span class="status hit">Growing</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Bright Spots -->
+<h2 class="section-title">Bright Spots</h2>
+<div class="insight-grid">
+  <div class="insight bright">
+    <h4>High AOV ($1,965 per sale day)</h4>
+    <p>When you do sell, you sell big. This is consistent with handcrafted furniture — fewer transactions but high-value. Your median sale-day is $2,121, meaning most orders cluster around the $2K+ mark.</p>
+  </div>
+  <div class="insight bright">
+    <h4>Two strong peak seasons</h4>
+    <p>Spring (Apr-May) and Fall (Sep-Oct) are your power months — together they account for 57% of annual revenue. This matches home furnishing buying patterns: spring refresh and pre-holiday nesting.</p>
+  </div>
+  <div class="insight bright">
+    <h4>Q1 2026 recovery trend</h4>
+    <p>After a brutal Dec-Jan slump (38-day zero-sale streak), revenue is climbing: $3K → $5.2K → $6.5K over Jan-Feb-Mar. Momentum is building heading into your strongest season.</p>
+  </div>
+  <div class="insight bright">
+    <h4>Wednesday + Saturday are power days</h4>
+    <p>Wednesday ($417/day avg) and Saturday ($328/day avg) generate the most revenue. Mid-week could be email/social campaign day; Saturday is natural browse-and-buy behavior.</p>
+  </div>
+</div>
+
+<!-- Areas of Concern -->
+<h2 class="section-title">Areas of Concern</h2>
+<div class="insight-grid">
+  <div class="insight concern">
+    <h4>86.6% zero-sale days</h4>
+    <p>Only 46 of 366 days had any revenue at all. This is the single biggest issue — the store isn't converting on most days. Even for high-AOV furniture, this rate is exceptionally low. The problem isn't order size; it's order frequency.</p>
+  </div>
+  <div class="insight concern">
+    <h4>July near-total collapse ($78)</h4>
+    <p>July generated essentially no revenue — just two tiny transactions. This represents either a serious traffic problem, a seasonal dead zone, or a site/payment issue that went undetected. Worth investigating whether July traffic also dropped or if conversion specifically failed.</p>
+  </div>
+  <div class="insight concern">
+    <h4>38-day zero-sale streak (Dec 12 – Jan 18)</h4>
+    <p>Over five weeks with zero revenue spanning the holiday season. For a furniture brand, this is a missed opportunity — holiday gifting and New Year home refresh are peak intent periods for competitors.</p>
+  </div>
+  <div class="insight concern">
+    <h4>H2 revenue declined 12.6%</h4>
+    <p>The second half ($41.3K) underperformed the first half ($47.3K) despite including the holiday season. The Dec-Jan trough pulled down what should have been a strong period.</p>
+  </div>
+  <div class="insight concern">
+    <h4>Friday is a dead zone ($55/day avg)</h4>
+    <p>Friday generates 7x less revenue than Wednesday. If Friday traffic exists but doesn't convert, there may be a UX or urgency issue. If traffic also drops, it's a content/marketing gap.</p>
+  </div>
+</div>
+
+<!-- Recommendations -->
+<h2 class="section-title">Recommended Actions</h2>
+<div class="insight-grid">
+  <div class="insight action">
+    <h4>Investigate July + Dec-Jan gaps</h4>
+    <p>Cross-reference GA4 session data for these periods. If traffic was present but conversion dropped, the issue is on-site (payment, UX, broken flows). If traffic also disappeared, the issue is upstream (marketing, SEO, seasonal).</p>
+  </div>
+  <div class="insight action">
+    <h4>Launch mid-week email campaigns</h4>
+    <p>Wednesday is your strongest day. Send your newsletter on Tuesday evenings to capitalize on Wednesday purchase intent. Test a "mid-week feature" series highlighting a single product with its process story.</p>
+  </div>
+  <div class="insight action">
+    <h4>Build a holiday campaign for Q4 2026</h4>
+    <p>Last holiday season was a near-total miss. Plan a "Gift of Heirloom" campaign starting October — gift cards, expedited wax products (3-5 day ship), and "order now for spring delivery" messaging for furniture.</p>
+  </div>
+  <div class="insight action">
+    <h4>Increase sale-day frequency to 3x/week minimum</h4>
+    <p>Your AOV is strong — you don't need bigger orders, you need more of them. Target 12+ sale days/month (vs current 3-6) through consistent traffic generation: blog content, email, social, and paid retargeting.</p>
+  </div>
+  <div class="insight action">
+    <h4>Activate the SEO content plan from the audit</h4>
+    <p>Your dormant blog is directly contributing to low organic traffic. The SEO audit identified 20 keyword opportunities. Publishing 2-4 posts/month starting now will compound into your spring peak season.</p>
+  </div>
+  <div class="insight action">
+    <h4>Add a "quick ship" product line</h4>
+    <p>Your wax products ship in 3-5 days. Feature them prominently as impulse/gift purchases to fill gaps between large furniture orders and reduce zero-sale days.</p>
+  </div>
+</div>
+
+</div>
+
+<script>
+const monthLabels = ['Mar 25','Apr 25','May 25','Jun 25','Jul 25','Aug 25','Sep 25','Oct 25','Nov 25','Dec 25','Jan 26','Feb 26','Mar 26'];
+const monthValues = [1723.63,10551.11,15964.27,5352.48,78.47,5167.8,10197.05,14853.2,6557.1,5132.35,3006.34,5230.97,6550.0];
+const monthCounts = [1,5,5,4,2,3,6,5,3,2,3,4,3];
+const dowLabels = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const dowAvg = [318.29,253.24,416.66,135.79,54.77,327.52,220.89];
+const seasonLabels = ['Spring','Summer','Fall','Holiday'];
+const seasonValues = [28239.01,10598.75,31607.35,13369.66];
+const weekValues = [0,1723.63,2874.29,3562.14,0,1617.72,2496.96,11923.67,0,0,4040.6,2769.39,0,0,2583.09,0,51.94,0,26.53,0,26.69,2375.46,0,0,6928.8,1989.9,0,3795,249,10658.2,2121,2074,0,0,2609.1,3450,498,2032.35,3100,0,0,0,0,0,0,1785.37,1220.97,24.97,3160,2046,0,4300,2250,0];
+
+const colors = { emerald:'#2CBF96', amber:'#F2AC29', coral:'#D35055', charcoal:'#323640', gray:'#9DA0A7', cream:'#F2EBD5' };
+
+Chart.defaults.font.family = "'Segoe UI',system-ui,sans-serif";
+Chart.defaults.font.size = 12;
+
+// Weekly
+new Chart(document.getElementById('weeklyChart'), {
+  type:'bar',
+  data:{ labels:weekValues.map((_,i)=>'W'+(i+1)), datasets:[{ data:weekValues, backgroundColor:weekValues.map(v=>v>0?colors.emerald+'88':'#eee'), borderRadius:2 }] },
+  options:{ plugins:{legend:{display:false}}, scales:{ x:{display:false}, y:{ticks:{callback:v=>'$'+v.toLocaleString()}} } }
+});
+
+// Monthly
+new Chart(document.getElementById('monthlyChart'), {
+  type:'bar',
+  data:{ labels:monthLabels, datasets:[{ data:monthValues, backgroundColor:colors.emerald+'cc', borderRadius:4 }] },
+  options:{ plugins:{legend:{display:false}}, scales:{ y:{ticks:{callback:v=>'$'+(v/1000).toFixed(0)+'K'}} } }
+});
+
+// Season
+new Chart(document.getElementById('seasonChart'), {
+  type:'doughnut',
+  data:{ labels:seasonLabels, datasets:[{ data:seasonValues, backgroundColor:[colors.emerald,colors.amber,colors.charcoal,colors.coral] }] },
+  options:{ plugins:{legend:{position:'bottom'}} }
+});
+
+// DOW
+new Chart(document.getElementById('dowChart'), {
+  type:'bar',
+  data:{ labels:dowLabels, datasets:[{ data:dowAvg, backgroundColor:dowAvg.map(v=>v>300?colors.emerald:v>200?colors.amber:colors.coral), borderRadius:4 }] },
+  options:{ plugins:{legend:{display:false}}, scales:{ y:{ticks:{callback:v=>'$'+v}} } }
+});
+
+// Count
+new Chart(document.getElementById('countChart'), {
+  type:'bar',
+  data:{ labels:monthLabels, datasets:[{ data:monthCounts, backgroundColor:monthCounts.map(c=>c>=5?colors.emerald:c>=3?colors.amber:colors.coral), borderRadius:4 }] },
+  options:{ plugins:{legend:{display:false}}, scales:{ y:{title:{display:true,text:'Days with sales'}}} }
+});
+</script>
+</body>
+</html>
