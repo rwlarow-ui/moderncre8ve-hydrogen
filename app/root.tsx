@@ -185,8 +185,11 @@ export function Layout({ children }: { children?: React.ReactNode }) {
   const nonce = useNonce();
   const data = useRouteLoaderData<RootLoader>("root");
   const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
+  const location = useLocation();
   const { topbarHeight, topbarText } = useThemeSettings();
   const shouldShowNewsletterPopup = useShouldRenderNewsletterPopup();
+  const isOpsRoute =
+    location.pathname === "/ops" || location.pathname.startsWith("/ops/");
 
   return (
     <html lang={locale.language}>
@@ -226,20 +229,24 @@ export function Layout({ children }: { children?: React.ReactNode }) {
                 className="flex min-h-screen flex-col"
                 key={`${locale.language}-${locale.country}`}
               >
-                <div className="">
-                  <a href="#mainContent" className="sr-only">
-                    Skip to content
-                  </a>
-                </div>
-                <ScrollingAnnouncement />
-                <Header />
+                {!isOpsRoute ? (
+                  <>
+                    <div className="">
+                      <a href="#mainContent" className="sr-only">
+                        Skip to content
+                      </a>
+                    </div>
+                    <ScrollingAnnouncement />
+                    <Header />
+                  </>
+                ) : null}
                 <main id="mainContent" className="grow">
                   {children}
                 </main>
-                <Footer />
+                {!isOpsRoute ? <Footer /> : null}
               </div>
-              {shouldShowNewsletterPopup && <NewsletterPopup />}
-              <CustomAnalytics />
+              {!isOpsRoute && shouldShowNewsletterPopup ? <NewsletterPopup /> : null}
+              {!isOpsRoute ? <CustomAnalytics /> : null}
             </TooltipProvider>
           </Analytics.Provider>
         ) : (

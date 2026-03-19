@@ -12,6 +12,7 @@
     "preview": "shopify hydrogen preview --build",
     "start": "shopify hydrogen preview",
     "typecheck": "tsc --noEmit",
+    "test:ops": "node --test tests/ops-utils.test.mjs",
     "codegen": "shopify hydrogen codegen",
     "hydrogen": "shopify hydrogen",
     "clean": "rm -rf dist node_modules package-lock.json pnpm-lock.yaml .shopify .react-router",
