@@ -30,6 +30,7 @@ export const themeSchema: HydrogenThemeSchema = {
         };
       },
     ),
+    staticContent: {},
   },
   settings: [
     {

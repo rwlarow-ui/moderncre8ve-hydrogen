@@ -6,7 +6,7 @@ import {
 } from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { forwardRef } from "react";
+import { type Ref, forwardRef } from "react";
 import { Image } from "~/components/image";
 import type { ImageAspectRatio } from "~/types/image";
 import { cn } from "~/utils/cn";
@@ -78,7 +78,7 @@ const ImageWithTextImage = forwardRef<HTMLDivElement, ImageWithTextImageProps>(
 
     return (
       <Image
-        ref={ref}
+        ref={ref as Ref<HTMLImageElement>}
         {...rest}
         data={imageData}
         data-motion="slide-in"
