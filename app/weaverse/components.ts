@@ -45,6 +45,9 @@ import * as HotspotsItem from "~/sections/hotspots/item";
 import * as ImageGallery from "~/sections/image-gallery";
 import * as ImageGalleryItem from "~/sections/image-gallery/image";
 import * as ImageGalleryItems from "~/sections/image-gallery/items";
+import * as Instagram from "~/sections/instagram";
+import * as InstagramContent from "~/sections/instagram/content";
+import * as InstagramSlider from "~/sections/instagram/slider";
 import * as ImageWithText from "~/sections/image-with-text";
 import * as ImageWithTextContent from "~/sections/image-with-text/content";
 import * as ImageWithTextImage from "~/sections/image-with-text/image";
@@ -112,6 +115,9 @@ export const components: HydrogenComponent[] = [
   HeroImage,
   Highlights,
   HighlightsBadge,
+  Instagram,
+  InstagramContent,
+  InstagramSlider,
   ImageWithText,
   ImageWithTextContent,
   ImageWithTextImage,
