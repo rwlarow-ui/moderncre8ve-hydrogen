@@ -49,9 +49,6 @@ import * as ImageWithText from "~/sections/image-with-text";
 import * as ImageWithTextContent from "~/sections/image-with-text/content";
 import * as ImageWithTextImage from "~/sections/image-with-text/image";
 import * as ImageWithTextImages from "~/sections/image-with-text/images";
-import * as Instagram from "~/sections/instagram";
-import * as InstagramContent from "~/sections/instagram/content";
-import * as InstagramSlider from "~/sections/instagram/slider";
 import * as JudgemeReview from "~/sections/judgeme-reviews";
 import * as ReviewIndex from "~/sections/judgeme-reviews/review-index";
 import * as ProductInformation from "~/sections/main-product/index";
@@ -119,9 +116,6 @@ export const components: HydrogenComponent[] = [
   ImageWithTextContent,
   ImageWithTextImage,
   ImageWithTextImages,
-  Instagram,
-  InstagramContent,
-  InstagramSlider,
   ColumnsWithImages,
   ColumnsWithImagesItems,
   ColumnWithImageItem,

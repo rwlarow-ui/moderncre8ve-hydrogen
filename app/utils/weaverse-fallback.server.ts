@@ -53,11 +53,8 @@ export async function loadPageWithFallback(
   params?: { type?: PageType; handle?: string },
 ): Promise<WeaverseLoaderData | null> {
   const result = await weaverse.loadPage(params);
-
-  // Design mode should always use Studio data
-  if (result?.configs?.requestInfo?.queries?.isDesignMode) {
-    return result;
-  }
+  const isDesignMode =
+    result?.configs?.requestInfo?.queries?.isDesignMode;
 
   // If Studio returned a real (non-fallback) page, use it — Studio takes priority
   if (result?.page?.id && !result.page.id.includes("fallback")) {
