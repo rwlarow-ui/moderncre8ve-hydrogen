@@ -12,6 +12,7 @@
     "preview": "shopify hydrogen preview --build",
     "start": "shopify hydrogen preview",
     "typecheck": "tsc --noEmit",
+    "debug:admin-auth": "node scripts/debug-admin-auth.mjs",
     "test:ops": "node --test tests/ops-utils.test.mjs",
     "codegen": "shopify hydrogen codegen",
     "hydrogen": "shopify hydrogen",
