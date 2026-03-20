@@ -50,23 +50,29 @@ export function CustomAnalytics() {
 
   return (
     <>
-      {/* Initialize GA4 via gtag.js */}
+      {/* Initialize GA4 via gtag.js — deferred to reduce main-thread blocking */}
       <script
         nonce={nonce}
         suppressHydrationWarning
         dangerouslySetInnerHTML={{
           __html: `
               window.dataLayer = window.dataLayer || [];
+              function gtag(){ dataLayer.push(arguments) };
 
-              function gtag(){
-                dataLayer.push(arguments)
+              // Defer analytics init until the browser is idle to avoid blocking
+              // LCP/TBT and allow document to reach "idle" state faster.
+              var initGA = function() {
+                gtag('js', new Date());
+                gtag('config', "${id}", {
+                  page_path: window.location.pathname,
+                  send_page_view: true
+                });
               };
-
-              gtag('js', new Date());
-              gtag('config', "${id}", {
-                page_path: window.location.pathname,
-                send_page_view: true
-              });
+              if (typeof requestIdleCallback === 'function') {
+                requestIdleCallback(initGA, { timeout: 3000 });
+              } else {
+                setTimeout(initGA, 1500);
+              }
           `,
         }}
       />

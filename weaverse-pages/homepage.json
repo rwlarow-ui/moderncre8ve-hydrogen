@@ -49,51 +49,76 @@
         "height": "full",
         "effect": "fade",
         "autoRotate": true,
+        "changeSlidesEvery": 6,
         "loop": true,
-        "arrows": true,
-        "dots": true
+        "showArrows": false,
+        "showDots": true
       }
     },
     {
       "id": "home-slide-1",
       "type": "slideshow-slide",
       "data": {
-        "headingContent": "Furniture for People Who Notice",
-        "subheadingContent": "Modern Design. Old-World Craft. No Compromise.",
+        "headingTagName": "h1",
+        "headingContent": "Handcrafted Mid-Century Modern Furniture",
+        "subheadingContent": "Furniture for People Who Notice",
         "paragraphContent": "Every piece is designed in Cleveland and built by hand from American hardwood \u2014 because good taste deserves real craftsmanship.",
         "buttonContent": "Explore the Collection",
         "to": "/collections",
         "enableOverlay": true,
         "overlayOpacity": 40,
-        "backgroundImage": "/images/heroes/hero-credenza-lifestyle.jpg"
+        "backgroundImage": "/images/heroes/hero-credenza-lifestyle.jpg",
+        "variant": "custom",
+        "backgroundColor": "#00000000",
+        "textColor": "#fff",
+        "borderColor": "#fff",
+        "backgroundColorHover": "#fff",
+        "textColorHover": "#000",
+        "borderColorHover": "#fff"
       }
     },
     {
       "id": "home-slide-2",
       "type": "slideshow-slide",
       "data": {
-        "headingContent": "The Dining Table You'll Never Replace",
+        "headingTagName": "h2",
+        "headingContent": "Solid Wood Dining Tables \u2014 Built for Generations",
         "subheadingContent": "Mid-Century. Solid Walnut. Built for the Long Haul.",
         "paragraphContent": "Designed to anchor your home for decades \u2014 not just pass through it.",
-        "buttonContent": "Shop Dining",
-        "to": "/collections/dining",
+        "buttonContent": "Shop Dining Tables",
+        "to": "/collections/mid-century-modern-dining-tables",
         "enableOverlay": true,
         "overlayOpacity": 40,
-        "backgroundImage": "/images/heroes/hero-oval-dining-table.jpg"
+        "backgroundImage": "/images/heroes/hero-oval-dining-table.jpg",
+        "variant": "custom",
+        "backgroundColor": "#00000000",
+        "textColor": "#fff",
+        "borderColor": "#fff",
+        "backgroundColorHover": "#fff",
+        "textColorHover": "#000",
+        "borderColorHover": "#fff"
       }
     },
     {
       "id": "home-slide-3",
       "type": "slideshow-slide",
       "data": {
-        "headingContent": "Scandinavian Calm. Japandi Soul.",
+        "headingTagName": "h2",
+        "headingContent": "Scandinavian & Japandi Design Furniture",
         "subheadingContent": "For Spaces That Breathe",
         "paragraphContent": "Minimal lines and warm hardwoods \u2014 furniture that makes a room feel finished, not filled.",
-        "buttonContent": "View Collection",
+        "buttonContent": "View Scandinavian Collection",
         "to": "/collections/scandinavian-design-furniture",
         "enableOverlay": true,
         "overlayOpacity": 40,
-        "backgroundImage": "/images/heroes/hero-japandi-sideboard.jpg"
+        "backgroundImage": "/images/heroes/hero-japandi-sideboard.jpg",
+        "variant": "custom",
+        "backgroundColor": "#00000000",
+        "textColor": "#fff",
+        "borderColor": "#fff",
+        "backgroundColorHover": "#fff",
+        "textColorHover": "#000",
+        "borderColorHover": "#fff"
       }
     },
     {
@@ -122,7 +147,7 @@
         "iconType": "circle",
         "badgeTextColor": "#29231E",
         "headingContent": "Designed, Not Decorated",
-        "content": "Every detail is intentional \u2014 from the grain direction to the joint.",
+        "content": "Every detail is intentional \u2014 from the grain direction to the joint. Each piece of mid-century modern furniture is drawn in our Cleveland studio and refined until it\u2019s right.",
         "color": "#29231E"
       }
     },
@@ -133,7 +158,7 @@
         "iconType": "square",
         "badgeTextColor": "#29231E",
         "headingContent": "Real Hardwood, No Shortcuts",
-        "content": "Walnut, white oak, maple, cherry \u2014 sourced from American mills.",
+        "content": "Solid walnut, white oak, maple, and cherry \u2014 sourced from American mills. No particle board. No veneer. No MDF. Just real solid wood furniture built to last.",
         "color": "#29231E"
       }
     },
@@ -144,7 +169,7 @@
         "iconType": "triangle",
         "badgeTextColor": "#29231E",
         "headingContent": "Built to Your Specs",
-        "content": "60% of our orders are custom. Dimensions, species, finish \u2014 your call.",
+        "content": "60% of our orders are custom. Dimensions, wood species, finish \u2014 handcrafted to order with 12\u201316 week lead times because quality can\u2019t be rushed.",
         "color": "#29231E"
       }
     },

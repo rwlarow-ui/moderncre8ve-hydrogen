@@ -92,17 +92,110 @@ function home(): SeoConfig {
   return {
     title: "Handcrafted Mid-Century Modern & Scandinavian Furniture",
     titleTemplate: "%s | ModernCre8ve",
-    description: "Shop handcrafted mid-century modern, Scandinavian & Japandi furniture. Made by Amish artisans in solid hardwoods. 12–16 week lead times. Free white glove delivery.",
+    description:
+      "Shop handcrafted mid-century modern, Scandinavian & Japandi furniture. Made by Amish artisans in solid hardwoods. 12–16 week lead times. Free white glove delivery.",
     handle: "@moderncre8ve",
     robots: {
       noIndex: false,
       noFollow: false,
     },
-    jsonLd: {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      name: "Home page",
-    },
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "Handcrafted Mid-Century Modern & Scandinavian Furniture | ModernCre8ve",
+        description:
+          "Shop handcrafted mid-century modern, Scandinavian & Japandi furniture. Made by Amish artisans in solid hardwoods.",
+        url: "https://moderncre8ve.com/",
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        name: "ModernCre8ve",
+        image: "https://moderncre8ve.com/logo.png",
+        description:
+          "Handcrafted modern furniture made in Cleveland, Ohio. Mid-century, Scandinavian, and Japandi designs built by Amish artisans in solid American hardwood.",
+        url: "https://moderncre8ve.com",
+        telephone: "+12165020755",
+        email: "info@moderncre8ve.com",
+        priceRange: "$$$$",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "1400 E 36th Street, Suite 2802A",
+          addressLocality: "Cleveland",
+          addressRegion: "OH",
+          postalCode: "44114",
+          addressCountry: "US",
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: 41.5074,
+          longitude: -81.6641,
+        },
+        openingHoursSpecification: {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+          ],
+          opens: "09:00",
+          closes: "17:00",
+        },
+        sameAs: [
+          "https://www.instagram.com/moderncre8ve",
+          "https://www.facebook.com/moderncre8ve",
+        ],
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "How long does custom furniture take?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "All furniture is handcrafted to order. Please allow 12–16 weeks for production and white glove delivery. Wax products ship within 3–5 business days.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What wood species do you offer?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "We build in solid American hardwoods: walnut, white oak, maple, and cherry. All lumber is sourced from domestic mills. Over 60% of our orders are fully custom — you choose the species, dimensions, and finish.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What payment methods do you accept?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "We accept all major credit cards (Visa, Mastercard, American Express), Apple Pay, Google Pay, and Shop Pay installments.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What is your return policy?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Because each piece is handcrafted to order, we do not accept returns on custom furniture. We stand behind our craftsmanship with a quality guarantee. Please contact us within 48 hours of delivery if there are any issues.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "How does shipping work?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "We offer free white glove in-home delivery with assembly for 95%+ of orders. Our delivery team will bring your furniture inside, assemble it, and remove all packaging.",
+            },
+          },
+        ],
+      },
+    ],
   };
 }
 

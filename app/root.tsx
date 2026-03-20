@@ -72,6 +72,11 @@ export const links: LinksFunction = () => {
       crossOrigin: "anonymous",
     },
     { rel: "icon", type: "image/svg+xml", href: "/favicon.ico" },
+    // Preconnect to analytics domain to reduce RTT for gtag.js
+    {
+      rel: "preconnect",
+      href: "https://www.googletagmanager.com",
+    },
   ];
 };
 

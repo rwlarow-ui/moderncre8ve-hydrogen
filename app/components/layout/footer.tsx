@@ -398,10 +398,12 @@ export function Footer() {
   const bio = bioIsUsable
     ? _bio
     : "<p>Handcrafted modern furniture made in Cleveland, Ohio. We specialize in mid-century modern, Scandinavian, and Japandi-inspired solid wood furniture.</p><p>Phone: (216) 502-0755</p>";
-  const copyright =
+  const rawCopyright =
     _copyright && !_copyright.includes("Weaverse")
       ? _copyright
       : "© 2026 ModernCre8ve. All rights reserved.";
+  // Strip HTML tags to prevent nested <p> rendering when Studio value contains markup
+  const copyright = rawCopyright.replace(/<[^>]*>/g, "").trim();
   const fetcher = useFetcher<{ ok: boolean; errorMessage?: string }>();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
