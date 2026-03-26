@@ -1,8 +1,8 @@
-name: "SEO Truth Layer — Weekly Pipeline"
+name: "SEO Truth Layer — Daily Pipeline"
 
 on:
   schedule:
-    - cron: "0 14 */2 * *"  # Every 2 days at 2pm UTC
+    - cron: "0 14 * * *"  # Every day at 2pm UTC (9am CT)
   workflow_dispatch:
 
 jobs:
