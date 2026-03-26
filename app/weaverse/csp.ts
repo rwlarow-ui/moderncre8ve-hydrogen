@@ -16,7 +16,6 @@ export function getWeaverseCsp(request: Request, context: AppLoadContext) {
     defaultSrc: [...weaverseHosts],
     imgSrc: [
       "data:",
-      "cdn.alireviews.io",
       ...weaverseHosts,
     ],
     mediaSrc: [
