@@ -25,7 +25,7 @@ export const collectionSeoDescriptions: Record<
   },
 
   "mid-century-modern-dining-tables": {
-    meta: "Handcrafted mid-century modern dining tables in walnut, oak & cherry. Extendable options. White glove delivery. Made to order in Ohio.",
+    meta: "Handcrafted MCM dining tables in solid walnut & oak. Round, oval & extendable designs seating 4–12. Made to order in Ohio. Free white glove delivery.",
     rich: "Shop our collection of handcrafted mid-century modern dining tables, built from solid American walnut and white oak by Amish artisans in Ohio. Each MCM dining table features the clean lines, tapered legs, and organic forms that define mid-century design. Choose from round, oval, and rectangular silhouettes with extendable leaf options for flexible seating. Our mid-century modern extendable dining tables are among our most popular pieces, combining timeless style with everyday functionality. Every table is made to order with custom dimensions available — from intimate 4-seat designs to grand 12-seat gathering tables. Includes white glove in-home delivery and assembly.",
   },
 
@@ -65,8 +65,8 @@ export const collectionSeoDescriptions: Record<
   },
 
   "custom-made-furniture": {
-    meta: "Design custom furniture in solid hardwood built to your exact specs. Choose wood species, dimensions & finish. Amish-crafted in Ohio. Free delivery.",
-    rich: "Commission custom handmade furniture built to your exact specifications by Amish artisans in Ohio. From custom dining tables and credenzas to bed frames and storage pieces, every ModernCre8ve piece is handcrafted from solid American hardwoods. Choose your wood species, dimensions, and finish for furniture that fits your space perfectly. Our unique handmade furniture combines old-world craftsmanship with mid-century modern, Scandinavian, and Japandi design sensibilities.",
+    meta: "Custom dining tables, credenzas & bed frames in solid walnut & oak. Choose dimensions, wood & finish. 12–16 week lead time. Handcrafted in Ohio.",
+    rich: "Commission personalized furniture built to your exact specifications by Amish artisans in Ohio. From custom dining tables and credenzas to bed frames, nightstands, and coffee tables — every piece is handcrafted from solid American walnut or white oak. Choose your wood species, dimensions, and finish for custom furniture that fits your space perfectly. Design consultations included. 12–16 week lead time with white glove in-home delivery.",
   },
 
   "all-products": {

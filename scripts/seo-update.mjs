@@ -113,9 +113,9 @@ const COLLECTIONS = [
   },
   {
     handle: "custom-made-furniture",
-    seoTitle: "Custom Made Furniture — Handcrafted to Order",
+    seoTitle: "Custom Furniture — Solid Walnut & Oak, Made to Order",
     seoDescription:
-      "Design custom furniture in solid hardwood built to your exact specs. Choose wood species, dimensions & finish. Amish-crafted in Ohio. Free delivery.",
+      "Custom dining tables, credenzas & bed frames in solid walnut & oak. Choose dimensions, wood & finish. 12–16 week lead time. Handcrafted in Ohio.",
   },
   // ── Priority 2: keyword & CTA improvements ───────────────────────────────
   {
@@ -132,9 +132,9 @@ const COLLECTIONS = [
   },
   {
     handle: "mid-century-modern-dining-tables",
-    seoTitle: "Mid-Century Modern Dining Tables — Solid Walnut & Oak",
+    seoTitle: "Mid-Century Modern Dining Tables — Round, Oval & Extendable",
     seoDescription:
-      "Handcrafted mid-century modern dining tables in walnut, oak & cherry. Extendable options. White glove delivery. Made to order in Ohio.",
+      "Handcrafted MCM dining tables in solid walnut & oak. Round, oval & extendable designs seating 4–12. Made to order in Ohio. Free white glove delivery.",
   },
   {
     handle: "mid-century-modern-coffee-tables",
@@ -190,9 +190,9 @@ const COLLECTIONS = [
 const PRODUCTS = [
   {
     handle: "the-santa-monica-mid-century-modern-dining-table",
-    seoTitle: "Mid-Century Modern Dining Table — Solid Walnut & Oak",
+    seoTitle: "Santa Monica Mid-Century Dining Table — Solid Walnut",
     seoDescription:
-      "Handcrafted mid-century modern dining table in solid walnut or oak. Tapered legs, beveled top. Made to order in Ohio. Free white glove delivery.",
+      "The Santa Monica dining table: tapered legs, beveled solid walnut top, seats 4–8. Handcrafted to order in Ohio. Free white glove delivery. Shop now.",
   },
   {
     handle: "mid-century-modern-extendable-dining-table-santa-monica",
@@ -226,9 +226,9 @@ const PRODUCTS = [
   },
   {
     handle: "scandinavian-danish-modern-dining-table",
-    seoTitle: "Scandinavian Dining Table — Solid Walnut & Oak",
+    seoTitle: "Scandinavian Dining Table — Handcrafted Minimalist Design",
     seoDescription:
-      "Scandinavian dining table in solid walnut or oak. Extended proportions seat 8–10. Nordic lines, Amish craftsmanship. Made in Ohio.",
+      "Handcrafted Scandinavian dining table in solid walnut or oak. Seats 8–10 with aesthetic Nordic lines. Made to order in Ohio. Free white glove delivery.",
   },
   {
     handle: "mar-vista-oval-dining-table",
@@ -259,6 +259,12 @@ const PRODUCTS = [
     seoTitle: "Lareaux's Natural Furniture Wax — Beeswax Wood Care",
     seoDescription:
       "Natural beeswax furniture wax for solid wood care. Nourishes and protects walnut, oak & cherry. Ships in 3–5 business days.",
+  },
+  {
+    handle: "mid-century-modern-walnut-nightstand",
+    seoTitle: "Solid Walnut Nightstand — Mid-Century Modern Design",
+    seoDescription:
+      "Handcrafted solid walnut nightstand with round modern design. Sold individually or as a pair. Made to order in Ohio. Free white glove delivery.",
   },
 ];
 
