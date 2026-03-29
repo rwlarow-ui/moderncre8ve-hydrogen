@@ -9,9 +9,9 @@
  * Keyword targeting is based on Ahrefs data from March 2026.
  */
 export interface CollectionSeoDescription {
-  /** Short meta description (≤155 chars) */
+  /** Short meta description (<=155 chars) */
   meta: string;
-  /** Longer rich description for JSON-LD / on-page use */
+  /** Longer rich description for JSON-LD / on-page use. May include HTML. */
   rich: string;
 }
 
@@ -25,8 +25,8 @@ export const collectionSeoDescriptions: Record<
   },
 
   "mid-century-modern-dining-tables": {
-    meta: "Handcrafted mid-century modern dining tables in solid walnut & white oak. Extendable options available. 12–16 week lead time. Made in Ohio.",
-    rich: "Shop our collection of handcrafted mid-century modern dining tables, built from solid American walnut and white oak by Amish artisans in Ohio. Each MCM dining table features the clean lines, tapered legs, and organic forms that define mid-century design. Choose from round, oval, and rectangular silhouettes with extendable leaf options for flexible seating. Our mid-century modern extendable dining tables are among our most popular pieces, combining timeless style with everyday functionality. Every table is made to order with custom dimensions available — from intimate 4-seat designs to grand 12-seat gathering tables. Includes white glove in-home delivery and assembly.",
+    meta: "Browse handcrafted mid century modern dining tables in solid walnut and white oak. Extendable and fixed designs, custom sizing, white glove delivery.",
+    rich: `<p>Explore our collection of <strong>mid century modern dining tables</strong>, handcrafted from solid American walnut and white oak by Amish artisans in Ohio. Each table is built to order with the clean lines, tapered legs, and organic proportions that define timeless mid-century design.</p><p>If you are shopping for a classic fixed-top silhouette, start with <a href="/products/the-santa-monica-mid-century-modern-dining-table">The Santa Monica dining table</a>, our signature design for everyday seating and warm walnut-or-oak styling. If you need more flexibility for gatherings, the <a href="/products/scandinavian-dining-table-extendable-dining-table">extendable Scandinavian dining table</a> adds extra seating without sacrificing a refined Nordic profile.</p><p>Many shoppers use this collection as a starting point before exploring our broader <a href="/collections/scandinavian-design-furniture">Scandinavian furniture collection</a> or pairing their table with long-term care essentials like <a href="/products/lareauxs-furniture-wax">furniture wax for solid wood pieces</a>. Every dining table is made to order, available in custom dimensions, and delivered with complimentary white glove service.</p>`,
   },
 
   "mid-century-modern": {
