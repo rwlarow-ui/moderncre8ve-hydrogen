@@ -268,7 +268,11 @@ function CartDetails({
               </div>
             </>
           )}
-          <CartCheckoutActions checkoutUrl={cart.checkoutUrl} layout={layout} />
+          <CartCheckoutActions
+            checkoutUrl={cart.checkoutUrl}
+            layout={layout}
+            cart={cart}
+          />
         </CartSummary>
       </div>
     </>
@@ -421,11 +425,39 @@ function CartLines({
 function CartCheckoutActions({
   checkoutUrl,
   layout,
+  cart,
 }: {
   checkoutUrl: string;
   layout: Layouts;
+  cart: OptimisticCart<CartApiQueryFragment>;
 }) {
   if (!checkoutUrl) { return null; }
+
+  function handleCheckoutClick() {
+    try {
+      const lines = cart?.lines?.nodes ?? [];
+      const currency = cart?.cost?.totalAmount?.currencyCode ?? "USD";
+      const value = parseFloat(cart?.cost?.totalAmount?.amount ?? "0");
+      window.dataLayer?.push({ ecommerce: null });
+      window.dataLayer?.push({
+        event: "begin_checkout",
+        ecommerce: {
+          currency,
+          value,
+          items: lines.map((line) => ({
+            item_id: line.merchandise?.product?.id ?? line.id,
+            item_name: line.merchandise?.product?.title ?? "Unknown Product",
+            item_variant: line.merchandise?.title ?? "",
+            item_brand: line.merchandise?.product?.vendor ?? "ModernCre8ve",
+            price: parseFloat(line.merchandise?.price?.amount ?? "0"),
+            quantity: line.quantity ?? 1,
+          })),
+        },
+      });
+    } catch {
+      // Never block checkout due to analytics errors
+    }
+  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -439,7 +471,7 @@ function CartCheckoutActions({
           View cart
         </Link>
       )}
-      <a href={checkoutUrl} target="_self">
+      <a href={checkoutUrl} target="_self" onClick={handleCheckoutClick}>
         <Button className="!px-6 !py-5 h-[54px] w-full">CHECKOUT</Button>
       </a>
     </div>

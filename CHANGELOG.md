@@ -4,6 +4,43 @@
 
 ---
 
+## 1.4.2 — 2026-03-19
+
+### Security Hardening
+- Patched critical storefront vulnerabilities across API routes, cart actions, session/cookie handling, and CSP enforcement
+- Locked down the Storefront GraphQL proxy with origin checks, header filtering, and version allowlisting
+- Added Turnstile + honeypot review protection and capped unsafe query params on search/products endpoints
+
+### SEO & Analytics Quick Wins
+- Fixed homepage metadata and rewrote collection meta descriptions for priority collection pages
+- Corrected GA4 loading so analytics uses the proper `gtag/js` endpoint
+- Enforced single-H1 page structure and added smarter product image alt text generation
+
+### Product Page Conversion & Trust Upgrades
+- Added new trust-building Weaverse sections: Quality Guarantee, Craftsmanship Process, and Customer Gallery
+- Rebuilt the default product template to include guarantees, highlights, reviews, gallery content, and related products in a stronger conversion order
+- Added a Specifications & Details accordion, white glove delivery messaging, Made in the USA highlights, and updated CTA/guarantee copy
+
+### Weaverse / Platform Stability
+- Improved collection-card readability with persistent dark overlays and white text
+- Fixed Weaverse Studio design-mode sync by restoring fallback behavior when Studio page data is missing
+- Restored the Instagram section as a no-op stub so legacy Studio content can load without schema errors
+- Updated `@weaverse/hydrogen` to `5.10.0`
+
+### Research & Documentation
+- Added customer behavior analysis, SEO findings, competitive brief, market research, and brand voice documentation to support ongoing optimization
+
+---
+
+## 1.4.1 — 2026-03-16
+
+### Fix: Restore Weaverse Studio → Live Publish Flow
+- Restored Studio-priority guard in `weaverse-fallback.server.ts` that was removed in commit `6da3daf`
+- Pages published in Weaverse Studio now correctly appear on the live site
+- Local fallback JSON is only used when Studio has no page configured (as originally intended)
+
+---
+
 ## 1.4.0 — 2026-03-05
 
 ### Phase 5: Launch — DNS Cutover to moderncre8ve.com

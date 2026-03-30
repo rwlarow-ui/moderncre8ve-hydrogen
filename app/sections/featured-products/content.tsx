@@ -411,6 +411,7 @@ export const schema = createSchema({
     displayMode: "vertical",
     gap: 32,
     headingContent: "Best Sellers",
+    headingTagName: "h2",
     paragraphContent:
       "Handcrafted with care, these are our most loved pieces — built to last for generations.",
     buttonContent: "SHOP ALL",

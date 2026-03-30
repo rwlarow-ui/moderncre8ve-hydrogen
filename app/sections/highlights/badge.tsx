@@ -267,6 +267,7 @@ export let schema = createSchema({
     iconType: "circle",
     badgeTextColor: "#29231E",
     headingContent: "Designed, Not Decorated",
+    headingTagName: "h3",
     color: "#29231E",
   },
 });

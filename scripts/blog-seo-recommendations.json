@@ -1,0 +1,78 @@
+{
+  "generatedDate": "2026-03-26",
+  "articles": [
+    {
+      "handle": "best-scandinavian-furniture-online",
+      "blogHandle": "mid-century-modern-scandi-japandi-design-blog",
+      "currentUrl": "/blogs/mid-century-modern-scandi-japandi-design-blog/best-scandinavian-furniture-online",
+      "recommendedTitle": "Affordable Scandinavian Furniture Brands \u2014 2026 Buyer\u2019s Guide",
+      "recommendedTitleChars": 61,
+      "recommendedMeta": "Discover the best affordable Scandinavian furniture brands. Handcrafted solid wood dining tables, bed frames & more \u2014 Nordic design made in the USA.",
+      "recommendedMetaChars": 148,
+      "primaryKeyword": "affordable scandinavian furniture brands",
+      "internalLinks": [
+        {
+          "url": "/collections/scandinavian-design-furniture",
+          "anchor": "Scandinavian furniture collection"
+        },
+        {
+          "url": "/products/scandinavian-danish-modern-dining-table",
+          "anchor": "Scandinavian dining table"
+        },
+        {
+          "url": "/collections/scandinavian-bed-frames",
+          "anchor": "Scandinavian bed frames"
+        },
+        {
+          "url": "/products/the-vista-scandinavian-extendable-dining-table",
+          "anchor": "extendable Scandinavian dining table"
+        },
+        {
+          "url": "/collections/japandi",
+          "anchor": "Japandi furniture"
+        }
+      ]
+    },
+    {
+      "handle": "the-ultimate-guide-to-cleaning-and-caring-for-your-handmade-solid-wood-furniture",
+      "blogHandle": "mid-century-modern-scandi-japandi-design-blog",
+      "currentUrl": "/blogs/mid-century-modern-scandi-japandi-design-blog/the-ultimate-guide-to-cleaning-and-caring-for-your-handmade-solid-wood-furniture",
+      "recommendedTitle": "How to Care for Solid Wood Furniture \u2014 Expert Cleaning Guide",
+      "recommendedTitleChars": 60,
+      "recommendedMeta": "Learn how to clean and protect solid wood furniture. Expert walnut and oak care tips, best finishes for tables, and products to avoid. By ModernCre8ve.",
+      "recommendedMetaChars": 151,
+      "recommendedHandle": "solid-wood-furniture-care-guide",
+      "redirectConfirmed": true,
+      "redirectSource": "scripts/import-new-redirects.mjs (BLOG_REDIRECT_FIXES array, lines 87-91)",
+      "primaryKeyword": "how to care for wood furniture",
+      "internalLinks": [
+        {
+          "url": "/products/lareauxs-furniture-wax",
+          "anchor": "Lareaux's natural furniture wax"
+        },
+        {
+          "url": "/collections/mid-century-modern",
+          "anchor": "mid-century modern furniture"
+        },
+        {
+          "url": "/products/mid-century-modern-walnut-nightstand",
+          "anchor": "walnut nightstand"
+        },
+        {
+          "url": "/collections/mid-century-modern-dining-tables",
+          "anchor": "dining tables"
+        },
+        {
+          "url": "/products/mid-century-modern-credenza-handcrafted-ohio",
+          "anchor": "walnut credenza"
+        }
+      ],
+      "contentRecommendations": [
+        "Add section: Products to Avoid on Solid Wood Furniture (targets 'can i use clorox wipes on wood furniture')",
+        "Add section: Best Finish for a Dining Table Top (targets 'best varnish for table top')",
+        "Add FAQ schema section with 4 Q&As targeting long-tail care queries",
+        "Add internal product link to Lareaux's furniture wax in care/maintenance sections"
+      ]
+    }
+  ]
+}

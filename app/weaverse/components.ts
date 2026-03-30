@@ -45,13 +45,13 @@ import * as HotspotsItem from "~/sections/hotspots/item";
 import * as ImageGallery from "~/sections/image-gallery";
 import * as ImageGalleryItem from "~/sections/image-gallery/image";
 import * as ImageGalleryItems from "~/sections/image-gallery/items";
+import * as Instagram from "~/sections/instagram";
+import * as InstagramContent from "~/sections/instagram/content";
+import * as InstagramSlider from "~/sections/instagram/slider";
 import * as ImageWithText from "~/sections/image-with-text";
 import * as ImageWithTextContent from "~/sections/image-with-text/content";
 import * as ImageWithTextImage from "~/sections/image-with-text/image";
 import * as ImageWithTextImages from "~/sections/image-with-text/images";
-import * as Instagram from "~/sections/instagram";
-import * as InstagramContent from "~/sections/instagram/content";
-import * as InstagramSlider from "~/sections/instagram/slider";
 import * as JudgemeReview from "~/sections/judgeme-reviews";
 import * as ReviewIndex from "~/sections/judgeme-reviews/review-index";
 import * as ProductInformation from "~/sections/main-product/index";
@@ -82,6 +82,12 @@ import * as VideoEmbedItem from "~/sections/video-embed/video";
 import * as Videos from "~/sections/videos";
 import * as VideoItems from "~/sections/videos/items";
 import * as VideoItem from "~/sections/videos/video";
+import * as CraftsmanshipProcess from "~/sections/craftsmanship-process";
+import * as CraftsmanshipStep from "~/sections/craftsmanship-process/step";
+import * as CustomerGallery from "~/sections/customer-gallery";
+import * as CustomerGalleryItem from "~/sections/customer-gallery/item";
+import * as QualityGuarantee from "~/sections/quality-guarantee";
+import * as GuaranteeItem from "~/sections/quality-guarantee/item";
 
 export const components: HydrogenComponent[] = [
   SubHeading,
@@ -109,13 +115,13 @@ export const components: HydrogenComponent[] = [
   HeroImage,
   Highlights,
   HighlightsBadge,
+  Instagram,
+  InstagramContent,
+  InstagramSlider,
   ImageWithText,
   ImageWithTextContent,
   ImageWithTextImage,
   ImageWithTextImages,
-  Instagram,
-  InstagramContent,
-  InstagramSlider,
   ColumnsWithImages,
   ColumnsWithImagesItems,
   ColumnWithImageItem,
@@ -167,4 +173,10 @@ export const components: HydrogenComponent[] = [
   SlideShowSlide,
   Spacer,
   ScrollingText,
+  CraftsmanshipProcess,
+  CraftsmanshipStep,
+  CustomerGallery,
+  CustomerGalleryItem,
+  QualityGuarantee,
+  GuaranteeItem,
 ];

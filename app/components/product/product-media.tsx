@@ -17,6 +17,7 @@ import { Image } from "~/components/image";
 import type { ImageAspectRatio } from "~/types/image";
 import { cn } from "~/utils/cn";
 import { calculateAspectRatio } from "~/utils/image";
+import { getProductImageAlt } from "~/utils/product-image-alt";
 import { ZoomModal } from "./media-zoom";
 
 const variants = cva(
@@ -55,6 +56,7 @@ export interface ProductMediaProps extends VariantProps<typeof variants> {
   zoomShape?: "rounded-sm" | "circle" | "square";
   showBadges?: boolean;
   badges?: React.ReactNode;
+  product?: { title?: string; vendor?: string };
 }
 
 export function ProductMedia(props: ProductMediaProps) {
@@ -76,6 +78,7 @@ export function ProductMedia(props: ProductMediaProps) {
     zoomShape = "circle",
     showBadges = false,
     badges,
+    product,
   } = props;
 
   // Base navigation button styling + dynamic color/shape helpers
@@ -152,7 +155,11 @@ export function ProductMedia(props: ProductMediaProps) {
         {media.map((med, idx) => {
           const image = {
             ...med.previewImage,
-            altText: med.alt || "Product image",
+            altText: getProductImageAlt(
+              { altText: med.alt },
+              product,
+              selectedVariant,
+            ),
           };
           return (
             <Image
@@ -216,7 +223,11 @@ export function ProductMedia(props: ProductMediaProps) {
                     <Image
                       data={{
                         ...previewImage,
-                        altText: alt || "Product image",
+                        altText: getProductImageAlt(
+                          { altText: alt },
+                          product,
+                          selectedVariant,
+                        ),
                       }}
                       loading="lazy"
                       width={200}
@@ -418,7 +429,10 @@ function Media({
     const { image, alt } = media as Media_MediaImage_Fragment;
     return (
       <Image
-        data={{ ...image, altText: alt || "Product image" }}
+        data={{
+          ...image,
+          altText: getProductImageAlt({ altText: alt }),
+        }}
         loading={index === 0 ? "eager" : "lazy"}
         className="h-auto w-full object-cover"
         width={2048}

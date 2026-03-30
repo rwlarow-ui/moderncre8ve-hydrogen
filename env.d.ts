@@ -16,11 +16,13 @@ declare global {
   interface Env extends HydrogenEnv {
     // declare additional Env parameter use in the fetch handler and Remix loader context here
     PUBLIC_GOOGLE_GTM_ID: string;
+    SHOPIFY_ADMIN_API_TOKEN?: string;
     JUDGEME_PRIVATE_API_TOKEN: string;
     CUSTOM_COLLECTION_BANNER_METAFIELD: string;
     METAOBJECT_COLORS_TYPE: string;
     METAOBJECT_COLOR_NAME_KEY: string;
     METAOBJECT_COLOR_VALUE_KEY: string;
+    OPS_DASHBOARD_PASSWORD?: string;
     PUBLIC_SHOPIFY_INBOX_SHOP_ID: string;
     PUBLIC_TURNSTILE_SITE_KEY?: string;
     TURNSTILE_SECRET_KEY?: string;
@@ -46,6 +48,7 @@ declare module "react-router" {
 
   interface SessionData extends HydrogenSessionData {
     // declare local additions to the Remix session data here
+    opsAuthenticated?: boolean;
   }
 }
 
