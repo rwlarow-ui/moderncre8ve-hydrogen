@@ -367,7 +367,9 @@ function collectionJsonLd({
       description: truncate(
         collectionData?.seo?.description ??
           collectionData?.description ??
-          collectionSeoDescriptions[collectionData?.handle ?? ""]?.rich ??
+          stripHtmlTags(
+            collectionSeoDescriptions[collectionData?.handle ?? ""]?.rich ?? "",
+          ) ??
           "",
       ),
       image: collectionData?.image?.url,
@@ -739,4 +741,12 @@ function truncate(str: string, num = 155): string {
     return str;
   }
   return `${str.slice(0, num - 3)}...`;
+}
+
+function stripHtmlTags(str: string): string {
+  if (typeof str !== "string") {
+    return "";
+  }
+
+  return str.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 }
