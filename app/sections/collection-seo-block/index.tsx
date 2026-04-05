@@ -52,16 +52,10 @@ const CollectionSeoBlock = forwardRef<HTMLElement, CollectionSeoBlockProps>(
               {heading}
             </HeadingTag>
           )}
-          {metafieldDesc || localDesc ? (
-            <p className="font-serif text-gray-600 text-sm leading-relaxed md:text-base">
-              {metafieldDesc || localDesc}
-            </p>
-          ) : (
-            <div
-              className="collection-seo-prose font-serif text-gray-600 text-sm leading-relaxed md:text-base [&_p]:mb-4 [&_strong]:font-semibold [&_strong]:text-gray-800"
-              dangerouslySetInnerHTML={{ __html: shopifyDesc }}
-            />
-          )}
+          <div
+            className="collection-seo-prose font-serif text-gray-600 text-sm leading-relaxed md:text-base [&_a]:underline [&_a]:underline-offset-4 [&_p]:mb-4 [&_strong]:font-semibold [&_strong]:text-gray-800"
+            dangerouslySetInnerHTML={{ __html: toRenderableHtml(content) }}
+          />
         </div>
       </Section>
     );
@@ -113,3 +107,30 @@ export const schema = createSchema({
     },
   ],
 });
+
+function toRenderableHtml(content: string) {
+  const trimmed = content.trim();
+  if (!trimmed) {
+    return "";
+  }
+
+  if (/<[a-z][\s\S]*>/i.test(trimmed)) {
+    return trimmed;
+  }
+
+  return trimmed
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean)
+    .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
+    .join("");
+}
+
+function escapeHtml(text: string) {
+  return text
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}

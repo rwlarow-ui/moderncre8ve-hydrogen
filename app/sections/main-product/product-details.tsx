@@ -36,11 +36,18 @@ export function ProductDetails({
     return null;
   }
 
-  const { description, summary } = product || {};
+  const { description, descriptionHtml, summary } = product || {};
   const { shippingPolicy, refundPolicy } = shop || {};
   const details = [
-    showShortDescription && summary && { title: "Summary", content: summary },
-    description && { title: "Description", content: description },
+    showShortDescription &&
+      summary && {
+        title: "Summary",
+        content: formatPlainTextAsHtml(summary),
+      },
+    (descriptionHtml || description) && {
+      title: "Description",
+      content: descriptionHtml || formatPlainTextAsHtml(description),
+    },
     showShippingPolicy &&
       shippingPolicy?.body && {
         title: "Shipping",
@@ -121,4 +128,26 @@ function getExcerpt(text: string) {
   const regex = /<p.*>(.*?)<\/p>/;
   const match = regex.exec(text);
   return match?.length ? match[0] : text;
+}
+
+function formatPlainTextAsHtml(text?: string) {
+  if (!text) {
+    return "";
+  }
+
+  return text
+    .split(/\n{2,}/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean)
+    .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
+    .join("");
+}
+
+function escapeHtml(text: string) {
+  return text
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 }
