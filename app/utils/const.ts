@@ -110,6 +110,12 @@ export const STOREFRONT_HREFLANGS = [
     }),
 ];
 
+export const STOREFRONT_LOCALE_PREFIXES = Object.fromEntries(
+  STOREFRONT_HREFLANGS.map(({ hrefLang, pathPrefix }) => {
+    return [hrefLang.toUpperCase(), pathPrefix];
+  }),
+);
+
 export function normalizePathname(pathname: string) {
   return pathname.replace(/\/+$/, "") || "/";
 }

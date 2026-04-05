@@ -1,6 +1,10 @@
 import { getSitemap } from "@shopify/hydrogen";
 import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
-import { SUPPORTED_STOREFRONT_LOCALES } from "~/utils/const";
+import {
+  normalizePathname,
+  STOREFRONT_LOCALE_PREFIXES,
+  SUPPORTED_STOREFRONT_LOCALES,
+} from "~/utils/const";
 
 const BLOG_HANDLE = "mid-century-modern-scandi-japandi-design-blog";
 
@@ -15,24 +19,17 @@ export async function loader({
     params,
     locales: SUPPORTED_STOREFRONT_LOCALES,
     getLink: ({ type, baseUrl, handle, locale }) => {
-      const segments = [];
+      const pathPrefix = locale ? STOREFRONT_LOCALE_PREFIXES[locale] ?? "" : "";
+      const basePath =
+        type === "articles"
+          ? `/blogs/${BLOG_HANDLE}/${handle}`
+          : `/${type}/${handle}`;
 
-      if (!locale) {
-        if (type === "articles") {
-          return `${baseUrl}/blogs/${BLOG_HANDLE}/${handle}`;
-        }
-        return `${baseUrl}/${type}/${handle}`;
+      if (!pathPrefix) {
+        return `${baseUrl}${normalizePathname(basePath)}`;
       }
 
-      segments.push(baseUrl, locale.toLowerCase());
-
-      if (type === "articles") {
-        segments.push("blogs", BLOG_HANDLE, handle);
-      } else {
-        segments.push(type, handle);
-      }
-
-      return segments.join("/");
+      return `${baseUrl}${pathPrefix}${normalizePathname(basePath)}`;
     },
   });
 
