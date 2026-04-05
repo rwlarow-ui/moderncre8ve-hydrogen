@@ -10,7 +10,38 @@
  * 5. Keep /collections/all-products → /collections/all for external links
  */
 
+import { readFileSync } from "fs";
+import { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const envPath = resolve(__dirname, "..", ".env");
+
+try {
+  const envFile = readFileSync(envPath, "utf-8");
+  for (const line of envFile.split("\n")) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) continue;
+    const eqIdx = trimmed.indexOf("=");
+    if (eqIdx === -1) continue;
+    const key = trimmed.slice(0, eqIdx).trim();
+    let val = trimmed.slice(eqIdx + 1).trim();
+    if (
+      (val.startsWith('"') && val.endsWith('"')) ||
+      (val.startsWith("'") && val.endsWith("'"))
+    ) {
+      val = val.slice(1, -1);
+    }
+    if (!process.env[key]) process.env[key] = val;
+  }
+} catch {
+  console.warn(
+    "⚠️  Could not load .env file, using existing environment variables",
+  );
+}
+
 const SHOPIFY_STORE = "moderncre8ve.myshopify.com";
+const STOREFRONT_ORIGIN = "https://moderncre8ve.com";
 const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_API_TOKEN;
 if (!ADMIN_TOKEN) {
   console.error(
@@ -44,7 +75,36 @@ async function shopifyGraphQL(query, variables = {}) {
   return json.data;
 }
 
+async function validateRedirectTarget(target) {
+  const url = new URL(target, STOREFRONT_ORIGIN);
+
+  const request = async (method) => {
+    return fetch(url, {
+      method,
+      redirect: "manual",
+    });
+  };
+
+  let response = await request("HEAD");
+  if (response.status === 405 || response.status === 501) {
+    response = await request("GET");
+  }
+
+  if (response.status >= 300 && response.status < 400) {
+    const location = response.headers.get("location");
+    throw new Error(
+      `Target ${target} resolves to ${response.status}${location ? ` (${location})` : ""}`,
+    );
+  }
+
+  if (response.status !== 200) {
+    throw new Error(`Target ${target} resolves to ${response.status}`);
+  }
+}
+
 async function updateRedirect(id, newTarget) {
+  await validateRedirectTarget(newTarget);
+
   const mutation = `
     mutation urlRedirectUpdate($id: ID!, $urlRedirect: UrlRedirectInput!) {
       urlRedirectUpdate(id: $id, urlRedirect: $urlRedirect) {
@@ -63,6 +123,8 @@ async function updateRedirect(id, newTarget) {
 }
 
 async function createRedirect(from, to) {
+  await validateRedirectTarget(to);
+
   const mutation = `
     mutation urlRedirectCreate($urlRedirect: UrlRedirectInput!) {
       urlRedirectCreate(urlRedirect: $urlRedirect) {

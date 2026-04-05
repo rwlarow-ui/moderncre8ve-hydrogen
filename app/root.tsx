@@ -35,7 +35,12 @@ import { GenericError } from "./components/root/generic-error";
 import { GlobalLoading } from "./components/root/global-loading";
 import { NotFound } from "./components/root/not-found";
 import styles from "./styles/app.css?url";
-import { COUNTRIES, DEFAULT_LOCALE } from "./utils/const";
+import {
+  DEFAULT_LOCALE,
+  getLocaleAlternatePath,
+  normalizePathname,
+  STOREFRONT_HREFLANGS,
+} from "./utils/const";
 import { getEnhancedSeoMeta } from "./utils/enhanced-seo-meta";
 import { loadCriticalData, loadDeferredData } from "./utils/root.server";
 import { GlobalStyle } from "./weaverse/style";
@@ -95,7 +100,7 @@ export async function loader(args: LoaderFunctionArgs) {
 
 export const meta = ({ data, location }: MetaArgs<typeof loader>) => {
   const origin = "https://moderncre8ve.com";
-  const canonicalPath = location.pathname.replace(/\/+$/, "") || "/";
+  const canonicalPath = normalizePathname(location.pathname);
   const canonical = `${origin}${canonicalPath}`;
 
   return getEnhancedSeoMeta(data?.seo as SeoConfig, {
@@ -138,41 +143,25 @@ const ORIGIN = "https://moderncre8ve.com";
  * version.  Rendered inside `<head>` by the Layout component so they
  * appear on every page regardless of child-route meta overrides.
  */
-/** All known locale prefixes (e.g. "/en-au", "/en-gb") */
-const LOCALE_PREFIXES = Object.keys(COUNTRIES).filter((k) => k !== "default");
-
 function HreflangLinks() {
   const { pathname } = useLocation();
 
   // Strip the current locale prefix (if any) to get the base path.
   // E.g. "/en-gb/products/foo" → "/products/foo", "/en-gb" → "/"
   let basePath = pathname;
-  for (const prefix of LOCALE_PREFIXES) {
-    if (pathname === prefix || pathname.startsWith(`${prefix}/`)) {
-      basePath = pathname.slice(prefix.length) || "/";
+  for (const { pathPrefix } of STOREFRONT_HREFLANGS) {
+    if (!pathPrefix) continue;
+    if (pathname === pathPrefix || pathname.startsWith(`${pathPrefix}/`)) {
+      basePath = pathname.slice(pathPrefix.length) || "/";
       break;
     }
   }
-  // Normalise trailing slashes
-  basePath = basePath.replace(/\/+$/, "") || "/";
+  basePath = normalizePathname(basePath);
 
-  // Build alternate links for every locale
-  const links: { hreflang: string; href: string }[] = [];
-
-  for (const [prefix, loc] of Object.entries(COUNTRIES)) {
-    const lang = loc.language.toLowerCase();
-    const country = loc.country.toLowerCase();
-    const hreflang = `${lang}-${country}`;
-
-    if (prefix === "default") {
-      // Default locale (US) has no prefix
-      links.push({ hreflang, href: `${ORIGIN}${basePath}` });
-    } else {
-      // Prefixed locales: /en-au, /en-ca, etc.
-      const localePath = basePath === "/" ? prefix : `${prefix}${basePath}`;
-      links.push({ hreflang, href: `${ORIGIN}${localePath}` });
-    }
-  }
+  const links = STOREFRONT_HREFLANGS.map(({ hrefLang, pathPrefix }) => ({
+    hreflang: hrefLang,
+    href: `${ORIGIN}${getLocaleAlternatePath(basePath, pathPrefix)}`,
+  }));
 
   // x-default points to the default (US) version
   links.push({ hreflang: "x-default", href: `${ORIGIN}${basePath}` });

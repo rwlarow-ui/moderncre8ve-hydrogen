@@ -11,6 +11,7 @@ import {
 } from "react-router";
 import useWindowScroll from "react-use/esm/useWindowScroll";
 import Link from "~/components/link";
+import { usePrefixPathWithLocale } from "~/hooks/use-prefix-path-with-locale";
 import { Logo } from "~/components/logo";
 import type { RootLoader } from "~/root";
 import { cn } from "~/utils/cn";
@@ -112,23 +113,46 @@ export function Header() {
 function AccountLink({ className }: { className?: string }) {
   const rootData = useRouteLoaderData<RootLoader>("root");
   const isLoggedIn = rootData?.isLoggedIn;
+  const accountPath = usePrefixPathWithLocale("/account");
+  const loginPath = usePrefixPathWithLocale("/account/login");
+  const icon = <UserIcon className="h-5 w-5" />;
 
   return (
-    <Link to="/account" className={clsx("transition-none", className)}>
-      <Suspense fallback={<UserIcon className="h-5 w-5" />}>
+    <Suspense
+      fallback={<span className={clsx("transition-none", className)}>{icon}</span>}
+    >
         <Await
           resolve={isLoggedIn}
-          errorElement={<UserIcon className="h-5 w-5" />}
+          errorElement={
+            <form method="get" action={loginPath}>
+              <button
+                type="submit"
+                className={clsx("transition-none", className)}
+                aria-label="Sign in"
+              >
+                {icon}
+              </button>
+            </form>
+          }
         >
           {(loggedIn) =>
             loggedIn ? (
-              <UserIcon className="h-5 w-5" />
+              <Link to={accountPath} className={clsx("transition-none", className)}>
+                {icon}
+              </Link>
             ) : (
-              <UserIcon className="h-5 w-5" />
+              <form method="get" action={loginPath}>
+                <button
+                  type="submit"
+                  className={clsx("transition-none", className)}
+                  aria-label="Sign in"
+                >
+                  {icon}
+                </button>
+              </form>
             )
           }
         </Await>
-      </Suspense>
-    </Link>
+    </Suspense>
   );
 }

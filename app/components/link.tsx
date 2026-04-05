@@ -14,6 +14,7 @@ import {
 } from "react-router";
 import type { RootLoader } from "~/root";
 import { cn } from "~/utils/cn";
+import { getLocaleAlternatePath, normalizePathname } from "~/utils/const";
 
 export const variants = cva(
   ["button inline-flex leading-none transition-colors"],
@@ -90,20 +91,48 @@ export interface LinkProps
     Partial<Omit<HydrogenComponentProps, "children">>,
     LinkData {}
 
+const STOREFRONT_ORIGIN = "https://moderncre8ve.com";
+
+function normalizeInternalHref(
+  href: string,
+  pathPrefix: string = "",
+): string {
+  if (!href || href.startsWith("#") || href.startsWith("?")) {
+    return href;
+  }
+
+  // Leave non-http protocols and protocol-relative links untouched.
+  if (/^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)) {
+    const url = new URL(href, STOREFRONT_ORIGIN);
+    if (!/^https?:$/i.test(url.protocol) || url.origin !== STOREFRONT_ORIGIN) {
+      return href;
+    }
+
+    const pathname = pathPrefix
+      ? getLocaleAlternatePath(url.pathname, pathPrefix)
+      : normalizePathname(url.pathname);
+    return `${pathname}${url.search}${url.hash}`;
+  }
+
+  if (!href.startsWith("/")) {
+    return href;
+  }
+
+  const normalizedPath = pathPrefix
+    ? getLocaleAlternatePath(href, pathPrefix)
+    : normalizePathname(href);
+  return normalizedPath;
+}
+
 export function useHrefWithLocale(href: LinkProps["to"]) {
   const rootData = useRouteLoaderData<RootLoader>("root");
   const selectedLocale = rootData?.selectedLocale;
 
-  let toWithLocale = href;
-  if (
-    typeof toWithLocale === "string" &&
-    selectedLocale?.pathPrefix &&
-    !toWithLocale.toLowerCase().startsWith(selectedLocale.pathPrefix)
-  ) {
-    toWithLocale = `${selectedLocale.pathPrefix}${href}`;
+  if (typeof href !== "string") {
+    return href;
   }
 
-  return toWithLocale;
+  return normalizeInternalHref(href, selectedLocale?.pathPrefix);
 }
 
 /**

@@ -82,3 +82,56 @@ export const DEFAULT_LOCALE: I18nLocale = Object.freeze({
   ...COUNTRIES.default,
   pathPrefix: "",
 });
+
+function toLocaleCode(locale: { language: string; country: string }) {
+  return `${locale.language}-${locale.country}`.toUpperCase();
+}
+
+export const SUPPORTED_STOREFRONT_LOCALES = Array.from(
+  new Set(
+    Object.values(COUNTRIES).map((locale) => {
+      return toLocaleCode(locale);
+    }),
+  ),
+);
+
+export const STOREFRONT_HREFLANGS = [
+  {
+    hrefLang: toLocaleCode(COUNTRIES.default).toLowerCase(),
+    pathPrefix: "",
+  },
+  ...Object.entries(COUNTRIES)
+    .filter(([prefix]) => prefix !== "default")
+    .map(([prefix, locale]) => {
+      return {
+        hrefLang: toLocaleCode(locale).toLowerCase(),
+        pathPrefix: prefix,
+      };
+    }),
+];
+
+export function normalizePathname(pathname: string) {
+  return pathname.replace(/\/+$/, "") || "/";
+}
+
+export function getLocaleAlternatePath(
+  basePath: string,
+  pathPrefix: string = "",
+) {
+  const normalizedBasePath = normalizePathname(basePath);
+
+  if (!pathPrefix) {
+    return normalizedBasePath;
+  }
+
+  if (
+    normalizedBasePath === pathPrefix ||
+    normalizedBasePath.startsWith(`${pathPrefix}/`)
+  ) {
+    return normalizedBasePath;
+  }
+
+  return normalizedBasePath === "/"
+    ? pathPrefix
+    : `${pathPrefix}${normalizedBasePath}`;
+}

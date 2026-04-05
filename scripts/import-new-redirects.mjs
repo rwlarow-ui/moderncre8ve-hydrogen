@@ -42,6 +42,7 @@ try {
 }
 
 const SHOPIFY_STORE = "moderncre8ve.myshopify.com";
+const STOREFRONT_ORIGIN = "https://moderncre8ve.com";
 const ADMIN_TOKEN = process.env.SHOPIFY_ADMIN_API_TOKEN;
 if (!ADMIN_TOKEN) {
   console.error(
@@ -77,6 +78,17 @@ const NEW_REDIRECTS = [
   {
     from: "/blogs/mid-century-modern-scandi-japandi-design-blog/tagged/japandi-bedroom",
     to: "/blogs/mid-century-modern-scandi-japandi-design-blog",
+  },
+];
+
+const REDIRECT_REPAIRS = [
+  {
+    from: "/products/the-april-v2",
+    to: "/collections/mid-century-modern-coffee-tables",
+  },
+  {
+    from: "/products/copy-of-larchmere-tallboy-mid-century-modern-dresser",
+    to: "/collections/bedroom",
   },
 ];
 
@@ -127,8 +139,51 @@ async function shopifyGraphQL(query, variables = {}) {
   return json.data;
 }
 
+async function validateRedirectTarget(target) {
+  const url = new URL(target, STOREFRONT_ORIGIN);
+
+  const request = async (method) => {
+    return fetch(url, {
+      method,
+      redirect: "manual",
+    });
+  };
+
+  let response = await request("HEAD");
+  if (response.status === 405 || response.status === 501) {
+    response = await request("GET");
+  }
+
+  if (response.status >= 300 && response.status < 400) {
+    const location = response.headers.get("location");
+    return {
+      valid: false,
+      message: `Target resolves to ${response.status}${location ? ` (${location})` : ""}`,
+    };
+  }
+
+  if (response.status !== 200) {
+    return {
+      valid: false,
+      message: `Target resolves to ${response.status}`,
+    };
+  }
+
+  return { valid: true, url: url.toString() };
+}
+
 // Create a single redirect
 async function createRedirect(from, to) {
+  const validation = await validateRedirectTarget(to);
+  if (!validation.valid) {
+    return {
+      success: false,
+      from,
+      to,
+      errors: [{ message: validation.message }],
+    };
+  }
+
   const mutation = `
     mutation urlRedirectCreate($urlRedirect: UrlRedirectInput!) {
       urlRedirectCreate(urlRedirect: $urlRedirect) {
@@ -150,6 +205,45 @@ async function createRedirect(from, to) {
   });
 
   const result = data.urlRedirectCreate;
+  if (result.userErrors.length > 0) {
+    return { success: false, from, to, errors: result.userErrors };
+  }
+  return { success: true, from, to, id: result.urlRedirect.id };
+}
+
+async function updateRedirect(id, from, to) {
+  const validation = await validateRedirectTarget(to);
+  if (!validation.valid) {
+    return {
+      success: false,
+      from,
+      to,
+      errors: [{ message: validation.message }],
+    };
+  }
+
+  const mutation = `
+    mutation urlRedirectUpdate($id: ID!, $urlRedirect: UrlRedirectInput!) {
+      urlRedirectUpdate(id: $id, urlRedirect: $urlRedirect) {
+        urlRedirect {
+          id
+          path
+          target
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
+
+  const data = await shopifyGraphQL(mutation, {
+    id,
+    urlRedirect: { target: to },
+  });
+
+  const result = data.urlRedirectUpdate;
   if (result.userErrors.length > 0) {
     return { success: false, from, to, errors: result.userErrors };
   }
@@ -191,6 +285,19 @@ async function deleteRedirect(id) {
 
   const data = await shopifyGraphQL(mutation, { id });
   return data.urlRedirectDelete;
+}
+
+async function upsertRedirect(from, to) {
+  const existing = await findRedirectByPath(from);
+  if (existing) {
+    if (existing.target === to) {
+      return { success: true, skipped: true, from, to };
+    }
+
+    return updateRedirect(existing.id, from, to);
+  }
+
+  return createRedirect(from, to);
 }
 
 async function testAuth() {
@@ -255,10 +362,13 @@ async function main() {
 
   for (const { from, to } of NEW_REDIRECTS) {
     try {
-      const result = await createRedirect(from, to);
-      if (result.success) {
+      const result = await upsertRedirect(from, to);
+      if (result.success && !result.skipped) {
         console.log(`  ✅ ${from} → ${to}`);
         created++;
+      } else if (result.skipped) {
+        console.log(`  ⏭️  ${from} → already correct`);
+        skipped++;
       } else {
         const msg = result.errors.map((e) => e.message).join(", ");
         if (msg.includes("already exists")) {
@@ -282,8 +392,41 @@ async function main() {
     `\nPhase 1 complete: ${created} created, ${skipped} skipped, ${failed} failed\n`,
   );
 
-  // --- Phase 2: Fix 4 blog article redirects (blanket → 1:1) ---
-  console.log("--- Phase 2: Fixing 4 blog article redirects ---\n");
+  // --- Phase 2: Repair broken product redirects ---
+  console.log("--- Phase 2: Repairing broken product redirects ---\n");
+
+  let repaired = 0;
+  let repairSkipped = 0;
+  let repairFailed = 0;
+
+  for (const { from, to } of REDIRECT_REPAIRS) {
+    try {
+      const result = await upsertRedirect(from, to);
+      if (result.success && !result.skipped) {
+        console.log(`  ✅ ${from} → ${to}`);
+        repaired++;
+      } else if (result.skipped) {
+        console.log(`  ⏭️  ${from} → already correct`);
+        repairSkipped++;
+      } else {
+        const msg = result.errors.map((e) => e.message).join(", ");
+        console.log(`  ❌ ${from} → FAILED: ${msg}`);
+        repairFailed++;
+      }
+    } catch (err) {
+      console.log(`  ❌ ${from} → ERROR: ${err.message}`);
+      repairFailed++;
+    }
+
+    await new Promise((r) => setTimeout(r, 300));
+  }
+
+  console.log(
+    `\nPhase 2 complete: ${repaired} repaired, ${repairSkipped} skipped, ${repairFailed} failed\n`,
+  );
+
+  // --- Phase 3: Fix 4 blog article redirects (blanket → 1:1) ---
+  console.log("--- Phase 3: Fixing 4 blog article redirects ---\n");
 
   let fixed = 0;
   let blogSkipped = 0;
@@ -327,13 +470,16 @@ async function main() {
   }
 
   console.log(
-    `\nPhase 2 complete: ${fixed} fixed, ${blogSkipped} already correct, ${blogFailed} failed\n`,
+    `\nPhase 3 complete: ${fixed} fixed, ${blogSkipped} already correct, ${blogFailed} failed\n`,
   );
 
   // --- Summary ---
   console.log("=== SUMMARY ===");
   console.log(
     `New redirects:   ${created} created, ${skipped} skipped, ${failed} failed`,
+  );
+  console.log(
+    `Repairs:         ${repaired} repaired, ${repairSkipped} skipped, ${repairFailed} failed`,
   );
   console.log(
     `Blog fixes:      ${fixed} fixed, ${blogSkipped} already correct, ${blogFailed} failed`,
