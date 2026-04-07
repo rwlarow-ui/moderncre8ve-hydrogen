@@ -23,6 +23,36 @@
 - [ ] Assign hero/slide background images from Shopify media library
 - [ ] Apply brand color palette to Weaverse theme settings
 
+## SEO Health (from 2026-04-07 scan)
+
+### High-Impact CTR Fixes (rewrite title tags + meta descriptions)
+
+- [ ] Product: Scandinavian Danish Modern Dining Table — 0% CTR at pos 10, 2,206 impressions
+- [ ] Collection: Mid-Century Modern Dining Tables — 0.2% CTR at pos 19, 2,571 impressions
+- [ ] Product: Mid-Century Modern Walnut Nightstand — 0% CTR at pos 25, 1,670 impressions
+- [ ] Product: Santa Monica MCM Dining Table — 0% CTR at pos 18, 1,358 impressions
+- [ ] Collection: Scandinavian Design Furniture — 0.1% CTR at pos 28, 854 impressions
+- [ ] Product: Van Aiken Boho Bed Frame — 0% CTR at pos 10, 294 impressions
+
+### Striking Distance Content (optimize + add internal links to push to page 1)
+
+- [ ] Blog: "Best Scandinavian Furniture Online" — pos 15, 2,286 imp, query: "scandinavian furniture"
+- [ ] Blog: "Scandi Modern Furniture Style Differences" — pos 11, 1,347 imp, query: "mid century modern vs scandinavian"
+- [ ] Product: Scandinavian Danish Dining Table — pos 10, 2,206 imp, query: "aesthetic dining table"
+- [ ] Collection: Japandi Scandi MCM Furniture — pos 10, 222 imp, query: "japandi mcm"
+
+### Technical SEO Fixes
+
+- [ ] Add Twitter card meta tags in `app/utils/seo.server.ts`
+- [ ] Fix product slug: `capri-modern-dining-table-set_` (trailing underscore)
+- [ ] Fix product slug: `copy-of-santa-monica-bench-modern-walnut-bench` ("copy-of" prefix)
+- [ ] Fix product slug: `van-aiken-boho-bed-fram` (typo — missing "e" in "frame") + set up redirect
+- [ ] Consolidate duplicate pages: `about-us-1` → redirect to `about-us`
+- [ ] Consolidate duplicate pages: pick one contact page, redirect the other
+- [ ] Expand homepage meta description from 126 to ~155 chars
+- [ ] Audit all product images for missing alt text
+- [ ] Re-run SEO truth layer pipeline (last report: 2026-03-11, nearly a month stale)
+
 ## SEO Truth Layer
 
 Repo: [moderncre8ve-seo-truth-layer](https://github.com/rwlarow-ui/moderncre8ve-seo-truth-layer)
