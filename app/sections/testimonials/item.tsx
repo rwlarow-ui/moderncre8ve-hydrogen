@@ -15,6 +15,7 @@ import { QuickShop } from "~/components/product/quick-shop";
 import { ScrollArea } from "~/components/scroll-area";
 import { PRODUCT_QUERY } from "~/graphql/queries";
 import { usePrefixPathWithLocale } from "~/hooks/use-prefix-path-with-locale";
+import { useWeaverseStudioCheck } from "~/hooks/use-weaverse-studio-check";
 import { ProductPopup } from "./product-popup";
 
 export interface TestimonialHotspotsItemData {
@@ -56,17 +57,28 @@ let TestimonialHotspotsItem = forwardRef<
     loaderData,
     ...rest
   } = props;
+  const isDesignMode = useWeaverseStudioCheck();
+  const resolvedProduct = loaderData?.product ?? null;
+  const hasResolvedProduct = Boolean(product?.handle && resolvedProduct?.handle);
+  const productHandle = resolvedProduct?.handle ?? product?.handle ?? "";
+
+  if (!hasResolvedProduct && !isDesignMode) {
+    return null;
+  }
+
   let Icon = ICONS[icon];
 
   // Quick shop state for mobile
   const [showQuickShop, setShowQuickShop] = useState(false);
   const { load, data: quickShopData, state } = useFetcher();
-  const apiPath = usePrefixPathWithLocale(
-    `/api/product?handle=${product?.handle}`,
-  );
+  const apiPath = usePrefixPathWithLocale(`/api/product?handle=${productHandle}`);
 
   // Handle click - open quick shop on mobile, popup on desktop
   const handleClick = () => {
+    if (!hasResolvedProduct) {
+      return;
+    }
+
     if (window.innerWidth < 768) {
       // Mobile breakpoint
       // On mobile, open QuickShop
@@ -115,22 +127,27 @@ let TestimonialHotspotsItem = forwardRef<
           >
             <Icon style={{ width: iconSize, height: iconSize }} />
             {/* Desktop popup */}
-            <div className="hidden md:block">
-              <ProductPopup
-                product={loaderData?.product}
-                offsetX={offsetX}
-                offsetY={offsetY}
-                showPrice={showPrice}
-                showViewDetailsLink={showViewDetailsLink}
-                viewDetailsLinkText={viewDetailsLinkText}
-              />
-            </div>
+            {hasResolvedProduct ? (
+              <div className="hidden md:block">
+                <ProductPopup
+                  product={resolvedProduct}
+                  offsetX={offsetX}
+                  offsetY={offsetY}
+                  showPrice={showPrice}
+                  showViewDetailsLink={showViewDetailsLink}
+                  viewDetailsLinkText={viewDetailsLinkText}
+                />
+              </div>
+            ) : null}
           </span>
         </div>
       </div>
 
       {/* Mobile Quick Shop */}
-      <Dialog.Root open={showQuickShop} onOpenChange={setShowQuickShop}>
+      <Dialog.Root
+        open={hasResolvedProduct ? showQuickShop : false}
+        onOpenChange={setShowQuickShop}
+      >
         <Dialog.Portal>
           <Dialog.Overlay
             className="fixed inset-0 z-10 bg-black/50 data-[state=open]:animate-fade-in"
@@ -192,20 +209,26 @@ export let loader = async (
 ) => {
   let { weaverse, data } = args;
   let { storefront } = weaverse;
-  if (!data?.product) {
+  if (!data?.product?.handle || data.product.handle === "#") {
     return null;
   }
-  let productHandle = data.product.handle;
-  let { product } = await storefront.query<ProductQuery>(PRODUCT_QUERY, {
-    variables: {
-      handle: productHandle,
-      selectedOptions: [],
-      language: storefront.i18n.language,
-      country: storefront.i18n.country,
-    },
-  });
 
-  return { product };
+  try {
+    let productHandle = data.product.handle;
+    let { product } = await storefront.query<ProductQuery>(PRODUCT_QUERY, {
+      variables: {
+        handle: productHandle,
+        selectedOptions: [],
+        language: storefront.i18n.language,
+        country: storefront.i18n.country,
+      },
+    });
+
+    return product ? { product } : null;
+  } catch (error) {
+    console.error("Error loading testimonial hotspots product data:", error);
+    return null;
+  }
 };
 
 export const schema = createSchema({

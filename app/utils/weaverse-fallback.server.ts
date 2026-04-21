@@ -36,6 +36,15 @@ const JSON_LOADERS: Record<string, () => Promise<{ default: any }>> = {
   COLLECTION: () => import("../../weaverse-pages/default-collection.json"),
 };
 
+const PREFER_LOCAL_PAGE_KEYS = new Set(
+  Object.keys(JSON_LOADERS).filter((key) => key.startsWith("PAGE:")),
+);
+
+const HOMEPAGE_LINK_PATCHES: Record<string, string> = {
+  "/faq/about-us-1": "/pages/about-us",
+  "/pages/about-us-1": "/pages/about-us",
+};
+
 function getLookupKey(type?: PageType, handle?: string): string {
   if (type === "PAGE" && handle) return `PAGE:${handle}`;
   return type ?? "INDEX";
@@ -55,28 +64,42 @@ export async function loadPageWithFallback(
   const result = await weaverse.loadPage(params);
   const isDesignMode =
     result?.configs?.requestInfo?.queries?.isDesignMode;
+  const key = getLookupKey(params?.type, params?.handle);
+  const shouldPreferLocalPageFallback =
+    !isDesignMode &&
+    params?.type === "PAGE" &&
+    PREFER_LOCAL_PAGE_KEYS.has(key);
 
-  // If Studio returned a real (non-fallback) page, apply SEO patches then use it
+  // For mapped content pages, prefer the repo fallback on the published site.
+  // This keeps known-good curated JSON authoritative when Studio assignments drift.
+  if (shouldPreferLocalPageFallback) {
+    return buildLocalFallbackResponse(weaverse, key, result);
+  }
+
+  // If Studio returned a real (non-fallback) page, apply runtime patches then use it.
   if (result?.page?.id && !result.page.id.includes("fallback")) {
-    const key = getLookupKey(params?.type, params?.handle);
     if (key === "INDEX" && result.page?.items && !isDesignMode) {
       result.page.items = patchHomepageItems(result.page.items);
     }
     return result;
   }
 
-  // Fall back to local JSON only when Studio has no page configured
-  const key = getLookupKey(params?.type, params?.handle);
+  return buildLocalFallbackResponse(weaverse, key, result);
+}
+
+async function buildLocalFallbackResponse(
+  weaverse: WeaverseClient,
+  key: string,
+  result: WeaverseLoaderData | null,
+): Promise<WeaverseLoaderData | null> {
   const loader = JSON_LOADERS[key];
   if (!loader) {
-    // No local JSON for this route — return the original result
     return result;
   }
 
   const json = await loader();
   const pageJson = json.default ?? json;
 
-  // Build a HydrogenPageData from the local JSON
   const page: HydrogenPageData = {
     id: `local_${key.replace(/[^a-zA-Z0-9]/g, "_")}`,
     name: key,
@@ -84,17 +107,13 @@ export async function loadPageWithFallback(
     rootId: pageJson.rootId,
   };
 
-  // Run component loaders (for sections that fetch data, e.g. featured-products)
   const itemsWithData = await Promise.all(
     page.items.map((item: HydrogenComponentData) =>
       weaverse.execComponentLoader(item),
     ),
   );
-  page.items = itemsWithData;
+  page.items = key === "INDEX" ? patchHomepageItems(itemsWithData) : itemsWithData;
 
-  // Build configs — prefer the API result but fall back to the client's own
-  // basePageConfigs so that projectId, weaverseHost, and requestInfo are always
-  // present.  Without a valid projectId the SDK's WeaverseRoot renders nothing.
   const configs =
     result?.configs ??
     ({
@@ -173,6 +192,17 @@ function patchHomepageItems(
         };
       }
     }
+
+    if (typeof item.data?.to === "string") {
+      const patchedTo = HOMEPAGE_LINK_PATCHES[item.data.to];
+      if (patchedTo) {
+        return {
+          ...item,
+          data: { ...item.data, to: patchedTo },
+        };
+      }
+    }
+
     return item;
   });
 }

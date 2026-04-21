@@ -1,7 +1,6 @@
 import { ShoppingBagIcon } from "@phosphor-icons/react";
 import { Money } from "@shopify/hydrogen";
 import type { MediaImage } from "@shopify/hydrogen/storefront-api-types";
-import { IMAGES_PLACEHOLDERS } from "@weaverse/hydrogen";
 import clsx from "clsx";
 import type { CSSProperties } from "react";
 import { useState } from "react";
@@ -19,54 +18,8 @@ import type { TestimonialHotspotsItemData } from "./item";
 
 interface ProductPopupProps
   extends Omit<TestimonialHotspotsItemData, "icon" | "iconSize" | "product"> {
-  product: ProductQuery["product"];
+  product?: ProductQuery["product"] | null;
 }
-
-const PRODUCT_PLACEHOLDER: Partial<ProductQuery["product"]> = {
-  id: "gid://shopify/Product/123",
-  title: "Example Product Title",
-  handle: "#",
-  media: {
-    nodes: [
-      {
-        id: "1",
-        __typename: "MediaImage",
-        mediaContentType: "IMAGE",
-        image: {
-          id: "1",
-          url: IMAGES_PLACEHOLDERS.product_4,
-          width: 500,
-          height: 500,
-        },
-      },
-    ],
-  },
-  // @ts-expect-error
-  variants: {
-    nodes: [
-      {
-        id: "1",
-        availableForSale: true,
-        quantityAvailable: 0,
-        selectedOptions: [],
-        price: {
-          amount: "99.0",
-          currencyCode: "USD",
-        },
-        compareAtPrice: {
-          amount: "129.0",
-          currencyCode: "USD",
-        },
-        title: "Default Title",
-        unitPrice: null,
-        product: {
-          title: "Example Product",
-          handle: "#",
-        },
-      },
-    ],
-  },
-};
 
 function ProductColorOptions({
   product,
@@ -145,15 +98,14 @@ function ProductColorOptions({
 }
 
 export function ProductPopup({
-  // @ts-expect-error
-  product = PRODUCT_PLACEHOLDER,
+  product,
   offsetX,
   offsetY,
   showPrice,
   showViewDetailsLink,
   viewDetailsLinkText,
 }: ProductPopupProps) {
-  if (!product) {
+  if (!product?.handle) {
     return null;
   }
 

@@ -3,7 +3,6 @@ import {
   type ComponentLoaderArgs,
   createSchema,
   type HydrogenComponentProps,
-  IMAGES_PLACEHOLDERS,
   type WeaverseCollection,
 } from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
@@ -13,6 +12,7 @@ import { forwardRef, useEffect, useMemo, useState } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ProductCard } from "~/components/product/product-card";
+import { useWeaverseStudioCheck } from "~/hooks/use-weaverse-studio-check";
 import "swiper/css";
 import "swiper/css/navigation";
 import Link from "~/components/link";
@@ -118,6 +118,7 @@ const ProductItems = forwardRef<HTMLDivElement, ProductItemsProps>(
     const [isBeginning, setIsBeginning] = useState(true);
     const [isEnd, setIsEnd] = useState(false);
     const [isSwiperInitialized, setIsSwiperInitialized] = useState(false);
+    const isDesignMode = useWeaverseStudioCheck();
 
     useEffect(() => {
       setIsSwiperInitialized(false);
@@ -132,18 +133,23 @@ const ProductItems = forwardRef<HTMLDivElement, ProductItemsProps>(
       }
     }, [isSwiperInitialized]);
 
-    let productsConnection = loaderData?.products ?? [];
+    const productsConnection = loaderData?.products ?? [];
 
-    // Show placeholders if no products available
     if (!productsConnection.length) {
-      const placeholderCount =
-        layout === "grid" ? Number(itemsPerRow) : slidesPerView;
-      productsConnection = new Array(placeholderCount)
-        .fill(null)
-        .map((_, index) => ({
-          ...PRODUCT_PLACEHOLDER,
-          id: `placeholder-${index}`,
-        }));
+      if (!isDesignMode) {
+        return null;
+      }
+
+      return (
+        <div
+          ref={ref}
+          {...rest}
+          className="rounded-lg border border-dashed border-gray-300 bg-gray-50 px-4 py-8 text-center text-sm text-gray-600"
+        >
+          Assign a collection with real products to preview this featured
+          products block.
+        </div>
+      );
     }
 
     const totalProducts = loaderData?.products?.length ?? 0;
@@ -355,79 +361,6 @@ const ProductItems = forwardRef<HTMLDivElement, ProductItemsProps>(
     );
   },
 );
-
-const PRODUCT_PLACEHOLDER = {
-  id: "gid://shopify/Product/placeholder",
-  title: "Product Title",
-  handle: "product-placeholder",
-  vendor: "Vendor",
-  featuredImage: {
-    id: "gid://shopify/ProductImage/placeholder",
-    url: IMAGES_PLACEHOLDERS.product_1,
-    altText: "Product placeholder",
-    width: 1000,
-    height: 1000,
-  },
-  images: {
-    nodes: [
-      {
-        id: "gid://shopify/ProductImage/placeholder",
-        url: IMAGES_PLACEHOLDERS.product_1,
-        altText: "Product placeholder",
-        width: 1000,
-        height: 1000,
-      },
-    ],
-  },
-  badges: [],
-  publishedAt: new Date().toISOString(),
-  options: [],
-  priceRange: {
-    minVariantPrice: {
-      amount: "0.00",
-      currencyCode: "USD",
-    },
-    maxVariantPrice: {
-      amount: "0.00",
-      currencyCode: "USD",
-    },
-  },
-  compareAtPriceRange: {
-    minVariantPrice: {
-      amount: "0.00",
-      currencyCode: "USD",
-    },
-    maxVariantPrice: {
-      amount: "0.00",
-      currencyCode: "USD",
-    },
-  },
-  variants: {
-    nodes: [],
-  },
-  selectedOrFirstAvailableVariant: {
-    id: "gid://shopify/ProductVariant/placeholder",
-    title: "Default",
-    availableForSale: true,
-    selectedOptions: [],
-    image: {
-      id: "gid://shopify/ProductImage/placeholder",
-      url: IMAGES_PLACEHOLDERS.product_1,
-      altText: "Product placeholder",
-      width: 1000,
-      height: 1000,
-    },
-    price: {
-      amount: "0.00",
-      currencyCode: "USD",
-    },
-    compareAtPrice: null,
-    product: {
-      title: "Product Title",
-      handle: "product-placeholder",
-    },
-  },
-};
 
 export default ProductItems;
 

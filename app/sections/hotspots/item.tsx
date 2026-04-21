@@ -15,6 +15,7 @@ import { QuickShop } from "~/components/product/quick-shop";
 import { ScrollArea } from "~/components/scroll-area";
 import { PRODUCT_QUERY } from "~/graphql/queries";
 import { usePrefixPathWithLocale } from "~/hooks/use-prefix-path-with-locale";
+import { useWeaverseStudioCheck } from "~/hooks/use-weaverse-studio-check";
 import { ProductPopup } from "./product-popup";
 
 export interface HotspotsItemData {
@@ -66,15 +67,26 @@ const HotspotsItem = forwardRef<HTMLDivElement, HotspotsItemProps>(
       loaderData,
       ...rest
     } = props;
+    const isDesignMode = useWeaverseStudioCheck();
+    const resolvedProduct = loaderData?.product ?? null;
+    const hasResolvedProduct = Boolean(product?.handle && resolvedProduct?.handle);
+    const productHandle = resolvedProduct?.handle ?? product?.handle ?? "";
+
+    if (!hasResolvedProduct && !isDesignMode) {
+      return null;
+    }
+
     const Icon = ICONS[icon];
     const [showQuickShop, setShowQuickShop] = useState(false);
     const { load, data: quickShopData, state } = useFetcher();
-    const apiPath = usePrefixPathWithLocale(
-      `/api/product?handle=${product?.handle}`,
-    );
+    const apiPath = usePrefixPathWithLocale(`/api/product?handle=${productHandle}`);
 
     // Handle click - open quick shop on mobile and tablet, popup on desktop
     const handleClick = () => {
+      if (!hasResolvedProduct) {
+        return;
+      }
+
       if (window.innerWidth < 1024) {
         // Mobile and tablet breakpoint
         // On mobile and tablet, open QuickShop
@@ -126,22 +138,27 @@ const HotspotsItem = forwardRef<HTMLDivElement, HotspotsItemProps>(
             >
               <Icon style={{ width: iconSize, height: iconSize }} />
               {/* Desktop popup - only on actual desktop screens (1024px+) */}
-              <div className="hidden lg:block">
-                <ProductPopup
-                  product={loaderData?.product}
-                  offsetX={offsetX}
-                  offsetY={offsetY}
-                  showPrice={showPrice}
-                  showViewDetailsLink={showViewDetailsLink}
-                  viewDetailsLinkText={viewDetailsLinkText}
-                />
-              </div>
+              {hasResolvedProduct ? (
+                <div className="hidden lg:block">
+                  <ProductPopup
+                    product={resolvedProduct}
+                    offsetX={offsetX}
+                    offsetY={offsetY}
+                    showPrice={showPrice}
+                    showViewDetailsLink={showViewDetailsLink}
+                    viewDetailsLinkText={viewDetailsLinkText}
+                  />
+                </div>
+              ) : null}
             </span>
           </div>
         </div>
 
         {/* Mobile Quick Shop */}
-        <Dialog.Root open={showQuickShop} onOpenChange={setShowQuickShop}>
+        <Dialog.Root
+          open={hasResolvedProduct ? showQuickShop : false}
+          onOpenChange={setShowQuickShop}
+        >
           <Dialog.Portal>
             <Dialog.Overlay
               className={clsx(
@@ -206,7 +223,7 @@ export default HotspotsItem;
 export const loader = async (args: ComponentLoaderArgs<HotspotsItemData>) => {
   const { weaverse, data } = args;
   const { storefront } = weaverse;
-  if (!data?.product) {
+  if (!data?.product?.handle || data.product.handle === "#") {
     return null;
   }
 
@@ -221,7 +238,7 @@ export const loader = async (args: ComponentLoaderArgs<HotspotsItemData>) => {
       },
     });
 
-    return { product };
+    return product ? { product } : null;
   } catch (error) {
     console.error("Error loading hotspots product data:", error);
     return null;
