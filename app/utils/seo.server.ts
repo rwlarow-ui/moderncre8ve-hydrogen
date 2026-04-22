@@ -298,6 +298,26 @@ function product({
     productData?.seo?.description ?? productData?.description ?? "",
   );
   const selectedVariant = productData?.selectedOrFirstAvailableVariant;
+  // Prefer the selected variant's image (has width/height in the fragment),
+  // fall back to featuredImage (url/altText only) so og:image is populated
+  // even when variants share a single asset.
+  const variantImage = selectedVariant?.image;
+  const featured = productData?.featuredImage;
+  const seoMedia: SeoConfig["media"] = variantImage?.url
+    ? {
+        type: "image",
+        url: variantImage.url,
+        height: variantImage.height,
+        width: variantImage.width,
+        altText: variantImage.altText ?? productData?.title ?? "",
+      }
+    : featured?.url
+      ? {
+          type: "image",
+          url: featured.url,
+          altText: featured.altText ?? productData?.title ?? "",
+        }
+      : undefined;
   return {
     title: truncateTitle(
       stripBrandSuffix(productData?.seo?.title) || productData?.title || "",
@@ -305,7 +325,7 @@ function product({
     description,
     handle: "@moderncre8ve",
     url,
-    media: selectedVariant?.image,
+    media: seoMedia,
     jsonLd: productJsonLd({ product: productData, selectedVariant, url }),
   };
 }

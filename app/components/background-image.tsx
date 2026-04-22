@@ -34,20 +34,31 @@ export type BackgroundImageProps = VariantProps<typeof variants> & {
 
 export function BackgroundImage(props: BackgroundImageProps) {
   const { backgroundImage, backgroundFit, backgroundPosition } = props;
-  if (backgroundImage) {
-    const data =
-      typeof backgroundImage === "string"
-        ? { url: backgroundImage, altText: "Section background" }
-        : backgroundImage;
-    return (
-      <Image
-        className={variants({ backgroundFit, backgroundPosition })}
-        data={data}
-        sizes="auto"
-      />
-    );
+  if (!backgroundImage) return null;
+
+  // Reject empty / whitespace strings — those produce a broken <img> whose
+  // visible alt text leaks into the layout (see v1.x audit — FAQ/Trade).
+  if (typeof backgroundImage === "string" && backgroundImage.trim() === "") {
+    return null;
   }
-  return null;
+
+  const data =
+    typeof backgroundImage === "string"
+      ? // Decorative background — empty alt is correct per WCAG (role="none").
+        { url: backgroundImage, altText: "" }
+      : backgroundImage;
+
+  // If we received a structured image object but it has no url, bail out
+  // rather than rendering a broken <img>.
+  if (!data?.url) return null;
+
+  return (
+    <Image
+      className={variants({ backgroundFit, backgroundPosition })}
+      data={data}
+      sizes="auto"
+    />
+  );
 }
 
 export const backgroundInputs: InspectorGroup["inputs"] = [
