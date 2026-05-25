@@ -14,6 +14,7 @@ import type { PageType } from "@weaverse/schema";
 const JSON_LOADERS: Record<string, () => Promise<{ default: any }>> = {
   INDEX: () => import("../../weaverse-pages/homepage.json"),
   "PAGE:about-us": () => import("../../weaverse-pages/about-us.json"),
+  "PAGE:about-us-1": () => import("../../weaverse-pages/about-us.json"),
   "PAGE:contact-us": () => import("../../weaverse-pages/contact.json"),
   "PAGE:contact-and-inquiry": () => import("../../weaverse-pages/contact.json"),
   "PAGE:faq": () => import("../../weaverse-pages/faq.json"),
@@ -36,6 +37,21 @@ const JSON_LOADERS: Record<string, () => Promise<{ default: any }>> = {
   COLLECTION: () => import("../../weaverse-pages/default-collection.json"),
 };
 
+const SHOPIFY_PAGE_FALLBACK_HANDLES = new Set([
+  "cleveland-workshop-showroom",
+  "legal",
+  "my-personal-data",
+  "privacy-policy",
+  "request-personal-data",
+  "terms-of-service",
+  "wrong-turn",
+]);
+
+const PREFER_LOCAL_PAGE_KEYS = new Set([
+  ...Object.keys(JSON_LOADERS).filter((key) => key.startsWith("PAGE:")),
+  ...[...SHOPIFY_PAGE_FALLBACK_HANDLES].map((handle) => `PAGE:${handle}`),
+]);
+
 function getLookupKey(type?: PageType, handle?: string): string {
   if (type === "PAGE" && handle) return `PAGE:${handle}`;
   return type ?? "INDEX";
@@ -46,7 +62,9 @@ function getLookupKey(type?: PageType, handle?: string): string {
  *
  * When Weaverse Studio has no page configured (the returned page id
  * contains "fallback"), we substitute a locally-authored JSON file.
- * Studio pages always take priority. Design/preview mode is unaffected.
+ * Known page handles also prefer repo-authored content on the published site
+ * so drifted Studio assignments cannot serve the wrong page. Design/preview
+ * mode is unaffected.
  */
 export async function loadPageWithFallback(
   weaverse: WeaverseClient,
@@ -55,10 +73,20 @@ export async function loadPageWithFallback(
   const result = await weaverse.loadPage(params);
   const isDesignMode =
     result?.configs?.requestInfo?.queries?.isDesignMode;
+  const key = getLookupKey(params?.type, params?.handle);
+  const shouldPreferLocalPageFallback =
+    !isDesignMode &&
+    params?.type === "PAGE" &&
+    PREFER_LOCAL_PAGE_KEYS.has(key);
+
+  // Known page handles use repo-authored fallbacks on the published site.
+  // This prevents stale Studio assignments from rendering contact content.
+  if (shouldPreferLocalPageFallback) {
+    return buildLocalFallbackResponse(weaverse, key, result);
+  }
 
   // If Studio returned a real (non-fallback) page, apply SEO patches then use it
   if (result?.page?.id && !result.page.id.includes("fallback")) {
-    const key = getLookupKey(params?.type, params?.handle);
     if (key === "INDEX" && result.page?.items && !isDesignMode) {
       result.page.items = patchHomepageItems(result.page.items);
     }
@@ -66,15 +94,24 @@ export async function loadPageWithFallback(
   }
 
   // Fall back to local JSON only when Studio has no page configured
-  const key = getLookupKey(params?.type, params?.handle);
+  return buildLocalFallbackResponse(weaverse, key, result);
+}
+
+async function buildLocalFallbackResponse(
+  weaverse: WeaverseClient,
+  key: string,
+  result: WeaverseLoaderData | null,
+): Promise<WeaverseLoaderData | null> {
   const loader = JSON_LOADERS[key];
-  if (!loader) {
+  const json = loader ? await loader() : null;
+  const pageJson = json
+    ? (json.default ?? json)
+    : getShopifyPageFallbackJson(key);
+
+  if (!pageJson) {
     // No local JSON for this route — return the original result
     return result;
   }
-
-  const json = await loader();
-  const pageJson = json.default ?? json;
 
   // Build a HydrogenPageData from the local JSON
   const page: HydrogenPageData = {
@@ -118,6 +155,33 @@ export async function loadPageWithFallback(
         weaverseShopId: "",
       } as any),
     pageAssignment: result?.pageAssignment,
+  };
+}
+
+function getShopifyPageFallbackJson(key: string) {
+  const pageHandle = key.startsWith("PAGE:") ? key.slice("PAGE:".length) : "";
+  if (!SHOPIFY_PAGE_FALLBACK_HANDLES.has(pageHandle)) {
+    return null;
+  }
+
+  const idPrefix = `shopify-page-${pageHandle.replace(/[^a-zA-Z0-9]/g, "-")}`;
+  return {
+    rootId: `${idPrefix}-root`,
+    items: [
+      {
+        id: `${idPrefix}-root`,
+        type: "main",
+        children: [{ id: `${idPrefix}-body` }],
+      },
+      {
+        id: `${idPrefix}-body`,
+        type: "page",
+        data: {
+          verticalPadding: "large",
+          width: "fixed",
+        },
+      },
+    ],
   };
 }
 

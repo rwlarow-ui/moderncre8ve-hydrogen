@@ -6,25 +6,46 @@ The merge creates a single source of truth: for every page,
 you see both its search performance AND its revenue performance.
 """
 
+from __future__ import annotations
+
 import os
 import pandas as pd
-from .transform import normalize_gsc, normalize_ga4
+from .transform import classify_page, extract_handle, normalize_gsc, normalize_ga4
 
 
-def merge_truth(gsc_df: pd.DataFrame, ga4_df: pd.DataFrame) -> pd.DataFrame:
+def _normalize_bing(df: pd.DataFrame) -> pd.DataFrame:
+    """Return Bing page-level rows with normalized page_path, page_type, handle."""
+    if df is None or df.empty:
+        return pd.DataFrame()
+    if "scope" in df.columns:
+        df = df[df["scope"] == "page"].copy()
+    else:
+        df = df.copy()
+    if df.empty:
+        return df
+    df["page_path"] = df["page_path"].str.rstrip("/").replace("", "/")
+    df["page_type"] = df["page_path"].apply(classify_page)
+    df["handle"] = df["page_path"].apply(extract_handle)
+    return df
+
+
+def merge_truth(
+    gsc_df: pd.DataFrame,
+    ga4_df: pd.DataFrame,
+    bing_df: pd.DataFrame | None = None,
+) -> pd.DataFrame:
     """
-    Merge GSC (query-level) with GA4 (page-level) data.
+    Merge GSC (query-level) with GA4 (page-level) data, plus optional Bing.
 
     Strategy:
     1. Aggregate GSC to page_path level (total clicks/impressions, avg position)
     2. Left join with GA4 on page_path
-    3. Compute derived metrics (revenue per click, etc.)
-
-    Returns:
-        Merged DataFrame with ranking + revenue fields per page
+    3. Left join Bing page-level metrics with bing_ prefix
+    4. Compute derived metrics (revenue per click, etc.)
     """
     gsc = normalize_gsc(gsc_df)
     ga4 = normalize_ga4(ga4_df)
+    bing = _normalize_bing(bing_df)
 
     if gsc.empty:
         print("[MERGE] Warning: GSC data is empty")
@@ -65,6 +86,33 @@ def merge_truth(gsc_df: pd.DataFrame, ga4_df: pd.DataFrame) -> pd.DataFrame:
             "avg_session_duration": 0, "purchase_revenue": 0,
             "transactions": 0, "new_users": 0,
         })
+
+    # --- Bing (optional) ---
+    if not bing.empty:
+        bing_slim = bing[["page_path", "clicks", "impressions", "position", "ctr"]].rename(
+            columns={
+                "clicks": "bing_clicks",
+                "impressions": "bing_impressions",
+                "position": "bing_position",
+                "ctr": "bing_ctr",
+            }
+        )
+        bing_slim = bing_slim.groupby("page_path", as_index=False).agg({
+            "bing_clicks": "sum",
+            "bing_impressions": "sum",
+            "bing_position": "mean",
+            "bing_ctr": "mean",
+        })
+        merged = merged.merge(bing_slim, on="page_path", how="left")
+    else:
+        merged["bing_clicks"] = 0
+        merged["bing_impressions"] = 0
+        merged["bing_position"] = 0.0
+        merged["bing_ctr"] = 0.0
+    merged = merged.fillna({
+        "bing_clicks": 0, "bing_impressions": 0,
+        "bing_position": 0.0, "bing_ctr": 0.0,
+    })
 
     # --- Derived metrics ---
     merged["revenue_per_click"] = (

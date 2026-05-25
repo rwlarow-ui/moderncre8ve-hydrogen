@@ -1,4 +1,5 @@
 import type { SeoConfig } from "@shopify/hydrogen";
+import { redirect } from "@shopify/remix-oxygen";
 import type { RouteLoaderArgs } from "@weaverse/hydrogen";
 import type { MetaFunction } from "react-router";
 import type { PageDetailsQuery } from "storefront-api.generated";
@@ -13,8 +14,23 @@ import { validateWeaverseData, WeaverseContent } from "~/weaverse";
 
 export const headers = routeHeaders;
 
+const PAGE_REDIRECTS: Record<string, string> = {
+  "about-us-1": "/pages/about-us",
+  "custom-kitchen-cabinets-cleveland":
+    "/pages/custom-furniture-crafted-to-perfection",
+};
+
 export async function loader({ request, params, context }: RouteLoaderArgs) {
   invariant(params.pageHandle, "Missing page handle");
+
+  const redirectTo = PAGE_REDIRECTS[params.pageHandle];
+  if (redirectTo) {
+    const url = new URL(request.url);
+    const localePrefix = params.locale ? `/${params.locale}` : "";
+    url.pathname = `${localePrefix}${redirectTo}`;
+    throw redirect(url.toString(), 301);
+  }
+
   const { storefront } = context.weaverse;
 
   // Load page data and weaverseData in parallel

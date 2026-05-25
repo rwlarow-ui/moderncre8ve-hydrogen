@@ -35,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check page fallback integrity
+        run: npm run check:page-fallbacks
+
       - name: Build and Publish to Oxygen
         run: npx shopify hydrogen deploy
         env:

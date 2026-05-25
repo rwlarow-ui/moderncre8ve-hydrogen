@@ -1,8 +1,8 @@
-name: "SEO Truth Layer — Weekly Pipeline"
+name: "SEO Truth Layer — Daily Pipeline"
 
 on:
   schedule:
-    - cron: "0 14 */2 * *"  # Every 2 days at 2pm UTC
+    - cron: "0 14 * * *"  # Every day at 2pm UTC (9am CT)
   workflow_dispatch:
 
 permissions:
@@ -11,6 +11,9 @@ permissions:
 jobs:
   seo-pipeline:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: seo-truth-layer
 
     steps:
       - uses: actions/checkout@v4
@@ -41,6 +44,7 @@ jobs:
         run: python -m src.send_email rob@moderncre8ve.com
 
       - name: Commit snapshots back to repo
+        working-directory: ${{ github.workspace }}
         # history.db + refreshed CSVs must persist for WoW deltas to work.
         run: |
           git config user.name "github-actions[bot]"
@@ -59,5 +63,5 @@ jobs:
         with:
           name: seo-reports
           path: |
-            data/
-            reports/
+            seo-truth-layer/data/
+            seo-truth-layer/reports/
