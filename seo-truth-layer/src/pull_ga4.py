@@ -13,12 +13,26 @@ from google.analytics.data_v1beta import BetaAnalyticsDataClient
 from google.analytics.data_v1beta.types import (
     DateRange,
     Dimension,
+    Filter,
+    FilterExpression,
     Metric,
     RunReportRequest,
 )
 
 
 SCOPES = ["https://www.googleapis.com/auth/analytics.readonly"]
+
+AI_REFERRER_HOSTS = [
+    "chatgpt.com",
+    "chat.openai.com",
+    "perplexity.ai",
+    "www.perplexity.ai",
+    "copilot.microsoft.com",
+    "gemini.google.com",
+    "claude.ai",
+    "you.com",
+    "phind.com",
+]
 
 
 def get_credentials():
@@ -124,6 +138,84 @@ def save_ga4(df: pd.DataFrame, output_path: str = "data/ga4_raw.csv"):
     print(f"[GA4] Saved to {output_path}")
 
 
+def pull_ga4_ai_referrers(property_id: str, days_back: int = 7) -> pd.DataFrame:
+    """
+    Pull GA4 sessions referred from AI chat / answer engines.
+
+    Filters sessions where sessionSource is one of the AI_REFERRER_HOSTS.
+    Granularity: (date, page_path, ai_source).
+
+    Returns DataFrame with columns:
+        date, page_path, ai_source, sessions, engaged_sessions, new_users,
+        purchase_revenue, transactions, date_start, date_end
+    """
+    creds = get_credentials()
+    client = BetaAnalyticsDataClient(credentials=creds)
+
+    end_date = datetime.utcnow().date() - timedelta(days=1)
+    start_date = end_date - timedelta(days=days_back)
+
+    source_filter = FilterExpression(
+        filter=Filter(
+            field_name="sessionSource",
+            in_list_filter=Filter.InListFilter(values=AI_REFERRER_HOSTS),
+        )
+    )
+
+    request = RunReportRequest(
+        property=f"properties/{property_id}",
+        date_ranges=[
+            DateRange(start_date=start_date.isoformat(), end_date=end_date.isoformat())
+        ],
+        dimensions=[
+            Dimension(name="date"),
+            Dimension(name="pagePath"),
+            Dimension(name="sessionSource"),
+        ],
+        metrics=[
+            Metric(name="sessions"),
+            Metric(name="engagedSessions"),
+            Metric(name="newUsers"),
+            Metric(name="purchaseRevenue"),
+            Metric(name="transactions"),
+        ],
+        dimension_filter=source_filter,
+        limit=100000,
+    )
+
+    response = client.run_report(request)
+
+    rows = []
+    for row in response.rows:
+        rows.append({
+            "date": row.dimension_values[0].value,
+            "page_path": row.dimension_values[1].value,
+            "ai_source": row.dimension_values[2].value,
+            "sessions": int(row.metric_values[0].value),
+            "engaged_sessions": int(row.metric_values[1].value),
+            "new_users": int(row.metric_values[2].value),
+            "purchase_revenue": round(float(row.metric_values[3].value), 2),
+            "transactions": int(row.metric_values[4].value),
+        })
+
+    df = pd.DataFrame(rows)
+    if not df.empty:
+        df["date_start"] = start_date.isoformat()
+        df["date_end"] = end_date.isoformat()
+
+    print(
+        f"[GA4-AI] Pulled {len(df)} AI-referrer rows "
+        f"({start_date} to {end_date}, {len(AI_REFERRER_HOSTS)} sources)"
+    )
+    return df
+
+
+def save_ga4_ai_referrers(df: pd.DataFrame, output_path: str = "data/ga4_ai_referrers.csv"):
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    df.to_csv(output_path, index=False)
+    print(f"[GA4-AI] Saved to {output_path}")
+
+
 if __name__ == "__main__":
     from dotenv import load_dotenv
     load_dotenv()
@@ -134,3 +226,6 @@ if __name__ == "__main__":
 
     df = pull_ga4(property_id)
     save_ga4(df)
+
+    ai_df = pull_ga4_ai_referrers(property_id)
+    save_ga4_ai_referrers(ai_df)

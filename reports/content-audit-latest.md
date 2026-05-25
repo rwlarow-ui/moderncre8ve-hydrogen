@@ -9,6 +9,14 @@ Generated: 2026-04-05T17:53:05.380Z
 - Source-only findings: 4
 - Severity counts: critical 0, high 19, medium 16, low 2
 
+## Remediation Prepared
+
+2026-05-25: Product handle cleanup redirects are prepared in `redirects-for-shopify.csv` and `scripts/import-new-redirects.mjs`. Rename the live Shopify product handles before importing redirects:
+
+- `/products/capri-modern-dining-table-set_` → `/products/capri-modern-dining-table-set`
+- `/products/copy-of-santa-monica-bench-modern-walnut-bench` → `/products/santa-monica-bench-modern-walnut-bench`
+- `/products/van-aiken-boho-bed-fram` → `/products/van-aiken-boho-bed-frame`
+
 ## Highest Priority Live Findings
 
 - [high] page https://moderncre8ve.com/pages/about-us -> page_content_mismatch
@@ -180,4 +188,3 @@ Generated: 2026-04-05T17:53:05.380Z
   Findings: page_content_mismatch, suspicious_handle_or_slug
 - page https://moderncre8ve.com/pages/cleveland-workshop-showroom
   Findings: no_repo_fallback, page_content_mismatch
-

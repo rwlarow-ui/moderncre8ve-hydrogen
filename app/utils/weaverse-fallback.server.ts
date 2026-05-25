@@ -167,7 +167,7 @@ function patchHomepageItems(
       headingContent: "Handcrafted Mid-Century Modern Furniture",
       subheadingContent: "Furniture for People Who Notice",
       buttonContent: "Explore the Collection",
-      to: "/collections",
+      to: "/collections/all-products",
     },
     1: {
       headingTagName: "h2",

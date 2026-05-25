@@ -89,7 +89,7 @@
 **Action:** 854 impressions but only 0.1% CTR (expected ~1.0% at position 28). Rewrite title tag + meta description for this page.
 
 ### 👁️ #10: HIGH_IMPRESSIONS_LOW_CTR
-**Page:** `/products/van-aiken-boho-bed-fram`  
+**Page:** `/products/van-aiken-boho-bed-frame`  
 **Metric:** CTR 0.0% vs expected 2.0%  
 **Action:** 294 impressions but only 0.0% CTR (expected ~2.0% at position 10). Rewrite title tag + meta description for this page.
 

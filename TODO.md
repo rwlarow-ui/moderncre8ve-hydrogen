@@ -44,9 +44,9 @@
 ### Technical SEO Fixes
 
 - [ ] Add Twitter card meta tags in `app/utils/seo.server.ts`
-- [ ] Fix product slug: `capri-modern-dining-table-set_` (trailing underscore)
-- [ ] Fix product slug: `copy-of-santa-monica-bench-modern-walnut-bench` ("copy-of" prefix)
-- [ ] Fix product slug: `van-aiken-boho-bed-fram` (typo — missing "e" in "frame") + set up redirect
+- [x] Prep product slug cleanup: `capri-modern-dining-table-set_` → `capri-modern-dining-table-set` (redirect CSV + import script ready; Shopify Admin handle rename still required)
+- [x] Prep product slug cleanup: `copy-of-santa-monica-bench-modern-walnut-bench` → `santa-monica-bench-modern-walnut-bench` (redirect CSV + import script ready; Shopify Admin handle rename still required)
+- [x] Prep product slug cleanup: `van-aiken-boho-bed-fram` → `van-aiken-boho-bed-frame` (redirect CSV + import script ready; Shopify Admin handle rename still required)
 - [ ] Consolidate duplicate pages: `about-us-1` → redirect to `about-us`
 - [ ] Consolidate duplicate pages: pick one contact page, redirect the other
 - [ ] Expand homepage meta description from 126 to ~155 chars
