@@ -15,6 +15,9 @@ node_modules
 /playwright/.cache/
 pnpm-lock.yaml
 .DS_Store
+# Editor swap files (e.g. vim .env.swp — never commit; may hold secret buffers)
+*.swp
+*.swo
 .react-router
 h2_deploy_log.json
 app-connector/
