@@ -22,3 +22,6 @@ product-images-bg/*.bak
 
 # Claude Code worktrees
 .claude/worktrees/
+
+# Stray standalone SEO Truth Layer clone — the maintained copy lives in seo-truth-layer/
+moderncre8ve-seo-truth-layer/
