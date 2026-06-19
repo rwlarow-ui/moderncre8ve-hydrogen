@@ -63,8 +63,10 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 - **SEO Truth Layer:** `seo-truth-layer/` (weekly pipeline, merged into this repo)
 
 ### MCP Servers
-Configured in `.mcp.json`: Ahrefs, Figma, Shopify (Storefront API), Shopify Dev (docs/schema), Weaverse (docs/API at `https://docs.weaverse.io/mcp`).
+Configured in `.mcp.json`: Figma, Shopify (Storefront API), Shopify Dev (docs/schema), Weaverse (docs/API at `https://docs.weaverse.io/mcp`).
 Composer and Crypto.com servers visible in sessions are from another project — irrelevant here.
+
+> **Ahrefs (informational):** The Ahrefs MCP connection was removed (was a stdio server in `.mcp.json`). Historical Ahrefs keyword data (March 2026) still informs SEO copy — see the comment in `app/utils/collection-seo-descriptions.ts` — and `AhrefsBot`/`AhrefsSiteAudit` crawl directives remain in `app/routes/[robots.txt].tsx`. Neither depends on the live MCP connection.
 
 ## Development Commands
 
