@@ -43,6 +43,9 @@ const CollectionSeoBlock = forwardRef<HTMLElement, CollectionSeoBlockProps>(
     if (!content) return null;
 
     const HeadingTag = headingSize;
+    const trustedDesc = metafieldDesc || localDesc;
+    const trustedDescIsHtml =
+      typeof trustedDesc === "string" && /<\/?[a-z][\s\S]*>/i.test(trustedDesc);
 
     return (
       <Section ref={ref} {...rest}>
@@ -52,9 +55,14 @@ const CollectionSeoBlock = forwardRef<HTMLElement, CollectionSeoBlockProps>(
               {heading}
             </HeadingTag>
           )}
-          {metafieldDesc || localDesc ? (
+          {trustedDescIsHtml ? (
+            <div
+              className="collection-seo-prose font-serif text-gray-600 text-sm leading-relaxed md:text-base [&_a]:underline [&_a]:underline-offset-4 [&_h3]:mb-3 [&_h3]:font-sans [&_h3]:font-semibold [&_h3]:text-gray-800 [&_h3]:text-lg [&_h3]:tracking-tight [&_h3]:mt-6 [&_p]:mb-4 [&_strong]:font-semibold [&_strong]:text-gray-800"
+              dangerouslySetInnerHTML={{ __html: trustedDesc }}
+            />
+          ) : trustedDesc ? (
             <p className="font-serif text-gray-600 text-sm leading-relaxed md:text-base">
-              {metafieldDesc || localDesc}
+              {trustedDesc}
             </p>
           ) : (
             <div

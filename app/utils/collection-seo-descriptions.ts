@@ -25,8 +25,23 @@ export const collectionSeoDescriptions: Record<
   },
 
   "mid-century-modern-dining-tables": {
-    meta: "Mid-Century Modern Dining Tables — Handcrafted in Solid Hardwood. Shop handcrafted mid-century modern dining tables in walnut, oak & cherry. Extendable options for 4–12 seats. Made in Ohio.",
-    rich: "Shop our collection of handcrafted mid-century modern dining tables, built from solid American walnut and white oak by Amish artisans in Ohio. Each MCM dining table features the clean lines, tapered legs, and organic forms that define mid-century design. Choose from round, oval, and rectangular silhouettes with extendable leaf options for flexible seating. Our mid-century modern extendable dining tables are among our most popular pieces, combining timeless style with everyday functionality. Every table is made to order with custom dimensions available — from intimate 4-seat designs to grand 12-seat gathering tables. Includes white glove in-home delivery and assembly.",
+    meta: "Shop solid walnut and oak mid century modern dining tables, handcrafted to order in Ohio with extendable options, custom sizing, and white glove delivery.",
+    rich: `<p>Our <strong>mid century modern dining tables</strong> are handcrafted to order by skilled Amish artisans in Ohio, using solid American walnut, white oak, cherry, and maple. Each table is built with traditional joinery and hand-finished surfaces, giving you a dining table with real weight, lasting structure, and wood grain that becomes more beautiful with daily use.</p>
+
+<h3>Why Choose a Handcrafted Mid Century Modern Dining Table?</h3>
+<p>Mid century modern dining tables are known for clean lines, tapered legs, softened corners, and organic silhouettes inspired by the 1940s through 1960s. Instead of veneer or particle board, ModernCre8ve tables are made one at a time from solid hardwood. The result is a substantial dining centerpiece built for everyday meals, long dinners, and years of family use.</p>
+
+<h3>Walnut, Oak, Cherry, and Custom Finishes</h3>
+<p><strong>Solid American walnut</strong> remains the signature mid-century choice because of its warm chocolate color and expressive grain. White oak creates a lighter Scandinavian look, while cherry brings warmth that deepens with age. Most designs can be customized by wood species, finish, length, width, and extension configuration so the table fits both your room and your way of hosting.</p>
+
+<h3>Extendable Tables for 6, 8, 10, or More</h3>
+<p>Many of our mid century modern dining tables include extension leaves or custom sizing options. Round, oval, and rectangular designs can be built for compact rooms, everyday seating for 6, or larger gatherings for 8 to 12 guests. If you need a specific dimension, our team can quote a made-to-order version rather than forcing your room around a stock size.</p>
+
+<h3>How to Choose the Right Size</h3>
+<p>Plan for about 24 inches of table width per person and roughly 36 inches of clearance around the table for chairs and movement. A 60-inch rectangular table generally seats 6, a 72-inch table seats 8, and extension tables give you flexibility for holidays and dinner parties without overwhelming the room every day.</p>
+
+<h3>Delivery and Lead Time</h3>
+<p>Because every table is made to order, furniture production typically takes <strong>12-16 weeks</strong>. Most furniture orders include white glove in-home delivery with placement and assembly, so your table arrives ready for the room instead of sitting in boxes at the door.</p>`,
   },
 
   "mid-century-modern": {
@@ -42,6 +57,11 @@ export const collectionSeoDescriptions: Record<
   japandi: {
     meta: "Japandi furniture blending Japanese minimalism with Scandinavian warmth. Handcrafted in solid walnut & oak. Made to order in Ohio.",
     rich: "Discover our Japandi furniture collection — a harmonious blend of Japanese minimalism and Scandinavian warmth, handcrafted from solid American walnut and white oak. Each Japandi piece embodies wabi-sabi philosophy: celebrating natural wood grain, asymmetric beauty, and purposeful simplicity. From Japandi coffee tables and dining sets to bed frames and storage, our collection creates serene, intentional living spaces. Every piece is made to order by Amish artisans in Ohio with a 12–16 week lead time.",
+  },
+
+  "japandi-scandi-mid-century-modern-furniture": {
+    meta: "Shop Japandi MCM furniture blending Japanese minimalism, Scandi warmth, and mid-century lines. Solid walnut and oak pieces handmade to order in Ohio.",
+    rich: "Shop Japandi MCM furniture that blends Japanese minimalism, Scandinavian warmth, and mid-century modern lines. This collection is built for calm, intentional rooms: low-profile silhouettes, natural walnut and oak grain, soft edges, and functional storage without visual noise. Every piece is handcrafted to order by Amish artisans in Ohio using solid hardwoods, traditional joinery, and custom finish options. Choose dining tables, bed frames, credenzas, coffee tables, and storage pieces that pair Japandi restraint with MCM character. Furniture lead times are 12-16 weeks, and most furniture orders include white glove in-home delivery with placement and assembly.",
   },
 
   "handmade-modern-bed-frames": {

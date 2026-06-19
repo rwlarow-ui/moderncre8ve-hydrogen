@@ -12,6 +12,10 @@ import type { BreadcrumbList, CollectionPage, Offer } from "schema-dts";
 import type { ProductQuery, ShopFragment } from "storefront-api.generated";
 import { collectionFaqs } from "~/utils/collection-faqs";
 import { collectionSeoDescriptions } from "~/utils/collection-seo-descriptions";
+import {
+  getCollectionSeoFallback,
+  getProductSeoFallback,
+} from "~/utils/seo-fallbacks";
 
 function root({
   shop,
@@ -209,8 +213,11 @@ function productJsonLd({
   url: Request["url"];
 }): SeoConfig["jsonLd"] {
   const origin = new URL(url).origin;
+  const seoFallback = getProductSeoFallback(productData?.handle);
   const description = truncate(
-    productData?.seo?.description ?? productData?.description,
+    seoFallback?.description ??
+      productData?.seo?.description ??
+      productData?.description,
   );
 
   // Create offers array from adjacent variants
@@ -294,13 +301,20 @@ function product({
   product: ProductQuery["product"];
   url: Request["url"];
 }): SeoConfig {
+  const seoFallback = getProductSeoFallback(productData?.handle);
   const description = truncate(
-    productData?.seo?.description ?? productData?.description ?? "",
+    seoFallback?.description ??
+      productData?.seo?.description ??
+      productData?.description ??
+      "",
   );
   const selectedVariant = productData?.selectedOrFirstAvailableVariant;
   return {
     title: truncateTitle(
-      stripBrandSuffix(productData?.seo?.title) || productData?.title || "",
+      stripBrandSuffix(seoFallback?.title) ||
+        stripBrandSuffix(productData?.seo?.title) ||
+        productData?.title ||
+        "",
     ),
     description,
     handle: "@moderncre8ve",
@@ -329,6 +343,7 @@ function collectionJsonLd({
   collection: CollectionRequiredFields;
 }): SeoConfig["jsonLd"] {
   const origin = new URL(url).origin;
+  const seoFallback = getCollectionSeoFallback(collectionData?.handle);
   const itemListElement: CollectionPage["mainEntity"] =
     collectionData.products.nodes.map((prod, index) => {
       return {
@@ -360,12 +375,14 @@ function collectionJsonLd({
       "@context": "https://schema.org",
       "@type": "CollectionPage",
       name:
+        stripBrandSuffix(seoFallback?.title) ||
         stripBrandSuffix(collectionData?.seo?.title) ||
         stripBrandSuffix(collectionData?.title) ||
         collectionData?.title ||
         "",
       description: truncate(
-        collectionData?.seo?.description ??
+        seoFallback?.description ??
+          collectionData?.seo?.description ??
           collectionData?.description ??
           collectionSeoDescriptions[collectionData?.handle ?? ""]?.rich ??
           "",
@@ -406,15 +423,18 @@ function collection({
   collection: CollectionRequiredFields;
   url: Request["url"];
 }): SeoConfig {
+  const seoFallback = getCollectionSeoFallback(collectionData?.handle);
   return {
     title: truncateTitle(
-      stripBrandSuffix(collectionData?.seo?.title) ||
+      stripBrandSuffix(seoFallback?.title) ||
+        stripBrandSuffix(collectionData?.seo?.title) ||
         stripBrandSuffix(collectionData?.title) ||
         collectionData?.title ||
         "",
     ),
     description: truncate(
-      collectionData?.seo?.description ??
+      seoFallback?.description ??
+        collectionData?.seo?.description ??
         collectionData?.description ??
         collectionSeoDescriptions[collectionData?.handle ?? ""]?.meta ??
         "",
