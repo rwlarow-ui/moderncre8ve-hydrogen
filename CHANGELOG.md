@@ -4,6 +4,17 @@
 
 ---
 
+## Unreleased
+
+### Developer Tooling & Docs
+- Removed the dead **Ahrefs MCP server** from `.mcp.json` (connection retired). Ahrefs is now informational only — the `AhrefsBot`/`AhrefsSiteAudit` crawl directives in `app/routes/[robots.txt].tsx` and the March-2026 keyword-data comment in `app/utils/collection-seo-descriptions.ts` are unaffected (neither uses the MCP).
+- Repointed the **Shopify Storefront MCP** from a hardcoded `/Users/rwlarow/…` absolute path (nonexistent on other machines) to `npx -y @wolfielabs/shopify-storefront-mcp-server` so it resolves anywhere.
+- Updated `CLAUDE.md` / `AGENTS.md` MCP server lists and added an "Ahrefs (informational)" note.
+
+_No storefront runtime impact — all changes are dev tooling / documentation._
+
+---
+
 ## 1.4.2 — 2026-03-19
 
 ### Security Hardening
