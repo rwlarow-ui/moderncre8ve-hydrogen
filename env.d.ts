@@ -55,5 +55,6 @@ declare module "react-router" {
 declare global {
   interface Window {
     dataLayer: any[];
+    gtag?: (...args: any[]) => void;
   }
 }
