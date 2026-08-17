@@ -1,29 +1,8 @@
 {
   "mcpServers": {
-    "figma": {
-      "type": "http",
-      "url": "https://mcp.figma.com/mcp"
-    },
-    "shopify": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@wolfielabs/shopify-storefront-mcp-server"],
-      "env": {
-        "SHOPIFY_STOREFRONT_ACCESS_TOKEN": "${PUBLIC_STOREFRONT_API_TOKEN}",
-        "SHOPIFY_STORE_DOMAIN": "${PUBLIC_STORE_DOMAIN}"
-      }
-    },
     "weaverse": {
       "type": "http",
       "url": "https://docs.weaverse.io/mcp"
-    },
-    "shopify-dev": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@shopify/dev-mcp@latest"],
-      "env": {
-        "OPT_OUT_INSTRUMENTATION": "true"
-      }
     },
     "ops-dashboard": {
       "type": "stdio",
