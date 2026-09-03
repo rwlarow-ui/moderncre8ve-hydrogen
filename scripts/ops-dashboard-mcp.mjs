@@ -282,4 +282,3 @@ function writeError(id, code, message) {
 function writeMessage(message) {
   process.stdout.write(`${JSON.stringify(message)}\n`);
 }
-
