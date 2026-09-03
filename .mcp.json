@@ -2,12 +2,14 @@
   "mcpServers": {
     "weaverse": {
       "type": "http",
-      "url": "https://docs.weaverse.io/mcp"
+      "url": "https://weaverse.io/docs/mcp"
     },
     "ops-dashboard": {
       "type": "stdio",
       "command": "node",
-      "args": ["/Users/dev/Desktop/my-hydrogen-storefront/scripts/ops-dashboard-mcp.mjs"],
+      "args": [
+        "scripts/ops-dashboard-mcp.mjs"
+      ],
       "env": {
         "PUBLIC_STORE_DOMAIN": "${PUBLIC_STORE_DOMAIN}",
         "SHOPIFY_ADMIN_API_TOKEN": "${SHOPIFY_ADMIN_API_TOKEN}"
