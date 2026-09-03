@@ -42,3 +42,7 @@ jobs:
           path: |
             data/
             reports/
+
+      - name: Clean up credentials
+        if: always()
+        run: rm -f service_account.json
