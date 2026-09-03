@@ -10,8 +10,8 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 - **Template:** Weaverse Aspen (furniture-focused Hydrogen theme)
 - **Repo:** github.com/rwlarow-ui/moderncre8ve-hydrogen
 - **Deploy target:** Shopify Oxygen
-- **Current version:** 1.3.8 (see `CHANGELOG.md` for full history)
-- **Status:** Phases 1–4 complete. Phase 5 (launch — DNS cutover to moderncre8ve.com) pending.
+- **Current version:** 1.4.2 — single source of truth is `package.json`; `CHANGELOG.md` has the full history
+- **Status:** Phases 1–5 complete. **Live in production** — `moderncre8ve.com` resolves to the Hydrogen storefront on Oxygen (`powered-by: Shopify, Oxygen, Hydrogen`).
 
 ### Links
 | Resource | URL |
@@ -56,14 +56,16 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 - **App:** "Claude2" in Shopify Dev Dashboard (Client ID: `fd5964839bc3fb47703bafb47d25d3fc`)
 
 ### Google Analytics / GTM
-- **GTM ID:** `G-R1KFYYKE48` (set via `PUBLIC_GOOGLE_GTM_ID` env var)
-- **GA4 Property:** `251836602` / Measurement ID: `G-G4Q4Z6MM4B`
+- **GA4 Measurement ID:** `G-08LS6GEXG3` — set via the `PUBLIC_GOOGLE_GTM_ID` env var (the name says GTM, the value is a GA4 measurement ID; there is no GTM container). The **live** value is whatever Oxygen holds — confirm with `npx shopify hydrogen env list`; local `.env` matches.
+- **GA4 Property:** `251836602`
+- **Superseded IDs** (do not reuse): `G-R1KFYYKE48`, `G-G4Q4Z6MM4B`
 - **Google Cloud Project:** `mindful-quasar-486518-r9`
 - **Service Account:** `moderncre8ve-829@mindful-quasar-486518-r9.iam.gserviceaccount.com`
-- **SEO Truth Layer:** `seo-truth-layer/` (weekly pipeline, merged into this repo)
+- **SEO Truth Layer:** source is vendored at `seo-truth-layer/`, but the pipeline **runs daily at 14:00 UTC from the separate `github.com/rwlarow-ui/moderncre8ve-seo-truth-layer` repo**. GitHub only executes workflows under the root `.github/workflows/`, so `seo-truth-layer/.github/workflows/seo-pipeline.yml` in this repo never runs. Its secrets (`GA4_PROPERTY_ID`, `GOOGLE_SA_JSON`, `RESEND_API_KEY`, `SITE_URL`) live on that other repo.
 
 ### MCP Servers
-Configured in `.mcp.json`: Figma, Shopify (Storefront API), Shopify Dev (docs/schema), Weaverse (docs/API at `https://docs.weaverse.io/mcp`).
+Configured in `.mcp.json`: **Weaverse** (docs/API, `https://weaverse.io/docs/mcp`) and **ops-dashboard** (local stdio server, `scripts/ops-dashboard-mcp.mjs` — Shopify Admin order/customer tooling).
+Figma, Shopify (Storefront API), Shopify Dev and Ahrefs were all removed from `.mcp.json`; the claude.ai Shopify connector covers Admin API access.
 Composer and Crypto.com servers visible in sessions are from another project — irrelevant here.
 
 > **Ahrefs (informational):** The Ahrefs MCP connection was removed (was a stdio server in `.mcp.json`). Historical Ahrefs keyword data (March 2026) still informs SEO copy — see the comment in `app/utils/collection-seo-descriptions.ts` — and `AhrefsBot`/`AhrefsSiteAudit` crawl directives remain in `app/routes/[robots.txt].tsx`. Neither depends on the live MCP connection.
