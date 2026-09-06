@@ -2,7 +2,7 @@
   "name": "@moderncre8ve/storefront",
   "private": true,
   "sideEffects": false,
-  "version": "1.0.1",
+  "version": "1.4.2",
   "type": "module",
   "author": "ModernCre8ve",
   "scripts": {

@@ -10,6 +10,22 @@
 - Removed the dead **Ahrefs MCP server** from `.mcp.json` (connection retired). Ahrefs is now informational only — the `AhrefsBot`/`AhrefsSiteAudit` crawl directives in `app/routes/[robots.txt].tsx` and the March-2026 keyword-data comment in `app/utils/collection-seo-descriptions.ts` are unaffected (neither uses the MCP).
 - Repointed the **Shopify Storefront MCP** from a hardcoded `/Users/rwlarow/…` absolute path (nonexistent on other machines) to `npx -y @wolfielabs/shopify-storefront-mcp-server` so it resolves anywhere.
 - Updated `CLAUDE.md` / `AGENTS.md` MCP server lists and added an "Ahrefs (informational)" note.
+- Removed the **Shopify Storefront**, **Shopify Dev** and **Figma** MCP servers from `.mcp.json` (`8b88077`), leaving Weaverse and ops-dashboard. This supersedes the `npx` repoint noted above — the Shopify server is gone, not relocated; the claude.ai Shopify connector covers Admin API access.
+
+### Fix: both remaining MCP servers were failing to connect
+- **Weaverse** — `https://docs.weaverse.io/mcp` 301-redirects to `https://weaverse.io/docs/mcp`, and the MCP client does not follow redirects on POST, so every handshake came back `405 Method not allowed`. `.mcp.json` now points at the final URL.
+- **ops-dashboard** — `scripts/ops-dashboard-mcp.mjs` framed messages LSP-style with a `Content-Length` header, but MCP stdio transport is newline-delimited JSON. The handshake never completed and the client timed out after 30s. The server now reads and writes one JSON object per line.
+- **ops-dashboard** — `.env` is resolved relative to the script instead of `process.cwd()`, and `.mcp.json` uses a repo-relative path, so the server no longer depends on a hardcoded `/Users/dev/…` absolute path (the same portability class of bug fixed for the Shopify server in #43).
+
+### Docs reconciliation
+- **Launch status** — `CLAUDE.md` / `AGENTS.md` claimed "Phase 5 pending". `moderncre8ve.com` has in fact been serving the Hydrogen storefront on Oxygen (verified: `powered-by: Shopify, Oxygen, Hydrogen`). Both files now say Phases 1–5 complete. Issues **#3** and **#14** are stale and can be closed.
+- **Version drift** — `package.json` said `1.0.1`, the docs said `1.3.8`, the CHANGELOG said `1.4.2`. `package.json` is now `1.4.2` and is named as the single source of truth.
+- **GA4 ID** — docs listed `G-R1KFYYKE48` as a "GTM ID" plus a separate measurement ID `G-G4Q4Z6MM4B`; the actual `PUBLIC_GOOGLE_GTM_ID` is `G-08LS6GEXG3` (a GA4 measurement ID — there is no GTM container). Both superseded IDs are now marked as such.
+- **SEO Truth Layer** — docs described a "weekly pipeline, merged into this repo". It runs **daily at 14:00 UTC from the separate `moderncre8ve-seo-truth-layer` repo**; GitHub never executes `seo-truth-layer/.github/workflows/seo-pipeline.yml` from here, because only root `.github/workflows/` runs.
+- **MCP server list** in both files corrected to the two servers that actually remain.
+
+### Housekeeping
+- `seo-truth-layer/.DS_Store` was tracked despite matching `.gitignore` — untracked via `git rm --cached`.
 
 _No storefront runtime impact — all changes are dev tooling / documentation._
 

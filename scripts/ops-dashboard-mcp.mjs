@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   getCustomerDetail,
   getOrderDetail,
@@ -36,7 +36,7 @@ process.stdin.on("end", () => {
 });
 
 function loadDotEnv() {
-  const envPath = resolve(process.cwd(), ".env");
+  const envPath = fileURLToPath(new URL("../.env", import.meta.url));
 
   try {
     const raw = readFileSync(envPath, "utf8");
@@ -70,35 +70,19 @@ function loadDotEnv() {
 
 function consumeMessages() {
   while (true) {
-    const headerEnd = buffer.indexOf("\r\n\r\n");
-    if (headerEnd === -1) {
+    const newlineIndex = buffer.indexOf("\n");
+    if (newlineIndex === -1) {
       return;
     }
 
-    const headerText = buffer.slice(0, headerEnd).toString("utf8");
-    const headers = Object.fromEntries(
-      headerText.split("\r\n").map((line) => {
-        const [name, value] = line.split(":");
-        return [name.toLowerCase(), value.trim()];
-      }),
-    );
-    const contentLength = Number(headers["content-length"]);
+    const line = buffer.slice(0, newlineIndex).toString("utf8").trim();
+    buffer = buffer.slice(newlineIndex + 1);
 
-    if (!Number.isFinite(contentLength)) {
-      writeError(null, -32700, "Invalid Content-Length header.");
-      buffer = Buffer.alloc(0);
-      return;
+    if (!line) {
+      continue;
     }
 
-    const messageEnd = headerEnd + 4 + contentLength;
-    if (buffer.length < messageEnd) {
-      return;
-    }
-
-    const payload = buffer.slice(headerEnd + 4, messageEnd).toString("utf8");
-    buffer = buffer.slice(messageEnd);
-
-    handleMessage(payload).catch((error) => {
+    handleMessage(line).catch((error) => {
       const message = error instanceof Error ? error.message : "Unknown error";
       writeError(null, -32603, message);
     });
@@ -296,8 +280,5 @@ function writeError(id, code, message) {
 }
 
 function writeMessage(message) {
-  const body = JSON.stringify(message);
-  const output = `Content-Length: ${Buffer.byteLength(body, "utf8")}\r\n\r\n${body}`;
-  process.stdout.write(output);
+  process.stdout.write(`${JSON.stringify(message)}\n`);
 }
-
