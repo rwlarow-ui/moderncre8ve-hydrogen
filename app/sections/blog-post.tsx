@@ -30,6 +30,15 @@ const BlogPost = forwardRef<HTMLElement, BlogPostProps>((props, ref) => {
     formattedDate: string;
   }>();
   const { title, handle, image, contentHtml, author, tags } = article;
+  // Strip <img> tags with empty/missing src before rendering contentHtml.
+  // Shopify's blog editor occasionally persists `<img src="">` when an image
+  // upload was deleted or the rich-text control glitched. Those render as
+  // broken placeholders (see /blogs/.../japandi-bedroom in the 2026-04-22
+  // audit).
+  const safeContentHtml = (contentHtml ?? "").replace(
+    /<img\b[^>]*\bsrc\s*=\s*(?:""|'')[^>]*>/gi,
+    "",
+  );
   if (article) {
     let domain = layout.shop.primaryDomain.url;
     if (isBrowser) {
@@ -67,7 +76,7 @@ const BlogPost = forwardRef<HTMLElement, BlogPostProps>((props, ref) => {
           <div className="mx-auto space-y-8 md:space-y-16">
             <div
               suppressHydrationWarning
-              dangerouslySetInnerHTML={{ __html: contentHtml }}
+              dangerouslySetInnerHTML={{ __html: safeContentHtml }}
             />
             {(showTags || showShareButtons) && (
               <>

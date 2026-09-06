@@ -33,6 +33,33 @@ _No storefront runtime impact — all changes are dev tooling / documentation._
 
 ---
 
+## 1.4.3 — 2026-04-22
+
+### Fix: `og:image` missing on product pages
+- `app/utils/seo.server.ts` — `product()` now emits the proper `SeoConfig.media` shape so `getSeoMeta` picks up the image. Previously passed `media: selectedVariant?.image` directly, which was silently dropped, causing `getEnhancedSeoMeta` to fall back to the site-wide logo for every product
+- Prefers the selected variant image (includes `width`/`height` from `PRODUCT_VARIANT_FRAGMENT`) and falls back to `featuredImage` when no variant image is present
+- Unblocks Twitter Card `summary_large_image` rendering across all 26 product pages
+
+### Fix: "Section background" alt-text leak on FAQ and Trade
+- `app/components/background-image.tsx` — when a background image prop arrives as an empty/whitespace string (or a structured object with no URL), the component now returns `null` instead of rendering a broken `<img>` whose alt text leaked into the visible layout
+- Decorative backgrounds now use empty `alt=""` per WCAG (role="none") instead of the previous hardcoded `"Section background"` literal
+- `app/sections/before-and-after/slider.tsx` — same hardcoded alt replaced with semantic `"Before image"` / `"After image"` labels when the input is a bare URL string
+- Fixes visible alt-text leaks on `/pages/faq` and `/pages/trade` where `weaverse-pages/*.json` reference hero paths that do not exist in `public/`
+
+### Fix: Broken `<img src="">` in blog post content
+- `app/sections/blog-post.tsx` — strips `<img>` tags with empty/missing `src` from Shopify `contentHtml` before rendering via `dangerouslySetInnerHTML`
+- Shopify's blog editor occasionally persists `<img src="">` when an image upload is deleted or the rich-text control glitches; those rendered as broken placeholders on `/blogs/*/japandi-bedroom` and likely others
+
+### Not Fixed by This Deploy
+These audit findings require Shopify Admin / content work and are tracked separately:
+- Hero image assets are absent from `public/` (every `/images/heroes/*.jpg` path referenced in `weaverse-pages/{faq,trade}.json` is a dead link — needs real assets uploaded or paths pointed at Shopify CDN URLs)
+- 2 products render blank galleries (needs image re-attach in Shopify Admin)
+- 3 slug hygiene issues (requires slug renames with 301 redirects configured)
+- Bloggle widget is empty on 6 blog posts (third-party Shopify app — manage in app settings or remove from blog template)
+- Homepage React hydration error #418 (needs browser repro to isolate the mismatch)
+
+---
+
 ## 1.4.2 — 2026-03-19
 
 ### Security Hardening
