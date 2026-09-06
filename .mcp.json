@@ -9,11 +9,7 @@
       "command": "node",
       "args": [
         "scripts/ops-dashboard-mcp.mjs"
-      ],
-      "env": {
-        "PUBLIC_STORE_DOMAIN": "${PUBLIC_STORE_DOMAIN}",
-        "SHOPIFY_ADMIN_API_TOKEN": "${SHOPIFY_ADMIN_API_TOKEN}"
-      }
+      ]
     }
   }
 }
