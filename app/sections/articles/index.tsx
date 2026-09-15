@@ -1,11 +1,4 @@
 import { ArrowRight } from "@phosphor-icons/react";
-import {
-  type ComponentLoaderArgs,
-  type HydrogenComponentProps,
-  type HydrogenComponentSchema,
-  IMAGES_PLACEHOLDERS,
-  type WeaverseBlog,
-} from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { type CSSProperties, forwardRef, useState } from "react";
 import { backgroundInputs } from "~/components/background-image";
@@ -17,9 +10,16 @@ import Heading, {
 import { Image } from "~/components/image";
 import Link from "~/components/link";
 import { layoutInputs, Section } from "~/components/section";
+import {
+  type ComponentLoaderArgs,
+  type ComponentSchema,
+  IMAGES_PLACEHOLDERS,
+  type PickedBlog,
+  type SectionComponentProps,
+} from "~/page-builder";
 
 type ArticleData = {
-  blogs: WeaverseBlog;
+  blogs: PickedBlog;
   articlePerRow: number;
   showSeperator: boolean;
   viewAllText?: string;
@@ -38,7 +38,7 @@ type ArticleData = {
 };
 
 export interface ArticlesProps
-  extends HydrogenComponentProps<Awaited<ReturnType<typeof loader>>>,
+  extends SectionComponentProps<Awaited<ReturnType<typeof loader>>>,
     ArticleData,
     Omit<HeadingProps, "content"> {}
 
@@ -235,8 +235,8 @@ const Blogs = forwardRef<HTMLElement, ArticlesProps>((props, ref) => {
 export default Blogs;
 
 export let loader = async (args: ComponentLoaderArgs<ArticleData>) => {
-  let { weaverse, data } = args;
-  let { storefront, request } = weaverse;
+  let { context, data } = args;
+  let { storefront } = context;
   if (data.blogs) {
     const res = await storefront.query(BLOG_QUERY, {
       variables: {
@@ -281,7 +281,7 @@ query BlogSingle(
   }
 ` as const;
 
-export const schema: HydrogenComponentSchema = {
+export const schema: ComponentSchema = {
   type: "articles-list",
   title: "Articles",
   settings: [

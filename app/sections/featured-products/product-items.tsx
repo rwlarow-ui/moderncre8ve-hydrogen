@@ -1,10 +1,4 @@
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
-import {
-  type ComponentLoaderArgs,
-  createSchema,
-  type HydrogenComponentProps,
-  type WeaverseCollection,
-} from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
@@ -12,7 +6,12 @@ import { forwardRef, useEffect, useMemo, useState } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ProductCard } from "~/components/product/product-card";
-import { useWeaverseStudioCheck } from "~/hooks/use-weaverse-studio-check";
+import {
+  type ComponentLoaderArgs,
+  createSchema,
+  type PickedCollection,
+  type SectionComponentProps,
+} from "~/page-builder";
 import "swiper/css";
 import "swiper/css/navigation";
 import Link from "~/components/link";
@@ -89,8 +88,8 @@ const productItemsVariants = cva("", {
 
 interface ProductItemsProps
   extends VariantProps<typeof productItemsVariants>,
-    HydrogenComponentProps<Awaited<ReturnType<typeof loader>>> {
-  collection: WeaverseCollection;
+    SectionComponentProps<Awaited<ReturnType<typeof loader>>> {
+  collection: PickedCollection;
   layout?: "grid" | "carousel";
   slidesPerView?: number;
   itemsPerRow?: ItemsPerRowType;
@@ -118,7 +117,6 @@ const ProductItems = forwardRef<HTMLDivElement, ProductItemsProps>(
     const [isBeginning, setIsBeginning] = useState(true);
     const [isEnd, setIsEnd] = useState(false);
     const [isSwiperInitialized, setIsSwiperInitialized] = useState(false);
-    const isDesignMode = useWeaverseStudioCheck();
 
     useEffect(() => {
       setIsSwiperInitialized(false);
@@ -136,20 +134,7 @@ const ProductItems = forwardRef<HTMLDivElement, ProductItemsProps>(
     const productsConnection = loaderData?.products ?? [];
 
     if (!productsConnection.length) {
-      if (!isDesignMode) {
-        return null;
-      }
-
-      return (
-        <div
-          ref={ref}
-          {...rest}
-          className="rounded-lg border border-dashed border-gray-300 bg-gray-50 px-4 py-8 text-center text-sm text-gray-600"
-        >
-          Assign a collection with real products to preview this featured
-          products block.
-        </div>
-      );
+      return null;
     }
 
     const totalProducts = loaderData?.products?.length ?? 0;
@@ -385,8 +370,8 @@ const PRODUCTS_BY_COLLECTION_QUERY = `#graphql
   ${PRODUCT_CARD_FRAGMENT}
 `;
 
-export const loader = async ({ weaverse, data }: ComponentLoaderArgs) => {
-  const { language, country } = weaverse.storefront.i18n;
+export const loader = async ({ context, data }: ComponentLoaderArgs) => {
+  const { language, country } = context.storefront.i18n;
   const collectionHandle = data.collection?.handle;
 
   // Return empty products if no collection is selected
@@ -394,7 +379,7 @@ export const loader = async ({ weaverse, data }: ComponentLoaderArgs) => {
     return { collection: data.collection, products: [] };
   }
 
-  const res = await weaverse.storefront.query(PRODUCTS_BY_COLLECTION_QUERY, {
+  const res = await context.storefront.query(PRODUCTS_BY_COLLECTION_QUERY, {
     variables: {
       handle: collectionHandle,
       country,

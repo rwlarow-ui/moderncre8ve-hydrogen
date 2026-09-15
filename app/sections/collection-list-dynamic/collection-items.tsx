@@ -1,13 +1,13 @@
-import {
-  type ComponentLoaderArgs,
-  type HydrogenComponentProps,
-  type HydrogenComponentSchema,
-  IMAGES_PLACEHOLDERS,
-  type WeaverseCollection,
-} from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { forwardRef, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  type ComponentLoaderArgs,
+  type ComponentSchema,
+  IMAGES_PLACEHOLDERS,
+  type PickedCollection,
+  type SectionComponentProps,
+} from "~/page-builder";
 import "swiper/css";
 import type { CollectionByIdsQuery } from "storefront-api.generated";
 import { Image } from "~/components/image";
@@ -43,13 +43,13 @@ interface CollectionWithProducts {
 }
 
 interface CollectionItemsData {
-  collections: WeaverseCollection[];
+  collections: PickedCollection[];
   layout: "grid" | "slider" | "showcase";
   gap: number;
 }
 
 interface CollectionItemsProps
-  extends HydrogenComponentProps<CollectionItemsLoaderData>,
+  extends SectionComponentProps<CollectionItemsLoaderData>,
     CollectionItemsData {
   collectionNameColor: string;
   collectionBackgroundColor: string;
@@ -153,7 +153,7 @@ let CollectionItems = forwardRef<HTMLDivElement, CollectionItemsProps>(
 
           <h3
             className={clsx(
-              "absolute bottom-0 line-clamp-1 w-full p-4 font-medium text-white text-lg uppercase leading-snug drop-shadow-md",
+              "absolute bottom-0 line-clamp-1 w-full p-4 font-medium text-lg text-white uppercase leading-snug drop-shadow-md",
             )}
           >
             {collection.title}
@@ -238,7 +238,7 @@ let CollectionItems = forwardRef<HTMLDivElement, CollectionItemsProps>(
 
                 <h3
                   className={clsx(
-                    "absolute bottom-0 line-clamp-1 w-full p-4 font-medium text-white text-lg uppercase leading-snug drop-shadow-md",
+                    "absolute bottom-0 line-clamp-1 w-full p-4 font-medium text-lg text-white uppercase leading-snug drop-shadow-md",
                   )}
                 >
                   {third.title}
@@ -342,14 +342,14 @@ export type CollectionItemsLoaderData = Awaited<ReturnType<typeof loader>>;
 
 export let loader = async ({
   data,
-  weaverse,
+  context,
 }: ComponentLoaderArgs<CollectionItemsData>) => {
-  let { language, country } = weaverse.storefront.i18n;
+  let { language, country } = context.storefront.i18n;
   let ids = data.collections?.map(
     (collection) => `gid://shopify/Collection/${collection.id}`,
   );
   if (ids?.length) {
-    let { nodes } = await weaverse.storefront.query<CollectionByIdsQuery>(
+    let { nodes } = await context.storefront.query<CollectionByIdsQuery>(
       COLLECTIONS_QUERY,
       {
         variables: {
@@ -364,7 +364,7 @@ export let loader = async ({
   return [];
 };
 
-export let schema: HydrogenComponentSchema = {
+export let schema: ComponentSchema = {
   type: "collection-list-dynamic-items",
   title: "Collection items",
   settings: [

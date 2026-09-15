@@ -1,12 +1,12 @@
 import { Content, Item, Root, Trigger } from "@radix-ui/react-dropdown-menu";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
-import { useThemeSettings } from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Image } from "~/components/image";
 import Link from "~/components/link";
 import { useShopMenu } from "~/hooks/use-shop-menu";
+import { useThemeSettings } from "~/page-builder";
 import type { SingleMenuItem } from "~/types/menu";
 import { cn } from "~/utils/cn";
 
@@ -143,7 +143,11 @@ function DropdownMenu({ menuItem }: { menuItem: SingleMenuItem }) {
   const { openMenuBy } = useThemeSettings();
   const { items: childItems = [], title } = menuItem;
   return (
-    <div className="h-full" role="navigation" onMouseLeave={() => setOpen(false)}>
+    <div
+      className="h-full"
+      role="navigation"
+      onMouseLeave={() => setOpen(false)}
+    >
       <Root open={open} onOpenChange={setOpen} modal={false}>
         <Trigger
           className={clsx([

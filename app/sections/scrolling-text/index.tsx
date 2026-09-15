@@ -1,9 +1,6 @@
-import type {
-  HydrogenComponentProps,
-  HydrogenComponentSchema,
-} from "@weaverse/hydrogen";
 import { cva, type VariantProps } from "class-variance-authority";
 import { type CSSProperties, forwardRef } from "react";
+import type { ComponentSchema, SectionComponentProps } from "~/page-builder";
 import { cn } from "~/utils/cn";
 
 let variants = cva("", {
@@ -19,7 +16,7 @@ const MAX_DURATION = 20;
 
 export interface ScrollingProps
   extends VariantProps<typeof variants>,
-    HydrogenComponentProps {
+    SectionComponentProps {
   content: string;
   textSize?: string;
   textColor?: string;
@@ -214,7 +211,7 @@ const ScrollingText = forwardRef<HTMLElement, ScrollingProps>((props, ref) => {
 
 export default ScrollingText;
 
-export let schema: HydrogenComponentSchema = {
+export let schema: ComponentSchema = {
   type: "scrolling-text",
   title: "Scrolling Text",
   settings: [

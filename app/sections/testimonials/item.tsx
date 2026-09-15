@@ -1,11 +1,5 @@
 import { Circle, Handbag, Plus, Tag, XIcon } from "@phosphor-icons/react";
 import * as Dialog from "@radix-ui/react-dialog";
-import {
-  type ComponentLoaderArgs,
-  createSchema,
-  type HydrogenComponentProps,
-  type WeaverseProduct,
-} from "@weaverse/hydrogen";
 import clsx from "clsx";
 import type { CSSProperties } from "react";
 import { forwardRef, useState } from "react";
@@ -15,7 +9,12 @@ import { QuickShop } from "~/components/product/quick-shop";
 import { ScrollArea } from "~/components/scroll-area";
 import { PRODUCT_QUERY } from "~/graphql/queries";
 import { usePrefixPathWithLocale } from "~/hooks/use-prefix-path-with-locale";
-import { useWeaverseStudioCheck } from "~/hooks/use-weaverse-studio-check";
+import {
+  type ComponentLoaderArgs,
+  createSchema,
+  type PickedProduct,
+  type SectionComponentProps,
+} from "~/page-builder";
 import { ProductPopup } from "./product-popup";
 
 export interface TestimonialHotspotsItemData {
@@ -23,14 +22,14 @@ export interface TestimonialHotspotsItemData {
   iconSize: number;
   offsetX: number;
   offsetY: number;
-  product: WeaverseProduct;
+  product: PickedProduct;
   showPrice: boolean;
   showViewDetailsLink: boolean;
   viewDetailsLinkText: string;
 }
 
 interface TestimonialHotspotsItemProps
-  extends HydrogenComponentProps<Awaited<ReturnType<typeof loader>>>,
+  extends SectionComponentProps<Awaited<ReturnType<typeof loader>>>,
     TestimonialHotspotsItemData {}
 
 const ICONS = {
@@ -57,12 +56,13 @@ let TestimonialHotspotsItem = forwardRef<
     loaderData,
     ...rest
   } = props;
-  const isDesignMode = useWeaverseStudioCheck();
   const resolvedProduct = loaderData?.product ?? null;
-  const hasResolvedProduct = Boolean(product?.handle && resolvedProduct?.handle);
+  const hasResolvedProduct = Boolean(
+    product?.handle && resolvedProduct?.handle,
+  );
   const productHandle = resolvedProduct?.handle ?? product?.handle ?? "";
 
-  if (!hasResolvedProduct && !isDesignMode) {
+  if (!hasResolvedProduct) {
     return null;
   }
 
@@ -71,7 +71,9 @@ let TestimonialHotspotsItem = forwardRef<
   // Quick shop state for mobile
   const [showQuickShop, setShowQuickShop] = useState(false);
   const { load, data: quickShopData, state } = useFetcher();
-  const apiPath = usePrefixPathWithLocale(`/api/product?handle=${productHandle}`);
+  const apiPath = usePrefixPathWithLocale(
+    `/api/product?handle=${productHandle}`,
+  );
 
   // Handle click - open quick shop on mobile, popup on desktop
   const handleClick = () => {
@@ -207,8 +209,8 @@ export default TestimonialHotspotsItem;
 export let loader = async (
   args: ComponentLoaderArgs<TestimonialHotspotsItemData>,
 ) => {
-  let { weaverse, data } = args;
-  let { storefront } = weaverse;
+  let { context, data } = args;
+  let { storefront } = context;
   if (!data?.product?.handle || data.product.handle === "#") {
     return null;
   }

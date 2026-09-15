@@ -1,5 +1,4 @@
 import { Image } from "@shopify/hydrogen";
-import { useThemeSettings } from "@weaverse/hydrogen";
 import clsx from "clsx";
 import type {
   ProductCardFragment,
@@ -8,6 +7,7 @@ import type {
 import { Button } from "~/components/button";
 import { Link } from "~/components/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
+import { useThemeSettings } from "~/page-builder";
 import { RevealUnderline } from "~/reveal-underline";
 import { cn } from "~/utils/cn";
 import { isLightColor, isValidColor } from "~/utils/misc";

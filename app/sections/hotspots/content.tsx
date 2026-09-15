@@ -1,10 +1,10 @@
-import type { HydrogenComponentProps } from "@weaverse/hydrogen";
-import { createSchema } from "@weaverse/hydrogen";
 import { cva, type VariantProps } from "class-variance-authority";
 import { forwardRef } from "react";
+import type { SectionComponentProps } from "~/page-builder";
+import { createSchema } from "~/page-builder";
 
 interface HotspotsProps
-  extends HydrogenComponentProps,
+  extends SectionComponentProps,
     VariantProps<typeof variants> {}
 
 let variants = cva("flex flex-col [&_.paragraph]:mx-[unset]", {

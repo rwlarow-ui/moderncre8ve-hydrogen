@@ -1,12 +1,12 @@
-import {
-  createSchema,
-  type HydrogenComponentProps,
-  useParentInstance,
-} from "@weaverse/hydrogen";
 import { forwardRef, useEffect } from "react";
 import { useFetcher, useLoaderData } from "react-router";
 import { StarRating } from "~/components/star-rating";
 import { usePrefixPathWithLocale } from "~/hooks/use-prefix-path-with-locale";
+import {
+  createSchema,
+  type SectionComponentProps,
+  useParentSection,
+} from "~/page-builder";
 import type { loader as productRouteLoader } from "~/routes/($locale).products.$productHandle";
 
 type JudgemeReviewsData = {
@@ -15,11 +15,11 @@ type JudgemeReviewsData = {
   error?: string;
 };
 
-const JudgemeReview = forwardRef<HTMLDivElement, HydrogenComponentProps>(
+const JudgemeReview = forwardRef<HTMLDivElement, SectionComponentProps>(
   (props, ref) => {
     const { productReviews } = useLoaderData<typeof productRouteLoader>();
     const { load, data: fetchData } = useFetcher<JudgemeReviewsData>();
-    const context = useParentInstance();
+    const context = useParentSection();
     const handle = context?.data?.product?.handle;
     const api = usePrefixPathWithLocale(`/api/review/${handle}`);
 

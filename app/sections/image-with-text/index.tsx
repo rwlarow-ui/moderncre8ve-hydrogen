@@ -1,8 +1,8 @@
-import { createSchema } from "@weaverse/hydrogen";
 import { forwardRef, useState } from "react";
 import { backgroundInputs } from "~/components/background-image";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
+import { createSchema } from "~/page-builder";
 import { cn } from "~/utils/cn";
 import { type ImageAspectRatioType, ImageWithTextContext } from "./context";
 

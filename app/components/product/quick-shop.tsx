@@ -7,7 +7,6 @@ import {
   ShopPayButton,
 } from "@shopify/hydrogen";
 import type { MoneyV2 } from "@shopify/hydrogen/storefront-api-types";
-import { useThemeSettings } from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -20,6 +19,7 @@ import { ScrollArea } from "~/components/scroll-area";
 import { Skeleton } from "~/components/skeleton";
 import { SellingPlanSelector } from "~/components/subscriptions/selling-plan-selector";
 import { usePrefixPathWithLocale } from "~/hooks/use-prefix-path-with-locale";
+import { useThemeSettings } from "~/page-builder";
 import type { ProductData } from "~/routes/($locale).api.product";
 import { isDiscounted } from "~/utils/product";
 import { CompareAtPrice } from "./variant-prices";

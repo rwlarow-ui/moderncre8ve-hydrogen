@@ -1,12 +1,12 @@
+import { forwardRef } from "react";
 import {
   createSchema,
-  type HydrogenComponentProps,
   IMAGES_PLACEHOLDERS,
-} from "@weaverse/hydrogen";
-import { forwardRef } from "react";
+  type SectionComponentProps,
+} from "~/page-builder";
 import type { ImageAspectRatio } from "~/types/image";
 
-interface ColumnsWithImagesItemsProps extends HydrogenComponentProps {
+interface ColumnsWithImagesItemsProps extends SectionComponentProps {
   gap: number;
   imageAspectRatio: ImageAspectRatio;
 }

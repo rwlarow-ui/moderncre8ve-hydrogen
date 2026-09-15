@@ -1,5 +1,5 @@
-import type { InspectorGroup } from "@weaverse/hydrogen";
 import type { CSSProperties } from "react";
+import type { SettingsGroup } from "~/page-builder";
 import { cn } from "~/utils/cn";
 
 export interface OverlayData {
@@ -44,7 +44,7 @@ export function Overlay(props: OverlayProps) {
   return null;
 }
 
-export const overlayInputs: InspectorGroup["inputs"] = [
+export const overlayInputs: SettingsGroup["inputs"] = [
   {
     type: "switch",
     name: "enableOverlay",

@@ -1,4 +1,3 @@
-import { createSchema } from "@weaverse/hydrogen";
 import { forwardRef, useEffect, useState } from "react";
 import type { Swiper as SwiperType } from "swiper";
 import { EffectFade } from "swiper/modules";
@@ -6,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { backgroundInputs } from "~/components/background-image";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
+import { createSchema } from "~/page-builder";
 import "swiper/css";
 import "swiper/css/effect-fade";
 

@@ -1,6 +1,6 @@
-import { createSchema } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
 import { layoutInputs, Section, type SectionProps } from "~/components/section";
+import { createSchema } from "~/page-builder";
 
 const CollectionList = forwardRef<HTMLElement, SectionProps>((props, ref) => {
   const { children, ...rest } = props;

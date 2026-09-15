@@ -1,6 +1,6 @@
-import { createSchema } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
 import { useLoaderData } from "react-router";
+import { createSchema } from "~/page-builder";
 import type { loader as productRouteLoader } from "~/routes/($locale).products.$productHandle";
 import ReviewForm from "./review-form";
 import { ReviewList } from "./review-list";

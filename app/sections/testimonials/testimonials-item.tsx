@@ -1,7 +1,7 @@
-import { createSchema, type HydrogenComponentProps } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
+import { createSchema, type SectionComponentProps } from "~/page-builder";
 
-interface TestimonialProps extends HydrogenComponentProps {}
+interface TestimonialProps extends SectionComponentProps {}
 
 const TestimonialItem = forwardRef<HTMLDivElement, TestimonialProps>(
   (props, ref) => {

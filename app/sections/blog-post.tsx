@@ -3,7 +3,6 @@ import {
   PinterestLogoIcon,
   XLogoIcon,
 } from "@phosphor-icons/react";
-import { createSchema, isBrowser } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
 import { useLoaderData, useRouteLoaderData } from "react-router";
 import {
@@ -14,6 +13,7 @@ import {
 import type { ArticleQuery } from "storefront-api.generated";
 import { Image } from "~/components/image";
 import { layoutInputs, Section, type SectionProps } from "~/components/section";
+import { createSchema, isBrowser } from "~/page-builder";
 import type { RootLoader } from "~/root";
 
 interface BlogPostProps extends SectionProps {

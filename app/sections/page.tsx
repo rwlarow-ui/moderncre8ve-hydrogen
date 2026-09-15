@@ -1,9 +1,9 @@
-import { createSchema } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
 import { useLoaderData } from "react-router";
 import type { PageDetailsQuery } from "storefront-api.generated";
 import { Link } from "~/components/link";
 import { layoutInputs, Section, type SectionProps } from "~/components/section";
+import { createSchema } from "~/page-builder";
 
 interface PageProps extends SectionProps {}
 

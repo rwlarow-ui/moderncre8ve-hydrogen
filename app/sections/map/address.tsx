@@ -4,9 +4,9 @@ import {
   PlusCircleIcon,
 } from "@phosphor-icons/react";
 import * as Accordion from "@radix-ui/react-accordion";
-import type { HydrogenComponentSchema } from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { forwardRef, useContext, useEffect, useRef, useState } from "react";
+import type { ComponentSchema } from "~/page-builder";
 import { cn } from "~/utils/cn";
 import { MapContext } from "./map";
 
@@ -299,7 +299,7 @@ let Address = forwardRef<HTMLDivElement, AddressProps>((props, _ref) => {
 
 export default Address;
 
-export let schema: HydrogenComponentSchema = {
+export let schema: ComponentSchema = {
   type: "address-item",
   title: "Address",
   settings: [

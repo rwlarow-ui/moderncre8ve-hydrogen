@@ -1,9 +1,3 @@
-import {
-  createSchema,
-  type HydrogenComponentProps,
-  IMAGES_PLACEHOLDERS,
-  type WeaverseImage,
-} from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import { forwardRef } from "react";
@@ -16,6 +10,12 @@ import Link, { type LinkProps, linkInputs } from "~/components/link";
 import type { OverlayProps } from "~/components/overlay";
 import { Overlay, overlayInputs } from "~/components/overlay";
 import Paragraph, { type ParagraphProps } from "~/components/paragraph";
+import {
+  createSchema,
+  IMAGES_PLACEHOLDERS,
+  type PageImage,
+  type SectionComponentProps,
+} from "~/page-builder";
 
 const variants = cva(
   [
@@ -67,10 +67,10 @@ const variants = cva(
 
 interface PromotionItemProps
   extends VariantProps<typeof variants>,
-    HydrogenComponentProps,
+    SectionComponentProps,
     OverlayProps,
     Omit<HeadingProps, "content"> {
-  backgroundImage: WeaverseImage | string;
+  backgroundImage: PageImage | string;
   // Heading props
   headingContent?: string;
   headingTagName?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";

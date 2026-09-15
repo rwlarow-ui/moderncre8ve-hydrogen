@@ -1,10 +1,4 @@
 import { ArrowRight } from "@phosphor-icons/react";
-import {
-  createSchema,
-  type HydrogenComponentProps,
-  type InspectorGroup,
-  useThemeSettings,
-} from "@weaverse/hydrogen";
 import { cva, type VariantProps } from "class-variance-authority";
 import { forwardRef, type HTMLAttributes } from "react";
 import {
@@ -12,6 +6,12 @@ import {
   type LinkProps as RemixLinkProps,
   useRouteLoaderData,
 } from "react-router";
+import {
+  createSchema,
+  type SectionComponentProps,
+  type SettingsGroup,
+  useThemeSettings,
+} from "~/page-builder";
 import type { RootLoader } from "~/root";
 import { cn } from "~/utils/cn";
 
@@ -85,7 +85,7 @@ export interface LinkData
 
 export interface LinkProps
   extends HTMLAttributes<HTMLAnchorElement>,
-    Partial<Omit<HydrogenComponentProps, "children">>,
+    Partial<Omit<SectionComponentProps, "children">>,
     LinkData {}
 
 export function useHrefWithLocale(href: LinkProps["to"]) {
@@ -211,7 +211,7 @@ export const Link = forwardRef(
 
 export default Link;
 
-export const linkContentInputs: InspectorGroup["inputs"] = [
+export const linkContentInputs: SettingsGroup["inputs"] = [
   {
     type: "text",
     name: "text",
@@ -270,7 +270,7 @@ export const linkContentInputs: InspectorGroup["inputs"] = [
     condition: "variant.eq.decor",
   },
 ];
-export const linkStylesInputs: InspectorGroup["inputs"] = [
+export const linkStylesInputs: SettingsGroup["inputs"] = [
   {
     type: "color",
     label: "Background color",
@@ -315,7 +315,7 @@ export const linkStylesInputs: InspectorGroup["inputs"] = [
   },
 ];
 
-export const linkInputs: InspectorGroup["inputs"] = [
+export const linkInputs: SettingsGroup["inputs"] = [
   ...linkContentInputs,
   {
     type: "heading",

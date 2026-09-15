@@ -1,12 +1,12 @@
-import { createSchema, type HydrogenComponentProps } from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import { clsx } from "clsx";
 import { forwardRef } from "react";
+import { createSchema, type SectionComponentProps } from "~/page-builder";
 
 export interface ParagraphProps
   extends VariantProps<typeof variants>,
-    Partial<HydrogenComponentProps> {
+    Partial<SectionComponentProps> {
   as?: "p" | "div";
   content: string;
   color?: string;

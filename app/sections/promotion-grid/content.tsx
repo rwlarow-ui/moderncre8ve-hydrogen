@@ -1,9 +1,9 @@
-import { createSchema, type HydrogenComponentProps } from "@weaverse/hydrogen";
 import { cva, type VariantProps } from "class-variance-authority";
 import { forwardRef } from "react";
+import { createSchema, type SectionComponentProps } from "~/page-builder";
 
 interface PromotionGridProps
-  extends HydrogenComponentProps,
+  extends SectionComponentProps,
     VariantProps<typeof variants> {}
 
 let variants = cva("flex flex-col [&_.paragraph]:mx-[unset]", {

@@ -1,5 +1,4 @@
 import { Pagination } from "@shopify/hydrogen";
-import { createSchema } from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { forwardRef } from "react";
 import { useLoaderData } from "react-router";
@@ -8,6 +7,7 @@ import { BreadCrumb } from "~/components/breadcrumb";
 import { variants } from "~/components/link";
 import { ProductCard } from "~/components/product/product-card";
 import { layoutInputs, Section, type SectionProps } from "~/components/section";
+import { createSchema } from "~/page-builder";
 import { cn } from "~/utils/cn";
 
 interface AllProductsProps extends SectionProps {

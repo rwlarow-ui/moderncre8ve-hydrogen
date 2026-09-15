@@ -1,44 +1,40 @@
 import type { SeoConfig } from "@shopify/hydrogen";
-import type { RouteLoaderArgs } from "@weaverse/hydrogen";
-import type { MetaFunction } from "react-router";
+import { type MetaFunction, useLoaderData } from "react-router";
 import type { PageDetailsQuery } from "storefront-api.generated";
 import invariant from "tiny-invariant";
-
+import type { RouteLoaderArgs } from "~/page-builder";
+import { loadPage } from "~/page-builder/page.server";
+import { hasPageComposition } from "~/page-builder/pages";
+import { PageContent } from "~/page-builder/renderer";
 import { routeHeaders } from "~/utils/cache";
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { redirectIfHandleIsLocalized } from "~/utils/redirect";
 import { seoPayload } from "~/utils/seo.server";
-import { loadPageWithFallback } from "~/utils/weaverse-fallback.server";
-import { validateWeaverseData, WeaverseContent } from "~/weaverse";
 
 export const headers = routeHeaders;
 
 export async function loader({ request, params, context }: RouteLoaderArgs) {
   invariant(params.pageHandle, "Missing page handle");
-  const { storefront } = context.weaverse;
+  const { storefront } = context;
 
-  // Load page data and weaverseData in parallel
-  const [{ page }, weaverseData] = await Promise.all([
+  // Load page data and the page composition in parallel
+  const [{ page }, pageData] = await Promise.all([
     storefront.query<PageDetailsQuery>(PAGE_QUERY, {
       variables: {
         handle: params.pageHandle,
         language: storefront.i18n.language,
       },
     }),
-    loadPageWithFallback(context.weaverse, {
-      type: "PAGE",
-      handle: params.pageHandle,
-    }),
+    loadPage({ context, request }, { type: "PAGE", handle: params.pageHandle }),
   ]);
 
   if (!page) {
-    // No Shopify page — only render if we have a local Weaverse fallback
-    // (page ID starts with "local_"). Otherwise 404 so Shopify's URL
-    // redirects can fire (e.g. /pages/contact → /pages/contact-us).
-    if (!weaverseData?.page?.id?.startsWith("local_")) {
+    // No Shopify page — only render if this handle has a composition of its
+    // own. Otherwise 404 so Shopify's URL redirects can fire
+    // (e.g. /pages/contact → /pages/contact-us).
+    if (!hasPageComposition(params.pageHandle)) {
       throw new Response(null, { status: 404 });
     }
-    validateWeaverseData(weaverseData);
     const title = params.pageHandle
       .replace(/-/g, " ")
       .replace(/\b\w/g, (c) => c.toUpperCase());
@@ -48,7 +44,7 @@ export async function loader({ request, params, context }: RouteLoaderArgs) {
         page: { title, seo: { title, description: "" } },
         url: request.url,
       }),
-      weaverseData,
+      pageData,
     };
   }
   redirectIfHandleIsLocalized(request, {
@@ -61,7 +57,7 @@ export async function loader({ request, params, context }: RouteLoaderArgs) {
   return {
     page,
     seo,
-    weaverseData,
+    pageData,
   };
 }
 
@@ -73,7 +69,8 @@ export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
 };
 
 export default function Page() {
-  return <WeaverseContent />;
+  const { pageData } = useLoaderData<typeof loader>();
+  return <PageContent pageData={pageData} />;
 }
 
 const PAGE_QUERY = `#graphql

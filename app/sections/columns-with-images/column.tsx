@@ -1,15 +1,15 @@
-import {
-  createSchema,
-  type HydrogenComponentProps,
-  IMAGES_PLACEHOLDERS,
-  type WeaverseImage,
-} from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import type { CSSProperties } from "react";
 import { forwardRef } from "react";
 import { Image } from "~/components/image";
 import Link, { type LinkProps, linkContentInputs } from "~/components/link";
+import {
+  createSchema,
+  IMAGES_PLACEHOLDERS,
+  type PageImage,
+  type SectionComponentProps,
+} from "~/page-builder";
 
 const variants = cva("", {
   variants: {
@@ -27,8 +27,8 @@ const variants = cva("", {
 interface ColumnWithImageItemProps
   extends VariantProps<typeof variants>,
     Pick<LinkProps, "variant" | "text" | "to" | "openInNewTab">,
-    HydrogenComponentProps {
-  imageSrc: WeaverseImage;
+    SectionComponentProps {
+  imageSrc: PageImage;
   imageBorderRadius: number;
   heading: string;
   content: string;

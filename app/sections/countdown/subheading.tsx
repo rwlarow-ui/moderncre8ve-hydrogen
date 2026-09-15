@@ -1,7 +1,7 @@
-import { createSchema, type HydrogenComponentProps } from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import { forwardRef } from "react";
+import { createSchema, type SectionComponentProps } from "~/page-builder";
 import { cn } from "~/utils/cn";
 
 const variants = cva("subheading", {
@@ -29,7 +29,7 @@ const variants = cva("subheading", {
 
 interface SubHeadingProps
   extends VariantProps<typeof variants>,
-    HydrogenComponentProps {
+    SectionComponentProps {
   as?: "h4" | "h5" | "h6" | "div" | "p";
   color?: string;
   backgroundColor?: string;

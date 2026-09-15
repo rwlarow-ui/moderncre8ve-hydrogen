@@ -1,8 +1,8 @@
-import { createSchema } from "@weaverse/hydrogen";
 import { forwardRef, useState } from "react";
 import { useLoaderData } from "react-router";
 import type { SectionProps } from "~/components/section";
 import { Section } from "~/components/section";
+import { createSchema } from "~/page-builder";
 import { collectionFaqs } from "~/utils/collection-faqs";
 
 interface CollectionFaqProps extends SectionProps {

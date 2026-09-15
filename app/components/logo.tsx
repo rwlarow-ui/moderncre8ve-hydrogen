@@ -1,8 +1,8 @@
 import { Image } from "@shopify/hydrogen";
-import { useThemeSettings } from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { Link } from "~/components/link";
 import { useShopMenu } from "~/hooks/use-shop-menu";
+import { useThemeSettings } from "~/page-builder";
 
 export function Logo() {
   const { shopName } = useShopMenu();

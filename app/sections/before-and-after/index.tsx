@@ -1,6 +1,6 @@
-import type { HydrogenComponentSchema } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
 import { layoutInputs, Section, type SectionProps } from "~/components/section";
+import type { ComponentSchema } from "~/page-builder";
 
 type BeforeAndAfterProps = SectionProps;
 
@@ -17,7 +17,7 @@ const BeforeAndAfter = forwardRef<HTMLElement, BeforeAndAfterProps>(
 
 export default BeforeAndAfter;
 
-export let schema: HydrogenComponentSchema = {
+export let schema: ComponentSchema = {
   type: "before-and-after",
   title: "Before & after",
   // toolbar: ['general-settings', ['duplicate', 'delete']],

@@ -1,13 +1,13 @@
-import {
-  createSchema,
-  type HydrogenComponentProps,
-  type WeaverseImage,
-} from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
 import { forwardRef } from "react";
 import { Image } from "~/components/image";
+import {
+  createSchema,
+  type PageImage,
+  type SectionComponentProps,
+} from "~/page-builder";
 
 const variants = cva("h-(--image-height)", {
   variants: {
@@ -46,8 +46,8 @@ const variants = cva("h-(--image-height)", {
 
 interface ImageGalleryItemProps
   extends VariantProps<typeof variants>,
-    HydrogenComponentProps {
-  src: WeaverseImage;
+    SectionComponentProps {
+  src: PageImage;
 }
 
 const ImageGalleryItem = forwardRef<HTMLImageElement, ImageGalleryItemProps>(

@@ -1,10 +1,10 @@
-import type { HydrogenComponentProps } from "@weaverse/hydrogen";
-import { createSchema } from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { Children, createContext, forwardRef, useContext } from "react";
+import type { SectionComponentProps } from "~/page-builder";
+import { createSchema } from "~/page-builder";
 import type { ImageAspectRatio } from "~/types/image";
 
-interface HotspotsProps extends HydrogenComponentProps {
+interface HotspotsProps extends SectionComponentProps {
   gap?: number;
   aspectRatio?: ImageAspectRatio;
 }

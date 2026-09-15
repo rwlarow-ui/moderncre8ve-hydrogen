@@ -1,5 +1,4 @@
 import { UserIcon } from "@phosphor-icons/react";
-import { useThemeSettings } from "@weaverse/hydrogen";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
 import { Suspense, useState } from "react";
@@ -11,8 +10,9 @@ import {
 } from "react-router";
 import useWindowScroll from "react-use/esm/useWindowScroll";
 import Link from "~/components/link";
-import { usePrefixPathWithLocale } from "~/hooks/use-prefix-path-with-locale";
 import { Logo } from "~/components/logo";
+import { usePrefixPathWithLocale } from "~/hooks/use-prefix-path-with-locale";
+import { useThemeSettings } from "~/page-builder";
 import type { RootLoader } from "~/root";
 import { cn } from "~/utils/cn";
 import { DEFAULT_LOCALE } from "~/utils/const";
@@ -119,11 +119,33 @@ function AccountLink({ className }: { className?: string }) {
 
   return (
     <Suspense
-      fallback={<span className={clsx("transition-none", className)}>{icon}</span>}
+      fallback={
+        <span className={clsx("transition-none", className)}>{icon}</span>
+      }
     >
-        <Await
-          resolve={isLoggedIn}
-          errorElement={
+      <Await
+        resolve={isLoggedIn}
+        errorElement={
+          <form method="get" action={loginPath}>
+            <button
+              type="submit"
+              className={clsx("transition-none", className)}
+              aria-label="Sign in"
+            >
+              {icon}
+            </button>
+          </form>
+        }
+      >
+        {(loggedIn) =>
+          loggedIn ? (
+            <Link
+              to={accountPath}
+              className={clsx("transition-none", className)}
+            >
+              {icon}
+            </Link>
+          ) : (
             <form method="get" action={loginPath}>
               <button
                 type="submit"
@@ -133,26 +155,9 @@ function AccountLink({ className }: { className?: string }) {
                 {icon}
               </button>
             </form>
-          }
-        >
-          {(loggedIn) =>
-            loggedIn ? (
-              <Link to={accountPath} className={clsx("transition-none", className)}>
-                {icon}
-              </Link>
-            ) : (
-              <form method="get" action={loginPath}>
-                <button
-                  type="submit"
-                  className={clsx("transition-none", className)}
-                  aria-label="Sign in"
-                >
-                  {icon}
-                </button>
-              </form>
-            )
-          }
-        </Await>
+          )
+        }
+      </Await>
     </Suspense>
   );
 }

@@ -1,28 +1,27 @@
 import type { SeoConfig } from "@shopify/hydrogen";
 import { getPaginationVariables } from "@shopify/hydrogen";
 import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
-import type { MetaFunction } from "react-router";
+import { type MetaFunction, useLoaderData } from "react-router";
 import invariant from "tiny-invariant";
 import { PRODUCT_CARD_FRAGMENT } from "~/graphql/fragments";
+import { loadPage } from "~/page-builder/page.server";
+import { PageContent } from "~/page-builder/renderer";
 import { routeHeaders } from "~/utils/cache";
 import { maybeFilterOutCombinedListingsQuery } from "~/utils/combined-listings";
 import { PAGINATION_SIZE } from "~/utils/const";
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { seoPayload } from "~/utils/seo.server";
-import { WeaverseContent } from "~/weaverse";
 
 export const headers = routeHeaders;
 
-export async function loader({
-  request,
-  context: { storefront, weaverse },
-}: LoaderFunctionArgs) {
+export async function loader({ request, context }: LoaderFunctionArgs) {
+  const { storefront } = context;
   const variables = getPaginationVariables(request, {
     pageBy: PAGINATION_SIZE,
   });
 
-  // Load products data and weaverseData in parallel
-  const [data, weaverseData] = await Promise.all([
+  // Load products data and the page composition in parallel
+  const [data, pageData] = await Promise.all([
     storefront.query(ALL_PRODUCTS_QUERY, {
       variables: {
         ...variables,
@@ -31,7 +30,7 @@ export async function loader({
         query: maybeFilterOutCombinedListingsQuery,
       },
     }),
-    weaverse.loadPage({ type: "ALL_PRODUCTS" }),
+    loadPage({ context, request }, { type: "ALL_PRODUCTS" }),
   ]);
 
   invariant(data, "No data returned from Shopify API");
@@ -57,7 +56,7 @@ export async function loader({
   return {
     products: data.products,
     seo,
-    weaverseData,
+    pageData,
   };
 }
 
@@ -66,7 +65,8 @@ export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
   return getEnhancedSeoMeta(data.seo as SeoConfig, { canonicalUrl: canonical });
 };
 export default function AllProducts() {
-  return <WeaverseContent />;
+  const { pageData } = useLoaderData<typeof loader>();
+  return <PageContent pageData={pageData} />;
 }
 
 const ALL_PRODUCTS_QUERY = `#graphql

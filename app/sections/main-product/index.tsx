@@ -9,7 +9,6 @@ import type {
   MoneyV2,
   ProductVariantComponent,
 } from "@shopify/hydrogen/storefront-api-types";
-import { createSchema } from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { forwardRef, useState } from "react";
 import { Link, useLoaderData } from "react-router";
@@ -27,6 +26,7 @@ import {
 } from "~/components/product/variant-prices";
 import { layoutInputs, Section, type SectionProps } from "~/components/section";
 import { SellingPlanSelector } from "~/components/subscriptions/selling-plan-selector";
+import { createSchema } from "~/page-builder";
 import type { loader as productRouteLoader } from "~/routes/($locale).products.$productHandle";
 import { isCombinedListing } from "~/utils/combined-listings";
 import { isDiscounted } from "~/utils/product";

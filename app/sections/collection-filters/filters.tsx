@@ -2,12 +2,11 @@ import { CaretRightIcon } from "@phosphor-icons/react";
 import * as Accordion from "@radix-ui/react-accordion";
 import type { Filter } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
-import { useRef } from "react";
 import { useLoaderData } from "react-router";
 import type { CollectionQuery } from "storefront-api.generated";
 import { OPTIONS_AS_SWATCH } from "~/components/product/product-option-values";
 import { ScrollArea } from "~/components/scroll-area";
-import { useClosestWeaverseItem } from "~/hooks/use-closest-weaverse-item";
+import { useSectionData } from "~/page-builder";
 import { cn } from "~/utils/cn";
 import type { AppliedFilter } from "~/utils/filter";
 import type { CollectionFiltersData } from ".";
@@ -15,9 +14,7 @@ import { FilterItem } from "./filter-item";
 import { PriceRangeFilter } from "./price-range-filter";
 
 export function Filters({ className }: { className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const parentInstance = useClosestWeaverseItem(ref);
-  const parentData = parentInstance.data as unknown as CollectionFiltersData;
+  const parentData = useSectionData<CollectionFiltersData>();
   const {
     expandFilters,
     showFiltersCount,
@@ -53,7 +50,6 @@ export function Filters({ className }: { className?: string }) {
           return (
             <Accordion.Item
               key={filter.id}
-              ref={ref}
               value={filter.id}
               className="w-full pt-7 pb-6"
             >

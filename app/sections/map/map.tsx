@@ -1,10 +1,10 @@
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import type { HydrogenComponentSchema } from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { createContext, forwardRef, useEffect, useRef, useState } from "react";
 import Heading from "~/components/heading";
 import type { SectionProps } from "~/components/section";
 import { Section, sectionSettings } from "~/components/section";
+import type { ComponentSchema } from "~/page-builder";
 
 interface MapSectionProps extends SectionProps {
   heading?: string;
@@ -211,7 +211,7 @@ let MapSection = forwardRef<HTMLElement, MapSectionProps>((props, ref) => {
 
 export default MapSection;
 
-export let schema: HydrogenComponentSchema = {
+export let schema: ComponentSchema = {
   type: "map",
   title: "Map",
   childTypes: ["address-item"],

@@ -1,4 +1,3 @@
-import { createSchema, type HydrogenComponentProps } from "@weaverse/hydrogen";
 import { cva, type VariantProps } from "class-variance-authority";
 import { forwardRef } from "react";
 import Heading, {
@@ -7,9 +6,10 @@ import Heading, {
 } from "~/components/heading";
 import Link, { type LinkProps, linkInputs } from "~/components/link";
 import Paragraph, { type ParagraphProps } from "~/components/paragraph";
+import { createSchema, type SectionComponentProps } from "~/page-builder";
 
 interface CollectionListDynamicProps
-  extends HydrogenComponentProps,
+  extends SectionComponentProps,
     VariantProps<typeof variants>,
     Omit<HeadingProps, "content"> {
   // Layout props

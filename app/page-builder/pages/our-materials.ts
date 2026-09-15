@@ -1,0 +1,228 @@
+import type { PageDefinition } from "../types";
+
+export const ourMaterials: PageDefinition = {
+  rootId: "materials-root",
+  items: [
+    {
+      id: "materials-root",
+      type: "main",
+      children: [
+        {
+          id: "materials-hero",
+        },
+        {
+          id: "materials-columns",
+        },
+        {
+          id: "materials-iwt-mixed",
+        },
+      ],
+    },
+    {
+      id: "materials-hero",
+      type: "hero-image",
+      children: [
+        {
+          id: "materials-hero-sub",
+        },
+        {
+          id: "materials-hero-heading",
+        },
+      ],
+      data: {
+        height: "large",
+        contentPosition: "center center",
+        backgroundFit: "cover",
+        enableOverlay: true,
+        overlayOpacity: 40,
+        backgroundImage: "/images/heroes/img_1426.jpg",
+      },
+    },
+    {
+      id: "materials-hero-sub",
+      type: "subheading",
+      data: {
+        content: "Premium American Hardwoods — Locally Sourced in Ohio",
+        color: "#ffffff",
+      },
+    },
+    {
+      id: "materials-hero-heading",
+      type: "heading",
+      data: {
+        content: "Our Materials",
+        as: "h1",
+        color: "#ffffff",
+        size: "default",
+      },
+    },
+    {
+      id: "materials-columns",
+      type: "columns-with-images",
+      children: [
+        {
+          id: "materials-columns-heading",
+        },
+        {
+          id: "materials-columns-items",
+        },
+      ],
+      data: {
+        gap: 48,
+      },
+    },
+    {
+      id: "materials-columns-heading",
+      type: "heading",
+      data: {
+        content: "Premium Hardwood Species",
+        as: "h2",
+      },
+    },
+    {
+      id: "materials-columns-items",
+      type: "columns-with-images--items",
+      children: [
+        {
+          id: "materials-col-walnut",
+        },
+        {
+          id: "materials-col-oak",
+        },
+        {
+          id: "materials-col-maple",
+        },
+        {
+          id: "materials-col-cherry",
+        },
+      ],
+      data: {
+        gap: 40,
+        imageAspectRatio: "1/1",
+      },
+    },
+    {
+      id: "materials-col-walnut",
+      type: "column-with-image--item",
+      data: {
+        size: "medium",
+        heading: "American Walnut",
+        content:
+          "The heartwood is light brown to dark chocolate brown, occasionally with dark or purple streaks. Generally straight grained, sometimes with wavy or curly grain that produces its characteristic and attractive figure, sought after by designers.",
+        imageSrc:
+          "https://cdn.shopify.com/s/files/1/1015/2577/files/Screen_Shot_2020-12-01_at_11.55.49_AM_600x600.png?v=1606841831",
+        imageBorderRadius: 0,
+      },
+    },
+    {
+      id: "materials-col-oak",
+      type: "column-with-image--item",
+      data: {
+        size: "medium",
+        heading: "White Oak",
+        content:
+          "Sapwood is whitish to light brown, heartwood is light to mid or dark brown. The difference between sapwood and heartwood is less distinct than in red oak. Mainly straight-grained with medium to coarse texture.",
+        imageSrc:
+          "https://cdn.shopify.com/s/files/1/1015/2577/files/white-oak_480x480.jpg?v=1606841046",
+        imageBorderRadius: 0,
+      },
+    },
+    {
+      id: "materials-col-maple",
+      type: "column-with-image--item",
+      data: {
+        size: "medium",
+        heading: "Hard Maple",
+        content:
+          "Sapwood is normally creamy white with a slight reddish/brown tinge. Heartwood varies from light to dark reddish brown. Both may contain pith fleck as a natural characteristic.",
+        imageSrc:
+          "https://cdn.shopify.com/s/files/1/1015/2577/files/Hard-Maple-e1570042070155_480x480.jpg?v=1606841124",
+        imageBorderRadius: 0,
+      },
+    },
+    {
+      id: "materials-col-cherry",
+      type: "column-with-image--item",
+      data: {
+        size: "medium",
+        heading: "American Cherry",
+        content:
+          "Heartwood varies from rich red to reddish brown and darkens with light exposure over time. Sapwood is creamy white. Fine uniform, straight and unpronounced grain with a smooth texture. Pin knots and gum pockets are natural characteristics.",
+        imageSrc:
+          "https://cdn.shopify.com/s/files/1/1015/2577/files/Cherry-North-American-Quarter-Cut_480x480.jpg?v=1606842388",
+        imageBorderRadius: 0,
+      },
+    },
+    {
+      id: "materials-iwt-mixed",
+      type: "image-with-text",
+      children: [
+        {
+          id: "materials-iwt-images",
+        },
+        {
+          id: "materials-iwt-content",
+        },
+      ],
+      data: {
+        verticalPadding: "none",
+        backgroundColor: "#F0F0EF",
+        backgroundFor: "content",
+      },
+    },
+    {
+      id: "materials-iwt-images",
+      type: "image-with-text--images",
+      children: [
+        {
+          id: "materials-iwt-image",
+        },
+      ],
+      data: {
+        imageAspectRatio: "1/1",
+      },
+    },
+    {
+      id: "materials-iwt-image",
+      type: "image-with-text--image",
+      data: {
+        image:
+          "https://cdn.shopify.com/s/files/1/1015/2577/files/Screen_Shot_2020-12-01_at_11.52.19_AM_480x480.png?v=1606841597",
+        objectFit: "cover",
+        borderRadius: 0,
+      },
+    },
+    {
+      id: "materials-iwt-content",
+      type: "image-with-text--content",
+      children: [
+        {
+          id: "materials-iwt-heading",
+        },
+        {
+          id: "materials-iwt-paragraph",
+        },
+      ],
+      data: {
+        gap: "5",
+        contentPosition: "center center",
+      },
+    },
+    {
+      id: "materials-iwt-heading",
+      type: "heading",
+      data: {
+        content: "Mixed Walnut",
+        as: "h2",
+      },
+    },
+    {
+      id: "materials-iwt-paragraph",
+      type: "paragraph",
+      data: {
+        content:
+          "The sapwood of walnut is creamy white, whereas the heartwood is light brown to dark chocolate brown, making the difference in colour quite distinct. Mixed walnut blends both sap and heart woods for a striking contrast. Classic walnut (heartwood only, without light streaks) is available at a premium.",
+      },
+    },
+  ],
+};

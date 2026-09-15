@@ -1,7 +1,7 @@
-import type { HydrogenComponentSchema } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
+import type { ComponentSchema } from "~/page-builder";
 
 interface CollectionListDynamicProps extends SectionProps {}
 
@@ -21,7 +21,7 @@ export default CollectionListDynamic;
 
 // Remove the COLLECTIONS_QUERY and loader since they'll be moved to collection-items
 
-export let schema: HydrogenComponentSchema = {
+export let schema: ComponentSchema = {
   type: "feature-collection",
   title: "Featured collections",
   childTypes: ["collection-content-dynamic", "collection-list-dynamic-items"],

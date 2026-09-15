@@ -1,15 +1,16 @@
 import type { SeoConfig } from "@shopify/hydrogen";
 import { flattenConnection } from "@shopify/hydrogen";
 import { data, type LoaderFunctionArgs } from "@shopify/remix-oxygen";
-import type { MetaFunction } from "react-router";
+import { type MetaFunction, useLoaderData } from "react-router";
 import type { BlogQuery } from "storefront-api.generated";
 import invariant from "tiny-invariant";
+import { loadPage } from "~/page-builder/page.server";
+import { PageContent } from "~/page-builder/renderer";
 import { routeHeaders } from "~/utils/cache";
 import { PAGINATION_SIZE } from "~/utils/const";
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { redirectIfHandleIsLocalized } from "~/utils/redirect";
 import { seoPayload } from "~/utils/seo.server";
-import { WeaverseContent } from "~/weaverse";
 
 export const headers = routeHeaders;
 
@@ -20,8 +21,8 @@ export const loader = async (args: LoaderFunctionArgs) => {
 
   invariant(params.blogHandle, "Missing blog handle");
 
-  // Load blog data and weaverseData in parallel
-  const [{ blog }, weaverseData] = await Promise.all([
+  // Load blog data and the page composition in parallel
+  const [{ blog }, pageData] = await Promise.all([
     storefront.query<BlogQuery>(BLOGS_QUERY, {
       variables: {
         blogHandle: params.blogHandle,
@@ -29,10 +30,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
         language,
       },
     }),
-    context.weaverse.loadPage({
-      type: "BLOG",
-      handle: params.blogHandle,
-    }),
+    loadPage({ context, request }, { type: "BLOG", handle: params.blogHandle }),
   ]);
 
   if (!blog?.articles) {
@@ -61,7 +59,7 @@ export const loader = async (args: LoaderFunctionArgs) => {
     blog,
     articles,
     seo,
-    weaverseData,
+    pageData,
   });
 };
 
@@ -76,7 +74,8 @@ export const meta: MetaFunction<typeof loader> = ({
 };
 
 export default function Blogs() {
-  return <WeaverseContent />;
+  const { pageData } = useLoaderData<typeof loader>();
+  return <PageContent pageData={pageData} />;
 }
 
 const BLOGS_QUERY = `#graphql

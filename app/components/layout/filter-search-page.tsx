@@ -19,7 +19,7 @@ import {
 import type { CollectionQuery } from "storefront-api.generated";
 import { OPTIONS_AS_SWATCH } from "~/components/product/product-option-values";
 import { ScrollArea } from "~/components/scroll-area";
-import { useClosestWeaverseItem } from "~/hooks/use-closest-weaverse-item";
+import { useSectionData } from "~/page-builder";
 import type { RootLoader } from "~/root";
 import type { CollectionFiltersData } from "~/sections/collection-filters";
 import { cn } from "~/utils/cn";
@@ -33,10 +33,7 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 
 export function FiltersSearchPage({ className }: { className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const parentInstance = useClosestWeaverseItem(ref);
-  const parentData = (parentInstance?.data ||
-    {}) as unknown as CollectionFiltersData;
+  const parentData = useSectionData<CollectionFiltersData>();
   const {
     expandFilters = false,
     showFiltersCount = false,
@@ -80,7 +77,6 @@ export function FiltersSearchPage({ className }: { className?: string }) {
           return (
             <Accordion.Item
               key={filter.id}
-              ref={ref}
               value={filter.id}
               className="w-full pt-7 pb-6"
             >

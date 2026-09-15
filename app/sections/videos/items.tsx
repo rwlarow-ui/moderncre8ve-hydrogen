@@ -1,4 +1,3 @@
-import type { HydrogenComponent } from "@weaverse/hydrogen";
 import type { ReactNode } from "react";
 import {
   Children,
@@ -9,6 +8,7 @@ import {
 } from "react";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import type { SectionComponent } from "~/page-builder";
 import "swiper/css";
 import "swiper/css/pagination";
 import type { ImageAspectRatio } from "~/types/image";
@@ -66,7 +66,7 @@ let VideoItems = forwardRef<HTMLElement, VideoItemsProps>((props, ref) => {
   );
 });
 
-export let schema: HydrogenComponent["schema"] = {
+export let schema: SectionComponent["schema"] = {
   type: "video--items",
   title: "Videos",
   settings: [

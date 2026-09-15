@@ -16,6 +16,8 @@ import { useLoaderData } from "react-router";
 import type { CollectionQuery } from "storefront-api.generated";
 import invariant from "tiny-invariant";
 import { PRODUCT_CARD_FRAGMENT } from "~/graphql/fragments";
+import { loadPage } from "~/page-builder/page.server";
+import { PageContent } from "~/page-builder/renderer";
 import type { I18nLocale } from "~/types/locale";
 import { routeHeaders } from "~/utils/cache";
 import { PAGINATION_SIZE } from "~/utils/const";
@@ -23,8 +25,6 @@ import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { FILTER_URL_PREFIX, type SortParam } from "~/utils/filter";
 import { redirectIfHandleIsLocalized } from "~/utils/redirect";
 import { seoPayload } from "~/utils/seo.server";
-import { loadPageWithFallback } from "~/utils/weaverse-fallback.server";
-import { WeaverseContent } from "~/weaverse";
 
 export const headers = routeHeaders;
 
@@ -60,8 +60,8 @@ export async function loader({ params, request, context }: LoaderFunctionArgs) {
   const [bannerNamespace = "", bannerKey = ""] =
     CUSTOM_COLLECTION_BANNER_METAFIELD.split(".");
 
-  // Load collection data and weaverseData in parallel
-  const [{ collection, collections }, weaverseData] = await Promise.all([
+  // Load collection data and the page composition in parallel
+  const [{ collection, collections }, pageData] = await Promise.all([
     storefront
       .query<CollectionQuery>(COLLECTION_QUERY, {
         variables: {
@@ -80,10 +80,10 @@ export async function loader({ params, request, context }: LoaderFunctionArgs) {
       .catch((_e) => {
         return { collection: null, collections: [] };
       }),
-    loadPageWithFallback(context.weaverse, {
-      type: "COLLECTION",
-      handle: collectionHandle,
-    }),
+    loadPage(
+      { context, request },
+      { type: "COLLECTION", handle: collectionHandle },
+    ),
   ]);
 
   if (!collection) {
@@ -157,7 +157,7 @@ export async function loader({ params, request, context }: LoaderFunctionArgs) {
     // @ts-expect-error
     collections: flattenConnection(collections),
     seo,
-    weaverseData,
+    pageData,
   };
 }
 
@@ -170,14 +170,14 @@ export const meta = ({ matches, location }: MetaArgs<typeof loader>) => {
 };
 
 export default function Collection() {
-  const { collection } = useLoaderData<typeof loader>();
+  const { collection, pageData } = useLoaderData<typeof loader>();
   return (
     <>
       {/* SEO fallback H1 — visually hidden but ensures every collection page
-          has an H1 tag even if the Weaverse section doesn't render one.
+          has an H1 tag even if the page composition doesn't render one.
           Uses sr-only so it doesn't affect visual layout. */}
       <h1 className="sr-only">{collection.title}</h1>
-      <WeaverseContent />
+      <PageContent pageData={pageData} />
       <Analytics.CollectionView
         data={{
           collection: {

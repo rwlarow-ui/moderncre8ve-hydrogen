@@ -1,14 +1,14 @@
-import {
-  createSchema,
-  type HydrogenComponentProps,
-  IMAGES_PLACEHOLDERS,
-  useThemeSettings,
-} from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import { forwardRef } from "react";
 import { Autoplay, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  createSchema,
+  IMAGES_PLACEHOLDERS,
+  type SectionComponentProps,
+  useThemeSettings,
+} from "~/page-builder";
 import type { SlideshowArrowsProps } from "./arrows";
 import { Arrows } from "./arrows";
 import type { SlideshowDotsProps } from "./dots";
@@ -60,7 +60,7 @@ export interface SlideshowData
 
 const Slideshow = forwardRef<
   HTMLDivElement,
-  SlideshowData & HydrogenComponentProps
+  SlideshowData & SectionComponentProps
 >((props, ref) => {
   const {
     height,
@@ -167,7 +167,6 @@ export const schema = createSchema({
           },
           defaultValue: 5,
           condition: (data: SlideshowData) => data.autoRotate,
-          helpText: "Auto-rotate is disabled inside Weaverse Studio.",
         },
         {
           type: "switch",

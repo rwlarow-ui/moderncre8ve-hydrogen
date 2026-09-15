@@ -26,7 +26,6 @@ declare global {
     PUBLIC_SHOPIFY_INBOX_SHOP_ID: string;
     PUBLIC_TURNSTILE_SITE_KEY?: string;
     TURNSTILE_SECRET_KEY?: string;
-    WEAVERSE_HOST?: string;
   }
 }
 

@@ -1,7 +1,7 @@
-import { createSchema, type HydrogenComponentProps } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
+import { createSchema, type SectionComponentProps } from "~/page-builder";
 
-interface GuaranteeItemProps extends HydrogenComponentProps {
+interface GuaranteeItemProps extends SectionComponentProps {
   iconType: "shield" | "refresh" | "heart" | "check";
   title: string;
   description: string;
@@ -78,7 +78,7 @@ const GuaranteeItem = forwardRef<HTMLDivElement, GuaranteeItemProps>(
 
         {/* Title */}
         <h3
-          className="mb-2 font-sans text-base font-semibold uppercase tracking-wide"
+          className="mb-2 font-sans font-semibold text-base uppercase tracking-wide"
           style={{ color: textColor }}
         >
           {title}

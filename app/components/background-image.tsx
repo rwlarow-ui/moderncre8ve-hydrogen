@@ -1,7 +1,7 @@
 import { Image } from "@shopify/hydrogen";
-import type { InspectorGroup, WeaverseImage } from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
+import type { PageImage, SettingsGroup } from "~/page-builder";
 
 const variants = cva("absolute inset-0 z-[-1] h-full w-full", {
   variants: {
@@ -29,7 +29,7 @@ const variants = cva("absolute inset-0 z-[-1] h-full w-full", {
 });
 
 export type BackgroundImageProps = VariantProps<typeof variants> & {
-  backgroundImage?: WeaverseImage | string;
+  backgroundImage?: PageImage | string;
 };
 
 export function BackgroundImage(props: BackgroundImageProps) {
@@ -61,7 +61,7 @@ export function BackgroundImage(props: BackgroundImageProps) {
   );
 }
 
-export const backgroundInputs: InspectorGroup["inputs"] = [
+export const backgroundInputs: SettingsGroup["inputs"] = [
   {
     type: "select",
     name: "backgroundFor",

@@ -1,4 +1,3 @@
-import type { HydrogenComponent } from "@weaverse/hydrogen";
 import * as Heading from "~/components/heading";
 import * as Link from "~/components/link";
 import * as Paragraph from "~/components/paragraph";
@@ -30,6 +29,10 @@ import * as Countdown from "~/sections/countdown";
 import * as ButtonCountDown from "~/sections/countdown/button";
 import * as CountdownSubHeading from "~/sections/countdown/subheading";
 import * as CountDownTimer from "~/sections/countdown/timer";
+import * as CraftsmanshipProcess from "~/sections/craftsmanship-process";
+import * as CraftsmanshipStep from "~/sections/craftsmanship-process/step";
+import * as CustomerGallery from "~/sections/customer-gallery";
+import * as CustomerGalleryItem from "~/sections/customer-gallery/item";
 import * as FeaturedProducts from "~/sections/featured-products";
 import * as FeaturedContentProducts from "~/sections/featured-products/content";
 import * as FeaturedProductItems from "~/sections/featured-products/product-items";
@@ -45,13 +48,13 @@ import * as HotspotsItem from "~/sections/hotspots/item";
 import * as ImageGallery from "~/sections/image-gallery";
 import * as ImageGalleryItem from "~/sections/image-gallery/image";
 import * as ImageGalleryItems from "~/sections/image-gallery/items";
-import * as Instagram from "~/sections/instagram";
-import * as InstagramContent from "~/sections/instagram/content";
-import * as InstagramSlider from "~/sections/instagram/slider";
 import * as ImageWithText from "~/sections/image-with-text";
 import * as ImageWithTextContent from "~/sections/image-with-text/content";
 import * as ImageWithTextImage from "~/sections/image-with-text/image";
 import * as ImageWithTextImages from "~/sections/image-with-text/images";
+import * as Instagram from "~/sections/instagram";
+import * as InstagramContent from "~/sections/instagram/content";
+import * as InstagramSlider from "~/sections/instagram/slider";
 import * as JudgemeReview from "~/sections/judgeme-reviews";
 import * as ReviewIndex from "~/sections/judgeme-reviews/review-index";
 import * as ProductInformation from "~/sections/main-product/index";
@@ -64,6 +67,8 @@ import * as PromotionGrid from "~/sections/promotion-grid";
 import * as PromotionGridItemContent from "~/sections/promotion-grid/content";
 import * as GridItems from "~/sections/promotion-grid/grid-items";
 import * as PromotionGridItem from "~/sections/promotion-grid/item";
+import * as QualityGuarantee from "~/sections/quality-guarantee";
+import * as GuaranteeItem from "~/sections/quality-guarantee/item";
 import * as RelatedArticles from "~/sections/related-articles";
 import * as RelatedProducts from "~/sections/related-products";
 import * as ScrollingText from "~/sections/scrolling-text";
@@ -82,14 +87,11 @@ import * as VideoEmbedItem from "~/sections/video-embed/video";
 import * as Videos from "~/sections/videos";
 import * as VideoItems from "~/sections/videos/items";
 import * as VideoItem from "~/sections/videos/video";
-import * as CraftsmanshipProcess from "~/sections/craftsmanship-process";
-import * as CraftsmanshipStep from "~/sections/craftsmanship-process/step";
-import * as CustomerGallery from "~/sections/customer-gallery";
-import * as CustomerGalleryItem from "~/sections/customer-gallery/item";
-import * as QualityGuarantee from "~/sections/quality-guarantee";
-import * as GuaranteeItem from "~/sections/quality-guarantee/item";
+import * as Main from "./main";
+import type { SectionComponent } from "./types";
 
-export const components: HydrogenComponent[] = [
+export const components: SectionComponent[] = [
+  Main,
   SubHeading,
   Heading,
   Paragraph,
@@ -180,3 +182,13 @@ export const components: HydrogenComponent[] = [
   QualityGuarantee,
   GuaranteeItem,
 ];
+
+/**
+ * Registry keyed by schema `type` — what the renderer and the server-side page
+ * loader look sections up in.
+ */
+export const componentsByType: Map<string, SectionComponent> = new Map(
+  components
+    .filter((component) => component?.schema?.type)
+    .map((component) => [component.schema.type, component]),
+);

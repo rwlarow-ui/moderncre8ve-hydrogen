@@ -1,28 +1,26 @@
 import type { SeoConfig } from "@shopify/hydrogen";
 import { getPaginationVariables } from "@shopify/hydrogen";
-import type { RouteLoaderArgs } from "@weaverse/hydrogen";
-import type { MetaFunction } from "react-router";
+import { type MetaFunction, useLoaderData } from "react-router";
 import type { CollectionsQuery } from "storefront-api.generated";
+import type { RouteLoaderArgs } from "~/page-builder";
+import { loadPage } from "~/page-builder/page.server";
+import { PageContent } from "~/page-builder/renderer";
 import { routeHeaders } from "~/utils/cache";
 import { PAGINATION_SIZE } from "~/utils/const";
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { seoPayload } from "~/utils/seo.server";
-import { WeaverseContent } from "~/weaverse";
 
 export const headers = routeHeaders;
 
 export const loader = async (args: RouteLoaderArgs) => {
-  const {
-    request,
-    context: { weaverse },
-  } = args;
-  const storefront = weaverse.storefront;
+  const { request, context } = args;
+  const { storefront } = context;
   const variables = getPaginationVariables(request, {
     pageBy: PAGINATION_SIZE,
   });
 
-  // Load collections data and weaverseData in parallel
-  const [{ collections }, weaverseData] = await Promise.all([
+  // Load collections data and the page composition in parallel
+  const [{ collections }, pageData] = await Promise.all([
     storefront.query<CollectionsQuery>(COLLECTIONS_QUERY, {
       variables: {
         ...variables,
@@ -30,9 +28,7 @@ export const loader = async (args: RouteLoaderArgs) => {
         language: storefront.i18n.language,
       },
     }),
-    weaverse.loadPage({
-      type: "COLLECTION_LIST",
-    }),
+    loadPage({ context, request }, { type: "COLLECTION_LIST" }),
   ]);
 
   const seo = seoPayload.listCollections({
@@ -43,7 +39,7 @@ export const loader = async (args: RouteLoaderArgs) => {
   return {
     collections,
     seo,
-    weaverseData,
+    pageData,
   };
 };
 
@@ -55,7 +51,8 @@ export const meta: MetaFunction<typeof loader> = ({ data, location }) => {
 };
 
 export default function Collections() {
-  return <WeaverseContent />;
+  const { pageData } = useLoaderData<typeof loader>();
+  return <PageContent pageData={pageData} />;
 }
 
 const COLLECTIONS_QUERY = `#graphql

@@ -1,4 +1,3 @@
-import type { HydrogenComponent } from "@weaverse/hydrogen";
 import type { ReactNode } from "react";
 import { forwardRef } from "react";
 import {
@@ -6,6 +5,7 @@ import {
   type SectionProps,
   sectionSettings,
 } from "~/components/section";
+import type { SectionComponent } from "~/page-builder";
 
 interface VideosProps extends SectionProps {
   children?: ReactNode;
@@ -21,10 +21,10 @@ let Videos = forwardRef<HTMLElement, VideosProps>((props, ref) => {
   );
 });
 
-export let schema: HydrogenComponent["schema"] = {
+export let schema: SectionComponent["schema"] = {
   title: "Videos",
   type: "videos",
-  inspector: sectionSettings,
+  settings: sectionSettings,
   childTypes: ["heading", "video--items"],
   presets: {
     children: [

@@ -1,7 +1,6 @@
 import { Minus, Plus } from "@phosphor-icons/react";
 import * as Accordion from "@radix-ui/react-accordion";
 import { Image } from "@shopify/hydrogen";
-import { useThemeSettings } from "@weaverse/hydrogen";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
 import type React from "react";
@@ -10,6 +9,7 @@ import { Link, useFetcher, useRouteLoaderData } from "react-router";
 import { Button } from "~/components/button";
 import { HoneypotField, TurnstileWidget } from "~/components/turnstile-widget";
 import { useShopMenu } from "~/hooks/use-shop-menu";
+import { useThemeSettings } from "~/page-builder";
 import { RevealUnderline } from "~/reveal-underline";
 import type { RootLoader } from "~/root";
 import type { SingleMenuItem } from "~/types/menu";
@@ -389,21 +389,17 @@ export function Footer() {
     showGooglePayIcon,
     showShopPayIcon,
   } = useThemeSettings();
-  // Hardcode store info to prevent Weaverse Studio demo values from leaking
+  // Store contact details are fixed rather than theme settings.
   const addressTitle = "OUR SHOP";
   const storeAddress = "1400 E 36th Street, Suite 2802A, Cleveland, OH 44114";
   const storeEmail = "info@moderncre8ve.com";
-  const bioIsUsable =
-    _bio && !_bio.includes("Weaverse") && _bio.replace(/<[^>]*>/g, "").trim();
-  const bio = bioIsUsable
+  const bio = _bio?.replace(/<[^>]*>/g, "").trim()
     ? _bio
     : "<p>Handcrafted modern furniture made in Cleveland, Ohio. We specialize in mid-century modern, Scandinavian, and Japandi-inspired solid wood furniture.</p><p>Phone: (216) 502-0755</p>";
-  const rawCopyright =
-    _copyright && !_copyright.includes("Weaverse")
-      ? _copyright
-      : "© 2026 ModernCre8ve. All rights reserved.";
-  // Strip HTML tags to prevent nested <p> rendering when Studio value contains markup
-  const copyright = rawCopyright.replace(/<[^>]*>/g, "").trim();
+  // Strip HTML tags to prevent nested <p> rendering when the value contains markup.
+  const copyright = (_copyright || "© 2026 ModernCre8ve. All rights reserved.")
+    .replace(/<[^>]*>/g, "")
+    .trim();
   const fetcher = useFetcher<{ ok: boolean; errorMessage?: string }>();
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");

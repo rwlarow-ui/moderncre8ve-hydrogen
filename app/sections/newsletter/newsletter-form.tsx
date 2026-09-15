@@ -1,14 +1,14 @@
 import { EnvelopeSimpleIcon } from "@phosphor-icons/react";
-import { createSchema, type HydrogenComponentProps } from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { type RefObject, useState } from "react";
 import { useFetcher, useRouteLoaderData } from "react-router";
 import { Button } from "~/components/button";
 import { HoneypotField, TurnstileWidget } from "~/components/turnstile-widget";
+import { createSchema, type SectionComponentProps } from "~/page-builder";
 import type { RootLoader } from "~/root";
 import type { CustomerApiPlayLoad } from "~/routes/($locale).api.customer";
 
-interface NewsLetterInputProps extends HydrogenComponentProps {
+interface NewsLetterInputProps extends SectionComponentProps {
   width: number;
   placeholder: string;
   buttonText: string;

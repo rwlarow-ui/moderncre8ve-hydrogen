@@ -4,7 +4,7 @@ import { renderToReadableStream } from "react-dom/server";
 import type { AppLoadContext, EntryContext } from "react-router";
 import { ServerRouter } from "react-router";
 
-import { getWeaverseCsp } from "~/weaverse/csp";
+import { getContentSecurityPolicy } from "~/utils/csp";
 
 export default async function handleRequest(
   request: Request,
@@ -14,7 +14,7 @@ export default async function handleRequest(
   context: AppLoadContext,
 ) {
   const { nonce, header, NonceProvider } = createContentSecurityPolicy({
-    ...getWeaverseCsp(request, context),
+    ...getContentSecurityPolicy(),
     shop: {
       checkoutDomain:
         context.env?.PUBLIC_CHECKOUT_DOMAIN || context.env?.PUBLIC_STORE_DOMAIN,

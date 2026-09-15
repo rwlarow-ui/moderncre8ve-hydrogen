@@ -6,6 +6,7 @@ import type {
   SwatchesQuery,
 } from "storefront-api.generated";
 import invariant from "tiny-invariant";
+import { getThemeSettings } from "~/page-builder/theme.server";
 import type { EnhancedMenu } from "~/types/menu";
 import { seoPayload } from "~/utils/seo.server";
 
@@ -17,11 +18,10 @@ export async function loadCriticalData({
   request,
   context,
 }: LoaderFunctionArgs) {
-  const [layout, swatchesConfigs, weaverseTheme] = await Promise.all([
+  const [layout, swatchesConfigs] = await Promise.all([
     getLayoutData(context),
     getSwatchesConfigs(context),
     // Add other queries here, so that they are loaded in parallel
-    context.weaverse.loadThemeSettings(),
   ]);
 
   const seo = seoPayload.root({ shop: layout.shop, url: request.url });
@@ -43,7 +43,7 @@ export async function loadCriticalData({
       language: storefront.i18n.language,
     },
     selectedLocale: storefront.i18n,
-    weaverseTheme,
+    themeSettings: getThemeSettings(),
     googleGtmID: env.PUBLIC_GOOGLE_GTM_ID,
     turnstileSiteKey: env.PUBLIC_TURNSTILE_SITE_KEY || "",
     swatchesConfigs,
