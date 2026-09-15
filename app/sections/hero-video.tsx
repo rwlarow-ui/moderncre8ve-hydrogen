@@ -76,7 +76,7 @@ const variants = cva(
 
 function getPlayerSize(id: string) {
   if (isBrowser) {
-    const section = document.querySelector(`[data-wv-id="${id}"]`);
+    const section = document.querySelector(`[data-section-id="${id}"]`);
     if (section) {
       const rect = section.getBoundingClientRect();
       const aspectRatio = rect.width / rect.height;
@@ -105,7 +105,7 @@ const HeroVideo = forwardRef<HTMLElement, HeroVideoProps>((props, ref) => {
     ...rest
   } = props;
 
-  const id = rest["data-wv-id"];
+  const id = rest["data-section-id"];
   const [size, setSize] = useState(() => getPlayerSize(id));
 
   const desktopHeight =
