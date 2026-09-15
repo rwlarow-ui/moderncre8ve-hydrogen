@@ -7,7 +7,7 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8ve.com rebuild.
 
 - **Store:** moderncre8ve.myshopify.com (26 active + 3 draft products, 16 collections)
-- **Template:** Weaverse Aspen (furniture-focused Hydrogen theme)
+- **Template:** originally Weaverse Aspen; the hosted Weaverse page builder was removed in favour of an in-repo page builder (`app/page-builder/`)
 - **Repo:** github.com/rwlarow-ui/moderncre8ve-hydrogen
 - **Deploy target:** Shopify Oxygen
 - **Current version:** 1.4.2 — single source of truth is `package.json`; `CHANGELOG.md` has the full history
@@ -18,7 +18,6 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 |----------|-----|
 | Oxygen (live) | https://moderncre8ve-v2-6aebe5cb62e16d9300dd.o2.myshopify.dev |
 | Shopify Admin | https://admin.shopify.com/store/moderncre8ve/hydrogen/1000097972 |
-| Weaverse Studio | https://studio.weaverse.io/dashboard/projects/gkv7k7xwkbfez2rdmkbbzxuw |
 
 ### Store Knowledge
 - **Lead times:** All furniture 12–16 weeks (handcrafted to order). Wax products ship in 3–5 business days.
@@ -27,7 +26,7 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 
 ### Branding
 - **Fonts:** Jost (headings, `--font-sans`) / Spectral (body, `--font-serif`)
-- **Logo:** `public/logo.png` (dark), `public/logo-alt.png` (light variant)
+- **Logo:** `public/logo.png` (grey wordmark, for light backgrounds), `public/logo-alt.png` (white, for the transparent header over imagery)
 
 #### Color Palette
 | Swatch | Hex | Usage |
@@ -42,10 +41,10 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 ### Key Files
 | File | Purpose |
 |------|---------|
-| `app/weaverse/schema.server.ts` | Theme settings (colors, fonts, footer, social links) |
-| `app/weaverse/style.tsx` | Global CSS driven by theme settings |
+| `app/page-builder/theme-schema.server.ts` | Theme settings (colors, fonts, footer, social links) |
+| `app/page-builder/global-style.tsx` | Global CSS driven by theme settings |
 | `app/utils/seo.server.ts` | SEO config (title templates, org schema) |
-| `app/utils/weaverse-fallback.server.ts` | Page handle → fallback JSON mapping |
+| `app/page-builder/pages/index.ts` | Page handle / template → composition mapping |
 | `app/sections/main-product/index.tsx` | Product page template (lead time, variants, ATC) |
 | `app/styles/app.css` | Global styles, font-face, CSS custom properties |
 | `app/root.tsx` | Root layout, font preloads |
@@ -64,7 +63,7 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 - **SEO Truth Layer:** source is vendored at `seo-truth-layer/`, but the pipeline **runs daily at 14:00 UTC from the separate `github.com/rwlarow-ui/moderncre8ve-seo-truth-layer` repo**. GitHub only executes workflows under the root `.github/workflows/`, so `seo-truth-layer/.github/workflows/seo-pipeline.yml` in this repo never runs. Its secrets (`GA4_PROPERTY_ID`, `GOOGLE_SA_JSON`, `RESEND_API_KEY`, `SITE_URL`) live on that other repo.
 
 ### MCP Servers
-Configured in `.mcp.json`: **Weaverse** (docs/API, `https://weaverse.io/docs/mcp`) and **ops-dashboard** (local stdio server, `scripts/ops-dashboard-mcp.mjs` — Shopify Admin order/customer tooling).
+Configured in `.mcp.json`: **ops-dashboard** (local stdio server, `scripts/ops-dashboard-mcp.mjs` — Shopify Admin order/customer tooling). The Weaverse docs server was removed along with Weaverse itself.
 Figma, Shopify (Storefront API), Shopify Dev and Ahrefs were all removed from `.mcp.json`; the claude.ai Shopify connector covers Admin API access.
 Composer and Crypto.com servers visible in sessions are from another project — irrelevant here.
 
@@ -80,23 +79,22 @@ Composer and Crypto.com servers visible in sessions are from another project —
 
 ## Architecture
 
-**Shopify Hydrogen** storefront with **React Router v7** (not Remix) and **Weaverse** visual page builder.
+**Shopify Hydrogen** storefront with **React Router v7** (not Remix) and an in-repo page builder — page compositions are TypeScript modules, not hosted data.
 
 ### Stack
-Hydrogen 2025.5.0, React Router v7, Weaverse, Vite, Biome, TailwindCSS v4
+Hydrogen 2025.5.0, React Router v7, Vite, Biome, TailwindCSS v4
 
 ### Directory Structure
 ```
 app/
 ├── components/     # Reusable UI (layout, product, cart)
-├── sections/       # Weaverse page-building sections
+├── sections/       # Page-building sections
 ├── routes/         # File-based routing (React Router v7)
-├── weaverse/       # Weaverse integration and config
+├── page-builder/   # Page builder: renderer, schema, theme, page compositions
 ├── hooks/          # Custom React hooks
 ├── utils/          # Utility functions
 ├── graphql/        # GraphQL fragments and queries
 └── styles/         # Global styles
-weaverse-pages/     # 13 local fallback JSONs (11 pages + 2 templates)
 ```
 
 ### Critical: React Router, Not Remix
@@ -107,12 +105,13 @@ import { useLoaderData, Link, Form } from 'react-router';
 import { useLoaderData, Link, Form } from '@remix-run/react';
 ```
 
-### Weaverse Data Flow
-- **Studio data takes precedence** over local fallback JSON and schema `defaultValue`
-- If a schema field is added after Studio data was saved, the component receives `undefined` for that field — use **destructuring defaults** (e.g., `showLeadTime = true`) to handle this
-- Fallback JSONs in `weaverse-pages/` serve as baseline when Studio has no data
-- PAGE fallbacks are per-handle (`local_PAGE_about_us`); PRODUCT/COLLECTION fallbacks are templates (`local_PRODUCT`) that always match
-- `useThemeSettings()` values from Studio can contain demo data; footer hardcodes store info as fallbacks
+### Page Builder Data Flow
+- A route loader calls `loadPage({ context, request }, { type, handle })` and renders the result with `<PageContent pageData={pageData} />`
+- Compositions live in `app/page-builder/pages/` as typed modules; `getPageDefinition()` maps a page type / handle to one
+- A section's props are `schema defaults → the item's saved data`, so a field added to a schema after a page was authored still arrives with its default. Prefer **destructuring defaults** (e.g. `showLeadTime = true`) anyway
+- PAGE compositions are per-handle; PRODUCT/COLLECTION/BLOG/ARTICLE/ALL_PRODUCTS/COLLECTION_LIST are templates shared by every resource of that type. A Shopify page with no bespoke composition falls back to `app/page-builder/pages/page.ts`, which renders its admin content
+- Sections may export a `loader`; it runs server-side during `loadPage` and its result arrives as the `loaderData` prop
+- `useThemeSettings()` reads the settings the root loader resolved from `theme-schema.server.ts` — the single source of truth for theme values
 
 ### Component Schema
 ```tsx
@@ -140,11 +139,11 @@ export let schema = createSchema({
 - **Imports**: Use `~/*` alias for app directory
 
 ### Environment
-Required: `PUBLIC_STORE_DOMAIN`, `PUBLIC_STOREFRONT_API_TOKEN`, `WEAVERSE_PROJECT_ID`, `SESSION_SECRET`, `SHOPIFY_ADMIN_API_TOKEN`, `PUBLIC_GOOGLE_GTM_ID`
+Required: `PUBLIC_STORE_DOMAIN`, `PUBLIC_STOREFRONT_API_TOKEN`, `SESSION_SECRET`, `SHOPIFY_ADMIN_API_TOKEN`, `PUBLIC_GOOGLE_GTM_ID`
 
 ### Common Tasks
 - **Update GraphQL**: Edit `app/graphql/`, run `npm run codegen`
-- **Add theme settings**: Edit `schema.server.ts` + `style.tsx`, use `useThemeSettings()`
-- **New Weaverse section**: Create in `app/sections/`, export `schema` via `createSchema()`, register in `app/weaverse/components.ts`
+- **Add theme settings**: Edit `app/page-builder/theme-schema.server.ts` + `app/page-builder/global-style.tsx`, use `useThemeSettings()`
+- **New section**: Create in `app/sections/`, export `schema` via `createSchema()`, register in `app/page-builder/components.ts`
 - **Debug**: GraphiQL at `localhost:3456/graphiql`
 - **Deploy**: Use `~/.Codex/scripts/deploy.sh` (see global AGENTS.md for flags)
