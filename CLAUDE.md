@@ -109,7 +109,7 @@ import { useLoaderData, Link, Form } from '@remix-run/react';
 - A route loader calls `loadPage({ context, request }, { type, handle })` and renders the result with `<PageContent pageData={pageData} />`
 - Compositions live in `app/page-builder/pages/` as typed modules; `getPageDefinition()` maps a page type / handle to one
 - A section's props are `schema defaults → the item's saved data`, so a field added to a schema after a page was authored still arrives with its default. Prefer **destructuring defaults** (e.g. `showLeadTime = true`) anyway
-- PAGE compositions are per-handle; PRODUCT/COLLECTION/BLOG/ARTICLE/ALL_PRODUCTS/COLLECTION_LIST are templates shared by every resource of that type. A Shopify page with no bespoke composition falls back to `pages/page.ts`, which renders its admin content
+- PAGE compositions are per-handle; PRODUCT/COLLECTION/BLOG/ARTICLE/ALL_PRODUCTS/COLLECTION_LIST are templates shared by every resource of that type. A Shopify page with no bespoke composition falls back to `app/page-builder/pages/page.ts`, which renders its admin content
 - Sections may export a `loader`; it runs server-side during `loadPage` and its result arrives as the `loaderData` prop
 - `useThemeSettings()` reads the settings the root loader resolved from `theme-schema.server.ts` — the single source of truth for theme values
 
@@ -143,7 +143,7 @@ Required: `PUBLIC_STORE_DOMAIN`, `PUBLIC_STOREFRONT_API_TOKEN`, `SESSION_SECRET`
 
 ### Common Tasks
 - **Update GraphQL**: Edit `app/graphql/`, run `npm run codegen`
-- **Add theme settings**: Edit `schema.server.ts` + `style.tsx`, use `useThemeSettings()`
+- **Add theme settings**: Edit `app/page-builder/theme-schema.server.ts` + `app/page-builder/global-style.tsx`, use `useThemeSettings()`
 - **New section**: Create in `app/sections/`, export `schema` via `createSchema()`, register in `app/page-builder/components.ts`
 - **Debug**: GraphiQL at `localhost:3456/graphiql`
 - **Deploy**: Use `~/.claude/scripts/deploy.sh` (see global CLAUDE.md for flags)
