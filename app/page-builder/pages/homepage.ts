@@ -17,6 +17,9 @@ export const homepage: PageDefinition = {
           id: "home-featured",
         },
         {
+          id: "home-reviews",
+        },
+        {
           id: "home-collections",
         },
         {
@@ -24,9 +27,6 @@ export const homepage: PageDefinition = {
         },
         {
           id: "home-video",
-        },
-        {
-          id: "home-testimonials",
         },
         {
           id: "home-newsletter",
@@ -220,6 +220,58 @@ export const homepage: PageDefinition = {
       },
     },
     {
+      id: "home-reviews",
+      type: "review-quotes",
+      children: [
+        {
+          id: "home-review-1",
+        },
+        {
+          id: "home-review-2",
+        },
+        {
+          id: "home-review-3",
+        },
+      ],
+      data: {
+        subheading: "Customer Reviews",
+        heading: "Worth the Wait, In Their Words",
+        backgroundColor: "#F0F0EF",
+      },
+    },
+    {
+      id: "home-review-1",
+      type: "review-quote",
+      data: {
+        quote:
+          "I looked at about five hundred bed frames and this checked all the boxes. Well worth the wait and exactly as pictured. I'm 100% delighted.",
+        author: "Verified Etsy buyer",
+        product: "Solid wood bed frame",
+        rating: 5,
+      },
+    },
+    {
+      id: "home-review-2",
+      type: "review-quote",
+      data: {
+        quote:
+          "This table took some time to get to us, but it's gorgeous and just the right size. The craftsmanship is awesome, and it looks just like (or even better than) the images.",
+        author: "Verified Etsy buyer",
+        product: "Solid wood dining table",
+        rating: 5,
+      },
+    },
+    {
+      id: "home-review-3",
+      type: "review-quote",
+      data: {
+        quote: "Exquisite design, excellent craftsmanship, quality materials!",
+        author: "Verified Etsy buyer",
+        product: "",
+        rating: 5,
+      },
+    },
+    {
       id: "home-collections",
       type: "feature-collection",
       children: [
@@ -393,114 +445,6 @@ export const homepage: PageDefinition = {
       data: {
         size: "large",
         borderRadius: 0,
-      },
-    },
-    {
-      id: "home-testimonials",
-      type: "testimonial",
-      children: [
-        {
-          id: "home-test-1",
-        },
-        {
-          id: "home-test-2",
-        },
-        {
-          id: "home-test-3",
-        },
-      ],
-    },
-    {
-      id: "home-test-1",
-      type: "testimonial--item",
-      children: [
-        {
-          id: "home-test-1-content",
-        },
-        {
-          id: "home-test-1-hotspot",
-        },
-      ],
-    },
-    {
-      id: "home-test-1-content",
-      type: "testimonial--content",
-      data: {
-        content: "Stunning Craftsmanship",
-        description:
-          "The quality of the craftsmanship is immediately evident. Every piece feels substantial and well-made. I couldn't be happier with my walnut dining table!",
-        ratting: 5,
-        author: "John D.",
-      },
-    },
-    {
-      id: "home-test-1-hotspot",
-      type: "testimonial--hotspots-item",
-      data: {
-        image: "/images/heroes/img_1426.jpg",
-        aspectRatio: "1/1",
-      },
-    },
-    {
-      id: "home-test-2",
-      type: "testimonial--item",
-      children: [
-        {
-          id: "home-test-2-content",
-        },
-        {
-          id: "home-test-2-hotspot",
-        },
-      ],
-    },
-    {
-      id: "home-test-2-content",
-      type: "testimonial--content",
-      data: {
-        content: "Beautiful and Functional",
-        description:
-          "Our new coffee table is both a statement piece and incredibly functional. It has quickly become the centerpiece of our living room.",
-        ratting: 5,
-        author: "Susan M.",
-      },
-    },
-    {
-      id: "home-test-2-hotspot",
-      type: "testimonial--hotspots-item",
-      data: {
-        image: "/images/heroes/img_1524.jpg",
-        aspectRatio: "1/1",
-      },
-    },
-    {
-      id: "home-test-3",
-      type: "testimonial--item",
-      children: [
-        {
-          id: "home-test-3-content",
-        },
-        {
-          id: "home-test-3-hotspot",
-        },
-      ],
-    },
-    {
-      id: "home-test-3-content",
-      type: "testimonial--content",
-      data: {
-        content: "Perfect Blend of Style and Durability",
-        description:
-          "I was looking for something modern yet durable, and Moderncre8ve delivered beyond my expectations. My new bed frame is a dream!",
-        ratting: 5,
-        author: "Alex P.",
-      },
-    },
-    {
-      id: "home-test-3-hotspot",
-      type: "testimonial--hotspots-item",
-      data: {
-        image: "/images/heroes/img_2158.jpg",
-        aspectRatio: "1/1",
       },
     },
     {
