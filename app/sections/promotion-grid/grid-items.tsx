@@ -372,7 +372,7 @@ const extractTabsData = (childInstances: any, childrenArray: ReactNode[]) => {
     };
 
     return {
-      id: getValue("data-wv-id", "id", `tab-${index}`),
+      id: getValue("data-section-id", "id", `tab-${index}`),
       headingContent: getValue("headingContent", "headingContent", "Tab"),
       subheadingContent: getValue("subheadingContent", "subheadingContent", ""),
       paragraphContent: getValue("paragraphContent", "paragraphContent", ""),
@@ -509,7 +509,7 @@ let PromotionSlider = forwardRef<HTMLDivElement, GridItemProps>(
       return childrenArray
         .map((child: any) => {
           return (
-            child?.props?.["data-wv-id"] ||
+            child?.props?.["data-section-id"] ||
             `child-${Math.random().toString(36).slice(2, 11)}`
           );
         })
