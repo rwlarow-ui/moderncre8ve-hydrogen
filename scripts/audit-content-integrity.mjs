@@ -181,7 +181,7 @@ async function auditLiveItem(item, fallbackMap) {
   const mainTextLength = mainText.length;
   const sectionCount =
     countMatches(mainHtml, /<section\b/gi) +
-    countMatches(mainHtml, /data-wv-type=/gi);
+    countMatches(mainHtml, /data-section-type=/gi);
   const imageInfo = extractImageInfo(mainHtml);
   const headingText = extractHeadingText(mainHtml);
 

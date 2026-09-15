@@ -36,7 +36,7 @@ test("desktop homepage does not leak broken or demo homepage links", async ({
   await assertHomepageIntegrity(page);
 
   const hotspotTriggers = page.locator(
-    '[data-wv-type="hotspots--item"], [data-wv-type="testimonial-hot--item"]',
+    '[data-section-type="hotspots--item"], [data-section-type="testimonial-hot--item"]',
   );
 
   const count = await hotspotTriggers.count();
@@ -61,7 +61,7 @@ test.describe("mobile homepage integrity", () => {
     await assertHomepageIntegrity(page);
 
     const hotspotTriggers = page.locator(
-      '[data-wv-type="hotspots--item"], [data-wv-type="testimonial-hot--item"]',
+      '[data-section-type="hotspots--item"], [data-section-type="testimonial-hot--item"]',
     );
 
     const count = await hotspotTriggers.count();

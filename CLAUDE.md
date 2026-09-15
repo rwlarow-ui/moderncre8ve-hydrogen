@@ -26,7 +26,7 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 
 ### Branding
 - **Fonts:** Jost (headings, `--font-sans`) / Spectral (body, `--font-serif`)
-- **Logo:** `public/logo.png` (dark), `public/logo-alt.png` (light variant)
+- **Logo:** `public/logo.png` (grey wordmark, for light backgrounds), `public/logo-alt.png` (white, for the transparent header over imagery)
 
 #### Color Palette
 | Swatch | Hex | Usage |
