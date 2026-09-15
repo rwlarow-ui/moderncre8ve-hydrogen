@@ -182,7 +182,9 @@ async function assertAdminAccess(token) {
     data.currentAppInstallation?.accessScopes?.map((scope) => scope.handle) ||
     [];
   const requiredScopes = ["write_products", "write_content"];
-  const missingScopes = requiredScopes.filter((scope) => !scopes.includes(scope));
+  const missingScopes = requiredScopes.filter(
+    (scope) => !scopes.includes(scope),
+  );
   if (missingScopes.length > 0) {
     throw new Error(
       `Missing required Shopify scopes: ${missingScopes.join(", ")}`,

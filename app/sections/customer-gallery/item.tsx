@@ -77,11 +77,9 @@ const CustomerGalleryItem = forwardRef<
 
       {/* Product link */}
       {productUrl && (
-        <a
-          href={productUrl}
-          className="absolute inset-0"
-          aria-label={`View ${caption}`}
-        />
+        <a className="absolute inset-0" href={productUrl}>
+          <span className="sr-only">{`View ${caption}`}</span>
+        </a>
       )}
     </div>
   );

@@ -96,8 +96,9 @@ async function main() {
 
   const shop = json.data?.shop;
   const scopes =
-    json.data?.currentAppInstallation?.accessScopes?.map((scope) => scope.handle) ||
-    [];
+    json.data?.currentAppInstallation?.accessScopes?.map(
+      (scope) => scope.handle,
+    ) || [];
 
   console.log("Admin auth looks valid.");
   console.log(`Shop name: ${shop?.name || "Unknown"}`);

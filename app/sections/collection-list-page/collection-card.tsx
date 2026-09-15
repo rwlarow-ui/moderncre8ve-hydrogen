@@ -64,9 +64,7 @@ export function CollectionCard({
           />
         ) : null}
         <div className="absolute inset-0 bg-black/25 transition-opacity duration-500 group-hover:bg-black/40" />
-        <span
-          className="absolute bottom-0 left-0 z-1 p-4 font-medium text-white uppercase drop-shadow-md"
-        >
+        <span className="absolute bottom-0 left-0 z-1 p-4 font-medium text-white uppercase drop-shadow-md">
           {collection.title}
         </span>
       </div>

@@ -11,10 +11,15 @@ export function getProductImageAlt(
   // Check if alt text exists and isn't a filename pattern
   if (image?.altText) {
     // Detect filename patterns (IMG_*, DSC_*, Photo*, image*, screenshot*, etc.)
-    const isFilename = /^(IMG|DSC|Photo|image|screenshot|packshot|IMG_|DSC_|photo_|Screenshot|DSCF|CIMG)/i.test(image.altText);
+    const isFilename =
+      /^(IMG|DSC|Photo|image|screenshot|packshot|IMG_|DSC_|photo_|Screenshot|DSCF|CIMG)/i.test(
+        image.altText,
+      );
 
     // Detect file extensions in the text
-    const hasExtension = /\.(jpg|jpeg|png|webp|gif|heic|raw|psd|tiff)$/i.test(image.altText);
+    const hasExtension = /\.(jpg|jpeg|png|webp|gif|heic|raw|psd|tiff)$/i.test(
+      image.altText,
+    );
 
     // If it's not a filename pattern and doesn't have an extension, use it
     if (!isFilename && !hasExtension) {

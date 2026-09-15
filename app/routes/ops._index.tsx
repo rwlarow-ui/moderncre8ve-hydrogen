@@ -6,9 +6,9 @@ import {
   OpsMetaPill,
   OpsSectionHeading,
 } from "~/components/ops/ops-shell";
-import type { OpsDashboardFilters } from "~/utils/ops-dashboard.types";
 import { requireOpsAccess } from "~/utils/ops-auth.server";
 import { listCurrentOrders } from "~/utils/ops-dashboard.server";
+import type { OpsDashboardFilters } from "~/utils/ops-dashboard.types";
 
 export async function loader({ request, context }: LoaderFunctionArgs) {
   await requireOpsAccess(request, context);
@@ -34,9 +34,7 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
   ) as string[];
   const availableTags = Array.from(
     new Set(
-      dashboard.orders.flatMap((order) =>
-        order.tags.map((tag) => String(tag)),
-      ),
+      dashboard.orders.flatMap((order) => order.tags.map((tag) => String(tag))),
     ),
   ) as string[];
 
@@ -70,7 +68,7 @@ export default function OpsOrdersIndex() {
           className="grid gap-4 border-[#efe6d4] border-b bg-[#fbf8f1] px-6 py-5 md:grid-cols-5"
         >
           <label className="space-y-2">
-            <span className="font-sans text-xs uppercase tracking-[0.18em] text-[#5f636b]">
+            <span className="font-sans text-[#5f636b] text-xs uppercase tracking-[0.18em]">
               Search
             </span>
             <input
@@ -83,7 +81,7 @@ export default function OpsOrdersIndex() {
             />
           </label>
           <label className="space-y-2">
-            <span className="font-sans text-xs uppercase tracking-[0.18em] text-[#5f636b]">
+            <span className="font-sans text-[#5f636b] text-xs uppercase tracking-[0.18em]">
               Fulfillment
             </span>
             <select
@@ -100,7 +98,7 @@ export default function OpsOrdersIndex() {
             </select>
           </label>
           <label className="space-y-2">
-            <span className="font-sans text-xs uppercase tracking-[0.18em] text-[#5f636b]">
+            <span className="font-sans text-[#5f636b] text-xs uppercase tracking-[0.18em]">
               Financial
             </span>
             <select
@@ -117,7 +115,7 @@ export default function OpsOrdersIndex() {
             </select>
           </label>
           <label className="space-y-2">
-            <span className="font-sans text-xs uppercase tracking-[0.18em] text-[#5f636b]">
+            <span className="font-sans text-[#5f636b] text-xs uppercase tracking-[0.18em]">
               Tag
             </span>
             <select
@@ -134,7 +132,7 @@ export default function OpsOrdersIndex() {
             </select>
           </label>
           <label className="space-y-2">
-            <span className="font-sans text-xs uppercase tracking-[0.18em] text-[#5f636b]">
+            <span className="font-sans text-[#5f636b] text-xs uppercase tracking-[0.18em]">
               Limit
             </span>
             <div className="flex gap-3">
@@ -148,7 +146,7 @@ export default function OpsOrdersIndex() {
               />
               <button
                 type="submit"
-                className="rounded-2xl bg-[#323640] px-5 py-3 font-sans text-xs uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#2CBF96] hover:text-[#16372d]"
+                className="rounded-2xl bg-[#323640] px-5 py-3 font-sans text-white text-xs uppercase tracking-[0.18em] transition-colors hover:bg-[#2CBF96] hover:text-[#16372d]"
               >
                 Apply
               </button>
@@ -159,7 +157,7 @@ export default function OpsOrdersIndex() {
         {dashboard.orders.length ? (
           <div className="overflow-x-auto">
             <table className="min-w-full text-left">
-              <thead className="bg-[#f8f3e8] font-sans text-[11px] uppercase tracking-[0.24em] text-[#6d7077]">
+              <thead className="bg-[#f8f3e8] font-sans text-[#6d7077] text-[11px] uppercase tracking-[0.24em]">
                 <tr>
                   <th className="px-6 py-4">Order</th>
                   <th className="px-6 py-4">Customer</th>
@@ -180,12 +178,13 @@ export default function OpsOrdersIndex() {
                       <div className="space-y-1">
                         <Link
                           to={`/ops/orders/${order.legacyId}`}
-                          className="font-medium text-lg text-[#323640] hover:text-[#2CBF96]"
+                          className="font-medium text-[#323640] text-lg hover:text-[#2CBF96]"
                         >
                           {order.name}
                         </Link>
                         <p className="text-[#6d7077] text-sm">
-                          Placed {new Date(order.processedAt).toLocaleDateString()}
+                          Placed{" "}
+                          {new Date(order.processedAt).toLocaleDateString()}
                         </p>
                       </div>
                     </td>
@@ -228,13 +227,15 @@ export default function OpsOrdersIndex() {
                           order.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="rounded-full bg-[#f2ebd5] px-3 py-1 text-xs text-[#5f636b]"
+                              className="rounded-full bg-[#f2ebd5] px-3 py-1 text-[#5f636b] text-xs"
                             >
                               {tag}
                             </span>
                           ))
                         ) : (
-                          <span className="text-[#8b8e95] text-sm">No tags</span>
+                          <span className="text-[#8b8e95] text-sm">
+                            No tags
+                          </span>
                         )}
                       </div>
                     </td>

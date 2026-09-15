@@ -1,6 +1,6 @@
+import { Form, Link, NavLink } from "react-router";
 import { Button } from "~/components/button";
 import { cn } from "~/utils/cn";
-import { Form, Link, NavLink } from "react-router";
 
 interface OpsShellProps {
   title: string;
@@ -15,7 +15,7 @@ export function OpsShell({ title, subtitle, children }: OpsShellProps) {
         <header className="overflow-hidden rounded-[28px] border border-[#d4cbba] bg-white shadow-[0_20px_60px_rgba(50,54,64,0.08)]">
           <div className="grid gap-6 border-[#efe6d4] border-b bg-[linear-gradient(135deg,#323640_0%,#435765_100%)] px-6 py-8 text-white md:grid-cols-[1fr_auto] md:px-8">
             <div className="space-y-3">
-              <p className="font-sans text-xs uppercase tracking-[0.28em] text-white/70">
+              <p className="font-sans text-white/70 text-xs uppercase tracking-[0.28em]">
                 ModernCre8ve Ops
               </p>
               <div className="space-y-1">
@@ -120,7 +120,7 @@ export function OpsMetaPill({
   value: string;
 }) {
   return (
-    <div className="rounded-full border border-[#e5dccb] bg-[#faf7f0] px-3 py-1 text-xs uppercase tracking-[0.18em] text-[#6d7077]">
+    <div className="rounded-full border border-[#e5dccb] bg-[#faf7f0] px-3 py-1 text-[#6d7077] text-xs uppercase tracking-[0.18em]">
       <span className="mr-2 text-[#323640]">{label}</span>
       {value}
     </div>
@@ -149,15 +149,20 @@ export function OpsSectionHeading({
   );
 }
 
-export function OpsBackLink({ to, children }: { to: string; children: string }) {
+export function OpsBackLink({
+  to,
+  children,
+}: {
+  to: string;
+  children: string;
+}) {
   return (
     <Link
       to={to}
-      className="inline-flex items-center gap-2 font-sans text-xs uppercase tracking-[0.22em] text-[#5f636b] transition-colors hover:text-[#323640]"
+      className="inline-flex items-center gap-2 font-sans text-[#5f636b] text-xs uppercase tracking-[0.22em] transition-colors hover:text-[#323640]"
     >
       <span aria-hidden="true">←</span>
       {children}
     </Link>
   );
 }
-

@@ -76,7 +76,13 @@ async function main() {
   const failures = [];
 
   for (const blocker of homepageBlockers) {
-    if (blocker.test({ html: cleanedHomepageHtml, text: homepageText, links: uniqueHomepageLinks })) {
+    if (
+      blocker.test({
+        html: cleanedHomepageHtml,
+        text: homepageText,
+        links: uniqueHomepageLinks,
+      })
+    ) {
       failures.push({
         scope: "homepage",
         check: blocker.label,
@@ -173,7 +179,10 @@ function sanitizeHtml(html) {
 }
 
 function normalizeText(html) {
-  return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  return html
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function shouldSkipLink(path) {

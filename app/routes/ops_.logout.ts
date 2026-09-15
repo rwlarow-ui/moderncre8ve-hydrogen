@@ -7,4 +7,3 @@ export async function action({ context }: ActionFunctionArgs) {
     headers: await clearOpsAuthHeaders(context),
   });
 }
-

@@ -1,13 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-
+import { requireOpsAccess } from "../app/utils/ops-auth.server.js";
 import {
   buildOpsNoteMutation,
   diffTags,
   isCurrentOrder,
   normalizeOpsFilters,
 } from "../app/utils/ops-dashboard.server.js";
-import { requireOpsAccess } from "../app/utils/ops-auth.server.js";
 
 test("normalizeOpsFilters trims strings and clamps invalid limits", () => {
   const filters = normalizeOpsFilters({
@@ -40,7 +39,10 @@ test("diffTags computes add and remove deltas", () => {
 });
 
 test("buildOpsNoteMutation returns metafieldsSet payload for a non-empty note", () => {
-  const mutation = buildOpsNoteMutation("gid://shopify/Order/123", " Follow up ");
+  const mutation = buildOpsNoteMutation(
+    "gid://shopify/Order/123",
+    " Follow up ",
+  );
 
   assert.equal(mutation.mode, "set");
   assert.deepEqual(mutation.metafields[0], {
@@ -111,4 +113,3 @@ test("requireOpsAccess redirects unauthenticated users to the login route", asyn
     },
   );
 });
-

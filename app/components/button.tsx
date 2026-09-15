@@ -88,73 +88,73 @@ export interface ButtonProps
 }
 
 export function Button(props: ButtonProps & { ref?: Ref<HTMLButtonElement> }) {
-    let {
-      ref,
-      type = "button",
-      variant,
-      loading,
-      className,
-      textColor,
-      backgroundColor,
-      borderColor,
-      textColorHover,
-      backgroundColorHover,
-      borderColorHover,
-      style = {},
-      animate = true,
-      children,
-      ...rest
-    } = props;
-    if (variant === "custom") {
-      style = {
-        ...style,
-        "--btn-text": textColor,
-        "--btn-bg": backgroundColor,
-        "--btn-border": borderColor,
-        "--btn-text-hover": textColorHover,
-        "--btn-bg-hover": backgroundColorHover,
-        "--btn-border-hover": borderColorHover,
-      } as React.CSSProperties;
-    }
+  let {
+    ref,
+    type = "button",
+    variant,
+    loading,
+    className,
+    textColor,
+    backgroundColor,
+    borderColor,
+    textColorHover,
+    backgroundColorHover,
+    borderColorHover,
+    style = {},
+    animate = true,
+    children,
+    ...rest
+  } = props;
+  if (variant === "custom") {
+    style = {
+      ...style,
+      "--btn-text": textColor,
+      "--btn-bg": backgroundColor,
+      "--btn-border": borderColor,
+      "--btn-text-hover": textColorHover,
+      "--btn-bg-hover": backgroundColorHover,
+      "--btn-border-hover": borderColorHover,
+    } as React.CSSProperties;
+  }
 
-    if (!children) {
-      return null;
-    }
+  if (!children) {
+    return null;
+  }
 
-    let content: React.ReactNode;
-    if (typeof children === "string") {
-      content = <span>{children}</span>;
-    } else {
-      content = children;
-    }
+  let content: React.ReactNode;
+  if (typeof children === "string") {
+    content = <span>{children}</span>;
+  } else {
+    content = children;
+  }
 
-    if (animate) {
-      rest["data-motion"] = "fade-up";
-    }
+  if (animate) {
+    rest["data-motion"] = "fade-up";
+  }
 
-    return (
-      <button
-        ref={ref}
-        style={style}
-        type={type}
-        {...rest}
-        className={cn(variants({ variant, className }))}
-      >
-        {loading && <Spinner />}
-        {variant === "decor" ? (
-          <span className="inline-flex items-center gap-1">
-            {content}
-            <ArrowRight
-              size={20}
-              weight="thin"
-              className="transform transition-transform duration-300 group-hover:translate-x-1"
-            />
-          </span>
-        ) : (
-          content
-        )}
-      </button>
-    );
+  return (
+    <button
+      ref={ref}
+      style={style}
+      type={type}
+      {...rest}
+      className={cn(variants({ variant, className }))}
+    >
+      {loading && <Spinner />}
+      {variant === "decor" ? (
+        <span className="inline-flex items-center gap-1">
+          {content}
+          <ArrowRight
+            size={20}
+            weight="thin"
+            className="transform transition-transform duration-300 group-hover:translate-x-1"
+          />
+        </span>
+      ) : (
+        content
+      )}
+    </button>
+  );
 }
 
 function Spinner() {

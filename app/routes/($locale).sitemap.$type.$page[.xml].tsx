@@ -19,7 +19,9 @@ export async function loader({
     params,
     locales: SUPPORTED_STOREFRONT_LOCALES,
     getLink: ({ type, baseUrl, handle, locale }) => {
-      const pathPrefix = locale ? STOREFRONT_LOCALE_PREFIXES[locale] ?? "" : "";
+      const pathPrefix = locale
+        ? (STOREFRONT_LOCALE_PREFIXES[locale] ?? "")
+        : "";
       const basePath =
         type === "articles"
           ? `/blogs/${BLOG_HANDLE}/${handle}`

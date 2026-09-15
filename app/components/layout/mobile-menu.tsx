@@ -22,7 +22,9 @@ export function MobileMenu() {
   );
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
 
-  if (!headerMenu) { return <MenuTrigger />; }
+  if (!headerMenu) {
+    return <MenuTrigger />;
+  }
 
   const closeSubMenu = () => setActiveSubMenu(null);
   const closeAllMenus = () => {
@@ -233,10 +235,13 @@ function CollapsibleMenuItem({
   );
 }
 
-function MenuTrigger({ ref, ...props }: Dialog.DialogTriggerProps & { ref?: Ref<HTMLButtonElement> }) {
-    return (
-      <button ref={ref} type="button" {...props}>
-        <ListIcon className="h-5 w-5" />
-      </button>
-    );
+function MenuTrigger({
+  ref,
+  ...props
+}: Dialog.DialogTriggerProps & { ref?: Ref<HTMLButtonElement> }) {
+  return (
+    <button ref={ref} type="button" {...props}>
+      <ListIcon className="h-5 w-5" />
+    </button>
+  );
 }

@@ -28,44 +28,49 @@ export interface ImageProps extends React.ComponentPropsWithRef<"img"> {
   };
 }
 
-export function Image({ className, onLoad, ref, ...rest }: ImageProps & { ref?: Ref<HTMLDivElement> }) {
-    /**
-     * Use useRef for HydrogenImage, so we can access the HydrogenImage's ref
-     * even when using forwardRef for the outer div
-     */
-    const hydrogenImageRef = useRef<HTMLImageElement>(null);
-    const [loaded, setLoaded] = useState(false);
+export function Image({
+  className,
+  onLoad,
+  ref,
+  ...rest
+}: ImageProps & { ref?: Ref<HTMLDivElement> }) {
+  /**
+   * Use useRef for HydrogenImage, so we can access the HydrogenImage's ref
+   * even when using forwardRef for the outer div
+   */
+  const hydrogenImageRef = useRef<HTMLImageElement>(null);
+  const [loaded, setLoaded] = useState(false);
 
-    useEffect(() => {
-      if (hydrogenImageRef.current?.complete) {
-        setLoaded(true);
-        // @ts-expect-error
-        onLoad?.();
-      }
-    }, [onLoad]);
+  useEffect(() => {
+    if (hydrogenImageRef.current?.complete) {
+      setLoaded(true);
+      // @ts-expect-error
+      onLoad?.();
+    }
+  }, [onLoad]);
 
-    return (
-      <div
-        ref={ref}
+  return (
+    <div
+      ref={ref}
+      className={cn(
+        "h-full w-full overflow-hidden",
+        !loaded && "animate-pulse [animation-duration:4s]",
+        className,
+      )}
+    >
+      <HydrogenImage
+        ref={hydrogenImageRef}
         className={cn(
-          "h-full w-full overflow-hidden",
-          !loaded && "animate-pulse [animation-duration:4s]",
-          className,
+          "[transition:filter_500ms_cubic-bezier(.4,0,.2,1)]",
+          "h-full max-h-full w-full object-cover object-center",
+          loaded ? "blur-0" : "blur-xl",
         )}
-      >
-        <HydrogenImage
-          ref={hydrogenImageRef}
-          className={cn(
-            "[transition:filter_500ms_cubic-bezier(.4,0,.2,1)]",
-            "h-full max-h-full w-full object-cover object-center",
-            loaded ? "blur-0" : "blur-xl",
-          )}
-          onLoad={(e) => {
-            setLoaded(true);
-            onLoad?.(e);
-          }}
-          {...rest}
-        />
-      </div>
-    );
+        onLoad={(e) => {
+          setLoaded(true);
+          onLoad?.(e);
+        }}
+        {...rest}
+      />
+    </div>
+  );
 }

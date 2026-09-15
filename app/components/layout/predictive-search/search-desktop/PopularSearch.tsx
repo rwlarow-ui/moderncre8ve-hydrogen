@@ -12,7 +12,6 @@ const POPULAR_SEARCHES = [
 ];
 
 export function PopularSearch() {
-
   const [topSearches, setTopSearches] = useState<string[]>([]);
 
   useEffect(() => {
@@ -26,7 +25,9 @@ export function PopularSearch() {
         const counts = new Map<string, number>();
         for (const term of parsed) {
           const t = String(term || "").trim();
-          if (!t) { continue; }
+          if (!t) {
+            continue;
+          }
           counts.set(t, (counts.get(t) || 0) + 1);
         }
         const sorted = Array.from(counts.entries())
@@ -41,7 +42,9 @@ export function PopularSearch() {
   }, []);
 
   const displaySearches = useMemo(() => {
-    if (topSearches.length > 0) { return topSearches; }
+    if (topSearches.length > 0) {
+      return topSearches;
+    }
     return POPULAR_SEARCHES.slice(0, MAX_POPULAR_SEARCHES);
   }, [topSearches]);
 

@@ -51,8 +51,12 @@ const API_VERSION = "2024-10";
 const ENDPOINT = `https://${SHOP}/admin/api/${API_VERSION}/graphql.json`;
 
 if (!TOKEN) {
-  console.error("❌  No token found. Set SHOPIFY_ADMIN_API_TOKEN in .env or pass as first argument.");
-  console.error("    To get a fresh token: node scripts/get-admin-token.mjs <client_id> <client_secret>");
+  console.error(
+    "❌  No token found. Set SHOPIFY_ADMIN_API_TOKEN in .env or pass as first argument.",
+  );
+  console.error(
+    "    To get a fresh token: node scripts/get-admin-token.mjs <client_id> <client_secret>",
+  );
   process.exit(1);
 }
 
@@ -72,7 +76,9 @@ async function verifyToken() {
   const json = await res.json();
   if (json.errors || !json.data?.shop) {
     console.error("❌  Token rejected by Shopify Admin API.");
-    console.error("    Run: node scripts/get-admin-token.mjs fd5964839bc3fb47703bafb47d25d3fc <client_secret>");
+    console.error(
+      "    Run: node scripts/get-admin-token.mjs fd5964839bc3fb47703bafb47d25d3fc <client_secret>",
+    );
     process.exit(1);
   }
   return json.data.shop.name;
@@ -318,17 +324,24 @@ async function updateCollection({ handle, seoTitle, seoDescription }) {
     return { handle, status: "not_found" };
   }
   const result = await gql(UPDATE_COLLECTION, {
-    input: { id: col.id, seo: { title: seoTitle, description: seoDescription } },
+    input: {
+      id: col.id,
+      seo: { title: seoTitle, description: seoDescription },
+    },
   });
   const errors = result.collectionUpdate.userErrors;
   if (errors.length > 0) {
-    console.error(`  ❌  ${handle}: ${errors.map((e) => e.message).join(", ")}`);
+    console.error(
+      `  ❌  ${handle}: ${errors.map((e) => e.message).join(", ")}`,
+    );
     return { handle, status: "error", errors };
   }
   const s = result.collectionUpdate.collection.seo;
   console.log(`  ✅  ${handle}`);
   console.log(`      title (${charLen(s.title)} chars): "${s.title}"`);
-  console.log(`      meta  (${charLen(s.description)} chars): "${s.description}"`);
+  console.log(
+    `      meta  (${charLen(s.description)} chars): "${s.description}"`,
+  );
   return { handle, status: "ok" };
 }
 
@@ -340,17 +353,24 @@ async function updateProduct({ handle, seoTitle, seoDescription }) {
     return { handle, status: "not_found" };
   }
   const result = await gql(UPDATE_PRODUCT, {
-    input: { id: product.id, seo: { title: seoTitle, description: seoDescription } },
+    input: {
+      id: product.id,
+      seo: { title: seoTitle, description: seoDescription },
+    },
   });
   const errors = result.productUpdate.userErrors;
   if (errors.length > 0) {
-    console.error(`  ❌  ${handle}: ${errors.map((e) => e.message).join(", ")}`);
+    console.error(
+      `  ❌  ${handle}: ${errors.map((e) => e.message).join(", ")}`,
+    );
     return { handle, status: "error", errors };
   }
   const s = result.productUpdate.product.seo;
   console.log(`  ✅  ${handle}`);
   console.log(`      title (${charLen(s.title)} chars): "${s.title}"`);
-  console.log(`      meta  (${charLen(s.description)} chars): "${s.description}"`);
+  console.log(
+    `      meta  (${charLen(s.description)} chars): "${s.description}"`,
+  );
   return { handle, status: "ok" };
 }
 
@@ -382,7 +402,9 @@ async function main() {
   const errors = all.filter((r) => r.status === "error").length;
 
   console.log("\n═══════════════════════════════════════════════════");
-  console.log(` DONE: ${ok} updated · ${notFound} not found · ${errors} errors`);
+  console.log(
+    ` DONE: ${ok} updated · ${notFound} not found · ${errors} errors`,
+  );
   console.log("═══════════════════════════════════════════════════");
 
   if (notFound > 0 || errors > 0) {
@@ -390,7 +412,9 @@ async function main() {
     all
       .filter((r) => r.status !== "ok")
       .forEach((r) =>
-        console.log(`  ${r.status === "not_found" ? "⚠️ " : "❌"} ${r.handle} (${r.status})`),
+        console.log(
+          `  ${r.status === "not_found" ? "⚠️ " : "❌"} ${r.handle} (${r.status})`,
+        ),
       );
   }
 }
