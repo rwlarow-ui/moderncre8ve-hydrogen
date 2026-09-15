@@ -1,11 +1,11 @@
-import {
-  createSchema,
-  type HydrogenComponentProps,
-  type InspectorGroup,
-} from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import type { CSSProperties, Ref } from "react";
+import {
+  createSchema,
+  type SectionComponentProps,
+  type SettingsGroup,
+} from "~/page-builder";
 import { cn } from "~/utils/cn";
 
 const fontSizeVariants = cva("", {
@@ -95,7 +95,10 @@ export interface HeadingProps
   animate?: boolean;
 }
 
-function Heading(props: HeadingProps & Partial<HydrogenComponentProps> & { ref?: Ref<HTMLHeadingElement> }) {
+function Heading(
+  props: HeadingProps &
+    Partial<SectionComponentProps> & { ref?: Ref<HTMLHeadingElement> },
+) {
   const {
     ref,
     as: Tag = "h2",
@@ -143,7 +146,7 @@ function Heading(props: HeadingProps & Partial<HydrogenComponentProps> & { ref?:
 
 export default Heading;
 
-export const headingInputs: InspectorGroup["inputs"] = [
+export const headingInputs: SettingsGroup["inputs"] = [
   {
     type: "text",
     name: "content",

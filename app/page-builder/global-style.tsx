@@ -1,4 +1,4 @@
-import { useThemeSettings } from "@weaverse/hydrogen";
+import { useThemeSettings } from "./theme";
 
 export function GlobalStyle() {
   const settings = useThemeSettings();

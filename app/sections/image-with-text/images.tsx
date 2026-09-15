@@ -1,10 +1,10 @@
-import { createSchema, type HydrogenComponentProps } from "@weaverse/hydrogen";
 import { Children, forwardRef, useEffect } from "react";
+import { createSchema, type SectionComponentProps } from "~/page-builder";
 import { cn } from "~/utils/cn";
 import type { ImageAspectRatioType } from "./context";
 import { useImageWithTextContext } from "./context";
 
-interface ImageWithTextImageProps extends HydrogenComponentProps {
+interface ImageWithTextImageProps extends SectionComponentProps {
   imageAspectRatio: ImageAspectRatioType;
 }
 

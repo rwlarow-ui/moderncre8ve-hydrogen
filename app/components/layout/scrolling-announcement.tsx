@@ -4,12 +4,12 @@ import {
   LinkedinLogo,
   XLogo,
 } from "@phosphor-icons/react";
-import { useThemeSettings } from "@weaverse/hydrogen";
 import { cva } from "class-variance-authority";
 import { useEffect, useRef } from "react";
 import { Link } from "react-router";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useThemeSettings } from "~/page-builder";
 import { cn } from "~/utils/cn";
 import { CountrySelector } from "./country-selector";
 

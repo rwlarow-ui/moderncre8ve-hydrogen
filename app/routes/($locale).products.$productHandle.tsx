@@ -1,6 +1,7 @@
 import {
   Analytics,
   getAdjacentAndFirstAvailableVariants,
+  getSelectedProductOptions,
   useOptimisticVariant,
 } from "@shopify/hydrogen";
 import type {
@@ -9,12 +10,13 @@ import type {
   MetaArgs,
 } from "@shopify/remix-oxygen";
 import { data } from "@shopify/remix-oxygen";
-import { getSelectedProductOptions } from "@weaverse/hydrogen";
 import { useEffect } from "react";
 import { useLoaderData } from "react-router";
 import type { ProductQuery } from "storefront-api.generated";
 import invariant from "tiny-invariant";
 import { PRODUCT_QUERY } from "~/graphql/queries";
+import { loadPage } from "~/page-builder/page.server";
+import { PageContent } from "~/page-builder/renderer";
 import { routeHeaders } from "~/utils/cache";
 import {
   COMBINED_LISTINGS_CONFIGS,
@@ -23,14 +25,12 @@ import {
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { createJudgeMeReview, getJudgeMeProductReviews } from "~/utils/judgeme";
 import { getRecommendedProducts } from "~/utils/product";
-import { verifyTurnstile } from "~/utils/turnstile.server";
 import {
   redirectIfCombinedListing,
   redirectIfHandleIsLocalized,
 } from "~/utils/redirect";
 import { seoPayload } from "~/utils/seo.server";
-import { loadPageWithFallback } from "~/utils/weaverse-fallback.server";
-import { WeaverseContent } from "~/weaverse";
+import { verifyTurnstile } from "~/utils/turnstile.server";
 
 export const headers = routeHeaders;
 
@@ -39,9 +39,9 @@ export async function loader({ params, request, context }: LoaderFunctionArgs) {
 
   invariant(handle, "Missing productHandle param, check route filename");
 
-  const { storefront, weaverse } = context;
+  const { storefront } = context;
   const selectedOptions = getSelectedProductOptions(request);
-  const [{ shop, product }, weaverseData, productReviews] = await Promise.all([
+  const [{ shop, product }, pageData, productReviews] = await Promise.all([
     storefront.query<ProductQuery>(PRODUCT_QUERY, {
       variables: {
         handle,
@@ -50,7 +50,7 @@ export async function loader({ params, request, context }: LoaderFunctionArgs) {
         language: storefront.i18n.language,
       },
     }),
-    loadPageWithFallback(weaverse, { type: "PRODUCT", handle }),
+    loadPage({ context, request }, { type: "PRODUCT", handle }),
     getJudgeMeProductReviews({ context, handle }),
     // Add other queries here, so that they are loaded in parallel
   ]);
@@ -70,7 +70,7 @@ export async function loader({ params, request, context }: LoaderFunctionArgs) {
   return {
     shop,
     product,
-    weaverseData,
+    pageData,
     productReviews,
     storeDomain: shop.primaryDomain.url,
     seo: seoPayload.product({ product, url: request.url }),
@@ -130,7 +130,7 @@ export const meta = ({ matches, location }: MetaArgs<typeof loader>) => {
 };
 
 export default function Product() {
-  const { product } = useLoaderData<typeof loader>();
+  const { product, pageData } = useLoaderData<typeof loader>();
   const combinedListing = isCombinedListing(product);
 
   // Optimistically selects a variant with given available variant information
@@ -186,9 +186,9 @@ export default function Product() {
   return (
     <>
       {/* SEO fallback H1 — visually hidden but ensures every product page
-          has an H1 tag even if the Weaverse section doesn't render one. */}
+          has an H1 tag even if the page composition doesn't render one. */}
       <h1 className="sr-only">{product.title}</h1>
-      <WeaverseContent />
+      <PageContent pageData={pageData} />
       {selectedVariant && (
         <Analytics.ProductView
           data={{

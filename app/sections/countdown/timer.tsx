@@ -1,10 +1,10 @@
-import {
-  createSchema,
-  type HydrogenComponentProps,
-  useParentInstance,
-} from "@weaverse/hydrogen";
 import type { CSSProperties } from "react";
 import { forwardRef, useEffect, useState } from "react";
+import {
+  createSchema,
+  type SectionComponentProps,
+  useParentSection,
+} from "~/page-builder";
 import { cn } from "~/utils/cn";
 
 const ONE_SEC = 1000;
@@ -39,11 +39,11 @@ type CountDownTimerData = {
 
 const CountdownTimer = forwardRef<
   HTMLDivElement,
-  CountDownTimerData & HydrogenComponentProps
+  CountDownTimerData & SectionComponentProps
 >((props, ref) => {
   const { textColor, endTime, layout, ...rest } = props;
-  // Get parent scenario using Weaverse's useParentInstance hook
-  const parent = useParentInstance();
+  // The parent countdown section decides the timer's layout.
+  const parent = useParentSection();
   const parentScenario = parent?.data?.scenario as
     | "scenario1"
     | "scenario2"

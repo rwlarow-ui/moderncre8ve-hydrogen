@@ -1,7 +1,7 @@
-import { createSchema, type HydrogenComponentProps } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
+import { createSchema, type SectionComponentProps } from "~/page-builder";
 
-interface InformationItemProps extends HydrogenComponentProps {
+interface InformationItemProps extends SectionComponentProps {
   // allowMultiple: boolean;
 }
 

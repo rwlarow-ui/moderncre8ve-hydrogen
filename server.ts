@@ -1,17 +1,18 @@
 import * as remixBuild from "virtual:react-router/server-build"; // Virtual entry point for the app
 import type { HydrogenSession } from "@shopify/hydrogen";
-import { createHydrogenContext, storefrontRedirect } from "@shopify/hydrogen";
+import {
+  createHydrogenContext,
+  createWithCache,
+  storefrontRedirect,
+} from "@shopify/hydrogen";
 import {
   createCookieSessionStorage,
   createRequestHandler,
   type Session,
   type SessionStorage,
 } from "@shopify/remix-oxygen";
-import { WeaverseClient } from "@weaverse/hydrogen";
 import type { I18nLocale } from "~/types/locale";
 import { COUNTRIES } from "~/utils/const";
-import { components } from "~/weaverse/components";
-import { themeSchema } from "~/weaverse/schema.server";
 
 // React Router v7 Headers polyfill for getSetCookie compatibility
 if (typeof Headers !== "undefined" && !Headers.prototype.getSetCookie) {
@@ -187,13 +188,8 @@ export async function createAppLoadContext(
 
   return {
     ...hydrogenContext,
-    weaverse: new WeaverseClient({
-      ...hydrogenContext,
-      request,
-      cache,
-      themeSchema,
-      components,
-    }),
+    // Cached `fetch` for third-party APIs (Judge.me), shared across requests.
+    withCache: createWithCache({ cache, waitUntil, request }),
   };
 }
 

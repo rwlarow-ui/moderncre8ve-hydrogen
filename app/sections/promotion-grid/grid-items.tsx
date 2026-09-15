@@ -1,8 +1,3 @@
-import {
-  createSchema,
-  IMAGES_PLACEHOLDERS,
-  useChildInstances,
-} from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import {
@@ -19,6 +14,11 @@ import Link from "~/components/link";
 import { Overlay } from "~/components/overlay";
 import Paragraph from "~/components/paragraph";
 import type { SectionProps } from "~/components/section";
+import {
+  createSchema,
+  IMAGES_PLACEHOLDERS,
+  useChildSections,
+} from "~/page-builder";
 import "swiper/css";
 import { cn } from "~/utils/cn";
 import type { PromotionArrowsProps } from "./arrows";
@@ -482,7 +482,7 @@ let PromotionSlider = forwardRef<HTMLDivElement, GridItemProps>(
     let [swiperKey, setSwiperKey] = useState(0);
     let [activeTab, setActiveTab] = useState(0);
     let [refreshKey, setRefreshKey] = useState(0);
-    let childInstances = useChildInstances();
+    let childInstances = useChildSections();
 
     let childrenArray = Array.isArray(children)
       ? (children as ReactNode[])

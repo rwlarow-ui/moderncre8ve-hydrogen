@@ -1,5 +1,4 @@
 import { Money, mapSelectedProductOptionToObject } from "@shopify/hydrogen";
-import { useThemeSettings } from "@weaverse/hydrogen";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
 import { useState } from "react";
@@ -10,6 +9,7 @@ import type {
 import { Image } from "~/components/image";
 import { Link } from "~/components/link";
 import { NavLink } from "~/components/nav-link";
+import { useThemeSettings } from "~/page-builder";
 import { isCombinedListing } from "~/utils/combined-listings";
 import { calculateAspectRatio } from "~/utils/image";
 import { getProductImageAlt } from "~/utils/product-image-alt";

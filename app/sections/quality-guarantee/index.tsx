@@ -1,7 +1,7 @@
-import { createSchema } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
+import { createSchema } from "~/page-builder";
 
 interface QualityGuaranteeProps extends SectionProps {
   heading: string;
@@ -28,7 +28,7 @@ const QualityGuarantee = forwardRef<HTMLElement, QualityGuaranteeProps>(
         <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
           {heading && (
             <h2
-              className="mb-8 text-center font-sans text-2xl font-normal uppercase tracking-wide lg:text-3xl"
+              className="mb-8 text-center font-normal font-sans text-2xl uppercase tracking-wide lg:text-3xl"
               style={{ color: textColor }}
             >
               {heading}

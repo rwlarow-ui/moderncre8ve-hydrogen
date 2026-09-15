@@ -1,10 +1,6 @@
-import type {
-  HydrogenComponent,
-  WeaverseBlog,
-  WeaverseVideo,
-} from "@weaverse/hydrogen";
 import { forwardRef, lazy, Suspense } from "react";
 import { Link } from "react-router";
+import type { PageVideo, PickedBlog, SectionComponent } from "~/page-builder";
 
 const ReactPlayer = lazy(() => import("react-player"));
 
@@ -31,11 +27,11 @@ const VideoPlaceholder = () => (
 );
 
 interface VideoItemProps {
-  video: WeaverseVideo;
+  video: PageVideo;
   date: string;
   author: string;
   videoTitle: string;
-  videoHandle: WeaverseBlog;
+  videoHandle: PickedBlog;
   contentBackgroundColor?: string;
 }
 
@@ -127,7 +123,7 @@ let VideoItem = forwardRef<HTMLElement, VideoItemProps>((props, ref) => {
   );
 });
 
-export let schema: HydrogenComponent["schema"] = {
+export let schema: SectionComponent["schema"] = {
   type: "video--item",
   title: "Video",
   settings: [

@@ -1,6 +1,6 @@
-import { useThemeSettings } from "@weaverse/hydrogen";
 import { animate, inView, useAnimate } from "framer-motion";
 import { type ForwardedRef, useEffect } from "react";
+import { useThemeSettings } from "~/page-builder";
 
 export type MotionType = "fade-up" | "zoom-in" | "slide-in";
 

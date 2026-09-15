@@ -1,4 +1,3 @@
-import { createSchema } from "@weaverse/hydrogen";
 import { type CSSProperties, forwardRef, useState } from "react";
 import { useLoaderData } from "react-router";
 import type { ArticleFragment, BlogQuery } from "storefront-api.generated";
@@ -10,6 +9,7 @@ import Heading, {
 import { Image } from "~/components/image";
 import { Link } from "~/components/link";
 import { layoutInputs, Section, type SectionProps } from "~/components/section";
+import { createSchema } from "~/page-builder";
 import type { ImageAspectRatio } from "~/types/image";
 import { calculateAspectRatio, getImageLoadingPriority } from "~/utils/image";
 

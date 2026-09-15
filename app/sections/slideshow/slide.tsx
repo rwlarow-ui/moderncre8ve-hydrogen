@@ -1,8 +1,3 @@
-import {
-  createSchema,
-  type HydrogenComponentProps,
-  IMAGES_PLACEHOLDERS,
-} from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import { forwardRef } from "react";
@@ -18,6 +13,11 @@ import { OverlayAndBackground } from "~/components/overlay-and-background";
 import Paragraph, { type ParagraphProps } from "~/components/paragraph";
 import { layoutInputs } from "~/components/section";
 import { useAnimation } from "~/hooks/use-animation";
+import {
+  createSchema,
+  IMAGES_PLACEHOLDERS,
+  type SectionComponentProps,
+} from "~/page-builder";
 import { cn } from "~/utils/cn";
 
 const variants = cva(
@@ -59,7 +59,7 @@ const variants = cva(
 
 export interface SlideProps
   extends VariantProps<typeof variants>,
-    HydrogenComponentProps,
+    SectionComponentProps,
     OverlayAndBackgroundProps,
     Omit<HeadingProps, "content"> {
   // Heading props

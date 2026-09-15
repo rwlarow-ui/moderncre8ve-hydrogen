@@ -1,6 +1,6 @@
-import type { HydrogenComponentSchema } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
-import { type SectionProps, Section } from "~/components/section";
+import { Section, type SectionProps } from "~/components/section";
+import type { ComponentSchema } from "~/page-builder";
 
 const Instagram = forwardRef<HTMLElement, SectionProps>((props, ref) => {
   const { children, ...rest } = props;
@@ -13,7 +13,7 @@ const Instagram = forwardRef<HTMLElement, SectionProps>((props, ref) => {
 
 export default Instagram;
 
-export const schema: HydrogenComponentSchema = {
+export const schema: ComponentSchema = {
   type: "instagram",
   title: "Instagram",
   childTypes: ["instagram--content", "instagram--slider"],

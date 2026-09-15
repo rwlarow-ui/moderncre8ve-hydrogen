@@ -1,9 +1,9 @@
-import { createSchema, type HydrogenComponentProps } from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import { forwardRef } from "react";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
+import { createSchema, type SectionComponentProps } from "~/page-builder";
 
 export interface HighlightsProps extends VariantProps<typeof variants> {
   backgroundColor?: string;

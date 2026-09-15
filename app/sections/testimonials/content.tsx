@@ -1,17 +1,14 @@
 import { ArrowLeft, ArrowRight, Quotes, Star } from "@phosphor-icons/react";
-import type {
-  HydrogenComponentProps,
-  HydrogenComponentSchema,
-} from "@weaverse/hydrogen";
 import { forwardRef } from "react";
 import Heading, {
   type HeadingProps,
   headingInputs,
 } from "~/components/heading";
+import type { ComponentSchema, SectionComponentProps } from "~/page-builder";
 
 interface TestimonialContentProps
   extends Omit<HeadingProps, "as">,
-    Omit<HydrogenComponentProps, "content"> {
+    Omit<SectionComponentProps, "content"> {
   headingTagName?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   description?: string;
   ratting?: number;
@@ -150,7 +147,7 @@ let TestimonialContent = forwardRef<HTMLDivElement, TestimonialContentProps>(
 
 export default TestimonialContent;
 
-export let schema: HydrogenComponentSchema = {
+export let schema: ComponentSchema = {
   type: "testimonial--content",
   title: "Content",
   limit: 1,

@@ -1,5 +1,35 @@
+import { CacheCustom } from "@shopify/hydrogen";
 import type { AppLoadContext } from "react-router";
 import { constructURL } from "./misc";
+
+/**
+ * Judge.me review data changes rarely, so serve it from cache aggressively and
+ * revalidate in the background. Matches the strategy the previous cached
+ * fetcher used.
+ */
+const JUDGEME_CACHE_STRATEGY = {
+  maxAge: 10,
+  sMaxAge: 10,
+  staleWhileRevalidate: 82_800,
+  staleIfError: 82_800,
+};
+
+/** A cached JSON `fetch`, returning the parsed body or `null`. */
+function cachedJsonFetcher(withCache: AppLoadContext["withCache"]) {
+  return async <T>(url: string): Promise<T | null> => {
+    const { data } = await withCache.fetch<T>(
+      url,
+      {},
+      {
+        cacheKey: ["judgeme", url],
+        cacheStrategy: CacheCustom(JUDGEME_CACHE_STRATEGY),
+        shouldCacheResponse: (body) => body !== null && body !== undefined,
+        displayName: "Judge.me API",
+      },
+    );
+    return data;
+  };
+}
 
 type JudgemeProductData = {
   product: {
@@ -47,25 +77,27 @@ export async function getJudgeMeProductReviews({
   handle: string;
 }) {
   try {
-    const { weaverse, env } = context;
+    const { withCache, env } = context;
     const { JUDGEME_PRIVATE_API_TOKEN, PUBLIC_STORE_DOMAIN } = env;
     if (JUDGEME_PRIVATE_API_TOKEN) {
-      const { fetchWithCache } = weaverse;
-      const { product } = await fetchWithCache<JudgemeProductData>(
-        constructURL(JUDGEME_PRODUCT_API, {
-          handle,
-          shop_domain: PUBLIC_STORE_DOMAIN,
-          api_token: JUDGEME_PRIVATE_API_TOKEN,
-        }),
-      );
-      if (product?.id) {
-        const { reviews } = await fetchWithCache<JudgemeReviewsData>(
-          constructURL(JUDGEME_REVIEWS_API, {
-            api_token: JUDGEME_PRIVATE_API_TOKEN,
+      const fetchCached = cachedJsonFetcher(withCache);
+      const { product } =
+        (await fetchCached<JudgemeProductData>(
+          constructURL(JUDGEME_PRODUCT_API, {
+            handle,
             shop_domain: PUBLIC_STORE_DOMAIN,
-            product_id: product?.id,
+            api_token: JUDGEME_PRIVATE_API_TOKEN,
           }),
-        );
+        )) ?? {};
+      if (product?.id) {
+        const { reviews } =
+          (await fetchCached<JudgemeReviewsData>(
+            constructURL(JUDGEME_REVIEWS_API, {
+              api_token: JUDGEME_PRIVATE_API_TOKEN,
+              shop_domain: PUBLIC_STORE_DOMAIN,
+              product_id: product?.id,
+            }),
+          )) ?? {};
         const reviewNumber = reviews.length || 1;
         const rating = reviews.reduce((a, c) => a + c.rating, 0) / reviewNumber;
         return { rating, reviewNumber, reviews };

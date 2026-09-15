@@ -1,11 +1,5 @@
 import { List } from "@phosphor-icons/react";
 import { Image } from "@shopify/hydrogen";
-import {
-  type HydrogenComponentProps,
-  type HydrogenComponentSchema,
-  IMAGES_PLACEHOLDERS,
-  type WeaverseImage,
-} from "@weaverse/hydrogen";
 import clsx from "clsx";
 import React, {
   type CSSProperties,
@@ -13,10 +7,16 @@ import React, {
   useEffect,
   useRef,
 } from "react";
+import {
+  type ComponentSchema,
+  IMAGES_PLACEHOLDERS,
+  type PageImage,
+  type SectionComponentProps,
+} from "~/page-builder";
 
-interface BeforeAndAfterProps extends HydrogenComponentProps {
-  beforeImage1: WeaverseImage | string;
-  afterImage2: WeaverseImage | string;
+interface BeforeAndAfterProps extends SectionComponentProps {
+  beforeImage1: PageImage | string;
+  afterImage2: PageImage | string;
   separatorColor: string;
   showList: boolean;
   listColor: string;
@@ -250,7 +250,7 @@ const BeforeAndAfter = forwardRef<HTMLDivElement, BeforeAndAfterProps>(
 
 export default BeforeAndAfter;
 
-export let schema: HydrogenComponentSchema = {
+export let schema: ComponentSchema = {
   type: "before-after-slider",
   title: "Slider",
   limit: 1,

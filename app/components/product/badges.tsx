@@ -1,6 +1,5 @@
 import { useMoney } from "@shopify/hydrogen";
 import type { MoneyV2 } from "@shopify/hydrogen/storefront-api-types";
-import { useThemeSettings } from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { colord } from "colord";
 import type {
@@ -8,6 +7,7 @@ import type {
   ProductQuery,
   ProductVariantFragment,
 } from "storefront-api.generated";
+import { useThemeSettings } from "~/page-builder";
 import { cn } from "~/utils/cn";
 
 function Badge({

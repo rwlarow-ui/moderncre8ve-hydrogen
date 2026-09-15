@@ -1,13 +1,12 @@
 import { XIcon } from "@phosphor-icons/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import { useThemeSettings } from "@weaverse/hydrogen";
 import { useEffect, useState } from "react";
 import { useFetcher, useLocation, useRouteLoaderData } from "react-router";
 import { Button } from "~/components/button";
 import { Image } from "~/components/image";
 import { HoneypotField, TurnstileWidget } from "~/components/turnstile-widget";
-import { useWeaverseStudioCheck } from "~/hooks/use-weaverse-studio-check";
+import { useThemeSettings } from "~/page-builder";
 import type { RootLoader } from "~/root";
 import { cn } from "~/utils/cn";
 import { DEFAULT_LOCALE } from "~/utils/const";
@@ -43,7 +42,6 @@ export function NewsletterPopup() {
 
   const [open, setOpen] = useState(false);
   const fetcher = useFetcher<{ ok: boolean; errorMessage?: string }>();
-  const isDesignMode = useWeaverseStudioCheck();
   const rootData = useRouteLoaderData<RootLoader>("root");
   const turnstileSiteKey = rootData?.turnstileSiteKey || "";
   const [turnstileToken, setTurnstileToken] = useState("");
@@ -67,35 +65,15 @@ export function NewsletterPopup() {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: just need to run once
   useEffect(() => {
-    let timer: ReturnType<typeof setTimeout> | null = null;
-    if (!isDesignMode) {
-      const isDismissed = localStorage.getItem(POPUP_DISMISSED_KEY) === "true";
-      if (isDismissed) {
-        return;
-      }
-      timer = setTimeout(() => {
-        setOpen(true);
-      }, newsletterPopupDelay * 1000);
+    const isDismissed = localStorage.getItem(POPUP_DISMISSED_KEY) === "true";
+    if (isDismissed) {
+      return;
     }
+    const timer = setTimeout(() => {
+      setOpen(true);
+    }, newsletterPopupDelay * 1000);
     return () => clearTimeout(timer);
   }, []);
-
-  // Re-open popup when settings change in design mode
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Need to track all settings changes in design mode
-  useEffect(() => {
-    if (isDesignMode) {
-      setOpen(true);
-    }
-  }, [
-    newsletterPopupDelay,
-    newsletterPopupAllowDismiss,
-    newsletterPopupImage,
-    newsletterPopupImagePosition,
-    newsletterPopupHeading,
-    newsletterPopupDescription,
-    newsletterPopupButtonText,
-    newsletterPopupPosition,
-  ]);
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>

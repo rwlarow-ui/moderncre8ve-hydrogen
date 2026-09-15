@@ -1,13 +1,10 @@
-import type {
-  HydrogenComponentProps,
-  InspectorGroup,
-} from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import type React from "react";
 import type { HTMLAttributes } from "react";
 import { forwardRef } from "react";
 import { useAnimation } from "~/hooks/use-animation";
+import type { SectionComponentProps, SettingsGroup } from "~/page-builder";
 import { cn } from "~/utils/cn";
 import type { BackgroundImageProps } from "./background-image";
 import { backgroundInputs } from "./background-image";
@@ -22,7 +19,7 @@ export type BackgroundProps = BackgroundImageProps & {
 
 export interface SectionProps<T = any>
   extends Omit<VariantProps<typeof variants>, "padding">,
-    Partial<Omit<HydrogenComponentProps<T>, "children">>,
+    Partial<Omit<SectionComponentProps<T>, "children">>,
     Omit<HTMLAttributes<HTMLElement>, "children">,
     Partial<BackgroundProps>,
     Partial<OverlayProps> {
@@ -143,7 +140,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>((props, ref) => {
   );
 });
 
-export const layoutInputs: InspectorGroup["inputs"] = [
+export const layoutInputs: SettingsGroup["inputs"] = [
   {
     type: "select",
     name: "width",
@@ -198,7 +195,7 @@ export const layoutInputs: InspectorGroup["inputs"] = [
   },
 ];
 
-export const sectionSettings: InspectorGroup[] = [
+export const sectionSettings: SettingsGroup[] = [
   { group: "Layout", inputs: layoutInputs },
   { group: "Background", inputs: backgroundInputs },
   { group: "Overlay", inputs: overlayInputs },

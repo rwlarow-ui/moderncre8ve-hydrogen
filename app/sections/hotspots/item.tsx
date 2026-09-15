@@ -1,11 +1,5 @@
 import { HandbagIcon, PlusIcon, TagIcon, XIcon } from "@phosphor-icons/react";
 import * as Dialog from "@radix-ui/react-dialog";
-import {
-  type ComponentLoaderArgs,
-  createSchema,
-  type HydrogenComponentProps,
-  type WeaverseProduct,
-} from "@weaverse/hydrogen";
 import clsx from "clsx";
 import type { CSSProperties } from "react";
 import { forwardRef, useState } from "react";
@@ -15,7 +9,12 @@ import { QuickShop } from "~/components/product/quick-shop";
 import { ScrollArea } from "~/components/scroll-area";
 import { PRODUCT_QUERY } from "~/graphql/queries";
 import { usePrefixPathWithLocale } from "~/hooks/use-prefix-path-with-locale";
-import { useWeaverseStudioCheck } from "~/hooks/use-weaverse-studio-check";
+import {
+  type ComponentLoaderArgs,
+  createSchema,
+  type PickedProduct,
+  type SectionComponentProps,
+} from "~/page-builder";
 import { ProductPopup } from "./product-popup";
 
 export interface HotspotsItemData {
@@ -23,14 +22,14 @@ export interface HotspotsItemData {
   iconSize: number;
   offsetX: number;
   offsetY: number;
-  product: WeaverseProduct;
+  product: PickedProduct;
   showPrice: boolean;
   showViewDetailsLink: boolean;
   viewDetailsLinkText: string;
 }
 
 interface HotspotsItemProps
-  extends HydrogenComponentProps<Awaited<ReturnType<typeof loader>>>,
+  extends SectionComponentProps<Awaited<ReturnType<typeof loader>>>,
     HotspotsItemData {}
 
 const ICONS = {
@@ -67,19 +66,22 @@ const HotspotsItem = forwardRef<HTMLDivElement, HotspotsItemProps>(
       loaderData,
       ...rest
     } = props;
-    const isDesignMode = useWeaverseStudioCheck();
     const resolvedProduct = loaderData?.product ?? null;
-    const hasResolvedProduct = Boolean(product?.handle && resolvedProduct?.handle);
+    const hasResolvedProduct = Boolean(
+      product?.handle && resolvedProduct?.handle,
+    );
     const productHandle = resolvedProduct?.handle ?? product?.handle ?? "";
 
-    if (!hasResolvedProduct && !isDesignMode) {
+    if (!hasResolvedProduct) {
       return null;
     }
 
     const Icon = ICONS[icon];
     const [showQuickShop, setShowQuickShop] = useState(false);
     const { load, data: quickShopData, state } = useFetcher();
-    const apiPath = usePrefixPathWithLocale(`/api/product?handle=${productHandle}`);
+    const apiPath = usePrefixPathWithLocale(
+      `/api/product?handle=${productHandle}`,
+    );
 
     // Handle click - open quick shop on mobile and tablet, popup on desktop
     const handleClick = () => {
@@ -221,8 +223,8 @@ const HotspotsItem = forwardRef<HTMLDivElement, HotspotsItemProps>(
 export default HotspotsItem;
 
 export const loader = async (args: ComponentLoaderArgs<HotspotsItemData>) => {
-  const { weaverse, data } = args;
-  const { storefront } = weaverse;
+  const { context, data } = args;
+  const { storefront } = context;
   if (!data?.product?.handle || data.product.handle === "#") {
     return null;
   }

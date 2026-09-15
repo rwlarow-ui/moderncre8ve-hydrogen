@@ -1,11 +1,11 @@
-import {
-  createSchema,
-  type HydrogenComponentProps,
-  type WeaverseVideo,
-} from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import { forwardRef } from "react";
+import {
+  createSchema,
+  type PageVideo,
+  type SectionComponentProps,
+} from "~/page-builder";
 
 const variants = cva("mx-auto aspect-video w-full", {
   variants: {
@@ -46,8 +46,8 @@ const variants = cva("mx-auto aspect-video w-full", {
 
 interface VideoItemProps
   extends VariantProps<typeof variants>,
-    HydrogenComponentProps {
-  video: WeaverseVideo;
+    SectionComponentProps {
+  video: PageVideo;
   videoUrl: string;
 }
 

@@ -1,7 +1,7 @@
-import { createSchema, type HydrogenComponentProps } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
+import { createSchema, type SectionComponentProps } from "~/page-builder";
 
-interface CraftsmanshipStepProps extends HydrogenComponentProps {
+interface CraftsmanshipStepProps extends SectionComponentProps {
   stepNumber: string;
   stepTitle: string;
   stepDescription: string;
@@ -84,7 +84,7 @@ const CraftsmanshipStep = forwardRef<HTMLDivElement, CraftsmanshipStepProps>(
       >
         {/* Step number */}
         <span
-          className="mb-3 font-sans text-sm font-semibold uppercase tracking-widest"
+          className="mb-3 font-sans font-semibold text-sm uppercase tracking-widest"
           style={{ color: accentColor }}
         >
           Step {stepNumber}
@@ -97,7 +97,7 @@ const CraftsmanshipStep = forwardRef<HTMLDivElement, CraftsmanshipStepProps>(
 
         {/* Title */}
         <h3
-          className="mb-2 font-sans text-lg font-medium uppercase tracking-wide"
+          className="mb-2 font-medium font-sans text-lg uppercase tracking-wide"
           style={{ color: textColor }}
         >
           {stepTitle}

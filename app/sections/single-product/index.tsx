@@ -1,12 +1,5 @@
 import { getProductOptions, Money, ShopPayButton } from "@shopify/hydrogen";
 import type { MoneyV2 } from "@shopify/hydrogen/customer-account-api-types";
-import {
-  type ComponentLoaderArgs,
-  createSchema,
-  type HydrogenComponentProps,
-  IMAGES_PLACEHOLDERS,
-  type WeaverseProduct,
-} from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { forwardRef, useState } from "react";
 import type {
@@ -24,13 +17,20 @@ import { CompareAtPrice } from "~/components/product/variant-prices";
 import { layoutInputs, Section } from "~/components/section";
 import { PRODUCT_QUERY } from "~/graphql/queries";
 import { useAnimation } from "~/hooks/use-animation";
+import {
+  type ComponentLoaderArgs,
+  createSchema,
+  IMAGES_PLACEHOLDERS,
+  type PickedProduct,
+  type SectionComponentProps,
+} from "~/page-builder";
 import { isDiscounted } from "~/utils/product";
 import { ProductDetails } from "../main-product/product-details";
 import { ProductVariants } from "../main-product/variants";
 
 interface SingleProductData {
   productsCount: number;
-  product: WeaverseProduct;
+  product: PickedProduct;
   // Product Media settings
   mediaLayout: "grid" | "slider";
   gridSize: "1x1" | "2x2" | "mix";
@@ -56,7 +56,7 @@ interface SingleProductData {
   showRefundPolicy: boolean;
 }
 
-type SingleProductProps = HydrogenComponentProps<
+type SingleProductProps = SectionComponentProps<
   Awaited<ReturnType<typeof loader>>
 > &
   SingleProductData;
@@ -340,8 +340,8 @@ const SingleProduct = forwardRef<HTMLElement, SingleProductProps>(
 );
 
 export const loader = async (args: ComponentLoaderArgs<SingleProductData>) => {
-  const { weaverse, data } = args;
-  const { storefront } = weaverse;
+  const { context, data } = args;
+  const { storefront } = context;
   if (!data.product) {
     return null;
   }

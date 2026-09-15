@@ -1,12 +1,12 @@
-import { createSchema, type HydrogenComponentProps } from "@weaverse/hydrogen";
 import { forwardRef, useEffect, useState } from "react";
 import Heading, {
   type HeadingProps,
   headingInputs,
 } from "~/components/heading";
+import { createSchema, type SectionComponentProps } from "~/page-builder";
 
 export interface HighlightsBadgeProps
-  extends HydrogenComponentProps,
+  extends SectionComponentProps,
     Omit<HeadingProps, "content"> {
   iconType?: string;
   customIcon?: string;

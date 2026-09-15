@@ -10,7 +10,6 @@ import {
   useOptimisticData,
 } from "@shopify/hydrogen";
 import type { Cart as CartType } from "@shopify/hydrogen/storefront-api-types";
-import { useThemeSettings } from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import useScroll from "react-use/esm/useScroll";
@@ -19,6 +18,7 @@ import { Button } from "~/components/button";
 import { Image } from "~/components/image";
 import { Link } from "~/components/link";
 import { SubscriptionLineItem } from "~/components/subscriptions/subscription-line-item";
+import { useThemeSettings } from "~/page-builder";
 import { calculateAspectRatio } from "~/utils/image";
 import { toggleCartDrawer } from "../layout/cart-drawer";
 import { CartBestSellers } from "./cart-best-sellers";
@@ -431,7 +431,9 @@ function CartCheckoutActions({
   layout: Layouts;
   cart: OptimisticCart<CartApiQueryFragment>;
 }) {
-  if (!checkoutUrl) { return null; }
+  if (!checkoutUrl) {
+    return null;
+  }
 
   function handleCheckoutClick() {
     try {
@@ -540,7 +542,9 @@ function CartLineItem({
 }) {
   const optimisticData = useOptimisticData<OptimisticData>(line?.id);
 
-  if (!line?.id) { return null; }
+  if (!line?.id) {
+    return null;
+  }
 
   const { id, quantity, merchandise, isOptimistic } = line;
 
@@ -890,7 +894,9 @@ function CartLinePrice({
   isLoading?: boolean;
   [key: string]: any;
 }) {
-  if (!(line?.cost?.amountPerQuantity && line?.cost?.totalAmount)) { return null; }
+  if (!(line?.cost?.amountPerQuantity && line?.cost?.totalAmount)) {
+    return null;
+  }
 
   const moneyV2 =
     priceType === "regular"

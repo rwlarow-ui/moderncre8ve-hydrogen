@@ -1,7 +1,7 @@
-import { createSchema } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
+import { createSchema } from "~/page-builder";
 
 interface CustomerGalleryProps extends SectionProps {
   heading: string;
@@ -32,7 +32,7 @@ const CustomerGallery = forwardRef<HTMLElement, CustomerGalleryProps>(
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="mb-10 text-center" style={{ color: textColor }}>
-            <h2 className="mb-3 font-sans text-3xl font-normal uppercase tracking-wide lg:text-4xl">
+            <h2 className="mb-3 font-normal font-sans text-3xl uppercase tracking-wide lg:text-4xl">
               {heading}
             </h2>
             <p

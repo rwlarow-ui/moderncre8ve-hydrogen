@@ -1,8 +1,3 @@
-import {
-  createSchema,
-  type HydrogenComponentProps,
-  isBrowser,
-} from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
@@ -19,6 +14,11 @@ import { useInView } from "react-intersection-observer";
 import type { OverlayProps } from "~/components/overlay";
 import { Overlay, overlayInputs } from "~/components/overlay";
 import { useAnimation } from "~/hooks/use-animation";
+import {
+  createSchema,
+  isBrowser,
+  type SectionComponentProps,
+} from "~/page-builder";
 
 const SECTION_HEIGHTS = {
   small: {
@@ -43,7 +43,7 @@ interface HeroVideoData extends OverlayProps, VariantProps<typeof variants> {
   heightOnMobile: number;
 }
 
-export interface HeroVideoProps extends HeroVideoData, HydrogenComponentProps {}
+export interface HeroVideoProps extends HeroVideoData, SectionComponentProps {}
 
 const variants = cva(
   "absolute inset-0 z-10 mx-auto flex max-w-screen flex-col items-center justify-center px-3",

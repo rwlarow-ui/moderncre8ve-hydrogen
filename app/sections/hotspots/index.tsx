@@ -1,9 +1,9 @@
-import type { HydrogenComponentProps } from "@weaverse/hydrogen";
-import { createSchema } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
 import { layoutInputs, Section } from "~/components/section";
+import type { SectionComponentProps } from "~/page-builder";
+import { createSchema } from "~/page-builder";
 
-interface HotspotsProps extends HydrogenComponentProps {}
+interface HotspotsProps extends SectionComponentProps {}
 
 let Hotspots = forwardRef<HTMLElement, HotspotsProps>((props, ref) => {
   let { children, ...rest } = props;

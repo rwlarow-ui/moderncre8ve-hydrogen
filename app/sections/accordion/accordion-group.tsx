@@ -1,12 +1,9 @@
 import * as RadixAccordion from "@radix-ui/react-accordion";
-import type {
-  HydrogenComponentProps,
-  HydrogenComponentSchema,
-} from "@weaverse/hydrogen";
 import { forwardRef } from "react";
+import type { ComponentSchema, SectionComponentProps } from "~/page-builder";
 import { useAccordionContext } from "./index";
 
-interface AccordionGroupProps extends HydrogenComponentProps {
+interface AccordionGroupProps extends SectionComponentProps {
   allowMultiple: boolean;
   accordionBackgroundColor: string;
   accordionTextColor: string;
@@ -63,7 +60,7 @@ const AccordionGroup = forwardRef<HTMLDivElement, AccordionGroupProps>(
 
 export default AccordionGroup;
 
-export const schema: HydrogenComponentSchema = {
+export const schema: ComponentSchema = {
   type: "accordion-group",
   title: "Accordion Group",
   settings: [

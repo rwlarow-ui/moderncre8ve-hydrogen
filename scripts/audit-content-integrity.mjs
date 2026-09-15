@@ -8,11 +8,8 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 const REPORTS_DIR = resolve(ROOT, "reports");
-const FALLBACK_MAP_PATH = resolve(
-  ROOT,
-  "app/utils/weaverse-fallback.server.ts",
-);
-const WEAVERSE_PAGES_DIR = resolve(ROOT, "weaverse-pages");
+const PAGE_MAP_PATH = resolve(ROOT, "app/page-builder/pages/index.ts");
+const PAGES_DIR = resolve(ROOT, "app/page-builder/pages");
 const ENV_PATH = resolve(ROOT, ".env");
 
 const SITE_ORIGIN = "https://moderncre8ve.com";
@@ -79,7 +76,7 @@ const PLACEHOLDER_FILE_RULES = [
     issueType: "source_placeholder_image_fallback",
     severity: "medium",
     recommendedFix:
-      "Guard published slideshow slides so missing images do not fall back to Weaverse placeholder banners.",
+      "Guard published slideshow slides so missing images do not fall back to placeholder banners.",
     owner: "Storefront engineering",
   },
 ];
@@ -92,7 +89,7 @@ loadDotEnv();
 async function main() {
   const fallbackMap = await loadFallbackMap();
   const sourceFindings = [
-    ...(await scanFallbackJsonFiles()),
+    ...(await scanPageDefinitions()),
     ...(await scanPlaceholderCodePaths()),
   ];
 
@@ -200,14 +197,14 @@ async function auditLiveItem(item, fallbackMap) {
         severity: "medium",
         visibleLive: false,
         evidence: [
-          `Page handle \`${item.handle}\` is present in the live sitemap but not mapped in ${relative(ROOT, FALLBACK_MAP_PATH)}.`,
+          `Page handle \`${item.handle}\` is present in the live sitemap but not mapped in ${relative(ROOT, PAGE_MAP_PATH)}.`,
           sourceContext.storefrontSummary,
         ].filter(Boolean),
         contentSource:
-          "Weaverse Studio page assignment or Shopify page record without a mapped local fallback JSON.",
+          "Shopify page record without a page definition of its own; renders the default page template.",
         recommendedFix:
-          "Either add a local fallback mapping for this handle or document that it is intentionally Studio-only.",
-        owner: "Content / Weaverse",
+          "Either add a page definition for this handle or confirm the default page template is intended.",
+        owner: "Content / Page builder",
       }),
     );
   }
@@ -239,7 +236,7 @@ async function auditLiveItem(item, fallbackMap) {
         ].filter(Boolean),
         contentSource: sourceContext.contentSource,
         recommendedFix:
-          "Populate the Weaverse page assignment or fallback JSON so the route renders meaningful body content server-side.",
+          "Populate the page definition so the route renders meaningful body content server-side.",
         owner: sourceContext.owner,
       }),
     );
@@ -269,7 +266,7 @@ async function auditLiveItem(item, fallbackMap) {
         ].filter(Boolean),
         contentSource: sourceContext.contentSource,
         recommendedFix:
-          "Verify the Weaverse page assignment for this handle. It appears to be rendering contact-page content instead of route-specific copy.",
+          "Verify the page definition mapped for this handle. It appears to be rendering contact-page content instead of route-specific copy.",
         owner: sourceContext.owner,
       }),
     );
@@ -469,10 +466,10 @@ async function getSourceContext(item, fallbackMap) {
   let owner = "Storefront engineering";
 
   if (item.pageType === "page") {
-    owner = "Content / Weaverse";
+    owner = "Content / Page builder";
     if (fallbackMap.pageHandles.has(item.handle)) {
       parts.push(
-        `Mapped fallback JSON: ${fallbackMap.pageHandles.get(item.handle)}`,
+        `Mapped page definition: ${fallbackMap.pageHandles.get(item.handle)}`,
       );
     } else {
       parts.push("No mapped local fallback JSON");
@@ -697,13 +694,22 @@ async function adminQuery(query, variables) {
 }
 
 async function loadFallbackMap() {
-  const source = await readFile(FALLBACK_MAP_PATH, "utf8");
+  const source = await readFile(PAGE_MAP_PATH, "utf8");
   const pageHandles = new Map();
 
-  for (const match of source.matchAll(
-    /"PAGE:([^"]+)":\s*\(\)\s*=>\s*import\("\.\.\/\.\.\/weaverse-pages\/([^"]+)"\)/g,
-  )) {
-    pageHandles.set(match[1], `weaverse-pages/${match[2]}`);
+  // Read the `PAGES` record, whose entries are either `"some-handle": someVar,`
+  // or the shorthand `handle,` when the handle and the variable name match.
+  const pagesBlock = source.match(
+    /const PAGES: Record<string, PageDefinition> = \{([\s\S]*?)\n\};/,
+  );
+  for (const line of pagesBlock?.[1].split("\n") ?? []) {
+    const match = line.match(/^\s*(?:"([^"]+)"|([A-Za-z_$][\w$]*))\s*:?\s*([A-Za-z_$][\w$]*)?,\s*$/);
+    if (!match) {
+      continue;
+    }
+    const handle = match[1] ?? match[2];
+    const variable = match[3] ?? match[2];
+    pageHandles.set(handle, `app/page-builder/pages/${variable}`);
   }
 
   return {
@@ -711,61 +717,58 @@ async function loadFallbackMap() {
   };
 }
 
-async function scanFallbackJsonFiles() {
-  const entries = await readdir(WEAVERSE_PAGES_DIR);
+async function scanPageDefinitions() {
+  const entries = await readdir(PAGES_DIR);
   const findings = [];
 
   for (const entry of entries.sort()) {
-    if (extname(entry) !== ".json") continue;
+    if (extname(entry) !== ".ts" || entry === "index.ts") continue;
 
-    const absolutePath = resolve(WEAVERSE_PAGES_DIR, entry);
+    const absolutePath = resolve(PAGES_DIR, entry);
     const relativePath = relative(ROOT, absolutePath);
     const raw = await readFile(absolutePath, "utf8");
-    const parsed = JSON.parse(raw);
 
     const emptyPaths = [];
-    walkJson(parsed, "$", (value, pathName) => {
-      if (value === "") {
-        emptyPaths.push(pathName);
-      }
-    });
+    for (const match of raw.matchAll(/^\s*([A-Za-z_$][\w$]*): "",$/gm)) {
+      emptyPaths.push(match[1]);
+    }
 
     if (emptyPaths.length > 0) {
       findings.push(
         createFinding({
           url: `source://${relativePath}`,
           pageType: "source-risk",
-          issueType: "fallback_json_empty_fields",
+          issueType: "page_definition_empty_fields",
           severity: "medium",
           visibleLive: false,
           evidence: [
             `${relativePath} contains ${emptyPaths.length} empty string field(s).`,
             ...emptyPaths.slice(0, 10).map((pathName) => `Empty field: ${pathName}`),
           ],
-          contentSource: `Local fallback JSON (${relativePath})`,
+          contentSource: `Page definition (${relativePath})`,
           recommendedFix:
-            "Fill or remove empty content fields so mapped fallback pages do not render blank components.",
-          owner: "Content / Weaverse",
+            "Fill or remove empty content fields so mapped pages do not render blank components.",
+          owner: "Content / Page builder",
         }),
       );
     }
 
     const markerHits = findSourceMarkers(raw);
-    if (markerHits.length > 0 && entry !== "homepage.json" && entry !== "reviews.json") {
+    if (markerHits.length > 0 && entry !== "homepage.ts" && entry !== "reviews.ts") {
       findings.push(
         createFinding({
           url: `source://${relativePath}`,
           pageType: "source-risk",
-          issueType: "fallback_json_demo_markers",
+          issueType: "page_definition_demo_markers",
           severity: "low",
           visibleLive: false,
           evidence: [
             `${relativePath} contains marker hits: ${markerHits.join(", ")}.`,
           ],
-          contentSource: `Local fallback JSON (${relativePath})`,
+          contentSource: `Page definition (${relativePath})`,
           recommendedFix:
             "Confirm these marker strings are not production-facing copy, then remove or replace them if they are placeholders.",
-          owner: "Content / Weaverse",
+          owner: "Content / Page builder",
         }),
       );
     }
@@ -952,22 +955,6 @@ function findSourceMarkers(text) {
   );
 }
 
-function walkJson(value, pathName, visitor) {
-  visitor(value, pathName);
-
-  if (Array.isArray(value)) {
-    value.forEach((item, index) => {
-      walkJson(item, `${pathName}[${index}]`, visitor);
-    });
-    return;
-  }
-
-  if (value && typeof value === "object") {
-    for (const [key, nestedValue] of Object.entries(value)) {
-      walkJson(nestedValue, `${pathName}.${key}`, visitor);
-    }
-  }
-}
 
 function createFinding({
   url,

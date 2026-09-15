@@ -1,4 +1,3 @@
-import { createSchema, IMAGES_PLACEHOLDERS } from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import { forwardRef } from "react";
@@ -6,6 +5,7 @@ import { backgroundInputs } from "~/components/background-image";
 import { overlayInputs } from "~/components/overlay";
 import type { SectionProps } from "~/components/section";
 import { Section } from "~/components/section";
+import { createSchema, IMAGES_PLACEHOLDERS } from "~/page-builder";
 import { cn } from "~/utils/cn";
 
 const variants = cva("flex items-end justify-center", {

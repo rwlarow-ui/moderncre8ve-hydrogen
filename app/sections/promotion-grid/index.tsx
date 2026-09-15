@@ -1,7 +1,7 @@
-import { createSchema } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
+import { createSchema } from "~/page-builder";
 
 type PromotionGridProps = SectionProps;
 

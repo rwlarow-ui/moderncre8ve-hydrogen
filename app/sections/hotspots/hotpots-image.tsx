@@ -1,12 +1,12 @@
-import type { HydrogenComponentProps, WeaverseImage } from "@weaverse/hydrogen";
-import { createSchema, IMAGES_PLACEHOLDERS } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
 import { Image } from "~/components/image";
+import type { PageImage, SectionComponentProps } from "~/page-builder";
+import { createSchema, IMAGES_PLACEHOLDERS } from "~/page-builder";
 import type { ImageAspectRatio } from "~/types/image";
 import { calculateAspectRatio } from "~/utils/image";
 import { useHotspotsContext } from "./hotpots";
 
-interface HotspotsProps extends HydrogenComponentProps {
+interface HotspotsProps extends SectionComponentProps {
   image: string;
   aspectRatio?: ImageAspectRatio;
 }
@@ -17,7 +17,7 @@ let HotspotsImage = forwardRef<HTMLDivElement, HotspotsProps>((props, ref) => {
   const { aspectRatio: parentAspectRatio } = useHotspotsContext();
   const finalAspectRatio = parentAspectRatio || localAspectRatio || "adapt";
 
-  let imageData: Partial<WeaverseImage> =
+  let imageData: Partial<PageImage> =
     typeof image === "string"
       ? { url: image, altText: "Hotspots image" }
       : image;

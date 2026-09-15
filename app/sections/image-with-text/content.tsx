@@ -1,7 +1,7 @@
-import { createSchema, type HydrogenComponentProps } from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import { forwardRef } from "react";
+import { createSchema, type SectionComponentProps } from "~/page-builder";
 import { cn } from "~/utils/cn";
 import { useImageWithTextContext } from "./context";
 
@@ -45,7 +45,7 @@ const variants = cva(
 
 interface ImageWithTextContentProps
   extends VariantProps<typeof variants>,
-    HydrogenComponentProps {}
+    SectionComponentProps {}
 
 const ImageWithTextContent = forwardRef<
   HTMLDivElement,

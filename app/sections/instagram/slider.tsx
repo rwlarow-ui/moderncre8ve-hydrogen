@@ -1,5 +1,5 @@
-import type { HydrogenComponentSchema } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
+import type { ComponentSchema } from "~/page-builder";
 
 const InstagramSlider = forwardRef<HTMLDivElement>((_, ref) => {
   return <div ref={ref} />;
@@ -7,7 +7,7 @@ const InstagramSlider = forwardRef<HTMLDivElement>((_, ref) => {
 
 export default InstagramSlider;
 
-export const schema: HydrogenComponentSchema = {
+export const schema: ComponentSchema = {
   type: "instagram--slider",
   title: "Instagram slider",
   settings: [

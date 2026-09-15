@@ -1,13 +1,13 @@
-import {
-  createSchema,
-  type HydrogenComponentProps,
-  IMAGES_PLACEHOLDERS,
-  type WeaverseImage,
-} from "@weaverse/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { type Ref, forwardRef } from "react";
+import { forwardRef, type Ref } from "react";
 import { Image } from "~/components/image";
+import {
+  createSchema,
+  IMAGES_PLACEHOLDERS,
+  type PageImage,
+  type SectionComponentProps,
+} from "~/page-builder";
 import type { ImageAspectRatio } from "~/types/image";
 import { cn } from "~/utils/cn";
 import { useImageWithTextContext } from "./context";
@@ -46,8 +46,8 @@ const variants = cva("h-auto w-full", {
 
 interface ImageWithTextImageProps
   extends VariantProps<typeof variants>,
-    HydrogenComponentProps {
-  image: WeaverseImage | string;
+    SectionComponentProps {
+  image: PageImage | string;
   imageAspectRatio?: ImageAspectRatio;
 }
 
@@ -62,7 +62,7 @@ const ImageWithTextImage = forwardRef<HTMLDivElement, ImageWithTextImageProps>(
     } = props;
     const { imageAspectRatio: contextAspectRatio } = useImageWithTextContext();
     const finalAspectRatio = propAspectRatio || contextAspectRatio;
-    const imageData: Partial<WeaverseImage> =
+    const imageData: Partial<PageImage> =
       typeof image === "string"
         ? { url: image, altText: "Placeholder" }
         : image;

@@ -1,10 +1,10 @@
-import type { HydrogenComponentSchema } from "@weaverse/hydrogen";
 import clsx from "clsx";
 import { createContext, forwardRef, useContext, useMemo } from "react";
 import { backgroundInputs } from "~/components/background-image";
 import { overlayInputs } from "~/components/overlay";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
+import type { ComponentSchema } from "~/page-builder";
 
 // Accordion Context
 interface AccordionContextValue {
@@ -61,7 +61,7 @@ const AccordionSection = forwardRef<HTMLElement, AccordionSectionProps>(
 
 export default AccordionSection;
 
-export const schema: HydrogenComponentSchema = {
+export const schema: ComponentSchema = {
   type: "accordion",
   title: "Accordion",
   settings: [

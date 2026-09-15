@@ -1,16 +1,16 @@
-import type {
-  HydrogenComponentProps,
-  HydrogenComponentSchema,
-  WeaverseImage,
-} from "@weaverse/hydrogen";
-import { IMAGES_PLACEHOLDERS } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
 import { Image } from "~/components/image";
+import type {
+  ComponentSchema,
+  PageImage,
+  SectionComponentProps,
+} from "~/page-builder";
+import { IMAGES_PLACEHOLDERS } from "~/page-builder";
 import type { ImageAspectRatio } from "~/types/image";
 import { calculateAspectRatio } from "~/utils/image";
 
-interface HotspotsTestimonialProps extends HydrogenComponentProps {
-  image: WeaverseImage | string;
+interface HotspotsTestimonialProps extends SectionComponentProps {
+  image: PageImage | string;
   aspectRatio: ImageAspectRatio;
 }
 
@@ -18,7 +18,7 @@ let HotspotsTestimonial = forwardRef<HTMLDivElement, HotspotsTestimonialProps>(
   (props, ref) => {
     let { image, aspectRatio, children, ...rest } = props;
 
-    let imageData: Partial<WeaverseImage>;
+    let imageData: Partial<PageImage>;
     if (typeof image === "string") {
       imageData = { url: image, altText: "Hotspots image" };
     } else if (image && typeof image === "object") {
@@ -53,7 +53,7 @@ let HotspotsTestimonial = forwardRef<HTMLDivElement, HotspotsTestimonialProps>(
 
 export default HotspotsTestimonial;
 
-export let schema: HydrogenComponentSchema = {
+export let schema: ComponentSchema = {
   type: "testimonial--hotspots-item",
   title: "Hotspot",
   childTypes: ["testimonial-hot--item"],

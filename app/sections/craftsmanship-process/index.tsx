@@ -1,7 +1,7 @@
-import { createSchema } from "@weaverse/hydrogen";
 import { forwardRef } from "react";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
+import { createSchema } from "~/page-builder";
 
 interface CraftsmanshipProcessProps extends SectionProps {
   heading: string;
@@ -11,41 +11,40 @@ interface CraftsmanshipProcessProps extends SectionProps {
   accentColor: string;
 }
 
-const CraftsmanshipProcess = forwardRef<
-  HTMLElement,
-  CraftsmanshipProcessProps
->((props, ref) => {
-  const {
-    heading = "Built by Hand, Start to Finish",
-    subheading = "Every piece follows a deliberate process — from selecting the lumber to the final hand-rubbed finish.",
-    backgroundColor = "#F2EBD5",
-    textColor = "#323640",
-    accentColor = "#2CBF96",
-    children,
-    ...rest
-  } = props;
+const CraftsmanshipProcess = forwardRef<HTMLElement, CraftsmanshipProcessProps>(
+  (props, ref) => {
+    const {
+      heading = "Built by Hand, Start to Finish",
+      subheading = "Every piece follows a deliberate process — from selecting the lumber to the final hand-rubbed finish.",
+      backgroundColor = "#F2EBD5",
+      textColor = "#323640",
+      accentColor = "#2CBF96",
+      children,
+      ...rest
+    } = props;
 
-  return (
-    <Section ref={ref} {...rest} style={{ backgroundColor }}>
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mb-12 text-center" style={{ color: textColor }}>
-          <h2 className="mb-4 font-sans text-3xl font-normal uppercase tracking-wide lg:text-4xl">
-            {heading}
-          </h2>
-          <p
-            className="mx-auto max-w-2xl font-serif text-base leading-relaxed lg:text-lg"
-            style={{ color: `${textColor}cc` }}
-          >
-            {subheading}
-          </p>
+    return (
+      <Section ref={ref} {...rest} style={{ backgroundColor }}>
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center" style={{ color: textColor }}>
+            <h2 className="mb-4 font-normal font-sans text-3xl uppercase tracking-wide lg:text-4xl">
+              {heading}
+            </h2>
+            <p
+              className="mx-auto max-w-2xl font-serif text-base leading-relaxed lg:text-lg"
+              style={{ color: `${textColor}cc` }}
+            >
+              {subheading}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 gap-0 md:grid-cols-4">
+            {children}
+          </div>
         </div>
-        <div className="grid grid-cols-1 gap-0 md:grid-cols-4">
-          {children}
-        </div>
-      </div>
-    </Section>
-  );
-});
+      </Section>
+    );
+  },
+);
 
 export default CraftsmanshipProcess;
 

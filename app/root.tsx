@@ -10,7 +10,6 @@ import type {
   LoaderFunctionArgs,
   MetaArgs,
 } from "@shopify/remix-oxygen";
-import { useThemeSettings, withWeaverse } from "@weaverse/hydrogen";
 import type { CSSProperties } from "react";
 import {
   isRouteErrorResponse,
@@ -23,6 +22,7 @@ import {
   useRouteError,
   useRouteLoaderData,
 } from "react-router";
+import { useThemeSettings } from "~/page-builder";
 import { Footer } from "./components/layout/footer";
 import { Header } from "./components/layout/header";
 import { ScrollingAnnouncement } from "./components/layout/scrolling-announcement";
@@ -34,6 +34,7 @@ import { CustomAnalytics } from "./components/root/custom-analytics";
 import { GenericError } from "./components/root/generic-error";
 import { GlobalLoading } from "./components/root/global-loading";
 import { NotFound } from "./components/root/not-found";
+import { GlobalStyle } from "./page-builder/global-style";
 import styles from "./styles/app.css?url";
 import {
   DEFAULT_LOCALE,
@@ -43,7 +44,6 @@ import {
 } from "./utils/const";
 import { getEnhancedSeoMeta } from "./utils/enhanced-seo-meta";
 import { loadCriticalData, loadDeferredData } from "./utils/root.server";
-import { GlobalStyle } from "./weaverse/style";
 
 export type RootLoader = typeof loader;
 
@@ -239,7 +239,9 @@ export function Layout({ children }: { children?: React.ReactNode }) {
                 </main>
                 {!isOpsRoute ? <Footer /> : null}
               </div>
-              {!isOpsRoute && shouldShowNewsletterPopup ? <NewsletterPopup /> : null}
+              {!isOpsRoute && shouldShowNewsletterPopup ? (
+                <NewsletterPopup />
+              ) : null}
               {!isOpsRoute ? <CustomAnalytics /> : null}
             </TooltipProvider>
           </Analytics.Provider>
@@ -254,4 +256,4 @@ export function Layout({ children }: { children?: React.ReactNode }) {
   );
 }
 
-export default withWeaverse(App);
+export default App;

@@ -1,15 +1,9 @@
 {
   "mcpServers": {
-    "weaverse": {
-      "type": "http",
-      "url": "https://weaverse.io/docs/mcp"
-    },
     "ops-dashboard": {
       "type": "stdio",
       "command": "node",
-      "args": [
-        "scripts/ops-dashboard-mcp.mjs"
-      ]
+      "args": ["scripts/ops-dashboard-mcp.mjs"]
     }
   }
 }
