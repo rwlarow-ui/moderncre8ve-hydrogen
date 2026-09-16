@@ -117,7 +117,8 @@ export const themeSchema: ThemeSchema = {
           type: "richtext",
           name: "topbarText",
           label: "Content",
-          defaultValue: "",
+          defaultValue:
+            "Handcrafted to order in Cleveland, Ohio — 12–16 week lead times",
         },
         {
           type: "range",

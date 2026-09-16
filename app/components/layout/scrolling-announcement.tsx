@@ -168,46 +168,54 @@ export function ScrollingAnnouncement() {
             ))}
           </Swiper>
 
-          <button
-            type="button"
-            className="announcement-prev absolute top-1/2 left-0 z-10 -translate-y-1/2 p-2"
-            style={{ backgroundColor: topbarBgColor } as React.CSSProperties}
-            aria-label="Previous slide"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              className="rotate-180"
-            >
-              <path
-                d="M14.0575 4.74121L13.1737 5.62508L16.9236 9.37496H0.625V10.625H16.9234L13.1737 14.3748L14.0575 15.2586L19.3163 9.99992L14.0575 4.74121Z"
-                fill="#29231E"
-              />
-            </svg>
-          </button>
+          {slides.length > 1 && (
+            <>
+              <button
+                type="button"
+                className="announcement-prev absolute top-1/2 left-0 z-10 -translate-y-1/2 p-2"
+                style={
+                  { backgroundColor: topbarBgColor } as React.CSSProperties
+                }
+                aria-label="Previous slide"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  className="rotate-180"
+                >
+                  <path
+                    d="M14.0575 4.74121L13.1737 5.62508L16.9236 9.37496H0.625V10.625H16.9234L13.1737 14.3748L14.0575 15.2586L19.3163 9.99992L14.0575 4.74121Z"
+                    fill="#29231E"
+                  />
+                </svg>
+              </button>
 
-          <button
-            type="button"
-            className="announcement-next absolute top-1/2 right-0 z-10 -translate-y-1/2 p-2"
-            style={{ backgroundColor: topbarBgColor } as React.CSSProperties}
-            aria-label="Next slide"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-            >
-              <path
-                d="M14.0575 4.74121L13.1737 5.62508L16.9236 9.37496H0.625V10.625H16.9234L13.1737 14.3748L14.0575 15.2586L19.3163 9.99992L14.0575 4.74121Z"
-                fill="#29231E"
-              />
-            </svg>
-          </button>
+              <button
+                type="button"
+                className="announcement-next absolute top-1/2 right-0 z-10 -translate-y-1/2 p-2"
+                style={
+                  { backgroundColor: topbarBgColor } as React.CSSProperties
+                }
+                aria-label="Next slide"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M14.0575 4.74121L13.1737 5.62508L16.9236 9.37496H0.625V10.625H16.9234L13.1737 14.3748L14.0575 15.2586L19.3163 9.99992L14.0575 4.74121Z"
+                    fill="#29231E"
+                  />
+                </svg>
+              </button>
+            </>
+          )}
         </div>
         <div className="hidden justify-end md:flex">
           <CountrySelector inputClassName="px-4 py-1" enableFlag={false} />
