@@ -70,9 +70,6 @@ export const reviews: PageDefinition = {
         {
           id: "reviews-test-3",
         },
-        {
-          id: "reviews-test-4",
-        },
       ],
     },
     {
@@ -91,11 +88,11 @@ export const reviews: PageDefinition = {
       id: "reviews-test-1-content",
       type: "testimonial--content",
       data: {
-        content: "Stunning Craftsmanship",
+        content: "Well Worth the Wait",
         description:
-          "The quality of the craftsmanship is immediately evident. Every piece feels substantial and well-made. I couldn't be happier with my walnut dining table!",
+          "I looked at about five hundred bed frames and this checked all the boxes. Well worth the wait and exactly as pictured. I'm 100% delighted.",
         ratting: 5,
-        author: "John D.",
+        author: "Verified Etsy buyer",
       },
     },
     {
@@ -122,11 +119,11 @@ export const reviews: PageDefinition = {
       id: "reviews-test-2-content",
       type: "testimonial--content",
       data: {
-        content: "Beautiful and Functional",
+        content: "Better Than the Photos",
         description:
-          "Our new coffee table is both a statement piece and incredibly functional. It has quickly become the centerpiece of our living room.",
+          "This table took some time to get to us, but it's gorgeous and just the right size. The craftsmanship is awesome, and it looks just like (or even better than) the images.",
         ratting: 5,
-        author: "Susan M.",
+        author: "Verified Etsy buyer",
       },
     },
     {
@@ -153,11 +150,11 @@ export const reviews: PageDefinition = {
       id: "reviews-test-3-content",
       type: "testimonial--content",
       data: {
-        content: "Perfect Blend of Style and Durability",
+        content: "Exquisite Design",
         description:
-          "I was looking for something modern yet durable, and Moderncre8ve delivered beyond my expectations. My new bed frame is a dream!",
+          "Exquisite design, excellent craftsmanship, quality materials!",
         ratting: 5,
-        author: "Alex P.",
+        author: "Verified Etsy buyer",
       },
     },
     {
@@ -165,37 +162,6 @@ export const reviews: PageDefinition = {
       type: "testimonial--hotspots-item",
       data: {
         image: "/images/heroes/dsc_1417-edit.jpg",
-        aspectRatio: "1/1",
-      },
-    },
-    {
-      id: "reviews-test-4",
-      type: "testimonial--item",
-      children: [
-        {
-          id: "reviews-test-4-content",
-        },
-        {
-          id: "reviews-test-4-hotspot",
-        },
-      ],
-    },
-    {
-      id: "reviews-test-4-content",
-      type: "testimonial--content",
-      data: {
-        content: "Outstanding Customer Service",
-        description:
-          "The team at Moderncre8ve was a pleasure to work with from start to finish. They made sure I was completely satisfied with my purchase.",
-        ratting: 5,
-        author: "Rachel T.",
-      },
-    },
-    {
-      id: "reviews-test-4-hotspot",
-      type: "testimonial--hotspots-item",
-      data: {
-        image: "/images/heroes/img_2158.jpg",
         aspectRatio: "1/1",
       },
     },

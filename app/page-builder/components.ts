@@ -71,6 +71,8 @@ import * as QualityGuarantee from "~/sections/quality-guarantee";
 import * as GuaranteeItem from "~/sections/quality-guarantee/item";
 import * as RelatedArticles from "~/sections/related-articles";
 import * as RelatedProducts from "~/sections/related-products";
+import * as ReviewQuotes from "~/sections/review-quotes";
+import * as ReviewQuote from "~/sections/review-quotes/quote";
 import * as ScrollingText from "~/sections/scrolling-text";
 import * as SingleProduct from "~/sections/single-product";
 import * as SlideShow from "~/sections/slideshow";
@@ -181,6 +183,8 @@ export const components: SectionComponent[] = [
   CustomerGalleryItem,
   QualityGuarantee,
   GuaranteeItem,
+  ReviewQuotes,
+  ReviewQuote,
 ];
 
 /**
