@@ -1,6 +1,7 @@
 import { animate, inView, useAnimate } from "framer-motion";
 import { type ForwardedRef, useEffect } from "react";
 import { useThemeSettings } from "~/page-builder";
+import { usePrefersReducedMotion } from "./use-prefers-reduced-motion";
 
 export type MotionType = "fade-up" | "zoom-in" | "slide-in";
 
@@ -12,6 +13,7 @@ const ANIMATIONS: Record<MotionType, any> = {
 
 export function useAnimation(ref?: ForwardedRef<any>) {
   const { revealElementsOnScroll } = useThemeSettings();
+  const prefersReducedMotion = usePrefersReducedMotion();
   const [scope] = useAnimate();
 
   useEffect(() => {
@@ -23,6 +25,23 @@ export function useAnimation(ref?: ForwardedRef<any>) {
 
   useEffect(() => {
     if (!revealElementsOnScroll) {
+      return;
+    }
+
+    // The reveal is JS-driven and hides elements with an inline opacity:0, so
+    // a CSS prefers-reduced-motion rule cannot switch it off -- it would only
+    // leave the content invisible. Bail out here, and clear anything an
+    // earlier pass already hid (the preference resolves after first render).
+    if (prefersReducedMotion) {
+      if (scope.current) {
+        scope.current.classList.remove("animated-scope");
+        scope.current
+          .querySelectorAll("[data-motion]")
+          .forEach((elem: HTMLElement) => {
+            elem.style.opacity = "";
+            elem.style.transform = "";
+          });
+      }
       return;
     }
 
@@ -69,7 +88,7 @@ export function useAnimation(ref?: ForwardedRef<any>) {
         );
       });
     }
-  }, [revealElementsOnScroll]);
+  }, [revealElementsOnScroll, prefersReducedMotion]);
 
   return [scope] as const;
 }

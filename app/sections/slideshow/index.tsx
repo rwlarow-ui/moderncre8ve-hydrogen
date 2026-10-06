@@ -1,8 +1,9 @@
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import { forwardRef } from "react";
-import { Autoplay, EffectFade } from "swiper/modules";
+import { A11y, Autoplay, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { usePrefersReducedMotion } from "~/hooks/use-prefers-reduced-motion";
 import {
   createSchema,
   IMAGES_PLACEHOLDERS,
@@ -11,6 +12,7 @@ import {
 } from "~/page-builder";
 import type { SlideshowArrowsProps } from "./arrows";
 import { Arrows } from "./arrows";
+import { AutoplayToggle } from "./autoplay-toggle";
 import type { SlideshowDotsProps } from "./dots";
 import { Dots } from "./dots";
 
@@ -81,6 +83,12 @@ const Slideshow = forwardRef<
     ...rest
   } = props;
   const { enableTransparentHeader } = useThemeSettings();
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  // `loop` is incompatible with the fade effect, so it used to be silently
+  // dropped -- autoplay then ran to the last slide and stopped for good.
+  // `rewind` gives fade the same "start over" behaviour.
+  const shouldRewind = effect === "fade" && Boolean(loop);
 
   return (
     <section
@@ -97,10 +105,29 @@ const Slideshow = forwardRef<
           crossFade: true,
         }}
         loop={effect === "slide" ? loop : false}
-        autoplay={autoRotate ? { delay: changeSlidesEvery * 1000 } : false}
+        rewind={shouldRewind}
+        autoplay={
+          autoRotate
+            ? {
+                delay: changeSlidesEvery * 1000,
+                // The explicit pause control governs playback, so using the
+                // dots should not permanently kill autoplay.
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+              }
+            : false
+        }
+        a11y={{
+          enabled: true,
+          prevSlideMessage: "Previous slide",
+          nextSlideMessage: "Next slide",
+        }}
         modules={[
           effect === "fade" ? EffectFade : null,
           autoRotate ? Autoplay : null,
+          // Without the A11y module, inactive slides are never aria-hidden, so
+          // screen readers announce every slide's heading as page content.
+          A11y,
         ].filter(Boolean)}
       >
         {children.map((child, idx) => (
@@ -108,6 +135,9 @@ const Slideshow = forwardRef<
         ))}
         {showArrows && <Arrows {...props} />}
         {showDots && <Dots {...props} slidesCount={children.length} />}
+        {autoRotate && (
+          <AutoplayToggle initiallyPaused={prefersReducedMotion} />
+        )}
       </Swiper>
     </section>
   );
