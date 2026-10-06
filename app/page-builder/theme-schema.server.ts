@@ -277,7 +277,7 @@ export const themeSchema: ThemeSchema = {
           type: "color",
           label: "Text (subtle)",
           name: "colorTextSubtle",
-          defaultValue: "#9DA0A7",
+          defaultValue: "#6A6D76",
         },
         {
           type: "color",
@@ -289,7 +289,7 @@ export const themeSchema: ThemeSchema = {
           type: "color",
           label: "Borders",
           name: "colorLine",
-          defaultValue: "#A79D95",
+          defaultValue: "#9C9087",
         },
         {
           type: "color",
@@ -358,6 +358,12 @@ export const themeSchema: ThemeSchema = {
           defaultValue: "#ffffff",
         },
         {
+          type: "color",
+          label: "Footer text (subtle)",
+          name: "footerTextSubtle",
+          defaultValue: "#9DA0A7",
+        },
+        {
           type: "heading",
           label: "Button (primary)",
         },
@@ -383,7 +389,7 @@ export const themeSchema: ThemeSchema = {
           type: "color",
           label: "Text color (hover)",
           name: "buttonPrimaryColorHover",
-          defaultValue: "#ffffff",
+          defaultValue: "#323640",
         },
         {
           type: "heading",
@@ -427,31 +433,31 @@ export const themeSchema: ThemeSchema = {
           type: "color",
           label: "Background color",
           name: "buttonOutlineBackground",
-          defaultValue: "#NA",
+          defaultValue: "transparent",
         },
         {
           type: "color",
           label: "Border color",
           name: "buttonOutlineBorder",
-          defaultValue: "#A79D95",
+          defaultValue: "#9C9087",
         },
         {
           type: "color",
           label: "Text color (hover)",
-          name: "buttonOutlineText",
+          name: "buttonOutlineTextHover",
           defaultValue: "#524B46",
         },
         {
           type: "color",
           label: "Background color (hover)",
-          name: "buttonOutlineBackground",
+          name: "buttonOutlineBackgroundHover",
           defaultValue: "#E9E7E4",
         },
         {
           type: "color",
           label: "Border color (hover)",
-          name: "buttonOutlineBorder",
-          defaultValue: "#A79D95",
+          name: "buttonOutlineBorderHover",
+          defaultValue: "#9C9087",
         },
         {
           type: "heading",
@@ -462,6 +468,12 @@ export const themeSchema: ThemeSchema = {
           label: "Discounts",
           name: "saleBadgeColor",
           defaultValue: "#D35055",
+        },
+        {
+          type: "color",
+          label: "Bundle",
+          name: "bundleBadgeColor",
+          defaultValue: "#524B46",
         },
         {
           type: "color",
@@ -489,7 +501,7 @@ export const themeSchema: ThemeSchema = {
           type: "color",
           label: "Compare price text",
           name: "comparePriceTextColor",
-          defaultValue: "#84807B",
+          defaultValue: "#787470",
         },
         {
           type: "color",
@@ -635,6 +647,13 @@ export const themeSchema: ThemeSchema = {
           name: "bestSellerBadgeText",
           defaultValue: "Best Seller",
           placeholder: "Best Seller",
+        },
+        {
+          type: "text",
+          label: "Bundle text",
+          name: "bundleBadgeText",
+          defaultValue: "Bundle",
+          placeholder: "Bundle",
         },
         {
           type: "text",

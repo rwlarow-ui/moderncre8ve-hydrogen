@@ -18,6 +18,7 @@ export function GlobalStyle() {
       transparentHeaderText,
       footerBgColor,
       footerText,
+      footerTextSubtle,
       buttonPrimaryBg,
       buttonPrimaryColor,
       buttonPrimaryBgHover,
@@ -32,12 +33,12 @@ export function GlobalStyle() {
       buttonOutlineBackgroundHover,
       buttonOutlineBorderHover,
       comparePriceTextColor,
-      discountBadge,
-      newBadge,
-      bestSellerBadge,
+      saleBadgeColor,
+      newBadgeColor,
+      bestSellerBadgeColor,
       bundleBadgeColor,
       soldOutBadgeColor,
-      starRating,
+      starRatingColor,
       bodyBaseSize,
       bodyBaseSpacing,
       bodyBaseLineHeight,
@@ -77,6 +78,7 @@ export function GlobalStyle() {
               --color-transparent-header-text: ${transparentHeaderText};
               --color-footer-bg: ${footerBgColor};
               --color-footer-text: ${footerText};
+              --color-footer-text-subtle: ${footerTextSubtle};
 
               /* Colors (buttons & links) */
               --btn-primary-bg: ${buttonPrimaryBg};
@@ -95,12 +97,12 @@ export function GlobalStyle() {
 
               /* Colors (product) */
               --color-compare-price-text: ${comparePriceTextColor};
-              --color-discount: ${discountBadge};
-              --color-new-badge: ${newBadge};
-              --color-best-seller: ${bestSellerBadge};
+              --color-discount: ${saleBadgeColor};
+              --color-new-badge: ${newBadgeColor};
+              --color-best-seller: ${bestSellerBadgeColor};
               --color-bundle-badge: ${bundleBadgeColor};
               --color-sold-out-and-unavailable: ${soldOutBadgeColor};
-              --color-star-rating: ${starRating};
+              --color-star-rating: ${starRatingColor};
 
               /* Typography */
               --body-base-size: ${bodyBaseSize}px;

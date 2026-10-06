@@ -59,7 +59,7 @@
   --text-7xl: calc(var(--body-base-size) * 4.5);
   --text-7xl--line-height: 1;
   --text-8xl: calc(var(--body-base-size) * 6);
-  --text-8xl--line-height: ;
+  --text-8xl--line-height: 1;
   --text-9xl: calc(var(--body-base-size) * 8);
   --text-9xl--line-height: 1;
 
@@ -419,7 +419,10 @@
 @layer base {
   * {
     font-variant-ligatures: none;
-    border-color: rgb(var(--color-border) / 0.15);
+    /* Was rgb(var(--color-border) / 0.15); --color-border is never defined, so
+       the declaration was invalid at computed-value time and fell back to
+       currentcolor. Stated explicitly to keep rendering identical. */
+    border-color: currentcolor;
   }
 
   html {
@@ -606,4 +609,51 @@
 
 .animate-fade-out {
   animation: fade-out 0.25s ease-in;
+}
+
+
+/* ---------------------------------------------------------------------------
+   Focus visibility (WCAG 2.4.7)
+
+   Deliberately UNLAYERED. Tailwind's `outline-hidden` / `outline-none` live in
+   `@layer utilities`, and unlayered declarations win over every cascade layer
+   regardless of specificity -- so this restores a visible keyboard focus ring
+   across the ~66 places that suppress the outline locally, without having to
+   edit each one. Those suppressions remain harmless (they still serve
+   forced-colors mode); remove them as components are touched.
+
+   `:focus-visible` only matches keyboard/programmatic focus, so mouse clicks
+   stay clean.
+--------------------------------------------------------------------------- */
+:root {
+  --focus-ring-color: var(--color-text, #323640);
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+}
+
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring-color);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* The footer is the one dark surface that uses `text-body-subtle`. The global
+   subtle colour is tuned for light backgrounds (5.17:1 on white), which would
+   drop to 2.34:1 here, so rebind the token for the footer subtree. Custom
+   properties set on the element itself beat the inherited :root value. */
+footer {
+  --color-text-subtle: var(--color-footer-text-subtle, #9da0a7);
+}
+
+/* Dark surfaces: flip the ring so it stays visible against them. */
+footer :focus-visible,
+[data-focus-ring="light"] :focus-visible,
+[data-focus-ring="light"]:focus-visible {
+  --focus-ring-color: #ffffff;
+}
+
+/* The hero/promo progress bars are 4px tall; an offset ring reads as a halo
+   around the whole strip, so sit it tight against the element instead. */
+.slideshow-dots :focus-visible,
+.promotion-dots :focus-visible {
+  --focus-ring-offset: 3px;
 }

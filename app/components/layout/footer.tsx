@@ -523,7 +523,7 @@ export function Footer() {
                       type="email"
                       required
                       placeholder={newsletterPlaceholder}
-                      className="w-full border border-line-subtle bg-white px-3 text-body placeholder:text-[#918379] focus-visible:outline-hidden lg:w-80"
+                      className="w-full border border-line bg-white px-3 text-body placeholder:text-[#918379] lg:w-80"
                     />
                     <Button
                       variant="primary"
@@ -604,7 +604,7 @@ export function Footer() {
                     type="email"
                     required
                     placeholder={newsletterPlaceholder}
-                    className="w-full border border-line-subtle bg-white px-3 text-body placeholder:text-[#918379] focus-visible:outline-hidden lg:w-80"
+                    className="w-full border border-line bg-white px-3 text-body placeholder:text-[#918379] lg:w-80"
                   />
                   <Button
                     variant="primary"

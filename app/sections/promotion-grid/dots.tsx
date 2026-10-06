@@ -30,7 +30,7 @@ let dotVariants = cva(
     "dot cursor-pointer",
     "h-1 w-12 p-0",
     "fade-in transition-all duration-300",
-    "border-0 outline-none",
+    "border-0",
   ],
   {
     variants: {
