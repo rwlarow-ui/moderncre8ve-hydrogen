@@ -312,8 +312,12 @@ export function buildCustomerAdminUrl(storeDomain, legacyId) {
 }
 
 export function isCurrentOrder(order) {
-  const fulfillmentStatus = String(order.displayFulfillmentStatus || "").toUpperCase();
-  const financialStatus = String(order.displayFinancialStatus || "").toUpperCase();
+  const fulfillmentStatus = String(
+    order.displayFulfillmentStatus || "",
+  ).toUpperCase();
+  const financialStatus = String(
+    order.displayFinancialStatus || "",
+  ).toUpperCase();
 
   return (
     !INACTIVE_FULFILLMENT_STATUSES.has(fulfillmentStatus) &&
@@ -459,22 +463,22 @@ function mapOrderRow(order, storeDomain) {
 function matchesFilters(order, filters) {
   const search = filters.search.toLowerCase();
 
-  if (filters.fulfillmentStatus) {
-    if (order.displayFulfillmentStatus !== filters.fulfillmentStatus) {
-      return false;
-    }
+  if (
+    filters.fulfillmentStatus &&
+    order.displayFulfillmentStatus !== filters.fulfillmentStatus
+  ) {
+    return false;
   }
 
-  if (filters.financialStatus) {
-    if (order.displayFinancialStatus !== filters.financialStatus) {
-      return false;
-    }
+  if (
+    filters.financialStatus &&
+    order.displayFinancialStatus !== filters.financialStatus
+  ) {
+    return false;
   }
 
-  if (filters.tag) {
-    if (!order.tags.includes(filters.tag)) {
-      return false;
-    }
+  if (filters.tag && !order.tags.includes(filters.tag)) {
+    return false;
   }
 
   if (!search) {
@@ -533,7 +537,10 @@ export async function getOrderDetail(config, orderId) {
     cancelledAt: data.order.cancelledAt || null,
     closedAt: data.order.closedAt || null,
     shippingAddress: [
-      [data.order.shippingAddress?.firstName, data.order.shippingAddress?.lastName]
+      [
+        data.order.shippingAddress?.firstName,
+        data.order.shippingAddress?.lastName,
+      ]
         .filter(Boolean)
         .join(" "),
       data.order.shippingAddress?.company,
@@ -650,4 +657,3 @@ export async function setOpsNote(config, options) {
     userErrors: data.metafieldsDelete.userErrors,
   };
 }
-

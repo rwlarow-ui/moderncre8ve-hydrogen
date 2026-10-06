@@ -57,7 +57,7 @@ export const PRODUCTS: Record<string, ProductMetafieldContent> = {
     shortDescription:
       "The original Santa Monica — a handcrafted mid-century modern dining table in solid walnut or white oak. Clean lines, tapered legs, and a beautifully proportioned top that seats 6 to 8 comfortably. Made to order in Ohio by Amish artisans.",
     material:
-      '<p><strong>Primary Wood:</strong> Solid American Black Walnut or White Oak</p><p><strong>Construction:</strong> Traditional Amish joinery — mortise and tenon throughout</p><p><strong>Finish:</strong> Hand-rubbed natural oil finish</p><p><strong>Legs:</strong> Tapered mid-century modern profile in matching solid hardwood</p>',
+      "<p><strong>Primary Wood:</strong> Solid American Black Walnut or White Oak</p><p><strong>Construction:</strong> Traditional Amish joinery — mortise and tenon throughout</p><p><strong>Finish:</strong> Hand-rubbed natural oil finish</p><p><strong>Legs:</strong> Tapered mid-century modern profile in matching solid hardwood</p>",
     usp1: "White glove in-home delivery & assembly included",
     centerHeading: "The One That Started It All",
     centerContent:
@@ -68,7 +68,7 @@ export const PRODUCTS: Record<string, ProductMetafieldContent> = {
     shortDescription:
       "A premium furniture wax handcrafted for maintaining and protecting solid wood furniture. Lareaux's Furniture Wax nourishes, protects, and enhances the natural grain of walnut, oak, cherry, and other hardwoods. Ships in 3–5 business days.",
     material:
-      '<p><strong>Ingredients:</strong> Natural beeswax blend with conditioning oils</p><p><strong>Use:</strong> Apply thin coat with soft cloth, buff to desired sheen</p><p><strong>Coverage:</strong> One tin covers approximately 50–75 sq ft of surface area</p><p><strong>Safe for:</strong> All solid wood furniture, cutting boards, and wooden kitchen items</p>',
+      "<p><strong>Ingredients:</strong> Natural beeswax blend with conditioning oils</p><p><strong>Use:</strong> Apply thin coat with soft cloth, buff to desired sheen</p><p><strong>Coverage:</strong> One tin covers approximately 50–75 sq ft of surface area</p><p><strong>Safe for:</strong> All solid wood furniture, cutting boards, and wooden kitchen items</p>",
     centerHeading: "Care for Your Investment",
     centerContent:
       "Your handcrafted furniture deserves handcrafted care. Lareaux's Furniture Wax is specifically formulated for the natural oil finishes we use on ModernCre8ve pieces. A light application every 3–6 months keeps your wood nourished, protected from moisture rings, and looking its absolute best for decades to come.",
@@ -78,7 +78,7 @@ export const PRODUCTS: Record<string, ProductMetafieldContent> = {
     shortDescription:
       "The Santa Monica Large — a Scandinavian-inspired dining table in solid hardwood. The generous proportions and clean Nordic lines seat 8 to 10 guests with ease. Handcrafted to order in Ohio with your choice of walnut or white oak.",
     material:
-      '<p><strong>Primary Wood:</strong> Solid American Walnut or White Oak</p><p><strong>Construction:</strong> Amish-built using traditional joinery techniques</p><p><strong>Design:</strong> Scandinavian/Danish modern inspired proportions</p><p><strong>Finish:</strong> Hand-rubbed natural oil finish that deepens over time</p><p><strong>Seating:</strong> Comfortably seats 8–10 guests</p>',
+      "<p><strong>Primary Wood:</strong> Solid American Walnut or White Oak</p><p><strong>Construction:</strong> Amish-built using traditional joinery techniques</p><p><strong>Design:</strong> Scandinavian/Danish modern inspired proportions</p><p><strong>Finish:</strong> Hand-rubbed natural oil finish that deepens over time</p><p><strong>Seating:</strong> Comfortably seats 8–10 guests</p>",
     usp1: "White glove in-home delivery & assembly included",
     centerHeading: "Scandinavian Soul, American Craft",
     centerContent:
@@ -89,7 +89,7 @@ export const PRODUCTS: Record<string, ProductMetafieldContent> = {
     shortDescription:
       "A modern round dining table in solid American walnut featuring a distinctive double beveled top. The circular form creates intimate, egalitarian seating for 4 to 6 guests. Handcrafted by Amish artisans in Ohio.",
     material:
-      '<p><strong>Primary Wood:</strong> 100% Solid American Black Walnut</p><p><strong>Construction:</strong> Traditional Amish joinery</p><p><strong>Tabletop:</strong> Double beveled edge profile, solid walnut</p><p><strong>Shape:</strong> True circular form</p><p><strong>Finish:</strong> Hand-rubbed natural oil finish</p>',
+      "<p><strong>Primary Wood:</strong> 100% Solid American Black Walnut</p><p><strong>Construction:</strong> Traditional Amish joinery</p><p><strong>Tabletop:</strong> Double beveled edge profile, solid walnut</p><p><strong>Shape:</strong> True circular form</p><p><strong>Finish:</strong> Hand-rubbed natural oil finish</p>",
     usp1: "White glove in-home delivery & assembly included",
     centerHeading: "The Egalitarian Table",
     centerContent:
@@ -100,7 +100,7 @@ export const PRODUCTS: Record<string, ProductMetafieldContent> = {
     shortDescription:
       "The Santa Monica in American cherry — a mid-century modern dining table that deepens in color with age, developing a rich amber patina over time. Handcrafted by Amish artisans with traditional joinery.",
     material:
-      '<p><strong>Primary Wood:</strong> Solid American Cherry</p><p><strong>Construction:</strong> Traditional Amish mortise-and-tenon joinery</p><p><strong>Finish:</strong> Hand-rubbed natural oil finish</p><p><strong>Patina:</strong> Cherry naturally darkens to a rich amber over time with light exposure</p><p><strong>Legs:</strong> Tapered mid-century modern profile</p>',
+      "<p><strong>Primary Wood:</strong> Solid American Cherry</p><p><strong>Construction:</strong> Traditional Amish mortise-and-tenon joinery</p><p><strong>Finish:</strong> Hand-rubbed natural oil finish</p><p><strong>Patina:</strong> Cherry naturally darkens to a rich amber over time with light exposure</p><p><strong>Legs:</strong> Tapered mid-century modern profile</p>",
     usp1: "White glove in-home delivery & assembly included",
     centerHeading: "A Living Finish",
     centerContent:
@@ -111,7 +111,7 @@ export const PRODUCTS: Record<string, ProductMetafieldContent> = {
     shortDescription:
       "The Santa Monica in mixed hardwoods — a mid-century modern dining table combining walnut and white oak for a striking two-tone effect. Handcrafted by Amish artisans in Ohio with traditional joinery.",
     material:
-      '<p><strong>Primary Woods:</strong> Solid American Black Walnut & White Oak combination</p><p><strong>Construction:</strong> Traditional Amish mortise-and-tenon joinery</p><p><strong>Design:</strong> Two-tone hardwood combination for visual contrast</p><p><strong>Finish:</strong> Hand-rubbed natural oil finish on both species</p>',
+      "<p><strong>Primary Woods:</strong> Solid American Black Walnut & White Oak combination</p><p><strong>Construction:</strong> Traditional Amish mortise-and-tenon joinery</p><p><strong>Design:</strong> Two-tone hardwood combination for visual contrast</p><p><strong>Finish:</strong> Hand-rubbed natural oil finish on both species</p>",
     usp1: "White glove in-home delivery & assembly included",
     centerHeading: "Two Woods, One Vision",
     centerContent:
@@ -122,7 +122,7 @@ export const PRODUCTS: Record<string, ProductMetafieldContent> = {
     shortDescription:
       "A modern solid hardwood dining chair available in walnut, white oak, or cherry. Choose between arm and side chair configurations. Handcrafted by Amish artisans with traditional joinery for exceptional comfort and durability.",
     material:
-      '<p><strong>Wood Options:</strong> Solid American Walnut, White Oak, or Cherry</p><p><strong>Construction:</strong> Traditional Amish mortise-and-tenon joinery throughout</p><p><strong>Seat:</strong> Contoured solid wood seat for comfort without upholstery</p><p><strong>Configurations:</strong> Arm chair and side chair available</p><p><strong>Finish:</strong> Hand-rubbed natural oil finish</p>',
+      "<p><strong>Wood Options:</strong> Solid American Walnut, White Oak, or Cherry</p><p><strong>Construction:</strong> Traditional Amish mortise-and-tenon joinery throughout</p><p><strong>Seat:</strong> Contoured solid wood seat for comfort without upholstery</p><p><strong>Configurations:</strong> Arm chair and side chair available</p><p><strong>Finish:</strong> Hand-rubbed natural oil finish</p>",
     usp1: "White glove in-home delivery included",
     centerHeading: "Built for Daily Life",
     centerContent:
@@ -144,7 +144,7 @@ export const PRODUCTS: Record<string, ProductMetafieldContent> = {
     shortDescription:
       "The Vista — a Scandinavian-inspired extendable dining table combining the organic warmth of an oval top with the practicality of a butterfly leaf extension. Solid walnut or white oak, handcrafted in Ohio.",
     material:
-      '<p><strong>Primary Wood:</strong> Solid American Walnut or White Oak</p><p><strong>Construction:</strong> Amish-built with traditional joinery</p><p><strong>Extension:</strong> Integrated butterfly leaf system</p><p><strong>Shape:</strong> Oval/elliptical with soft edges</p><p><strong>Finish:</strong> Hand-rubbed natural oil finish</p>',
+      "<p><strong>Primary Wood:</strong> Solid American Walnut or White Oak</p><p><strong>Construction:</strong> Amish-built with traditional joinery</p><p><strong>Extension:</strong> Integrated butterfly leaf system</p><p><strong>Shape:</strong> Oval/elliptical with soft edges</p><p><strong>Finish:</strong> Hand-rubbed natural oil finish</p>",
     usp1: "White glove in-home delivery & assembly included",
     centerHeading: "Everyday Elegance, Expandable",
     centerContent:
@@ -155,7 +155,7 @@ export const PRODUCTS: Record<string, ProductMetafieldContent> = {
     shortDescription:
       "A mid-century modern credenza and sideboard in solid American walnut. Features soft-close doors with leather and brass hardware, adjustable center shelves, and cutouts for electronics and wiring. Handcrafted by Amish artisans in Ohio.",
     material:
-      '<p><strong>Primary Wood:</strong> 100% Solid American Black Walnut</p><p><strong>Construction:</strong> Traditional Amish joinery</p><p><strong>Hardware:</strong> Leather pulls with solid brass fittings</p><p><strong>Hinges:</strong> European soft-close door hardware</p><p><strong>Interior:</strong> One adjustable center shelf in each end compartment</p><p><strong>Back Panel:</strong> Cutouts for electronics, wiring, and cable management</p>',
+      "<p><strong>Primary Wood:</strong> 100% Solid American Black Walnut</p><p><strong>Construction:</strong> Traditional Amish joinery</p><p><strong>Hardware:</strong> Leather pulls with solid brass fittings</p><p><strong>Hinges:</strong> European soft-close door hardware</p><p><strong>Interior:</strong> One adjustable center shelf in each end compartment</p><p><strong>Back Panel:</strong> Cutouts for electronics, wiring, and cable management</p>",
     centerHeading: "Storage Meets Sculpture",
     centerContent:
       "Our mid-century modern credenza is equal parts functional storage and sculptural art. The solid walnut cabinet sits on tapered legs that give it visual lightness, while leather-and-brass door pulls add a warm, tactile detail. Inside, adjustable shelves and wire management cutouts mean it works beautifully as a media console, dining sideboard, or entryway statement piece.",

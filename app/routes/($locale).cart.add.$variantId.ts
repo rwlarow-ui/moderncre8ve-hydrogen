@@ -1,6 +1,6 @@
+import type { CartLineInput } from "@shopify/hydrogen/storefront-api-types";
 import type { ActionFunctionArgs } from "react-router";
 import { data } from "react-router";
-import type { CartLineInput } from "@shopify/hydrogen/storefront-api-types";
 
 export async function action({ params, context }: ActionFunctionArgs) {
   const { cart, session } = context;

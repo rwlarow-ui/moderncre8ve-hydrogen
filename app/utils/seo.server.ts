@@ -134,13 +134,7 @@ function home(): SeoConfig {
         },
         openingHoursSpecification: {
           "@type": "OpeningHoursSpecification",
-          dayOfWeek: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-          ],
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
           opens: "09:00",
           closes: "17:00",
         },
@@ -768,5 +762,8 @@ function stripHtmlTags(str: string): string {
     return "";
   }
 
-  return str.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  return str
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }

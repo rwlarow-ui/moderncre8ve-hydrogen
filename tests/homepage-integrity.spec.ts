@@ -25,7 +25,9 @@ async function assertHomepageIntegrity(page: Page) {
 
   for (const href of requiredHomepageLinks) {
     await expect(async () => {
-      expect(await page.locator(`a[href="${href}"]`).count()).toBeGreaterThan(0);
+      expect(await page.locator(`a[href="${href}"]`).count()).toBeGreaterThan(
+        0,
+      );
     }).toPass({ timeout: 10000 });
   }
 }
@@ -67,7 +69,9 @@ test.describe("mobile homepage integrity", () => {
     const count = await hotspotTriggers.count();
     if (count > 0) {
       await hotspotTriggers.first().click({ force: true });
-      await expect(page.locator("body")).not.toContainText("Example Product Title");
+      await expect(page.locator("body")).not.toContainText(
+        "Example Product Title",
+      );
       await expect(page.locator('a[href="/products/"]')).toHaveCount(0);
       await page.keyboard.press("Escape");
     }

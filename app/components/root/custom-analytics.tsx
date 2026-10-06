@@ -32,10 +32,7 @@ function toGa4Items(products?: any[]) {
 }
 
 function itemsValue(items: ReturnType<typeof toGa4Items>) {
-  return items.reduce(
-    (sum, i) => sum + (i.price ?? 0) * (i.quantity ?? 1),
-    0,
-  );
+  return items.reduce((sum, i) => sum + (i.price ?? 0) * (i.quantity ?? 1), 0);
 }
 
 export function CustomAnalytics() {
@@ -84,7 +81,9 @@ export function CustomAnalytics() {
     });
 
     subscribe(AnalyticsEvent.PRODUCT_ADD_TO_CART, (data: CartUpdatePayload) => {
-      const items = toGa4Items((data as any).products ?? data.cart?.lines?.nodes);
+      const items = toGa4Items(
+        (data as any).products ?? data.cart?.lines?.nodes,
+      );
       send("add_to_cart", {
         currency: data.cart?.cost?.totalAmount?.currencyCode,
         value: itemsValue(items),
@@ -92,14 +91,19 @@ export function CustomAnalytics() {
       });
     });
 
-    subscribe(AnalyticsEvent.PRODUCT_REMOVED_FROM_CART, (data: CartUpdatePayload) => {
-      const items = toGa4Items((data as any).products ?? data.cart?.lines?.nodes);
-      send("remove_from_cart", {
-        currency: data.cart?.cost?.totalAmount?.currencyCode,
-        value: itemsValue(items),
-        items,
-      });
-    });
+    subscribe(
+      AnalyticsEvent.PRODUCT_REMOVED_FROM_CART,
+      (data: CartUpdatePayload) => {
+        const items = toGa4Items(
+          (data as any).products ?? data.cart?.lines?.nodes,
+        );
+        send("remove_from_cart", {
+          currency: data.cart?.cost?.totalAmount?.currencyCode,
+          value: itemsValue(items),
+          items,
+        });
+      },
+    );
 
     subscribe(AnalyticsEvent.CART_VIEWED, (data: CartUpdatePayload) => {
       send("view_cart", {

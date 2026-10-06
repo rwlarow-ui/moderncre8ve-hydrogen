@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { readFileSync } from "node:fs";
-import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, extname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -60,10 +60,7 @@ const PLACEHOLDER_FILE_RULES = [
   },
   {
     file: "app/sections/image-with-text/image.tsx",
-    patterns: [
-      "IMAGES_PLACEHOLDERS.image",
-      'altText: "Placeholder"',
-    ],
+    patterns: ["IMAGES_PLACEHOLDERS.image", 'altText: "Placeholder"'],
     issueType: "source_placeholder_image_fallback",
     severity: "medium",
     recommendedFix:
@@ -132,7 +129,11 @@ async function main() {
 
   await writeFile(jsonPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");
   await writeFile(mdPath, buildMarkdownReport(report), "utf8");
-  await writeFile(latestJsonPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");
+  await writeFile(
+    latestJsonPath,
+    `${JSON.stringify(report, null, 2)}\n`,
+    "utf8",
+  );
   await writeFile(latestMdPath, buildMarkdownReport(report), "utf8");
 
   console.log(
@@ -570,7 +571,10 @@ async function getStorefrontSummary(item) {
 }
 
 async function getAdminSummary(item) {
-  if (!process.env.SHOPIFY_ADMIN_API_TOKEN || !process.env.PUBLIC_STORE_DOMAIN) {
+  if (
+    !process.env.SHOPIFY_ADMIN_API_TOKEN ||
+    !process.env.PUBLIC_STORE_DOMAIN
+  ) {
     return null;
   }
 
@@ -647,7 +651,10 @@ async function getAdminSummary(item) {
 }
 
 async function storefrontQuery(query, variables) {
-  if (!process.env.PUBLIC_STORE_DOMAIN || !process.env.PUBLIC_STOREFRONT_API_TOKEN) {
+  if (
+    !process.env.PUBLIC_STORE_DOMAIN ||
+    !process.env.PUBLIC_STOREFRONT_API_TOKEN
+  ) {
     return null;
   }
 
@@ -703,7 +710,9 @@ async function loadFallbackMap() {
     /const PAGES: Record<string, PageDefinition> = \{([\s\S]*?)\n\};/,
   );
   for (const line of pagesBlock?.[1].split("\n") ?? []) {
-    const match = line.match(/^\s*(?:"([^"]+)"|([A-Za-z_$][\w$]*))\s*:?\s*([A-Za-z_$][\w$]*)?,\s*$/);
+    const match = line.match(
+      /^\s*(?:"([^"]+)"|([A-Za-z_$][\w$]*))\s*:?\s*([A-Za-z_$][\w$]*)?,\s*$/,
+    );
     if (!match) {
       continue;
     }
@@ -743,7 +752,9 @@ async function scanPageDefinitions() {
           visibleLive: false,
           evidence: [
             `${relativePath} contains ${emptyPaths.length} empty string field(s).`,
-            ...emptyPaths.slice(0, 10).map((pathName) => `Empty field: ${pathName}`),
+            ...emptyPaths
+              .slice(0, 10)
+              .map((pathName) => `Empty field: ${pathName}`),
           ],
           contentSource: `Page definition (${relativePath})`,
           recommendedFix:
@@ -754,7 +765,11 @@ async function scanPageDefinitions() {
     }
 
     const markerHits = findSourceMarkers(raw);
-    if (markerHits.length > 0 && entry !== "homepage.ts" && entry !== "reviews.ts") {
+    if (
+      markerHits.length > 0 &&
+      entry !== "homepage.ts" &&
+      entry !== "reviews.ts"
+    ) {
       findings.push(
         createFinding({
           url: `source://${relativePath}`,
@@ -955,7 +970,6 @@ function findSourceMarkers(text) {
   );
 }
 
-
 function createFinding({
   url,
   pageType,
@@ -982,7 +996,9 @@ function createFinding({
 
 function buildSummary(inventory, findings, fallbackMap) {
   const totalUrls = inventory.length;
-  const flaggedUrls = inventory.filter((item) => item.status === "flagged").length;
+  const flaggedUrls = inventory.filter(
+    (item) => item.status === "flagged",
+  ).length;
   const sourceOnlyFindings = findings.filter((finding) =>
     finding.url.startsWith("source://"),
   ).length;
@@ -1067,9 +1083,13 @@ function buildMarkdownReport(report) {
 
   lines.push("", "## Flagged URL Inventory", "");
 
-  for (const item of report.inventory.filter((entry) => entry.status === "flagged")) {
+  for (const item of report.inventory.filter(
+    (entry) => entry.status === "flagged",
+  )) {
     lines.push(`- ${item.page_type} ${item.url}`);
-    lines.push(`  Findings: ${item.findings.map((finding) => finding.issue_type).join(", ")}`);
+    lines.push(
+      `  Findings: ${item.findings.map((finding) => finding.issue_type).join(", ")}`,
+    );
   }
 
   lines.push("");

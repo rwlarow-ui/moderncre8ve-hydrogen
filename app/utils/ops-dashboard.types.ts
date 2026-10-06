@@ -77,4 +77,3 @@ export interface OpsMutationResult {
     message: string;
   }>;
 }
-

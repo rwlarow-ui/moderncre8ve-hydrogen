@@ -29,4 +29,3 @@ export async function clearOpsAuthHeaders(context) {
     "Set-Cookie": await context.session.commit(),
   };
 }
-

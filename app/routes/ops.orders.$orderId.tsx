@@ -1,11 +1,17 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
-import { data, Form, Link, useActionData, useLoaderData, useNavigation } from "react-router";
+import {
+  data,
+  Form,
+  Link,
+  useActionData,
+  useLoaderData,
+  useNavigation,
+} from "react-router";
 import {
   OpsBackLink,
   OpsCard,
   OpsSectionHeading,
 } from "~/components/ops/ops-shell";
-import type { OpsMutationResult, OpsNoteTarget } from "~/utils/ops-dashboard.types";
 import { requireOpsAccess } from "~/utils/ops-auth.server";
 import {
   diffTags,
@@ -14,12 +20,12 @@ import {
   setOpsNote,
   updateOwnerTags,
 } from "~/utils/ops-dashboard.server";
+import type {
+  OpsMutationResult,
+  OpsNoteTarget,
+} from "~/utils/ops-dashboard.types";
 
-export async function loader({
-  request,
-  context,
-  params,
-}: LoaderFunctionArgs) {
+export async function loader({ request, context, params }: LoaderFunctionArgs) {
   await requireOpsAccess(request, context);
 
   if (!params.orderId) {
@@ -31,10 +37,7 @@ export async function loader({
   };
 }
 
-export async function action({
-  request,
-  context,
-}: ActionFunctionArgs) {
+export async function action({ request, context }: ActionFunctionArgs) {
   await requireOpsAccess(request, context);
 
   const formData = await request.formData();
@@ -57,7 +60,9 @@ export async function action({
   let mutationResult: OpsMutationResult;
 
   if (intent === "save-tags") {
-    const currentTags = normalizeTagList(formData.get("currentTags")) as string[];
+    const currentTags = normalizeTagList(
+      formData.get("currentTags"),
+    ) as string[];
     const nextTags = normalizeTagList(formData.get("tags")) as string[];
     const tagDiff = diffTags(currentTags, nextTags) as {
       addTags: string[];
@@ -145,7 +150,7 @@ export default function OpsOrderDetailRoute() {
                             className="h-full w-full object-cover"
                           />
                         ) : (
-                          <span className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#8b8e95]">
+                          <span className="font-sans text-[#8b8e95] text-[10px] uppercase tracking-[0.18em]">
                             No image
                           </span>
                         )}
@@ -154,7 +159,9 @@ export default function OpsOrderDetailRoute() {
                         <p className="font-medium">{lineItem.name}</p>
                         <p className="text-[#6d7077] text-sm">
                           Qty {lineItem.quantity}
-                          {lineItem.variantTitle ? ` • ${lineItem.variantTitle}` : ""}
+                          {lineItem.variantTitle
+                            ? ` • ${lineItem.variantTitle}`
+                            : ""}
                           {lineItem.sku ? ` • SKU ${lineItem.sku}` : ""}
                         </p>
                         <p className="text-sm">
@@ -168,7 +175,9 @@ export default function OpsOrderDetailRoute() {
                             ? ` total at ${new Intl.NumberFormat("en-US", {
                                 style: "currency",
                                 currency: lineItem.unitPrice.currencyCode,
-                              }).format(Number(lineItem.unitPrice.amount))} each`
+                              }).format(
+                                Number(lineItem.unitPrice.amount),
+                              )} each`
                             : ""}
                         </p>
                       </div>
@@ -178,7 +187,9 @@ export default function OpsOrderDetailRoute() {
               </section>
 
               <section className="space-y-3">
-                <h3 className="font-sans text-lg tracking-tight">Shipping Snapshot</h3>
+                <h3 className="font-sans text-lg tracking-tight">
+                  Shipping Snapshot
+                </h3>
                 <div className="rounded-2xl border border-[#ece2d0] bg-[#fcfaf5] p-4 text-[#5f636b]">
                   {order.shippingAddress.length ? (
                     <ul className="space-y-1">
@@ -228,18 +239,24 @@ function MetaPanel({
           />
           <KeyValue
             label="Cancelled"
-            value={order.cancelledAt ? new Date(order.cancelledAt).toLocaleString() : "No"}
+            value={
+              order.cancelledAt
+                ? new Date(order.cancelledAt).toLocaleString()
+                : "No"
+            }
           />
           <KeyValue
             label="Closed"
-            value={order.closedAt ? new Date(order.closedAt).toLocaleString() : "No"}
+            value={
+              order.closedAt ? new Date(order.closedAt).toLocaleString() : "No"
+            }
           />
           <div className="flex flex-wrap gap-3">
             <a
               href={order.adminUrl}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full bg-[#323640] px-4 py-2 font-sans text-xs uppercase tracking-[0.18em] text-white hover:bg-[#2CBF96] hover:text-[#16372d]"
+              className="rounded-full bg-[#323640] px-4 py-2 font-sans text-white text-xs uppercase tracking-[0.18em] hover:bg-[#2CBF96] hover:text-[#16372d]"
             >
               Open in Shopify Admin
             </a>
@@ -248,7 +265,7 @@ function MetaPanel({
                 href={order.statusPageUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-[#d8d0bf] px-4 py-2 font-sans text-xs uppercase tracking-[0.18em] text-[#323640] hover:border-[#323640]"
+                className="rounded-full border border-[#d8d0bf] px-4 py-2 font-sans text-[#323640] text-xs uppercase tracking-[0.18em] hover:border-[#323640]"
               >
                 Customer status page
               </a>
@@ -260,11 +277,11 @@ function MetaPanel({
       <TagFormCard
         title="Order Tags"
         description="Comma-separated Shopify tags on the order record."
-            ownerType="order"
-            ownerId={order.id}
-            tags={order.tags as string[]}
-            isSubmitting={isSubmitting}
-          />
+        ownerType="order"
+        ownerId={order.id}
+        tags={order.tags as string[]}
+        isSubmitting={isSubmitting}
+      />
 
       <NoteFormCard
         title="Order Ops Note"
@@ -285,12 +302,15 @@ function MetaPanel({
             <div className="space-y-3 px-6 py-6 text-sm">
               <KeyValue label="Customer" value={order.customer.name} />
               <KeyValue label="Legacy ID" value={order.customer.legacyId} />
-              <KeyValue label="Phone" value={order.customer.phone || "No phone"} />
+              <KeyValue
+                label="Phone"
+                value={order.customer.phone || "No phone"}
+              />
               <a
                 href={order.customer.adminUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex rounded-full border border-[#d8d0bf] px-4 py-2 font-sans text-xs uppercase tracking-[0.18em] text-[#323640] hover:border-[#323640]"
+                className="inline-flex rounded-full border border-[#d8d0bf] px-4 py-2 font-sans text-[#323640] text-xs uppercase tracking-[0.18em] hover:border-[#323640]"
               >
                 Open customer in Admin
               </a>
@@ -352,7 +372,7 @@ function TagFormCard({
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-full bg-[#323640] px-5 py-2 font-sans text-xs uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#2CBF96] hover:text-[#16372d] disabled:cursor-not-allowed disabled:opacity-70"
+          className="rounded-full bg-[#323640] px-5 py-2 font-sans text-white text-xs uppercase tracking-[0.18em] transition-colors hover:bg-[#2CBF96] hover:text-[#16372d] disabled:cursor-not-allowed disabled:opacity-70"
         >
           {isSubmitting ? "Saving..." : "Save tags"}
         </button>
@@ -393,7 +413,7 @@ function NoteFormCard({
         <button
           type="submit"
           disabled={isSubmitting}
-          className="rounded-full bg-[#323640] px-5 py-2 font-sans text-xs uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#2CBF96] hover:text-[#16372d] disabled:cursor-not-allowed disabled:opacity-70"
+          className="rounded-full bg-[#323640] px-5 py-2 font-sans text-white text-xs uppercase tracking-[0.18em] transition-colors hover:bg-[#2CBF96] hover:text-[#16372d] disabled:cursor-not-allowed disabled:opacity-70"
         >
           {isSubmitting ? "Saving..." : "Save note"}
         </button>
@@ -405,7 +425,7 @@ function NoteFormCard({
 function KeyValue({ label, value }: { label: string; value: string }) {
   return (
     <div className="space-y-1">
-      <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-[#6d7077]">
+      <p className="font-sans text-[#6d7077] text-[11px] uppercase tracking-[0.2em]">
         {label}
       </p>
       <p>{value}</p>
