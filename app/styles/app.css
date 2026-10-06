@@ -657,3 +657,23 @@ footer :focus-visible,
 .promotion-dots :focus-visible {
   --focus-ring-offset: 3px;
 }
+
+/* ---------------------------------------------------------------------------
+   Reduced motion (WCAG 2.3.3)
+
+   Covers the CSS-driven motion: the marquee announcement bar, drawer slides,
+   the fade/scale/expand keyframes. Entrance animations keep `forwards` fill, so
+   collapsing the duration lands on the finished state rather than hiding
+   content. The JS-driven scroll reveals are handled in use-animation.ts, and
+   slideshow autoplay in the slideshow section -- neither can be stopped here.
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
