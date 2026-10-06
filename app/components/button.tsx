@@ -8,7 +8,7 @@ export const variants = cva(
   [
     "button relative inline-flex items-center justify-center rounded-none",
     "whitespace-nowrap font-normal leading-tight",
-    "focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50!",
+    "disabled:cursor-not-allowed disabled:opacity-50!",
     "transition-colors",
   ],
   {

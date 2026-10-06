@@ -44,14 +44,14 @@ const NewsLetterForm = ({
           name="cf-turnstile-response"
           value={turnstileToken}
         />
-        <div className="flex h-[54px] grow items-center border border-line-subtle bg-white">
+        <div className="flex h-[54px] grow items-center border border-line bg-white">
           <EnvelopeSimpleIcon className="mr-1.5 ml-3 h-5 w-5 shrink-0" />
           <input
             name="email"
             type="email"
             required
             placeholder={placeholder}
-            className="h-full w-full bg-transparent pr-3 pl-1.5 leading-tight focus:outline-hidden"
+            className="h-full w-full bg-transparent pr-3 pl-1.5 leading-tight"
           />
         </div>
         <Button

@@ -479,7 +479,7 @@ const dotVariants = cva(
     "dot cursor-pointer",
     "h-0.5 p-0",
     "transition-all duration-300",
-    "border-0 outline-none",
+    "border-0",
     "bg-[#DBD7D1] hover:bg-[#DBD7D1]/50",
   ],
   {
