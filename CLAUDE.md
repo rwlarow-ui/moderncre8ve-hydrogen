@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8ve.com rebuild.
 
 - **Store:** moderncre8ve.myshopify.com (26 active + 3 draft products, 16 collections)
-- **Template:** originally Weaverse Aspen; the hosted Weaverse page builder was removed in favour of an in-repo page builder (`app/page-builder/`)
+- **Template:** forked from a third-party Hydrogen furniture theme; the hosted page builder was replaced by an in-repo page builder (`app/page-builder/`)
 - **Repo:** github.com/rwlarow-ui/moderncre8ve-hydrogen
 - **Deploy target:** Shopify Oxygen
 - **Current version:** 1.4.2 — single source of truth is `package.json`; `CHANGELOG.md` has the full history
@@ -51,7 +51,6 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 
 ### Admin API Access
 - **Token:** `SHOPIFY_ADMIN_API_TOKEN` in `.env` (full admin write scopes)
-- **Weaverse Admin Proxy:** `https://weaverse.io/api/admin-graphql` with Bearer token (manages Shopify Admin API calls)
 - **App:** "Claude2" in Shopify Dev Dashboard (Client ID: `fd5964839bc3fb47703bafb47d25d3fc`)
 
 ### Google Analytics / GTM
@@ -63,7 +62,7 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 - **SEO Truth Layer:** source is vendored at `seo-truth-layer/`, but the pipeline **runs daily at 14:00 UTC from the separate `github.com/rwlarow-ui/moderncre8ve-seo-truth-layer` repo**. GitHub only executes workflows under the root `.github/workflows/`, so `seo-truth-layer/.github/workflows/seo-pipeline.yml` in this repo never runs. Its secrets (`GA4_PROPERTY_ID`, `GOOGLE_SA_JSON`, `RESEND_API_KEY`, `SITE_URL`) live on that other repo.
 
 ### MCP Servers
-Configured in `.mcp.json`: **ops-dashboard** (local stdio server, `scripts/ops-dashboard-mcp.mjs` — Shopify Admin order/customer tooling). The Weaverse docs server was removed along with Weaverse itself.
+Configured in `.mcp.json`: **ops-dashboard** (local stdio server, `scripts/ops-dashboard-mcp.mjs` — Shopify Admin order/customer tooling).
 Figma, Shopify (Storefront API), Shopify Dev and Ahrefs were all removed from `.mcp.json`; the claude.ai Shopify connector covers Admin API access.
 Composer and Crypto.com servers visible in sessions are from another project — irrelevant here.
 
@@ -135,7 +134,7 @@ export let schema = createSchema({
 
 ### Code Standards
 - **TypeScript**: Strict mode disabled; use types where beneficial
-- **Biome**: Double quotes, semicolons required. Config extends `@weaverse/biome`
+- **Biome**: Double quotes, semicolons required. Config is self-contained in `biome.json`
 - **Imports**: Use `~/*` alias for app directory
 
 ### Environment

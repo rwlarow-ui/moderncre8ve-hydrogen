@@ -588,11 +588,11 @@ function createStaticFiltersForSearch(): any[] {
       type: "LIST",
       values: [
         {
-          id: "filter.p.vendor.WeaverseAspen",
-          label: "Weaverse Aspen",
+          id: "filter.p.vendor.Moderncre8ve",
+          label: "Moderncre8ve",
           count: 0,
           input: JSON.stringify({
-            "p.vendor": "Weaverse Aspen",
+            "p.vendor": "Moderncre8ve",
           }),
         },
       ],

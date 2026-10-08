@@ -22,7 +22,7 @@
 - 26 active + 3 draft products with SEO titles/descriptions
 - 27 background-removed product images uploaded
 - 88 SEO redirects imported via Admin API
-- 13 Weaverse page JSONs rendering via local fallback
+- 13 page compositions rendering from the in-repo page builder
 - FurnitureStore structured data + article schema
 - Shopify CLI 3.91.0 integrated, env vars synced from Oxygen
 

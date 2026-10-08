@@ -21,7 +21,7 @@
 ## Visual Polish
 
 - [ ] Assign hero/slide background images from Shopify media library
-- [ ] Apply brand color palette to Weaverse theme settings
+- [ ] Apply brand color palette to theme settings
 
 ## SEO Health (from 2026-04-07 scan)
 
