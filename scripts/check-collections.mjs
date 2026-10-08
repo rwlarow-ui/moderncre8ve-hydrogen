@@ -42,17 +42,26 @@ const args = Object.fromEntries(
 const ignored = new Set((args.ignore || "").split(",").filter(Boolean));
 const liveBase = args.live?.replace(/\/$/, "");
 
+const MAX_ATTEMPTS = 3;
+
+// Shopify occasionally returns a transient INTERNAL_SERVER_ERROR right after
+// collections are (un)published, so retry before giving up.
 async function graphql(path, token, headerName, query) {
-  const res = await fetch(`https://${domain}${path}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", [headerName]: token },
-    body: JSON.stringify({ query }),
-  });
-  const json = await res.json();
-  if (!res.ok || json.errors) {
-    throw new Error(`${path}: ${JSON.stringify(json.errors ?? res.status)}`);
+  let lastError = "";
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    const res = await fetch(`https://${domain}${path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", [headerName]: token },
+      body: JSON.stringify({ query }),
+    });
+    const json = await res.json();
+    if (res.ok && !json.errors) {
+      return json.data;
+    }
+    lastError = JSON.stringify(json.errors ?? res.status);
+    await new Promise((resolve) => setTimeout(resolve, attempt * 1000));
   }
-  return json.data;
+  throw new Error(`${path}: ${lastError}`);
 }
 
 const query = "{ collections(first: 250) { nodes { handle } } }";
