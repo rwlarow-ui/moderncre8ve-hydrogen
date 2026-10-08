@@ -41,6 +41,7 @@ interface ProductInformationData
   showVendor: boolean;
   showSalePrice: boolean;
   showShortDescription: boolean;
+  showSpecifications?: boolean;
   showShippingPolicy: boolean;
   showRefundPolicy: boolean;
   showBadgesOnProductMedia?: boolean;
@@ -75,6 +76,7 @@ const ProductInformation = forwardRef<
     showVendor,
     showSalePrice,
     showShortDescription,
+    showSpecifications = true,
     showShippingPolicy,
     showRefundPolicy,
     showLeadTime = true,
@@ -347,6 +349,7 @@ const ProductInformation = forwardRef<
                 showShippingPolicy={showShippingPolicy}
                 showRefundPolicy={showRefundPolicy}
                 showShortDescription={showShortDescription}
+                showSpecifications={showSpecifications}
                 product={product}
               />
             </div>
@@ -609,6 +612,12 @@ export const schema = createSchema({
           type: "switch",
           label: "Show short description",
           name: "showShortDescription",
+          defaultValue: true,
+        },
+        {
+          type: "switch",
+          label: "Show specifications (category metafields)",
+          name: "showSpecifications",
           defaultValue: true,
         },
         {

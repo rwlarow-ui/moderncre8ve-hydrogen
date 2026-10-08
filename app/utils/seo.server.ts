@@ -12,6 +12,7 @@ import type { BreadcrumbList, CollectionPage, Offer } from "schema-dts";
 import type { ProductQuery, ShopFragment } from "storefront-api.generated";
 import { collectionFaqs } from "~/utils/collection-faqs";
 import { collectionSeoDescriptions } from "~/utils/collection-seo-descriptions";
+import { parseProductSpecs, productSpecsJsonLd } from "~/utils/product-specs";
 
 function root({
   shop,
@@ -277,6 +278,12 @@ function productJsonLd({
       offers,
       sku: selectedVariant?.sku ?? "",
       url,
+      ...(productData.category?.name && {
+        category: productData.category.name,
+      }),
+      // material / color / size / additionalProperty from Shopify category
+      // metafields (shopify.* → shopify--* metaobjects).
+      ...productSpecsJsonLd(parseProductSpecs(productData.specs)),
     },
   ];
 }

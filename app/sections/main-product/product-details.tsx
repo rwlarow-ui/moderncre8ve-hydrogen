@@ -3,11 +3,13 @@ import * as Accordion from "@radix-ui/react-accordion";
 import clsx from "clsx";
 import { Link, useLoaderData } from "react-router";
 import type { loader as productLoader } from "~/routes/($locale).products.$productHandle";
+import { type ProductSpec, parseProductSpecs } from "~/utils/product-specs";
 
 interface ProductDetailsProps {
   showShippingPolicy: boolean;
   showRefundPolicy: boolean;
   showShortDescription?: boolean;
+  showSpecifications?: boolean;
   product?: any;
   shop?: any;
 }
@@ -16,6 +18,7 @@ export function ProductDetails({
   showShippingPolicy,
   showRefundPolicy,
   showShortDescription = true,
+  showSpecifications = true,
   product: propProduct,
   shop: propShop,
 }: ProductDetailsProps) {
@@ -38,6 +41,7 @@ export function ProductDetails({
 
   const { description, descriptionHtml, summary } = product || {};
   const { shippingPolicy, refundPolicy } = shop || {};
+  const specs = showSpecifications ? parseProductSpecs(product?.specs) : [];
   const details = [
     showShortDescription &&
       summary && {
@@ -47,6 +51,10 @@ export function ProductDetails({
     (descriptionHtml || description) && {
       title: "Description",
       content: descriptionHtml || formatPlainTextAsHtml(description),
+    },
+    specs.length > 0 && {
+      title: "Specifications",
+      content: formatSpecsAsHtml(specs),
     },
     showShippingPolicy &&
       shippingPolicy?.body && {
@@ -122,6 +130,20 @@ export function ProductDetails({
       ))}
     </Accordion.Root>
   );
+}
+
+/**
+ * Category attributes as a definition list. Server-rendered (not lazy) so the
+ * values are in the initial HTML for crawlers and AI shopping agents.
+ */
+function formatSpecsAsHtml(specs: ProductSpec[]) {
+  const rows = specs
+    .map(
+      (s) =>
+        `<div><dt>${escapeHtml(s.label)}</dt><dd>${escapeHtml(s.values.join(", "))}</dd></div>`,
+    )
+    .join("");
+  return `<dl class="product-specs">${rows}</dl>`;
 }
 
 function getExcerpt(text: string) {
