@@ -24,6 +24,7 @@ export const defaultCollection: PageDefinition = {
       data: {
         showBreadcrumb: true,
         showDescription: true,
+        showTrustStrip: true,
         showBanner: true,
         bannerHeightDesktop: 350,
         bannerHeightMobile: 200,
