@@ -28,3 +28,6 @@ product-images-bg/*.bak
 
 # Stray standalone SEO Truth Layer clone — the maintained copy lives in seo-truth-layer/
 moderncre8ve-seo-truth-layer/
+
+# design-system build output
+design-system/dist/
