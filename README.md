@@ -26,6 +26,7 @@ Required environment variables are listed in `.env.example`. Never commit `.env`
 | `npm run codegen` | Regenerate GraphQL types after schema changes |
 | `npm run biome` | Lint (errors only) |
 | `npm run biome:fix` | Lint and auto-fix |
+| `npm run check:collections` | Verify every Shopify collection is published to the storefront (needs `.env`) |
 
 ## Architecture
 
