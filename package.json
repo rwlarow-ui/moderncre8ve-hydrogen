@@ -13,6 +13,7 @@
     "start": "shopify hydrogen preview",
     "typecheck": "tsc --noEmit",
     "check:homepage": "node scripts/check-homepage-integrity.mjs",
+    "check:collections": "node --env-file=.env scripts/check-collections.mjs",
     "debug:admin-auth": "node scripts/debug-admin-auth.mjs",
     "audit:content": "node scripts/audit-content-integrity.mjs",
     "test:ops": "node --test tests/ops-utils.test.mjs",

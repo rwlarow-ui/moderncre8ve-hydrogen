@@ -6,6 +6,12 @@
 
 ## Unreleased
 
+### Fix: collection pages 404 because collections were not published to the Hydrogen channel
+- Most `/collections/<handle>` pages returned 404 (or 301 to `/collections/all`, also 404) on the live site. The Admin API listed 25 collections, but the **Storefront API returned none**: the collections were not published to the **MODERNCRE8VE** sales channel the storefront reads from. Tracked in #60.
+- Publishing a collection to that channel in Shopify Admin fixes its page (verified 2026-10-08: `all` went 404 → 200; `all-products`, `scandinavian-design-furniture` and `japandi-scandi-mid-century-modern-furniture` followed after Hydrogen's cached "not found" expired). **No code change was needed** — this is a Shopify Admin configuration fix.
+- Added `npm run check:collections` (`scripts/check-collections.mjs`): compares Admin collections against the Storefront API and exits 1 if any are unpublished. Flags: `--ignore=handle,handle` to skip intentionally hidden collections, `--live=https://moderncre8ve.com` to also print each page's HTTP status.
+- Status when written: 4 of 23 collections visible (excluding `piper-fox`, `piper-fox-co`); the rest still to be published.
+
 ### Developer Tooling & Docs
 - Removed the dead **Ahrefs MCP server** from `.mcp.json` (connection retired). Ahrefs is now informational only — the `AhrefsBot`/`AhrefsSiteAudit` crawl directives in `app/routes/[robots.txt].tsx` and the March-2026 keyword-data comment in `app/utils/collection-seo-descriptions.ts` are unaffected (neither uses the MCP).
 - Repointed the **Shopify Storefront MCP** from a hardcoded `/Users/rwlarow/…` absolute path (nonexistent on other machines) to `npx -y @wolfielabs/shopify-storefront-mcp-server` so it resolves anywhere.
