@@ -5,58 +5,158 @@
     "clientKind": "git",
     "useIgnoreFile": true
   },
-  "extends": ["./node_modules/@weaverse/biome/biome.json"],
   "linter": {
     "rules": {
       "style": {
-        "useThrowNewError": "warn",
-        "useFilenamingConvention": "off",
+        "useConst": "off",
+        "noExportedImports": "warn",
+        "useBlockStatements": "warn",
+        "noNestedTernary": "off",
+        "useConsistentMemberAccessibility": "warn",
         "noParameterAssign": "off",
-        "noNestedTernary": "off"
+        "useDefaultSwitchClause": "warn",
+        "useConsistentBuiltinInstantiation": "warn",
+        "useFilenamingConvention": "off",
+        "useConsistentArrayType": "warn",
+        "useShorthandAssign": "warn",
+        "useForOf": "warn",
+        "noNonNullAssertion": "warn",
+        "useTemplate": "warn",
+        "useAtIndex": "warn",
+        "useCollapsedIf": "warn",
+        "useCollapsedElseIf": "warn",
+        "noParameterProperties": "warn",
+        "noMagicNumbers": "warn",
+        "useReadonlyClassProperties": "warn",
+        "useConsistentTypeDefinitions": "warn",
+        "useThrowNewError": "warn"
+      },
+      "a11y": {
+        "noStaticElementInteractions": "off",
+        "useKeyWithClickEvents": "off",
+        "useAriaPropsSupportedByRole": "warn",
+        "noSvgWithoutTitle": "off",
+        "useButtonType": "warn",
+        "useSemanticElements": "warn",
+        "useFocusableInteractive": "warn",
+        "noLabelWithoutControl": "warn",
+        "useKeyWithMouseEvents": "warn",
+        "noRedundantAlt": "warn",
+        "noNoninteractiveElementInteractions": "warn"
+      },
+      "complexity": {
+        "useOptionalChain": "warn",
+        "useLiteralKeys": "warn",
+        "noForEach": "warn",
+        "noExcessiveCognitiveComplexity": {
+          "level": "error",
+          "options": {
+            "maxAllowedComplexity": 50
+          }
+        },
+        "noStaticOnlyClass": "off",
+        "noUselessCatch": "warn",
+        "noVoid": "warn",
+        "noImplicitCoercions": "warn",
+        "noExcessiveLinesPerFunction": "off"
       },
       "suspicious": {
+        "noArrayIndexKey": "off",
+        "noAssignInExpressions": "warn",
+        "noImplicitAnyLet": "warn",
+        "noConsole": "warn",
+        "noEvolvingTypes": "warn",
         "noExplicitAny": "off",
         "useAwait": "off",
-        "noArrayIndexKey": "off"
+        "noTemplateCurlyInString": "warn",
+        "noEmptyBlockStatements": "warn",
+        "noDocumentCookie": "warn",
+        "noConstantBinaryExpressions": "warn",
+        "useIterableCallbackReturn": "warn"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      },
+      "correctness": {
+        "useHookAtTopLevel": "warn",
+        "useExhaustiveDependencies": "warn",
+        "noChildrenProp": "warn",
+        "noUnusedVariables": "off",
+        "noUnusedImports": "warn",
+        "noUnusedFunctionParameters": "warn",
+        "noInvalidUseBeforeDeclaration": "warn",
+        "useParseIntRadix": "warn",
+        "noUnusedPrivateClassMembers": "warn",
+        "useImageSize": "warn"
       },
       "nursery": {
+        "noShadow": "warn",
         "useSortedClasses": {
           "level": "on",
           "fix": "safe",
           "options": {
             "functions": ["clsx", "cva", "cn"]
           }
-        }
-      },
-      "correctness": {
-        "noUnusedVariables": "off"
+        },
+        "noUnnecessaryConditions": "warn",
+        "noUnusedExpressions": "warn",
+        "noReactForwardRef": "warn",
+        "noIncrementDecrement": "warn",
+        "noEmptySource": "warn"
       },
       "performance": {
         "noNamespaceImport": "off",
-        "useTopLevelRegex": "off"
-      },
-      "complexity": {
-        "noExcessiveCognitiveComplexity": {
-          "level": "error",
-          "options": {
-            "maxAllowedComplexity": 50
-          }
-        }
+        "useTopLevelRegex": "off",
+        "noImgElement": "warn",
+        "noDynamicNamespaceImportAccess": "warn",
+        "noDelete": "warn",
+        "noBarrelFile": "off"
       }
     }
+  },
+  "javascript": {
+    "formatter": {
+      "semicolons": "always",
+      "quoteStyle": "double",
+      "trailingCommas": "all"
+    }
+  },
+  "formatter": {
+    "indentStyle": "space"
+  },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/build",
+      "!**/public",
+      "!**/.wrangler",
+      "!**/icons",
+      "!**/patches",
+      "!**/*.css",
+      "!**/*.scss",
+      "!**/storefront-api.generated.d.ts",
+      "!**/customer-account-api.generated.d.ts",
+      "!**/.shopify",
+      "!**/.react-router",
+      "!**/app/styles/app.css",
+      "!**/app/utils/string-parser.ts",
+      "!**/app/hooks/use-3rd-stuff.ts",
+      "!**/pnpm-lock.yaml",
+      "!**/.vscode",
+      "!**/prisma",
+      "!**/vite.config.ts",
+      "!**/app/styles/tailwind.css"
+    ],
+    "maxSize": 512000
   },
   "assist": {
     "actions": {
       "source": {
         "useSortedAttributes": "off"
       }
-    }
-  },
-  "javascript": {
-    "formatter": {
-      "quoteStyle": "double",
-      "semicolons": "always",
-      "trailingCommas": "all"
     }
   }
 }
