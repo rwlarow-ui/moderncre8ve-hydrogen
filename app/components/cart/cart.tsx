@@ -6,6 +6,7 @@ import {
   Money,
   type OptimisticCart,
   OptimisticInput,
+  useAnalytics,
   useOptimisticCart,
   useOptimisticData,
 } from "@shopify/hydrogen";
@@ -431,30 +432,37 @@ function CartCheckoutActions({
   layout: Layouts;
   cart: OptimisticCart<CartApiQueryFragment>;
 }) {
+  const { canTrack } = useAnalytics();
+
   if (!checkoutUrl) {
     return null;
   }
 
   function handleCheckoutClick() {
     try {
+      // The site loads plain gtag.js (no GTM container), so objects pushed to
+      // dataLayer are ignored; send via gtag() with the same consent gating as
+      // CustomAnalytics.
+      if (typeof window.gtag !== "function" || !canTrack()) {
+        return;
+      }
       const lines = cart?.lines?.nodes ?? [];
       const currency = cart?.cost?.totalAmount?.currencyCode ?? "USD";
       const value = parseFloat(cart?.cost?.totalAmount?.amount ?? "0");
-      window.dataLayer?.push({ ecommerce: null });
-      window.dataLayer?.push({
-        event: "begin_checkout",
-        ecommerce: {
-          currency,
-          value,
-          items: lines.map((line) => ({
-            item_id: line.merchandise?.product?.id ?? line.id,
-            item_name: line.merchandise?.product?.title ?? "Unknown Product",
-            item_variant: line.merchandise?.title ?? "",
-            item_brand: line.merchandise?.product?.vendor ?? "ModernCre8ve",
-            price: parseFloat(line.merchandise?.price?.amount ?? "0"),
-            quantity: line.quantity ?? 1,
-          })),
-        },
+      window.gtag("event", "begin_checkout", {
+        currency,
+        value,
+        items: lines.map((line, index) => ({
+          item_id: line.merchandise?.product?.id ?? line.id,
+          item_name: line.merchandise?.product?.title ?? "Unknown Product",
+          item_variant: line.merchandise?.title ?? "",
+          item_brand: line.merchandise?.product?.vendor ?? "ModernCre8ve",
+          price: parseFloat(line.merchandise?.price?.amount ?? "0"),
+          quantity: line.quantity ?? 1,
+          index,
+        })),
+        // Beacon transport so the event survives the navigation to checkout.
+        transport_type: "beacon",
       });
     } catch {
       // Never block checkout due to analytics errors
