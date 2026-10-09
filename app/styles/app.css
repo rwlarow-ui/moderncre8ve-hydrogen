@@ -677,3 +677,23 @@ footer :focus-visible,
     scroll-behavior: auto !important;
   }
 }
+
+/* PDP "Specifications" accordion — Shopify category metafields (app/utils/product-specs.ts) */
+.product-specs {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+}
+.product-specs > div {
+  display: grid;
+  grid-template-columns: minmax(7rem, 35%) 1fr;
+  gap: 1rem;
+}
+.product-specs dt {
+  font-weight: 600;
+  margin: 0;
+}
+.product-specs dd {
+  margin: 0;
+  padding: 0;
+}

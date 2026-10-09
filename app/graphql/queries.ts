@@ -41,6 +41,50 @@ export const PRODUCT_QUERY = `#graphql
         namespace
         value
       }
+      # Shopify category metafields (standard taxonomy attributes). Keep in
+      # sync with PRODUCT_SPEC_DEFINITIONS in app/utils/product-specs.ts.
+      category {
+        name
+      }
+      specs: metafields(identifiers: [
+        { namespace: "shopify", key: "furniture-fixture-material" }
+        { namespace: "shopify", key: "tabletop-material" }
+        { namespace: "shopify", key: "top-material" }
+        { namespace: "shopify", key: "frame-material" }
+        { namespace: "shopify", key: "leg-material" }
+        { namespace: "shopify", key: "lumber-wood-type" }
+        { namespace: "shopify", key: "wood-finish" }
+        { namespace: "shopify", key: "color-pattern" }
+        { namespace: "shopify", key: "tabletop-color" }
+        { namespace: "shopify", key: "top-color" }
+        { namespace: "shopify", key: "frame-color" }
+        { namespace: "shopify", key: "leg-color" }
+        { namespace: "shopify", key: "extension-mechanism" }
+        { namespace: "shopify", key: "table-base-type" }
+        { namespace: "shopify", key: "bedding-size" }
+        { namespace: "shopify", key: "compatible-mattress-size" }
+        { namespace: "shopify", key: "headboard-style" }
+        { namespace: "shopify", key: "bed-frame-features" }
+        { namespace: "shopify", key: "furniture-fixture-features" }
+        { namespace: "shopify", key: "seat-type" }
+        { namespace: "shopify", key: "backrest-type" }
+        { namespace: "shopify", key: "back-type" }
+        { namespace: "shopify", key: "door-type" }
+        { namespace: "shopify", key: "door-material" }
+      ]) {
+        key
+        namespace
+        references(first: 10) {
+          nodes {
+            ... on Metaobject {
+              handle
+              label: field(key: "label") {
+                value
+              }
+            }
+          }
+        }
+      }
       options {
         ...ProductOption
       }

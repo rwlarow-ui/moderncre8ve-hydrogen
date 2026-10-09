@@ -6,6 +6,15 @@
 
 ## Unreleased
 
+### SEO: Shopify category metaobjects wired into the storefront
+- Audit of all metaobject definitions vs. live products/collections: `docs/metaobjects-seo-audit-2026-10.md`. Only 1 of ~50 active products had category attributes, and the storefront never read them.
+- `PRODUCT_QUERY` fetches the product category and 24 `shopify.*` category metafields (metaobject `label`s). New `app/utils/product-specs.ts`.
+- PDP: **Specifications** accordion (server-rendered), `showSpecifications` toggle on the Main product section.
+- Product JSON-LD: adds `category`, `material`, `color`, `size`, `additionalProperty`.
+- `npm run sync:attributes` (`scripts/sync-product-attributes.mjs` + reviewed `scripts/product-attributes.plan.mjs`): dry-run-by-default sync of metaobject entries, product categories and category metafields for live products. Uses the category-specific keys Shopify enforces (`tabletop-*`/`leg-*` for tables, `frame-*`/`top-*` for case goods, `furniture-fixture-material`/`color-pattern` for beds, dressers, benches).
+- **Applied to the store on 2026-10-08** through the Shopify connector: 9 definitions enabled, 25 metaobject entries upserted, 23 product categories fixed (`dining` collection 34 → 38 products), and ~140 category metafields set on 41 live products.
+- `npm run test:specs` — parser / JSON-LD tests and query-plan drift guards.
+
 ### Fix: desktop logo overflowed the header
 - The header logo (`public/logo.png`, 3004×3600 — tall, near-square) rendered ~180px tall at the 150px theme width on desktop and spilled over the announcement bar. `app/components/logo.tsx` gave the link `lg:h-fit`, so nothing capped its height above the `lg` breakpoint; mobile was fine because the link is `h-full`. Removed `lg:h-fit` so the logo is held to the nav height at every width.
 - The "Logo width" theme setting now sets the logo box width, but the rendered logo is limited by the header height, so it will look narrower than 150px on desktop. Adjust the header height (`--height-nav`) if it needs to be larger.
