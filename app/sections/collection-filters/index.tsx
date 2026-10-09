@@ -5,6 +5,7 @@ import type { CollectionQuery } from "storefront-api.generated";
 import { BreadCrumb } from "~/components/breadcrumb";
 import { Image } from "~/components/image";
 import { layoutInputs, Section, type SectionProps } from "~/components/section";
+import { TrustStrip } from "~/components/trust-strip";
 import { createSchema } from "~/page-builder";
 import { Filters } from "./filters";
 import { ProductsPagination } from "./products-pagination";
@@ -13,6 +14,7 @@ import { ToolsBar } from "./tools-bar";
 export interface CollectionFiltersData {
   showBreadcrumb: boolean;
   showDescription: boolean;
+  showTrustStrip: boolean;
   showBanner: boolean;
   bannerHeightDesktop: number;
   bannerHeightMobile: number;
@@ -38,6 +40,7 @@ const CollectionFilters = forwardRef<HTMLElement, CollectionFiltersProps>(
     const {
       showBreadcrumb,
       showDescription,
+      showTrustStrip = true,
       showBanner,
       bannerHeightDesktop,
       bannerHeightMobile,
@@ -92,6 +95,7 @@ const CollectionFilters = forwardRef<HTMLElement, CollectionFiltersProps>(
                 {collection.description}
               </p>
             )}
+            {showTrustStrip && <TrustStrip className="mt-5" />}
             {showBanner && banner && (
               <div
                 className={clsx([
@@ -174,6 +178,14 @@ export const schema = createSchema({
           name: "showDescription",
           label: "Show description",
           defaultValue: false,
+        },
+        {
+          type: "switch",
+          name: "showTrustStrip",
+          label: "Show trust strip",
+          defaultValue: true,
+          helpText:
+            "Handcrafted to order, 12–16 week lead time and white glove delivery, shown under the title.",
         },
       ],
     },

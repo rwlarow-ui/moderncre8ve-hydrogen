@@ -6,17 +6,22 @@ import type { RouteLoaderArgs } from "~/page-builder";
 import { loadPage } from "~/page-builder/page.server";
 import { PageContent } from "~/page-builder/renderer";
 import { routeHeaders } from "~/utils/cache";
-import { PAGINATION_SIZE } from "~/utils/const";
+import { sortCollectionsForListing } from "~/utils/collection-list";
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { seoPayload } from "~/utils/seo.server";
 
 export const headers = routeHeaders;
 
+const COLLECTIONS_PAGE_SIZE = 48;
+
 export const loader = async (args: RouteLoaderArgs) => {
   const { request, context } = args;
   const { storefront } = context;
+  // The store has ~25 collections; fetch them in one page so shoppers see the
+  // whole range instead of a "Load more" button after 13 cards (empty
+  // collections are not rendered, which made the first page look short).
   const variables = getPaginationVariables(request, {
-    pageBy: PAGINATION_SIZE,
+    pageBy: COLLECTIONS_PAGE_SIZE,
   });
 
   // Load collections data and the page composition in parallel
@@ -31,13 +36,19 @@ export const loader = async (args: RouteLoaderArgs) => {
     loadPage({ context, request }, { type: "COLLECTION_LIST" }),
   ]);
 
+  // Lead with the focus categories; catch-all collections go last.
+  const orderedCollections = {
+    ...collections,
+    nodes: sortCollectionsForListing(collections.nodes),
+  };
+
   const seo = seoPayload.listCollections({
     collections,
     url: request.url,
   });
 
   return {
-    collections,
+    collections: orderedCollections,
     seo,
     pageData,
   };

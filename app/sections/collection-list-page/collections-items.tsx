@@ -4,6 +4,7 @@ import { forwardRef } from "react";
 import { useLoaderData } from "react-router";
 import type { CollectionsQuery } from "storefront-api.generated";
 import { variants } from "~/components/link";
+import { TrustStrip } from "~/components/trust-strip";
 import { createSchema } from "~/page-builder";
 import type { ImageAspectRatio } from "~/types/image";
 import { cn } from "~/utils/cn";
@@ -15,6 +16,8 @@ interface CollectionsItemsProps {
   nextButtonText: string;
   imageAspectRatio: ImageAspectRatio;
   collectionNameColor: string;
+  ctaText: string;
+  showTrustStrip: boolean;
   gap: number;
 }
 
@@ -26,6 +29,8 @@ const CollectionsItems = forwardRef<HTMLDivElement, CollectionsItemsProps>(
       nextButtonText,
       imageAspectRatio,
       collectionNameColor,
+      ctaText = "Shop the collection",
+      showTrustStrip = true,
       gap = 24,
       ...rest
     } = props;
@@ -46,6 +51,7 @@ const CollectionsItems = forwardRef<HTMLDivElement, CollectionsItemsProps>(
             PreviousLink,
           }) => (
             <div className="flex w-full flex-col items-center gap-8">
+              {showTrustStrip && <TrustStrip className="w-full" />}
               {hasPreviousPage && (
                 <PreviousLink
                   className={cn("mx-auto", variants({ variant: "outline" }))}
@@ -65,6 +71,7 @@ const CollectionsItems = forwardRef<HTMLDivElement, CollectionsItemsProps>(
                     collection={collection as Collection}
                     imageAspectRatio={imageAspectRatio}
                     collectionNameColor={collectionNameColor}
+                    ctaText={ctaText}
                     loading={getImageLoadingPriority(i, 2)}
                   />
                 ))}
@@ -151,6 +158,25 @@ export const schema = createSchema({
           name: "collectionNameColor",
           label: "Collection name color",
           defaultValue: "#fff",
+        },
+        {
+          type: "text",
+          name: "ctaText",
+          label: "Card call to action",
+          defaultValue: "Shop the collection",
+        },
+      ],
+    },
+    {
+      group: "Trust",
+      inputs: [
+        {
+          type: "switch",
+          name: "showTrustStrip",
+          label: "Show trust strip",
+          defaultValue: true,
+          helpText:
+            "Handcrafted to order, 12–16 week lead time and white glove delivery, shown above the grid.",
         },
       ],
     },
