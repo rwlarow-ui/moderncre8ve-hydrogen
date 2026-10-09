@@ -6,6 +6,19 @@
 
 ## Unreleased
 
+### Fix: desktop logo overflowed the header
+- The header logo (`public/logo.png`, 3004×3600 — tall, near-square) rendered ~180px tall at the 150px theme width on desktop and spilled over the announcement bar. `app/components/logo.tsx` gave the link `lg:h-fit`, so nothing capped its height above the `lg` breakpoint; mobile was fine because the link is `h-full`. Removed `lg:h-fit` so the logo is held to the nav height at every width.
+- The "Logo width" theme setting now sets the logo box width, but the rendered logo is limited by the header height, so it will look narrower than 150px on desktop. Adjust the header height (`--height-nav`) if it needs to be larger.
+- Not visually verified in a browser at time of writing — check the Oxygen preview.
+
+### Investigated: "Something's wrong here" on the homepage was a browser extension
+- A report of the homepage flashing to the generic error screen (`app/components/root/generic-error.tsx`) after load could not be reproduced in a clean Chrome session and **did not occur in an incognito window**, so it is caused by an extension in the reporter's normal profile (extensions that rewrite the DOM before hydration are a common trigger). No site code change. The error is intermittent in clean sessions too (seen once in ~5 loads), so watch for it recurring.
+- The Gemini DevTools scan that accompanied the report (duplicate `website` input ID in the newsletter form, duplicate `linearGradient-1` SVG ID, 1px `<html>` overflow) is a11y/layout nits and unrelated to the error screen; none were changed.
+- Console warnings seen on every load, still open: `Error in SEO input: description should not be longer than 155 characters` (a page's meta description is too long) and a Swiper "not enough slides for loop mode" warning from the cart drawer.
+
+### Known: `npm run typecheck` fails on `main`
+- 2 errors in `app/sections/single-product/index.tsx` (lines 245, 250): a Customer Account API `MoneyV2` is passed where the Storefront API `MoneyV2` is expected (`CurrencyCode` differs by `"USDC"`). Pre-existing since the Weaverse removal (`c920015`); `npm run build` passes.
+
 ### Fix: collection pages 404 because collections were not published to the Hydrogen channel
 - Most `/collections/<handle>` pages returned 404 (or 301 to `/collections/all`, also 404) on the live site. The Admin API listed 25 collections, but the **Storefront API returned none**: the collections were not published to the **MODERNCRE8VE** sales channel the storefront reads from. Tracked in #60.
 - Publishing a collection to that channel in Shopify Admin fixes its page (verified 2026-10-08: `all` went 404 → 200; `all-products`, `scandinavian-design-furniture` and `japandi-scandi-mid-century-modern-furniture` followed after Hydrogen's cached "not found" expired). **No code change was needed** — this is a Shopify Admin configuration fix.

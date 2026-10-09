@@ -112,6 +112,11 @@ import { useLoaderData, Link, Form } from '@remix-run/react';
 - Sections may export a `loader`; it runs server-side during `loadPage` and its result arrives as the `loaderData` prop
 - `useThemeSettings()` reads the settings the root loader resolved from `theme-schema.server.ts` — the single source of truth for theme values
 
+### Troubleshooting
+- **"Something's wrong here." right after the homepage loads** (the `generic-error.tsx` boundary): first load the site in an incognito window with extensions off. The 2026-10-09 report was an extension in the owner's normal profile — the page was fine in incognito and in clean automated sessions. Production hides the real error, so ask for the DevTools console output before changing code.
+- **Logo sizing:** `public/logo.png` is a tall 3004×3600 stacked wordmark, so the logo must be height-constrained by the header (`app/components/logo.tsx`), not just width-constrained, or it overflows the nav.
+- **Known failing check:** `npm run typecheck` reports 2 `MoneyV2`/`CurrencyCode` errors in `app/sections/single-product/index.tsx`; `npm run build` passes.
+
 ### Component Schema
 ```tsx
 export let schema = createSchema({
