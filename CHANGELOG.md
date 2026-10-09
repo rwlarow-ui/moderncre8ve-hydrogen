@@ -6,6 +6,9 @@
 
 ## Unreleased
 
+### Fix: contact page map blocked by CSP (#67)
+- The "Visit Our Showroom" map (`app/sections/map/map.tsx`) iframes `https://maps.google.com/maps?…&output=embed`, but `frameSrc` in `app/utils/csp.ts` did not allow Google, so Chrome showed "This content is blocked." Added `maps.google.com` and `www.google.com` (the embed redirects there) to `frameSrc`.
+
 ### SEO: Shopify category metaobjects wired into the storefront
 - Audit of all metaobject definitions vs. live products/collections: `docs/metaobjects-seo-audit-2026-10.md`. Only 1 of ~50 active products had category attributes, and the storefront never read them.
 - `PRODUCT_QUERY` fetches the product category and 24 `shopify.*` category metafields (metaobject `label`s). New `app/utils/product-specs.ts`.
