@@ -6,6 +6,12 @@
 
 ## Unreleased
 
+### Checkout domain: `checkout.moderncre8ve.com` is the Online Store primary (#62, #58)
+- Liquid Online Store redirect (#62): the official Hydrogen Redirect theme is published, so `moderncre8ve.myshopify.com` no longer serves a second crawlable copy of the catalogue (client-side redirect to `moderncre8ve.com`, `noindex`, canonical to the storefront), and `checkout.moderncre8ve.com` is the Online Store's Primary domain. Both done in Shopify Admin / GoDaddy; verified 2026-10-09.
+- Oxygen `PUBLIC_CHECKOUT_DOMAIN` is set to `checkout.moderncre8ve.com`, which fixes the Customer Privacy API cookie domain (`.moderncre8ve.com` instead of `com`). The Storefront API proxy route (`/api/<version>/graphql.json`) forwards to this host; verified it answers JSON there before the switch.
+- `CLAUDE.md` gains a Domains section (three-host topology, never touch the Hydrogen primary, one change at a time); `.env.example` explains the variable. No application code change.
+- #58 is not closed by this — it needs the post-deploy consent/GA4 Realtime check and a test order.
+
 ### SEO: Shopify category metaobjects wired into the storefront
 - Audit of all metaobject definitions vs. live products/collections: `docs/metaobjects-seo-audit-2026-10.md`. Only 1 of ~50 active products had category attributes, and the storefront never read them.
 - `PRODUCT_QUERY` fetches the product category and 24 `shopify.*` category metafields (metaobject `label`s). New `app/utils/product-specs.ts`.
