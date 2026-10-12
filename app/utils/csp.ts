@@ -3,8 +3,8 @@
  *
  * Shopify's own hosts are required for the CDN and the Storefront API; the rest
  * are the third parties the storefront embeds — YouTube and Vimeo for video
- * sections, Cloudflare Turnstile for the newsletter forms, and Google Tag
- * Manager / Analytics.
+ * sections, Cloudflare Turnstile for the newsletter forms, Google Tag
+ * Manager / Analytics, and Google Maps for the contact page map embed.
  */
 const SHOPIFY_HOSTS = ["*.shopify.com", "*.myshopify.com"];
 
@@ -21,6 +21,8 @@ export function getContentSecurityPolicy() {
       "*.youtu.be",
       "*.vimeo.com",
       "challenges.cloudflare.com",
+      "maps.google.com",
+      "www.google.com",
       ...SHOPIFY_HOSTS,
     ],
     scriptSrc: [
