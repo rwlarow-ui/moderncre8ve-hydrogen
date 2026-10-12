@@ -6,6 +6,11 @@
 
 ## Unreleased
 
+### Checkout domain: `checkout.moderncre8ve.com` is the Online Store primary (#62, #58)
+- Liquid Online Store redirect (#62): the official Hydrogen Redirect theme is published, so `moderncre8ve.myshopify.com` no longer serves a second crawlable copy of the catalogue (client-side redirect to `moderncre8ve.com`, `noindex`, canonical to the storefront), and `checkout.moderncre8ve.com` is the Online Store's Primary domain. Both done in Shopify Admin / GoDaddy; verified 2026-10-09.
+- Oxygen `PUBLIC_CHECKOUT_DOMAIN` is set to `checkout.moderncre8ve.com`, which fixes the Customer Privacy API cookie domain (`.moderncre8ve.com` instead of `com`). The Storefront API proxy route (`/api/<version>/graphql.json`) forwards to this host; verified it answers JSON there before the switch.
+- `CLAUDE.md` gains a Domains section (three-host topology, never touch the Hydrogen primary, one change at a time); `.env.example` explains the variable. No application code change.
+- #58 is not closed by this — it needs the post-deploy consent/GA4 Realtime check and a test order.
 ### Fix: contact page map blocked by CSP (#67)
 - The "Visit Our Showroom" map (`app/sections/map/map.tsx`) iframes `https://maps.google.com/maps?…&output=embed`, but `frameSrc` in `app/utils/csp.ts` did not allow Google, so Chrome showed "This content is blocked." Added `maps.google.com` and `www.google.com` (the embed redirects there) to `frameSrc`.
 

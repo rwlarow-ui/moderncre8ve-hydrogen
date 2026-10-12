@@ -142,8 +142,19 @@ export let schema = createSchema({
 - **Biome**: Double quotes, semicolons required. Config is self-contained in `biome.json`
 - **Imports**: Use `~/*` alias for app directory
 
+### Domains (Shopify Admin → Settings → Domains)
+| Host | Serves | Notes |
+|------|--------|-------|
+| `moderncre8ve.com` | Hydrogen on Oxygen | **Primary of the Hydrogen storefront (MODERNCRE8VE Production). Never change it.** `www` 301s to the apex |
+| `checkout.moderncre8ve.com` | Online Store (Liquid) | **Primary of the Online Store.** Hosts checkout; its theme is the published Hydrogen Redirect theme (JS redirect to `moderncre8ve.com`, `noindex`, canonical to the storefront) |
+| `moderncre8ve.myshopify.com` | 301 → `checkout.moderncre8ve.com` | Non-primary |
+
+- `PUBLIC_CHECKOUT_DOMAIN` must be the checkout host: Hydrogen's Customer Privacy API derives its cookie domain from the common suffix of it and the storefront host, so with the myshopify host consent never initialises and storefront GA4 events are dropped (#58, #62).
+- Make **one** domain change at a time and verify with `curl -sI https://moderncre8ve.com/` (must stay 200 with `powered-by: … Hydrogen`) before the next. Setting the checkout subdomain to target Hydrogen as Primary 301'd the whole site on 2026-10-09.
+- Redirect-theme rollback: publish the previous MAIN theme "AD: 25-06 MASTER MASTER CURRENT". DNS is at GoDaddy.
+
 ### Environment
-Required: `PUBLIC_STORE_DOMAIN`, `PUBLIC_STOREFRONT_API_TOKEN`, `SESSION_SECRET`, `SHOPIFY_ADMIN_API_TOKEN`, `PUBLIC_GOOGLE_GTM_ID`
+Required: `PUBLIC_STORE_DOMAIN`, `PUBLIC_CHECKOUT_DOMAIN` (`checkout.moderncre8ve.com` — the Online Store's primary domain, see Domains), `PUBLIC_STOREFRONT_API_TOKEN`, `SESSION_SECRET`, `SHOPIFY_ADMIN_API_TOKEN`, `PUBLIC_GOOGLE_GTM_ID`
 
 ### Common Tasks
 - **Update GraphQL**: Edit `app/graphql/`, run `npm run codegen`
