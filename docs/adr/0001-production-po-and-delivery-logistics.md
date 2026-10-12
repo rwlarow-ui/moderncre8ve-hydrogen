@@ -27,6 +27,9 @@ A prototype "Ops Hub" was built outside this repo (ChatGPT-hosted). Its limits: 
 
 1. **PO must include logistics.** The PO is not sent until the logistics form is complete.
 2. **Partner receives POs by email with PDF**, sent after approval.
+3. **Production partner:** Barkman (Barkman Furniture), contact `albert@barkmanfurniture.com`. PO field layout still to be confirmed with them.
+4. **Finish is a product metafield** `custom.finish` (single-line text), not a variant option. Needs a one-time catalog pass to fill it in.
+5. **Netlify is to be removed.** The site that posts PR checks is not configured in this repo (no `netlify.toml`); disconnect it in the Netlify dashboard / GitHub app settings.
 
 ## Decision
 
@@ -136,14 +139,14 @@ For the form: a full form *inside* Shopify checkout needs Plus, but the Hydrogen
 - **Guest orders** need a signed link since there is no account session.
 - **Secrets**: five live Shopify tokens sit in plaintext in `.claude/settings.local.json` (rotation outstanding); do not add the email key there.
 - **Netlify** site posting PR checks is undocumented; unrelated but should not host any PO endpoints.
-- **Partner details** still needed: name, contact email, and PO field layout they expect.
+- **Partner PO field layout** still needed from Barkman (name and email are recorded above).
 
 ## Action Items
 
-1. [ ] Confirm partner contact + PO template preferences (Rob)
-2. [ ] Decide finish handling and add structured field per product
-3. [ ] Create `production_po` metaobject definition + order metafield definitions (Admin API script, versioned in `scripts/`)
-4. [ ] Align `ops-dashboard.server.js` Admin API version with `shopify.app.toml`
+1. [~] Partner contact recorded (Barkman, albert@barkmanfurniture.com); PO template preferences still to confirm (Rob)
+2. [~] Finish decided: `custom.finish` product metafield; definition added by `scripts/create-po-definitions.mjs`, per-product values still to fill
+3. [x] Create `production_po` metaobject definition + order metafield definitions (Admin API script, versioned in `scripts/`)
+4. [x] Align `ops-dashboard.server.js` Admin API version with `shopify.app.toml`
 5. [ ] Flow: on order created → create PO metaobject (draft/awaiting_logistics) and start reminder timers
 6. [ ] Verify cart/order attribute limits and Flow built-in actions on this store (see sections above)
 7. [ ] Hydrogen: full logistics form on the cart page as cart attributes, required before Checkout, with "provide later" escape and server-side re-validation
