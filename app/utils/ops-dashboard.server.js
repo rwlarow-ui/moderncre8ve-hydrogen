@@ -1,4 +1,4 @@
-const ADMIN_API_VERSION = "2024-10";
+const ADMIN_API_VERSION = "2026-01";
 export const CURRENT_ORDER_WINDOW_DAYS = 140;
 export const DEFAULT_ORDER_LIMIT = 50;
 export const MAX_ORDER_LIMIT = 100;
