@@ -41,8 +41,18 @@ export const METAOBJECT_DEFINITION = {
   displayNameKey: "order_name",
   access: { admin: "MERCHANT_READ_WRITE", storefront: "NONE" },
   fieldDefinitions: [
-    { key: "order_id", name: "Order ID", type: "single_line_text_field", required: true },
-    { key: "order_name", name: "Order name", type: "single_line_text_field", required: true },
+    {
+      key: "order_id",
+      name: "Order ID",
+      type: "single_line_text_field",
+      required: true,
+    },
+    {
+      key: "order_name",
+      name: "Order name",
+      type: "single_line_text_field",
+      required: true,
+    },
     {
       key: "state",
       name: "State",
@@ -50,13 +60,22 @@ export const METAOBJECT_DEFINITION = {
       required: true,
       validations: [{ name: "choices", value: JSON.stringify(PO_STATES) }],
     },
-    { key: "revision", name: "Revision", type: "number_integer", required: true },
+    {
+      key: "revision",
+      name: "Revision",
+      type: "number_integer",
+      required: true,
+    },
     { key: "line_specs", name: "Line specs", type: "json" },
     { key: "logistics_snapshot", name: "Logistics snapshot", type: "json" },
     { key: "approved_by", name: "Approved by", type: "single_line_text_field" },
     { key: "approved_at", name: "Approved at", type: "date_time" },
     { key: "sent_at", name: "Sent at", type: "date_time" },
-    { key: "sent_message_id", name: "Sent message ID", type: "single_line_text_field" },
+    {
+      key: "sent_message_id",
+      name: "Sent message ID",
+      type: "single_line_text_field",
+    },
   ],
 };
 
