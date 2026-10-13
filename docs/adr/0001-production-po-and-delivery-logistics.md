@@ -149,7 +149,7 @@ For the form: a full form *inside* Shopify checkout needs Plus, but the Hydrogen
 4. [x] Align `ops-dashboard.server.js` Admin API version with `shopify.app.toml`
 5. [ ] Flow: on order created → create PO metaobject (draft/awaiting_logistics) and start reminder timers
 6. [ ] Verify cart/order attribute limits and Flow built-in actions on this store (see sections above)
-7. [ ] Hydrogen: full logistics form on the cart page as cart attributes, required before Checkout, with "provide later" escape and server-side re-validation
+7. [x] Hydrogen: full logistics form on the cart page as cart attributes, required before Checkout, with "provide later" escape and server-side re-validation
 8. [ ] Hydrogen: `/account/orders/:id/delivery` fallback/edit form + signed guest link; write metafields; set `logistics_status`; update confirmation email template (moderncre8ve.com links)
 9. [ ] `/ops`: PO review queue, edit, approve; awaiting-logistics queue with resend
 10. [ ] PDF generation (Workers-compatible) + approved-only email send with message-ID record
@@ -160,3 +160,11 @@ For the form: a full form *inside* Shopify checkout needs Plus, but the Hydrogen
 ## Not changed
 
 No code, metafield definitions, Flow, or customer-facing changes were made by this ADR. No PO has been sent.
+
+## Implementation notes: cart logistics form (action item 7)
+
+- Validation and attribute (de)serialization live in `app/utils/logistics.js` (tested by `npm run test:logistics`). The cart route's `CustomLogisticsUpdate` action validates server-side and merges only the logistics keys into the cart's existing attributes.
+- Cart attributes written: `logistics` (JSON), `logistics_status` (`complete|later`), plus flat `stairs`, `elevator`, `delivery_zip`.
+- **The checkout gate is UI-only.** On a non-Plus plan nothing server-side blocks `cart.checkoutUrl`, so a customer can still reach checkout by other means (e.g. a saved or edited checkout link). The order-creation step (action items 5/8) must re-validate `logistics` from `order.customAttributes` and park the PO in `awaiting_logistics` when it is missing or invalid.
+- **Still unverified (action item 6):** cart attribute value-length limits against the Storefront API. The whole form is one JSON attribute of roughly 400-700 characters; test a worst-case payload before relying on it.
+- Address prefill from the customer account is not implemented; the cart query does not fetch saved addresses.

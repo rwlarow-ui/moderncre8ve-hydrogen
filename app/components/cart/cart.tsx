@@ -21,6 +21,7 @@ import { Link } from "~/components/link";
 import { SubscriptionLineItem } from "~/components/subscriptions/subscription-line-item";
 import { useThemeSettings } from "~/page-builder";
 import { calculateAspectRatio } from "~/utils/image";
+import { isLogisticsReady } from "~/utils/logistics";
 import { toggleCartDrawer } from "../layout/cart-drawer";
 import { CartBestSellers } from "./cart-best-sellers";
 import {
@@ -28,6 +29,7 @@ import {
   GiftCardDialog,
   NoteDialog,
 } from "./cart-summary-actions";
+import { LogisticsForm } from "./logistics-form";
 
 type CartLine = OptimisticCart<CartApiQueryFragment>["lines"]["nodes"][0];
 type Layouts = "page" | "drawer";
@@ -202,6 +204,11 @@ function CartDetails({
           )}
         >
           <CartLines lines={cart?.lines?.nodes} layout={layout} />
+          {layout === "page" && (
+            <div className="mt-8">
+              <LogisticsForm attributes={cart.attributes ?? []} />
+            </div>
+          )}
         </div>
         <CartSummary
           cost={cart.cost}
@@ -433,6 +440,7 @@ function CartCheckoutActions({
   cart: OptimisticCart<CartApiQueryFragment>;
 }) {
   const { canTrack } = useAnalytics();
+  const logisticsReady = isLogisticsReady(cart?.attributes ?? []);
 
   if (!checkoutUrl) {
     return null;
@@ -481,9 +489,32 @@ function CartCheckoutActions({
           View cart
         </Link>
       )}
-      <a href={checkoutUrl} target="_self" onClick={handleCheckoutClick}>
-        <Button className="!px-6 !py-5 h-[54px] w-full">CHECKOUT</Button>
-      </a>
+      {logisticsReady ? (
+        <a href={checkoutUrl} target="_self" onClick={handleCheckoutClick}>
+          <Button className="!px-6 !py-5 h-[54px] w-full">CHECKOUT</Button>
+        </a>
+      ) : layout === "drawer" ? (
+        <Link
+          variant="primary"
+          to="/cart"
+          className="flex h-[54px] w-full items-center justify-center uppercase"
+        >
+          Add delivery details
+        </Link>
+      ) : (
+        <>
+          <Button
+            className="!px-6 !py-5 h-[54px] w-full"
+            disabled
+            aria-describedby="checkout-blocked"
+          >
+            CHECKOUT
+          </Button>
+          <p id="checkout-blocked" className="text-center text-sm">
+            Complete your delivery details to continue to checkout.
+          </p>
+        </>
+      )}
     </div>
   );
 }
