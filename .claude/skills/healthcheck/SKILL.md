@@ -24,8 +24,8 @@ Pick the tier from the ask: a quick "is it healthy" means `static --fast`; "read
 
 ## What each tier checks
 
-- **static**: lockfile and node_modules, `biome`, `typecheck` against a baseline, `build`, every `test` / `test:*` script, `.env.example` covering the docs' Required env names, `package.json` version matching the top CHANGELOG entry, backticked file paths in CLAUDE.md existing, CLAUDE.md vs AGENTS.md drift, and `.env` / `.claude/settings.local.json` not tracked by git.
-- **env**: allowlisted read-only scripts only (`check:collections`, `audit:content`, `debug:admin-auth`). Skips cleanly with "needs .env". Never runs `sync:*`, `seo-*` or anything that writes to Admin.
+- **static**: lockfile and node_modules, `biome`, `typecheck` against a baseline (runs `react-router typegen` first when `.react-router/` is absent, as in a fresh clone or CI), `build`, every `test` / `test:*` script, `.env.example` covering the docs' Required env names, `package.json` version matching the top CHANGELOG entry, backticked file paths in CLAUDE.md existing, CLAUDE.md vs AGENTS.md drift, and `.env` / `.claude/settings.local.json` not tracked by git.
+- **env**: allowlisted scripts that are read-only against Shopify (`check:collections`, `audit:content`; the latter writes a local report under `reports/`). Skips cleanly with "needs .env". Never runs `sync:*`, `seo-*`, or `debug:admin-auth` (it prints a token prefix), and nothing that writes to Admin.
 - **live**: `HEAD` of the Hydrogen host from the docs (expects 200 and `powered-by` containing Hydrogen), then `check:homepage` with `BASE_URL` set explicitly, because that script defaults to port 3000 while dev runs on 3456.
 
 ## Reading the results
