@@ -145,4 +145,5 @@ Required: `PUBLIC_STORE_DOMAIN`, `PUBLIC_STOREFRONT_API_TOKEN`, `SESSION_SECRET`
 - **Add theme settings**: Edit `app/page-builder/theme-schema.server.ts` + `app/page-builder/global-style.tsx`, use `useThemeSettings()`
 - **New section**: Create in `app/sections/`, export `schema` via `createSchema()`, register in `app/page-builder/components.ts`
 - **Debug**: GraphiQL at `localhost:3456/graphiql`
+- **Health check**: `/healthcheck` skill (`.claude/skills/healthcheck/`) or `npm run healthcheck` — tiers `static` / `env` / `live`, typecheck judged against the known baseline
 - **Deploy**: Use `~/.Codex/scripts/deploy.sh` (see global AGENTS.md for flags)
