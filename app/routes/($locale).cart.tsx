@@ -20,6 +20,10 @@ import invariant from "tiny-invariant";
 import { Cart } from "~/components/cart/cart";
 import { Section } from "~/components/section";
 import type { RootLoader } from "~/root";
+import { mergeCartAttributes, validateLogistics } from "~/utils/logistics";
+
+/** Custom cart action: saves the delivery-logistics form (ADR-0001). */
+export const LOGISTICS_UPDATE_ACTION = "CustomLogisticsUpdate";
 
 export async function action({ request, context }: ActionFunctionArgs) {
   const { cart } = context;
@@ -59,6 +63,27 @@ export async function action({ request, context }: ActionFunctionArgs) {
         ...(inputs.buyerIdentity as CartBuyerIdentityInput),
       });
       break;
+    case LOGISTICS_UPDATE_ACTION: {
+      // Validate here rather than trusting the client: only the logistics
+      // keys are written, and unrelated cart attributes are preserved.
+      const validation = validateLogistics(inputs.logistics ?? {});
+      if (!validation.ok) {
+        return data(
+          {
+            cart: null,
+            userErrors: [],
+            errors: null,
+            fieldErrors: validation.errors,
+          },
+          { status: 422 },
+        );
+      }
+      const current = await cart.get();
+      result = await cart.updateAttributes(
+        mergeCartAttributes(current?.attributes, validation.value),
+      );
+      break;
+    }
     default:
       invariant(false, `${cartFormAction} cart action is not defined`);
   }
