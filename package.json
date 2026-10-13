@@ -12,6 +12,7 @@
     "preview": "shopify hydrogen preview --build",
     "start": "shopify hydrogen preview",
     "typecheck": "tsc --noEmit",
+    "healthcheck": "node .claude/skills/healthcheck/scripts/healthcheck.mjs",
     "check:homepage": "node scripts/check-homepage-integrity.mjs",
     "check:collections": "node --env-file=.env scripts/check-collections.mjs",
     "sync:attributes": "node --env-file=.env scripts/sync-product-attributes.mjs",
