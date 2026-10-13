@@ -6,6 +6,11 @@
 
 ## Unreleased
 
+### Docs: correct the live GA4 measurement ID
+- `CLAUDE.md` / `AGENTS.md` said `G-08LS6GEXG3` was the live ID and called `G-G4Q4Z6MM4B` "superseded". That is backwards. On 2026-10-08 the live site was still loading the Weaverse demo ID `G-R1KFYYKE48`; Oxygen `PUBLIC_GOOGLE_GTM_ID` was set to **`G-G4Q4Z6MM4B`**, the only data stream of reporting property `251836602`, and the live HTML was confirmed loading it on 2026-10-13. `G-08LS6GEXG3` is a connected site tag ("g4 new") on that stream, not the storefront's ID.
+- Both docs now state the live ID and warn against reverting Oxygen to `G-08LS6GEXG3`; `conversion-playbook.md` no longer cites the demo ID as the input. The older "GA4 ID" bullet under *Docs reconciliation* below was the origin of the mistake. No code change.
+- Local `.env` (gitignored) still has `PUBLIC_GOOGLE_GTM_ID=G-08LS6GEXG3` and should be updated by hand to match Oxygen.
+
 ### Checkout domain: `checkout.moderncre8ve.com` is the Online Store primary (#62, #58)
 - Liquid Online Store redirect (#62): the official Hydrogen Redirect theme is published, so `moderncre8ve.myshopify.com` no longer serves a second crawlable copy of the catalogue (client-side redirect to `moderncre8ve.com`, `noindex`, canonical to the storefront), and `checkout.moderncre8ve.com` is the Online Store's Primary domain. Both done in Shopify Admin / GoDaddy; verified 2026-10-09.
 - Oxygen `PUBLIC_CHECKOUT_DOMAIN` is set to `checkout.moderncre8ve.com`, which fixes the Customer Privacy API cookie domain (`.moderncre8ve.com` instead of `com`). The Storefront API proxy route (`/api/<version>/graphql.json`) forwards to this host; verified it answers JSON there before the switch.

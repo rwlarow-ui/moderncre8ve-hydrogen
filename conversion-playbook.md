@@ -132,7 +132,7 @@ TASK 2.4 — Implement homepage changes in Weaverse
   TOOL:   Weaverse Studio / code editor
 
 TASK 2.5 — Add scroll-depth + click tracking
-  INPUT:  PUBLIC_GOOGLE_GTM_ID (G-R1KFYYKE48)
+  INPUT:  PUBLIC_GOOGLE_GTM_ID (G-G4Q4Z6MM4B)
   ACTION: Configure GA4 events for:
           - scroll_depth (25%, 50%, 75%, 100%)
           - homepage_cta_click (with CTA label as parameter)
