@@ -20,6 +20,7 @@ loadDotEnv();
 
 const config = {
   PUBLIC_STORE_DOMAIN: process.env.PUBLIC_STORE_DOMAIN,
+  OPS_ADMIN_API_TOKEN: process.env.OPS_ADMIN_API_TOKEN,
   SHOPIFY_ADMIN_API_TOKEN: process.env.SHOPIFY_ADMIN_API_TOKEN,
 };
 
