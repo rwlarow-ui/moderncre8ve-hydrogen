@@ -151,9 +151,9 @@ For the form: a full form *inside* Shopify checkout needs Plus, but the Hydrogen
 6. [ ] Verify cart/order attribute limits and Flow built-in actions on this store (see sections above)
 7. [x] Hydrogen: full logistics form on the cart page as cart attributes, required before Checkout, with "provide later" escape and server-side re-validation
 8. [ ] Hydrogen: `/account/orders/:id/delivery` fallback/edit form + signed guest link; write metafields; set `logistics_status`; update confirmation email template (moderncre8ve.com links)
-9. [ ] `/ops`: PO review queue, edit, approve; awaiting-logistics queue with resend
+9. [~] `/ops`: PO review queue, edit, approve; awaiting-logistics queue built. Resend (needs the email sender) is not.
 10. [ ] PDF generation (Workers-compatible) + approved-only email send with message-ID record
-11. [ ] Tests: state transitions, validation, permissions (approve/send gated by `requireOpsAccess`)
+11. [~] Tests: state transitions, validation, approval gate covered (`npm run test:pos`); permissions (`requireOpsAccess`) not tested (approve/send gated by `requireOpsAccess`)
 12. [ ] Dry run with one historical order before enabling for live orders; no live sends until Rob signs off
 13. [ ] Nice-to-have, later: deploy a real app and add a Thank-you/Order-status extension linking to the edit form (requires replacing the placeholder `application_url`)
 
@@ -168,3 +168,13 @@ No code, metafield definitions, Flow, or customer-facing changes were made by th
 - **The checkout gate is UI-only.** On a non-Plus plan nothing server-side blocks `cart.checkoutUrl`, so a customer can still reach checkout by other means (e.g. a saved or edited checkout link). The order-creation step (action items 5/8) must re-validate `logistics` from `order.customAttributes` and park the PO in `awaiting_logistics` when it is missing or invalid.
 - **Still unverified (action item 6):** cart attribute value-length limits against the Storefront API. The whole form is one JSON attribute of roughly 400-700 characters; test a worst-case payload before relying on it.
 - Address prefill from the customer account is not implemented; the cart query does not fetch saved addresses.
+
+## Implementation notes: `/ops` PO review queue (action item 9)
+
+- Rules (state graph, spec generation, approval gate, logistics resolution) are pure functions in `app/utils/production-po.js`; Shopify access is in `app/utils/production-po.server.js`; pages are `/ops/pos` (queue) and `/ops/pos/:id` (detail). Order pages get a "Create PO draft" button.
+- **Nothing is sent.** Approval only sets state, `approved_by` (`ops`, since the ops login is a shared session, not per-user) and `approved_at`. `sent` is refused by the server until the PDF + email step exists.
+- One PO per order: the metaobject handle is `po-<order id>`, so creating twice returns the existing PO.
+- Approval is blocked until logistics are complete and every line has size, species and finish. Logistics are re-validated from the `moderncre8ve.logistics` metafield or the cart-derived order attributes, never trusted as stored.
+- Added to the ADR state graph: `approved -> ready_for_review` ("revoke approval"), allowed because nothing has been sent at that point. Revoking leaves the old `approved_by/at` values in place; the UI only shows them while approved or sent.
+- POs are created manually from the order page until the Flow trigger (item 5) exists. Reminders and "resend" are not built; the awaiting queue shows days waiting and the customer's phone/email for calling.
+- Needs the Admin token to have metaobject-entry write and order-metafield write scopes, and the definitions from `scripts/create-po-definitions.mjs`. The GraphQL operations could not be validated against the schema or exercised against the store in this environment.

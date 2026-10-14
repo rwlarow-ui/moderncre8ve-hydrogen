@@ -188,6 +188,16 @@ export function mergeCartAttributes(existing = [], value) {
  */
 export function readLogistics(attributes = []) {
   const raw = (attributes ?? []).find((a) => a?.key === "logistics")?.value;
+  return parseLogisticsJson(raw);
+}
+
+/**
+ * Same as readLogistics for a raw JSON string, e.g. the value of the
+ * `moderncre8ve.logistics` order metafield.
+ *
+ * @returns {{ status: "none" | "later" | "complete", value: object | null }}
+ */
+export function parseLogisticsJson(raw) {
   if (!raw) return { status: "none", value: null };
 
   let parsed;
