@@ -6,11 +6,11 @@ import {
   formatDate,
   formatMoney,
   formatStatus,
-  LEAD_TIME_MAX_DAYS,
   LeadTimeMeter,
   OpsCard,
   OpsEmptyState,
   OpsField,
+  OpsNotice,
   OpsPageHeader,
   OpsTag,
   opsInputClass,
@@ -33,21 +33,11 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
     limit: Number(url.searchParams.get("limit") || 50),
   };
   const dashboard = await listCurrentOrders(context.env, filters);
-  const fulfillmentStatuses = Array.from(
-    new Set(
-      dashboard.orders.map((order) => String(order.displayFulfillmentStatus)),
-    ),
-  ) as string[];
-  const financialStatuses = Array.from(
-    new Set(
-      dashboard.orders.map((order) => String(order.displayFinancialStatus)),
-    ),
-  ) as string[];
-  const availableTags = Array.from(
-    new Set(
-      dashboard.orders.flatMap((order) => order.tags.map((tag) => String(tag))),
-    ),
-  ) as string[];
+  const {
+    fulfillmentStatuses,
+    financialStatuses,
+    tags: availableTags,
+  } = dashboard.facets;
 
   return {
     dashboard,
@@ -70,9 +60,7 @@ export default function OpsOrdersIndex() {
       filters.financialStatus ||
       filters.tag,
   );
-  const lateCount = orders.filter(
-    (order) => order.ageInDays > LEAD_TIME_MAX_DAYS,
-  ).length;
+  const lateCount = dashboard.pastLeadTimeCount;
 
   return (
     <>
@@ -86,6 +74,16 @@ export default function OpsOrdersIndex() {
           </dl>
         }
       />
+
+      {dashboard.scanCapped ? (
+        <div className="mb-6">
+          <OpsNotice ok={false}>
+            This window has more orders than the hub scans at once (
+            {dashboard.scanned} loaded), so counts may be incomplete. Open
+            Shopify Admin for the full list.
+          </OpsNotice>
+        </div>
+      ) : null}
 
       <OpsCard>
         <Form
