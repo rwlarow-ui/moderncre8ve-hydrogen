@@ -50,7 +50,8 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 | `app/root.tsx` | Root layout, font preloads |
 
 ### Admin API Access
-- **Token:** `SHOPIFY_ADMIN_API_TOKEN` in `.env` (full admin write scopes)
+- **Token:** `SHOPIFY_ADMIN_API_TOKEN` in `.env` (full admin write scopes — local scripts only; keep it out of Oxygen once the ops token is live)
+- **Ops hub token:** `OPS_ADMIN_API_TOKEN` — separate Dev Dashboard app with only `read_orders, read_all_orders, write_orders, read_customers, write_customers`; preferred over `SHOPIFY_ADMIN_API_TOKEN` by the hub and the ops MCP server. Mint with `node scripts/get-admin-token.mjs --ops <client_id> <client_secret>`, check with `node scripts/verify-ops-token.mjs`
 - **App:** "Claude2" in Shopify Dev Dashboard (Client ID: `fd5964839bc3fb47703bafb47d25d3fc`)
 
 ### Google Analytics / GTM
