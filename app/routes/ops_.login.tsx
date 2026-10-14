@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import {
   data,
@@ -115,6 +115,9 @@ export default function OpsLoginRoute() {
   const rootData = useRouteLoaderData<RootLoader>("root");
   const turnstileSiteKey = rootData?.turnstileSiteKey || "";
   const [turnstileToken, setTurnstileToken] = useState("");
+  // Stable identities: TurnstileWidget re-creates itself when its callbacks
+  // change, so an inline closure would re-challenge after every verification.
+  const handleExpire = useCallback(() => setTurnstileToken(""), []);
   const redirectTo = searchParams.get("redirectTo") || "/ops";
 
   return (
@@ -171,7 +174,7 @@ export default function OpsLoginRoute() {
               <TurnstileWidget
                 siteKey={turnstileSiteKey}
                 onVerify={setTurnstileToken}
-                onExpire={() => setTurnstileToken("")}
+                onExpire={handleExpire}
                 appearance="interaction-only"
               />
             ) : null}
