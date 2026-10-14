@@ -8,6 +8,7 @@ import {
   isCurrentOrder,
   listCurrentOrders,
   normalizeOpsFilters,
+  OPS_REQUIRED_SCOPES,
 } from "../app/utils/ops-dashboard.server.js";
 import {
   checkThrottle,
@@ -257,4 +258,33 @@ test("safeEqual compares strings of any length", async () => {
   assert.equal(await safeEqual("hunter2", "hunter2"), true);
   assert.equal(await safeEqual("hunter2", "hunter3"), false);
   assert.equal(await safeEqual("a", "a-much-longer-value"), false);
+});
+
+test("ops hub prefers OPS_ADMIN_API_TOKEN and falls back to the general token", async () => {
+  const seen = [];
+  const original = globalThis.fetch;
+  globalThis.fetch = async (_url, init) => {
+    seen.push(init.headers["X-Shopify-Access-Token"]);
+    return new Response(
+      JSON.stringify({
+        data: { orders: { nodes: [], pageInfo: { hasNextPage: false } } },
+      }),
+    );
+  };
+  try {
+    await listCurrentOrders(
+      { ...config, OPS_ADMIN_API_TOKEN: "ops-token" },
+      {},
+    );
+    await listCurrentOrders(config, {});
+    assert.deepEqual(seen, ["ops-token", "t"]);
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+
+test("OPS_REQUIRED_SCOPES covers the 140-day window and tag/note writes", () => {
+  for (const scope of ["read_all_orders", "write_orders", "write_customers"]) {
+    assert.ok(OPS_REQUIRED_SCOPES.includes(scope));
+  }
 });
