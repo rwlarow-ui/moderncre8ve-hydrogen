@@ -17,6 +17,8 @@ declare global {
     // declare additional Env parameter use in the fetch handler and Remix loader context here
     PUBLIC_GOOGLE_GTM_ID: string;
     SHOPIFY_ADMIN_API_TOKEN?: string;
+    /** Narrowly scoped token for the ops hub; preferred over SHOPIFY_ADMIN_API_TOKEN. */
+    OPS_ADMIN_API_TOKEN?: string;
     JUDGEME_PRIVATE_API_TOKEN: string;
     CUSTOM_COLLECTION_BANNER_METAFIELD: string;
     METAOBJECT_COLORS_TYPE: string;

@@ -11,6 +11,11 @@
  *
  * Usage:
  *   node scripts/get-admin-token.mjs <client_id> <client_secret>
+ *   node scripts/get-admin-token.mjs --ops <client_id> <client_secret>
+ *
+ * --ops requests only the scopes the ops hub needs and saves the token as
+ * OPS_ADMIN_API_TOKEN, leaving SHOPIFY_ADMIN_API_TOKEN untouched. Use a
+ * separate Dev Dashboard app for it so the broad token never ships to Oxygen.
  */
 
 import { execSync } from "node:child_process";
@@ -28,12 +33,16 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ENV_PATH = resolve(__dirname, "..", ".env");
 const SHOP = "moderncre8ve.myshopify.com";
-const SCOPES =
-  "write_products,read_products,write_online_store_navigation,read_online_store_navigation,write_files,read_files";
+const OPS_MODE = process.argv.includes("--ops");
+const ENV_KEY = OPS_MODE ? "OPS_ADMIN_API_TOKEN" : "SHOPIFY_ADMIN_API_TOKEN";
+const SCOPES = OPS_MODE
+  ? "read_orders,read_all_orders,write_orders,read_customers,write_customers"
+  : "write_products,read_products,write_online_store_navigation,read_online_store_navigation,write_files,read_files";
 const REDIRECT_URI = "https://localhost:3000/callback";
 
-const clientId = process.argv[2];
-const clientSecret = process.argv[3];
+const positionalArgs = process.argv.slice(2).filter((arg) => arg !== "--ops");
+const clientId = positionalArgs[0];
+const clientSecret = positionalArgs[1];
 
 if (!clientId || !clientSecret) {
   console.error(
@@ -134,10 +143,8 @@ const server = createServer({ key, cert }, async (req, res) => {
     // Check if already in .env
     if (existsSync(ENV_PATH)) {
       const envContent = readFileSync(ENV_PATH, "utf-8");
-      if (envContent.includes("SHOPIFY_ADMIN_API_TOKEN")) {
-        console.warn(
-          "\nWARNING: SHOPIFY_ADMIN_API_TOKEN already exists in .env.",
-        );
+      if (envContent.includes(ENV_KEY)) {
+        console.warn(`\nWARNING: ${ENV_KEY} already exists in .env.`);
         console.warn(
           "The new token will be appended — remove the old line manually.\n",
         );
@@ -146,9 +153,9 @@ const server = createServer({ key, cert }, async (req, res) => {
 
     appendFileSync(
       ENV_PATH,
-      `\n# Shopify Admin API (OAuth — ${new Date().toISOString().slice(0, 10)})\nSHOPIFY_ADMIN_API_TOKEN=${access_token}\n`,
+      `\n# Shopify Admin API (OAuth — ${new Date().toISOString().slice(0, 10)})\n${ENV_KEY}=${access_token}\n`,
     );
-    console.log(`Token saved to .env as SHOPIFY_ADMIN_API_TOKEN`);
+    console.log(`Token saved to .env as ${ENV_KEY}`);
 
     res.writeHead(200, { "Content-Type": "text/html" });
     res.end(`
