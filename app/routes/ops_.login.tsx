@@ -7,6 +7,8 @@ import {
   useNavigation,
   useSearchParams,
 } from "react-router";
+import { Button } from "~/components/button";
+import { OpsField, OpsNotice, opsInputClass } from "~/components/ops/ops-shell";
 import {
   createOpsAuthHeaders,
   isOpsAuthenticated,
@@ -30,13 +32,19 @@ export async function action({ request, context }: ActionFunctionArgs) {
 
   if (!configuredPassword) {
     return data(
-      { error: "OPS_DASHBOARD_PASSWORD is not configured in the environment." },
+      {
+        error:
+          "Sign-in is unavailable: OPS_DASHBOARD_PASSWORD is not set in the Oxygen environment.",
+      },
       { status: 500 },
     );
   }
 
   if (password !== configuredPassword) {
-    return data({ error: "Incorrect dashboard password." }, { status: 401 });
+    return data(
+      { error: "That password didn't match. Check it and try again." },
+      { status: 401 },
+    );
   }
 
   return redirect(redirectTo, {
@@ -52,112 +60,69 @@ export default function OpsLoginRoute() {
   const redirectTo = searchParams.get("redirectTo") || "/ops";
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,#f5edd7_0%,#efe6d4_40%,#e7decc_100%)] px-4 py-10 text-[#323640] md:px-8">
-      <div className="mx-auto grid max-w-5xl gap-10 rounded-[32px] border border-[#d4cbba] bg-white shadow-[0_30px_90px_rgba(50,54,64,0.14)] lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="space-y-8 bg-[linear-gradient(160deg,#323640_0%,#435765_100%)] px-8 py-10 text-white md:px-10">
-          <div className="space-y-3">
-            <p className="font-sans text-white/70 text-xs uppercase tracking-[0.28em]">
-              ModernCre8ve Internal Ops
-            </p>
-            <h1 className="font-sans text-4xl tracking-tight">
-              Orders, customers, and lightweight workflow notes in one place.
-            </h1>
-            <p className="max-w-lg text-white/80">
-              This dashboard reads live Shopify Admin order data and keeps tags
-              plus internal notes aligned with the MCP tools.
-            </p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            <FeatureCard
-              label="Live orders"
-              value="Current"
-              body="Tracks active operational work within the 140-day handcrafted lead-time window."
-            />
-            <FeatureCard
-              label="Private notes"
-              value="Metafields"
-              body="Stores internal notes in app-owned metafields so native Shopify notes stay untouched."
-            />
-            <FeatureCard
-              label="Shared data"
-              value="MCP-ready"
-              body="The dashboard and local MCP tools use the same Admin API service layer."
-            />
-            <FeatureCard
-              label="Fast triage"
-              value="Tags"
-              body="Update order and customer tags without leaving the dashboard."
-            />
-          </div>
-        </div>
-
-        <div className="flex items-center px-8 py-10 md:px-10">
-          <div className="w-full space-y-6">
-            <div className="space-y-2">
-              <p className="font-sans text-[#5f636b] text-xs uppercase tracking-[0.24em]">
-                Staff Access
-              </p>
-              <h2 className="font-sans text-3xl tracking-tight">
-                Sign in to Ops
-              </h2>
-              <p className="text-[#6d7077]">
-                Use the shared internal dashboard password configured in
-                `OPS_DASHBOARD_PASSWORD`.
-              </p>
-            </div>
-
-            <Form method="post" className="space-y-4">
-              <input type="hidden" name="redirectTo" value={redirectTo} />
-              <label className="space-y-2">
-                <span className="font-sans text-[#5f636b] text-xs uppercase tracking-[0.18em]">
-                  Dashboard password
-                </span>
-                <input
-                  data-test="ops-password"
-                  type="password"
-                  name="password"
-                  // biome-ignore lint/a11y/noAutofocus: sole interactive field on a dedicated login page; focusing it does not disorient assistive tech
-                  autoFocus
-                  required
-                  className="w-full rounded-2xl border border-[#d9cfbd] bg-[#fcfaf5] px-4 py-3 focus:border-[#323640] focus:outline-hidden"
-                />
-              </label>
-              {actionData?.error ? (
-                <div className="rounded-2xl border border-[#f0c7c9] bg-[#fff2f2] px-4 py-3 text-[#9b2f35] text-sm">
-                  {actionData.error}
-                </div>
-              ) : null}
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full rounded-2xl bg-[#323640] px-5 py-4 font-sans text-white text-xs uppercase tracking-[0.22em] transition-colors hover:bg-[#2CBF96] hover:text-[#16372d] disabled:cursor-not-allowed disabled:opacity-70"
-              >
-                {isSubmitting ? "Signing in..." : "Enter dashboard"}
-              </button>
-            </Form>
-          </div>
-        </div>
+    <div className="grid min-h-screen bg-background text-body lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
+      <div className="relative hidden overflow-hidden bg-(--color-topbar-bg) lg:block">
+        <img
+          src="/images/heroes/hero-oval-dining-table.jpg"
+          alt="Handcrafted oval dining table in a sunlit dining room"
+          width={1600}
+          height={1067}
+          className="absolute inset-0 size-full object-cover"
+        />
       </div>
-    </div>
-  );
-}
 
-function FeatureCard({
-  label,
-  value,
-  body,
-}: {
-  label: string;
-  value: string;
-  body: string;
-}) {
-  return (
-    <div className="rounded-[24px] border border-white/10 bg-white/7 p-5">
-      <p className="font-sans text-[11px] text-white/65 uppercase tracking-[0.22em]">
-        {label}
-      </p>
-      <p className="mt-2 font-sans text-2xl tracking-tight">{value}</p>
-      <p className="mt-3 text-sm text-white/75">{body}</p>
+      <div className="flex flex-col px-6 py-10 sm:px-12 lg:px-16 xl:px-24">
+        <img
+          src="/logo.png"
+          alt="ModernCre8ve"
+          width={3004}
+          height={3600}
+          className="h-16 w-auto self-start"
+        />
+
+        <div className="my-auto w-full max-w-sm space-y-8 py-12">
+          <div className="space-y-3">
+            <h1 className="h4">Sign in to Ops</h1>
+            <p className="text-body-subtle">
+              Track open orders against their lead time and keep private notes
+              and tags in step with Shopify.
+            </p>
+          </div>
+
+          <Form method="post" className="space-y-5">
+            <input type="hidden" name="redirectTo" value={redirectTo} />
+            <OpsField label="Team password">
+              <input
+                data-test="ops-password"
+                type="password"
+                name="password"
+                autoComplete="current-password"
+                // biome-ignore lint/a11y/noAutofocus: sole interactive field on a dedicated login page; focusing it does not disorient assistive tech
+                autoFocus
+                required
+                aria-invalid={actionData?.error ? true : undefined}
+                className={opsInputClass}
+              />
+            </OpsField>
+            {actionData?.error ? (
+              <OpsNotice ok={false}>{actionData.error}</OpsNotice>
+            ) : null}
+            <Button
+              type="submit"
+              animate={false}
+              loading={isSubmitting}
+              disabled={isSubmitting}
+              className="w-full"
+            >
+              Sign in
+            </Button>
+          </Form>
+        </div>
+
+        <p className="text-body-subtle text-sm">
+          For the ModernCre8ve team only.
+        </p>
+      </div>
     </div>
   );
 }
