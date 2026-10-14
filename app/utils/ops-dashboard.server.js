@@ -6,6 +6,19 @@ export const DEFAULT_ORDER_LIMIT = 50;
 export const MAX_ORDER_LIMIT = 100;
 export const ORDER_PAGE_SIZE = 100;
 export const MAX_ORDER_SCAN_PAGES = 10;
+/**
+ * Admin API scopes the ops hub needs, and nothing more. `read_all_orders`
+ * is required because the order window (140 days) exceeds the 60 days a plain
+ * `read_orders` token can see. The write scopes cover tagsAdd/tagsRemove and
+ * metafieldsSet/metafieldsDelete on orders and customers.
+ */
+export const OPS_REQUIRED_SCOPES = [
+  "read_orders",
+  "read_all_orders",
+  "write_orders",
+  "read_customers",
+  "write_customers",
+];
 export const OPS_NOTE_NAMESPACE = "codex_ops";
 export const OPS_NOTE_KEY = "internal_note";
 
@@ -354,14 +367,22 @@ export function buildOrderSearchQuery() {
 
 function getConfig(config) {
   const storeDomain = config.storeDomain || config.PUBLIC_STORE_DOMAIN;
-  const adminToken = config.adminApiToken || config.SHOPIFY_ADMIN_API_TOKEN;
+  // Prefer the dedicated, narrowly scoped ops token; fall back to the
+  // general admin token so existing environments keep working.
+  const adminToken =
+    config.opsAdminApiToken ||
+    config.OPS_ADMIN_API_TOKEN ||
+    config.adminApiToken ||
+    config.SHOPIFY_ADMIN_API_TOKEN;
 
   if (!storeDomain) {
     throw new Error("PUBLIC_STORE_DOMAIN is not configured.");
   }
 
   if (!adminToken) {
-    throw new Error("SHOPIFY_ADMIN_API_TOKEN is not configured.");
+    throw new Error(
+      "OPS_ADMIN_API_TOKEN (or SHOPIFY_ADMIN_API_TOKEN) is not configured.",
+    );
   }
 
   return {
