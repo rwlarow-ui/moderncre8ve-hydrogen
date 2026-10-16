@@ -26,7 +26,8 @@ The ask is to end both: one repo, repo-aware, with the data readable in the ops 
 | `pull_gsc()` defaults to `days_back=7` | `pull_gsc.py:36` | Tuned for the weekly brief. Wider windows need the arg passed. |
 | Oxygen is stateless with no cron, and runs JS workers | ADR-0001; platform | The pipeline **must** stay in CI. Python cannot run on Oxygen. |
 | `.github/workflows/oxygen-deployment-1000097972.yml` is `on: [push]` | that file, line 2 | **Any** commit deploys. Committing pipeline output daily means a full Oxygen deploy daily. |
-| Ops hub is a nested route: `ops.tsx` → `OpsShell` → `<Outlet/>`, gated by `requireOpsAccess`, `noindex` set via `headers`/`meta` on the parent only | `app/routes/ops.tsx:5-14`; child routes export neither | A new child route inherits auth, chrome and `noindex` for free by nesting. Matches the existing pattern. |
+| Ops hub is a nested route: `ops.tsx` → `OpsShell` → `<Outlet/>`, with `noindex` set via `headers`/`meta` on the parent only | `app/routes/ops.tsx:5-14`; child routes export neither | A new child route inherits the chrome and `noindex` by nesting. |
+| **Auth is not inherited.** Every ops child calls `requireOpsAccess` itself — `ops._index.tsx:25`, and `ops.orders.$orderId.tsx` at both `:46` (loader) **and** `:66` (action) | those lines | The parent loader is not an authorization boundary: child loaders and actions can be invoked directly, so each must call `requireOpsAccess` on its own. `ops.seo.tsx` must do the same in every loader and action it defines. |
 | The ops nav holds exactly one link today | `ops-shell.tsx` (`OpsNavLink to="/ops"`) | "A new tab" is one `OpsNavLink` plus one route file. |
 | `OPS_ADMIN_API_TOKEN` scopes are orders/customers only — no `write_metaobjects` | CLAUDE.md | A metaobject write path needs `SHOPIFY_ADMIN_API_TOKEN` in CI, not the ops token. |
 | Pipeline secrets (`GA4_PROPERTY_ID`, `GOOGLE_SA_JSON`, `RESEND_API_KEY`, `SITE_URL`) exist only on the other repo | CLAUDE.md | They must be re-created on this repo **before** cutover, and revoked after. |
@@ -64,7 +65,7 @@ This is the real decision. Oxygen can't run the pipeline, so output has to cross
 | Failure mode | Needs handling — read can fail or return nothing |
 
 **Pros:** Decouples data from deploys entirely. Uses infrastructure already in play — the store has metaobject definitions, the repo already reads metaobjects, and the ops loader already calls the Admin API through `ops-dashboard.server.js`. Fresh data with no build. No new vendor.
-**Cons:** Needs `SHOPIFY_ADMIN_API_TOKEN` (full write) as a CI secret, since the ops token lacks `write_metaobjects`. Adds a Shopify-shaped dependency to a pipeline that is otherwise pure Google. Metafield values have a size ceiling — 71 truth rows and 22 actions sit well inside it, but **verify the current limit against the Admin API before relying on it**, and store a summary rather than the raw 1,685 GSC rows.
+**Cons:** Needs `SHOPIFY_ADMIN_API_TOKEN` (full write) as a CI secret, since the ops token lacks `write_metaobjects`. **The read side needs a decision of its own** — the ops token lacks `read_metaobjects` too, so the storefront must read via the Storefront API or the ops token must gain that scope (action item 9); the full admin token must not go into Oxygen. Adds a Shopify-shaped dependency to a pipeline that is otherwise pure Google. Metafield values have a size ceiling — 71 truth rows and 22 actions sit well inside it, but **verify the current limit against the Admin API before relying on it**, and store a summary rather than the raw 1,685 GSC rows.
 
 ### Option C: Query GSC and GA4 live from the Oxygen worker; no pipeline
 
@@ -138,6 +139,7 @@ R2 is where the actual value is, and it is only possible once R1 is done. It is 
 **Phase 1 — consolidate (no behaviour change)**
 1. [ ] Re-create the four secrets on `moderncre8ve-hydrogen`: `GOOGLE_SA_JSON`, `GA4_PROPERTY_ID`, `RESEND_API_KEY`, `SITE_URL`.
 2. [ ] Promote the vendored workflow to `.github/workflows/seo-pipeline.yml`, keeping its `Clean up credentials` step and the `0 14 * * *` cron. Confirm it does not collide with the Oxygen deploy workflow.
+   **Re-path it while moving.** The vendored copy assumes the truth layer *is* the checkout root, which stops being true here: `pip install -r requirements.txt` and `python -m src.main` must run with `working-directory: seo-truth-layer` (or equivalent), the `Write service account file` / `Clean up credentials` steps must target `seo-truth-layer/service_account.json`, and the `upload-artifact` paths must become `seo-truth-layer/data/` and `seo-truth-layer/reports/`. A straight copy produces a workflow that fails on step one.
 3. [ ] Add a `paths-ignore` guard to the Oxygen deploy workflow, or otherwise ensure pipeline-only commits don't deploy.
 4. [ ] Run once via `workflow_dispatch` and match the output against run 38912954581 (1,685 / 8 / 71 / 22).
 5. [ ] Archive `rwlarow-ui/moderncre8ve-seo-truth-layer` and **revoke its copies of the secrets**. Update CLAUDE.md's SEO Truth Layer section, which currently documents the external repo as the executor.
@@ -148,17 +150,20 @@ R2 is where the actual value is, and it is only possible once R1 is done. It is 
 8. [ ] Add `SHOPIFY_ADMIN_API_TOKEN` as a CI secret, scoped as narrowly as a metaobject write allows.
 
 **Phase 3 — the tab**
-9. [ ] `app/routes/ops.seo.tsx` — loader calls `requireOpsAccess`, reads the snapshot, degrades to `OpsEmptyState` when absent or stale.
-10. [ ] Add `<OpsNavLink to="/ops/seo">SEO</OpsNavLink>` to the nav in `ops-shell.tsx`.
-11. [ ] Build the view from the existing kit: `OpsPageHeader`, `OpsCard`, `OpsSectionHeading`, `StatusBadge` for action severity, `OpsTag` for queries. No new components.
-12. [ ] Confirm `noindex` applies on `/ops/seo` — it comes from the parent's `headers`/`meta` only, so verify with `curl -sI`, and add a `headers` export if it does not inherit.
-13. [ ] Show snapshot age prominently. A stale number with no date is worse than no number.
-14. [ ] Extend `tests/ops-utils.test.mjs` for the snapshot parser, and add the route to the Playwright ops run.
+9. [ ] **Settle the runtime read path before building the route.** The transport above only supplies a CI *writer*. The ops hub's own reader cannot read a metaobject as things stand: `getConfig()` prefers `OPS_ADMIN_API_TOKEN` (`ops-dashboard.server.js:372-376`), and that token is minted with `read_orders,read_all_orders,write_orders,read_customers,write_customers` only (`scripts/get-admin-token.mjs:38-39`) — no `read_metaobjects`, so an Admin API read returns 403. Pick one, and **do not put the full admin token in Oxygen**:
+   - **Storefront API read (preferred).** Publish the metaobject to the Hydrogen channel and read it with the existing `PUBLIC_STOREFRONT_API_TOKEN`. No new secret, no admin scope, and it is the path the storefront already uses for metaobjects.
+   - **Ops-token scope bump.** Add `read_metaobjects` to the ops app and re-authorize, updating `get-admin-token.mjs`. Widens the ops token slightly but keeps one reader.
+10. [ ] `app/routes/ops.seo.tsx` — **every loader and action calls `requireOpsAccess` itself** (auth is not inherited from `ops.tsx`; see verified facts), reads the snapshot, degrades to `OpsEmptyState` when absent or stale.
+11. [ ] Add `<OpsNavLink to="/ops/seo">SEO</OpsNavLink>` to the nav in `ops-shell.tsx`.
+12. [ ] Build the view from the existing kit: `OpsPageHeader`, `OpsCard`, `OpsSectionHeading`, `StatusBadge` for action severity, `OpsTag` for queries. No new components.
+13. [ ] Confirm `noindex` applies on `/ops/seo` — it comes from the parent's `headers`/`meta` only, so verify with `curl -sI`, and add a `headers` export if it does not inherit.
+14. [ ] Show snapshot age prominently. A stale number with no date is worse than no number.
+15. [ ] Extend `tests/ops-utils.test.mjs` for the snapshot parser, and add the route to the Playwright ops run.
 
 **Phase 4 — repo-aware (R2), pending your call**
-15. [ ] Resolve GSC `page_path` values against real route files and collection handles.
-16. [ ] Flag high-impression pages with no bespoke composition in `app/page-builder/pages/`.
-17. [ ] Name the file to edit in each action item.
+16. [ ] Resolve GSC `page_path` values against real route files and collection handles.
+17. [ ] Flag high-impression pages with no bespoke composition in `app/page-builder/pages/`.
+18. [ ] Name the file to edit in each action item.
 
 ## Open questions
 
