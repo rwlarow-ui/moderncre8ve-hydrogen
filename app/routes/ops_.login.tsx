@@ -1,3 +1,4 @@
+import { useCallback, useState } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import {
   data,
@@ -5,14 +6,29 @@ import {
   redirect,
   useActionData,
   useNavigation,
+  useRouteLoaderData,
   useSearchParams,
 } from "react-router";
 import { Button } from "~/components/button";
 import { OpsField, OpsNotice, opsInputClass } from "~/components/ops/ops-shell";
+import { TurnstileWidget } from "~/components/turnstile-widget";
+import type { RootLoader } from "~/root";
 import {
   createOpsAuthHeaders,
   isOpsAuthenticated,
 } from "~/utils/ops-auth.server";
+import {
+  checkThrottle,
+  clearFailures,
+  getClientKey,
+  recordFailure,
+  safeEqual,
+} from "~/utils/ops-login-throttle.server";
+import { verifyTurnstile } from "~/utils/turnstile.server";
+
+export const headers = () => ({ "X-Robots-Tag": "noindex, nofollow" });
+
+export const meta = () => [{ name: "robots", content: "noindex, nofollow" }];
 
 export async function loader({ request, context }: LoaderFunctionArgs) {
   if (isOpsAuthenticated(context.session)) {
@@ -40,16 +56,55 @@ export async function action({ request, context }: ActionFunctionArgs) {
     );
   }
 
-  if (password !== configuredPassword) {
+  const clientKey = getClientKey(request);
+  const throttle = await checkThrottle(context.cache, clientKey);
+  if (throttle.locked) {
     return data(
-      { error: "That password didn't match. Check it and try again." },
+      {
+        error: `Too many failed attempts. Try again in ${formatWait(throttle.retryAfterSeconds)}.`,
+      },
+      {
+        status: 429,
+        headers: { "Retry-After": String(throttle.retryAfterSeconds) },
+      },
+    );
+  }
+
+  const turnstileValid = await verifyTurnstile(
+    String(formData.get("cf-turnstile-response") || "") || null,
+    context.env.TURNSTILE_SECRET_KEY,
+    request.headers.get("CF-Connecting-IP") || undefined,
+  );
+  if (!turnstileValid) {
+    return data(
+      { error: "Please complete the verification challenge and try again." },
+      { status: 400 },
+    );
+  }
+
+  if (!(await safeEqual(password, configuredPassword))) {
+    const { lockSeconds } = await recordFailure(context.cache, clientKey);
+    return data(
+      {
+        error: lockSeconds
+          ? `That password didn't match. Locked for ${formatWait(lockSeconds)}.`
+          : "That password didn't match. Check it and try again.",
+      },
       { status: 401 },
     );
   }
 
+  await clearFailures(context.cache, clientKey);
+
   return redirect(redirectTo, {
     headers: await createOpsAuthHeaders(context),
   });
+}
+
+function formatWait(seconds: number) {
+  return seconds >= 60
+    ? `${Math.ceil(seconds / 60)} minute${seconds > 60 ? "s" : ""}`
+    : `${seconds} seconds`;
 }
 
 export default function OpsLoginRoute() {
@@ -57,6 +112,12 @@ export default function OpsLoginRoute() {
   const navigation = useNavigation();
   const [searchParams] = useSearchParams();
   const isSubmitting = navigation.state !== "idle";
+  const rootData = useRouteLoaderData<RootLoader>("root");
+  const turnstileSiteKey = rootData?.turnstileSiteKey || "";
+  const [turnstileToken, setTurnstileToken] = useState("");
+  // Stable identities: TurnstileWidget re-creates itself when its callbacks
+  // change, so an inline closure would re-challenge after every verification.
+  const handleExpire = useCallback(() => setTurnstileToken(""), []);
   const redirectTo = searchParams.get("redirectTo") || "/ops";
 
   return (
@@ -91,6 +152,11 @@ export default function OpsLoginRoute() {
 
           <Form method="post" className="space-y-5">
             <input type="hidden" name="redirectTo" value={redirectTo} />
+            <input
+              type="hidden"
+              name="cf-turnstile-response"
+              value={turnstileToken}
+            />
             <OpsField label="Team password">
               <input
                 data-test="ops-password"
@@ -104,6 +170,14 @@ export default function OpsLoginRoute() {
                 className={opsInputClass}
               />
             </OpsField>
+            {turnstileSiteKey ? (
+              <TurnstileWidget
+                siteKey={turnstileSiteKey}
+                onVerify={setTurnstileToken}
+                onExpire={handleExpire}
+                appearance="interaction-only"
+              />
+            ) : null}
             {actionData?.error ? (
               <OpsNotice ok={false}>{actionData.error}</OpsNotice>
             ) : null}

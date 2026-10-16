@@ -7,6 +7,7 @@ import {
 } from "@phosphor-icons/react";
 import { Form, Link, NavLink, useLocation } from "react-router";
 import { cn } from "~/utils/cn";
+import { LEAD_TIME_MAX_DAYS, LEAD_TIME_MIN_DAYS } from "~/utils/ops-lead-time";
 
 /* ---------------------------------------------------------------------------
    Ops hub UI kit. Uses the storefront's own theme tokens (text-body,
@@ -15,8 +16,7 @@ import { cn } from "~/utils/cn";
 --------------------------------------------------------------------------- */
 
 /** Delivery window for handcrafted pieces: 12–16 weeks. */
-export const LEAD_TIME_MIN_DAYS = 12 * 7;
-export const LEAD_TIME_MAX_DAYS = 16 * 7;
+export { LEAD_TIME_MAX_DAYS, LEAD_TIME_MIN_DAYS };
 
 export const opsInputClass =
   "w-full rounded-none border border-line bg-background px-4 py-3 text-body placeholder:text-body-subtle transition-colors hover:border-body focus:border-body";

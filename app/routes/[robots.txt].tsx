@@ -69,6 +69,7 @@ function generalDisallowRules({
   sitemapUrl?: string;
 }) {
   return `Disallow: /admin
+Disallow: /ops
 Disallow: /cart
 Disallow: /orders
 Disallow: /checkouts/

@@ -1,7 +1,24 @@
+import { LEAD_TIME_MAX_DAYS } from "./ops-lead-time.js";
+
 const ADMIN_API_VERSION = "2026-01";
 export const CURRENT_ORDER_WINDOW_DAYS = 140;
 export const DEFAULT_ORDER_LIMIT = 50;
 export const MAX_ORDER_LIMIT = 100;
+export const ORDER_PAGE_SIZE = 100;
+export const MAX_ORDER_SCAN_PAGES = 10;
+/**
+ * Admin API scopes the ops hub needs, and nothing more. `read_all_orders`
+ * is required because the order window (140 days) exceeds the 60 days a plain
+ * `read_orders` token can see. The write scopes cover tagsAdd/tagsRemove and
+ * metafieldsSet/metafieldsDelete on orders and customers.
+ */
+export const OPS_REQUIRED_SCOPES = [
+  "read_orders",
+  "read_all_orders",
+  "write_orders",
+  "read_customers",
+  "write_customers",
+];
 export const OPS_NOTE_NAMESPACE = "codex_ops";
 export const OPS_NOTE_KEY = "internal_note";
 
@@ -50,10 +67,20 @@ const ORDER_ROW_FRAGMENT = `
 
 const LIST_CURRENT_ORDERS_QUERY = `
   ${ORDER_ROW_FRAGMENT}
-  query OpsCurrentOrders($first: Int!, $query: String!) {
-    orders(first: $first, sortKey: PROCESSED_AT, reverse: true, query: $query) {
+  query OpsCurrentOrders($first: Int!, $after: String, $query: String!) {
+    orders(
+      first: $first
+      after: $after
+      sortKey: PROCESSED_AT
+      reverse: true
+      query: $query
+    ) {
       nodes {
         ...OpsOrderRow
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
       }
     }
   }
@@ -325,7 +352,14 @@ export function isCurrentOrder(order) {
   );
 }
 
-function buildOrderWindowQuery() {
+/**
+ * Only the date window is pushed down to Shopify. Status, tag and free-text
+ * filters run in JS over the fully paginated window: Shopify's search tokens
+ * differ from our display values and its search is token-prefix, not the
+ * substring match the hub promises. Filtering after a complete scan also keeps
+ * the status and tag dropdown options complete.
+ */
+export function buildOrderSearchQuery() {
   const startDate = new Date();
   startDate.setUTCDate(startDate.getUTCDate() - CURRENT_ORDER_WINDOW_DAYS);
   return `processed_at:>=${startDate.toISOString().slice(0, 10)}`;
@@ -333,14 +367,22 @@ function buildOrderWindowQuery() {
 
 function getConfig(config) {
   const storeDomain = config.storeDomain || config.PUBLIC_STORE_DOMAIN;
-  const adminToken = config.adminApiToken || config.SHOPIFY_ADMIN_API_TOKEN;
+  // Prefer the dedicated, narrowly scoped ops token; fall back to the
+  // general admin token so existing environments keep working.
+  const adminToken =
+    config.opsAdminApiToken ||
+    config.OPS_ADMIN_API_TOKEN ||
+    config.adminApiToken ||
+    config.SHOPIFY_ADMIN_API_TOKEN;
 
   if (!storeDomain) {
     throw new Error("PUBLIC_STORE_DOMAIN is not configured.");
   }
 
   if (!adminToken) {
-    throw new Error("SHOPIFY_ADMIN_API_TOKEN is not configured.");
+    throw new Error(
+      "OPS_ADMIN_API_TOKEN (or SHOPIFY_ADMIN_API_TOKEN) is not configured.",
+    );
   }
 
   return {
@@ -499,23 +541,69 @@ function matchesFilters(order, filters) {
   return haystack.includes(search);
 }
 
+/**
+ * Walks the order connection page by page so no order in the window is
+ * silently dropped. Stops after MAX_ORDER_SCAN_PAGES and reports it.
+ */
+async function scanOrders(config, query, storeDomain) {
+  const orders = [];
+  let after = null;
+  let pages = 0;
+  let hasNextPage = false;
+
+  do {
+    const data = await adminGraphql(config, LIST_CURRENT_ORDERS_QUERY, {
+      first: ORDER_PAGE_SIZE,
+      after,
+      query,
+    });
+    const connection = data.orders;
+    orders.push(
+      ...connection.nodes.map((order) => mapOrderRow(order, storeDomain)),
+    );
+    hasNextPage = Boolean(connection.pageInfo?.hasNextPage);
+    after = connection.pageInfo?.endCursor || null;
+    pages += 1;
+  } while (hasNextPage && after && pages < MAX_ORDER_SCAN_PAGES);
+
+  return { orders, scanCapped: hasNextPage };
+}
+
+function uniqueSorted(values) {
+  return [...new Set(values.map(String).filter(Boolean))].sort();
+}
+
 export async function listCurrentOrders(config, filters = {}) {
   const normalizedFilters = normalizeOpsFilters(filters);
-  const data = await adminGraphql(config, LIST_CURRENT_ORDERS_QUERY, {
-    first: MAX_ORDER_LIMIT,
-    query: buildOrderWindowQuery(),
-  });
   const storeDomain = getConfig(config).storeDomain;
-  const orders = data.orders.nodes
-    .map((order) => mapOrderRow(order, storeDomain))
-    .filter(isCurrentOrder)
-    .filter((order) => matchesFilters(order, normalizedFilters))
-    .slice(0, normalizedFilters.limit);
+  const { orders: scanned, scanCapped } = await scanOrders(
+    config,
+    buildOrderSearchQuery(),
+    storeDomain,
+  );
+  const current = scanned.filter(isCurrentOrder);
+  const matched = current.filter((order) =>
+    matchesFilters(order, normalizedFilters),
+  );
 
   return {
     filters: normalizedFilters,
-    orders,
-    total: orders.length,
+    orders: matched.slice(0, normalizedFilters.limit),
+    total: matched.length,
+    scanned: scanned.length,
+    scanCapped,
+    pastLeadTimeCount: matched.filter(
+      (order) => order.ageInDays > LEAD_TIME_MAX_DAYS,
+    ).length,
+    facets: {
+      fulfillmentStatuses: uniqueSorted(
+        current.map((order) => order.displayFulfillmentStatus),
+      ),
+      financialStatuses: uniqueSorted(
+        current.map((order) => order.displayFinancialStatus),
+      ),
+      tags: uniqueSorted(current.flatMap((order) => order.tags)),
+    },
   };
 }
 
