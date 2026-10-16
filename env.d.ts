@@ -19,6 +19,14 @@ declare global {
     SHOPIFY_ADMIN_API_TOKEN?: string;
     /** Narrowly scoped token for the ops hub; preferred over SHOPIFY_ADMIN_API_TOKEN. */
     OPS_ADMIN_API_TOKEN?: string;
+    /** Production PO email (ADR-0001). Set as Oxygen env vars, never committed. */
+    RESEND_API_KEY?: string;
+    /** Verified Resend sender, e.g. "ModernCre8ve Orders <orders@moderncre8ve.com>". */
+    PO_FROM_EMAIL?: string;
+    /** Production partner address that receives approved POs. */
+    PO_PARTNER_EMAIL?: string;
+    /** Optional copy to the shop; also used as Reply-To. */
+    PO_CC_EMAIL?: string;
     JUDGEME_PRIVATE_API_TOKEN: string;
     CUSTOM_COLLECTION_BANNER_METAFIELD: string;
     METAOBJECT_COLORS_TYPE: string;

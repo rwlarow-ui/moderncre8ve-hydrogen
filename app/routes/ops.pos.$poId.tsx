@@ -23,6 +23,8 @@ import {
   STAIRS_OPTIONS,
 } from "~/utils/logistics";
 import { requireOpsAccess } from "~/utils/ops-auth.server";
+import { readEmailConfig } from "~/utils/po-email";
+import { sendProductionPo } from "~/utils/po-send.server";
 import {
   checkTransition,
   isEditableState,
@@ -54,9 +56,20 @@ export async function loader({ request, context, params }: LoaderFunctionArgs) {
     lineSpecs: po.lineSpecs,
     snapshot: po.snapshot,
   });
+  const email = readEmailConfig(context.env);
   return {
     po,
     blockers,
+    // Recipient is shown so the operator can see where it will go; the
+    // address itself always comes from server config at send time.
+    email: {
+      ok: email.ok,
+      problems: [
+        ...email.missing.map((name) => `${name} is not set`),
+        ...email.invalid.map((name) => `${name} is not valid`),
+      ],
+      to: email.ok ? email.to : null,
+    },
     orderLegacyId: String(po.orderId).split("/").pop() ?? "",
     editable: isEditableState(po.state),
     canApprove: checkTransition({
@@ -89,12 +102,21 @@ export async function action({ request, context, params }: ActionFunctionArgs) {
       await savePoSpecs(context.env, params.poId, edits);
       return data({ ok: true, message: "Specs saved." });
     }
+    if (intent === "send-po" || intent === "resend-po") {
+      const sent = await sendProductionPo(context.env, params.poId, {
+        resend: intent === "resend-po",
+      });
+      return data({
+        ok: true,
+        message: `${sent.number} emailed to ${sent.to} (message ${sent.messageId}).`,
+      });
+    }
     if (intent === "refresh-logistics") {
       await refreshPoLogistics(context.env, params.poId);
       return data({ ok: true, message: "Logistics refreshed from the order." });
     }
     const targets: Record<string, [string, string]> = {
-      approve: ["approved", "PO approved. It has not been sent."],
+      approve: ["approved", "PO approved. It has not been sent yet."],
       "revoke-approval": ["ready_for_review", "Approval revoked."],
       cancel: ["cancelled", "PO cancelled."],
     };
@@ -116,7 +138,7 @@ export async function action({ request, context, params }: ActionFunctionArgs) {
 }
 
 export default function OpsPoDetail() {
-  const { po, blockers, orderLegacyId, editable, canApprove } =
+  const { po, blockers, orderLegacyId, editable, canApprove, email } =
     useLoaderData<typeof loader>();
   const result = useActionData<typeof action>();
   const navigation = useNavigation();
@@ -140,12 +162,22 @@ export default function OpsPoDetail() {
                 : ""}
             </p>
           </div>
-          <a
-            href={`/ops/orders/${orderLegacyId}`}
-            className={`${opsTextLinkClass} text-sm`}
-          >
-            View order
-          </a>
+          <div className="flex gap-6 text-sm">
+            <a
+              href={`/ops/pos/${po.param}/pdf`}
+              target="_blank"
+              rel="noreferrer"
+              className={opsTextLinkClass}
+            >
+              Preview PDF
+            </a>
+            <a
+              href={`/ops/orders/${orderLegacyId}`}
+              className={opsTextLinkClass}
+            >
+              View order
+            </a>
+          </div>
         </div>
       </div>
 
@@ -375,14 +407,64 @@ export default function OpsPoDetail() {
               </Form>
             ) : null}
           </div>
-          {po.state === "approved" ? (
-            <p className="text-body-subtle text-sm">
-              Approved but not sent. Sending to the partner needs the PDF +
-              email step, which isn't built yet.
-            </p>
+          {po.state === "approved" || po.state === "sent" ? (
+            <SendBlock po={po} email={email} busy={busy} />
           ) : null}
         </div>
       </OpsCard>
+    </div>
+  );
+}
+
+function SendBlock({
+  po,
+  email,
+  busy,
+}: {
+  po: { state: string; sentAt: string | null; sentMessageId: string | null };
+  email: { ok: boolean; problems: string[]; to: string | null };
+  busy: boolean;
+}) {
+  const sent = po.state === "sent";
+  const intent = sent ? "resend-po" : "send-po";
+  const confirmText = sent
+    ? `Email this PO to ${email.to} again?`
+    : `Email this PO to ${email.to}? This can't be undone.`;
+
+  return (
+    <div className="space-y-3 border-line-subtle border-t pt-5">
+      <h3 className="font-medium text-sm">Send to production partner</h3>
+      {sent ? (
+        <p className="text-sm">
+          Sent {po.sentAt ? formatDate(po.sentAt, true) : ""}
+          {po.sentMessageId ? ` · message ${po.sentMessageId}` : ""}
+        </p>
+      ) : (
+        <p className="text-body-subtle text-sm">
+          Approved, not yet sent. Nothing is emailed until you press Send.
+        </p>
+      )}
+      {email.ok ? (
+        <Form
+          method="post"
+          onSubmit={(event) => {
+            if (!window.confirm(confirmText)) event.preventDefault();
+          }}
+        >
+          <input type="hidden" name="intent" value={intent} />
+          <Button
+            type="submit"
+            variant={sent ? "outline" : "primary"}
+            disabled={busy}
+          >
+            {sent ? "Resend PDF" : `Send PDF to ${email.to}`}
+          </Button>
+        </Form>
+      ) : (
+        <OpsNotice ok={false}>
+          Email isn't set up on this environment: {email.problems.join("; ")}.
+        </OpsNotice>
+      )}
     </div>
   );
 }

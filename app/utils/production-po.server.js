@@ -401,11 +401,13 @@ export async function refreshPoLogistics(config, param) {
 /**
  * Moves a PO to a new state. The server re-checks the state graph and the
  * approval gate against the stored PO, so a stale or forged form can't skip
- * them. Sending isn't available here: that needs the PDF + email step.
+ * them. Sending isn't available here: it goes through po-send.server.js.
  */
 export async function transitionPo(config, param, to, { actor = "ops" } = {}) {
   if (to === "sent") {
-    throw new Error("Sending isn't built yet (ADR-0001 action item 10).");
+    throw new Error(
+      "Use the send action to email a PO; it can't be set by hand.",
+    );
   }
   const po = await getProductionPo(config, param);
   const check = checkTransition({
@@ -425,4 +427,35 @@ export async function transitionPo(config, param, to, { actor = "ops" } = {}) {
   // date_time value isn't reliably accepted); the UI only shows them while
   // the PO is approved or sent, and re-approving overwrites them.
   return updatePoFields(config, po, values);
+}
+
+/**
+ * Records that a PO was emailed. Called only after the email provider has
+ * accepted the message. A first send moves approved -> sent; a re-send of an
+ * already-sent PO just updates the timestamp and message id.
+ */
+export async function markPoSent(config, param, { messageId, resend = false }) {
+  if (!messageId)
+    throw new Error("A message id is required to mark a PO sent.");
+  const po = await getProductionPo(config, param);
+
+  if (po.state === "sent" && resend) {
+    return updatePoFields(config, po, {
+      sent_at: new Date().toISOString(),
+      sent_message_id: messageId,
+    });
+  }
+  const check = checkTransition({
+    state: po.state,
+    to: "sent",
+    lineSpecs: po.lineSpecs,
+    snapshot: po.snapshot,
+  });
+  if (!check.ok) throw new Error(check.reason);
+
+  return updatePoFields(config, po, {
+    state: "sent",
+    sent_at: new Date().toISOString(),
+    sent_message_id: messageId,
+  });
 }
