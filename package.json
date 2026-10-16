@@ -21,6 +21,8 @@
     "test:ops": "node --test tests/ops-utils.test.mjs",
     "test:specs": "node --test tests/product-specs.test.mjs",
     "test:po": "node --test tests/po-definitions.test.mjs",
+    "test:logistics": "node --test tests/logistics.test.mjs",
+    "test:pos": "node --test tests/production-po.test.mjs",
     "codegen": "shopify hydrogen codegen",
     "hydrogen": "shopify hydrogen",
     "clean": "rm -rf dist node_modules package-lock.json pnpm-lock.yaml .shopify .react-router",

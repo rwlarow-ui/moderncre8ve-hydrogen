@@ -3,6 +3,8 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import {
   data,
   Form,
+  Link,
+  redirect,
   useActionData,
   useLoaderData,
   useNavigation,
@@ -35,6 +37,10 @@ import type {
   OpsMutationResult,
   OpsNoteTarget,
 } from "~/utils/ops-dashboard.types";
+import {
+  createDraftPoForOrder,
+  findProductionPoForOrder,
+} from "~/utils/production-po.server";
 
 export async function loader({ request, context, params }: LoaderFunctionArgs) {
   await requireOpsAccess(request, context);
@@ -43,16 +49,46 @@ export async function loader({ request, context, params }: LoaderFunctionArgs) {
     throw new Response("Order not found.", { status: 404 });
   }
 
+  // A PO lookup failure (e.g. definitions not created yet) must not take the
+  // order page down.
+  const [order, po] = await Promise.all([
+    getOrderDetail(context.env, params.orderId),
+    findProductionPoForOrder(context.env, params.orderId).catch(() => null),
+  ]);
+
   return {
-    order: await getOrderDetail(context.env, params.orderId),
+    order,
+    po: po ? { param: po.param, state: po.state } : null,
   };
 }
 
-export async function action({ request, context }: ActionFunctionArgs) {
+export async function action({ request, context, params }: ActionFunctionArgs) {
   await requireOpsAccess(request, context);
 
   const formData = await request.formData();
   const intent = String(formData.get("intent") || "");
+
+  if (intent === "create-po") {
+    if (!params.orderId) {
+      throw new Response("Order not found.", { status: 404 });
+    }
+    try {
+      const { po } = await createDraftPoForOrder(context.env, params.orderId);
+      return redirect(`/ops/pos/${po.param}`);
+    } catch (error) {
+      return data(
+        {
+          mutationResult: {
+            ok: false,
+            message:
+              error instanceof Error ? error.message : "Could not create PO.",
+          },
+        },
+        { status: 422 },
+      );
+    }
+  }
+
   const ownerType = String(formData.get("ownerType") || "") as OpsNoteTarget;
   const ownerId = String(formData.get("ownerId") || "");
 
@@ -109,7 +145,7 @@ export async function action({ request, context }: ActionFunctionArgs) {
 type OrderDetail = Awaited<ReturnType<typeof loader>>["order"];
 
 export default function OpsOrderDetailRoute() {
-  const { order } = useLoaderData<typeof loader>();
+  const { order, po } = useLoaderData<typeof loader>();
   const actionData = useActionData<typeof action>();
   const result = actionData?.mutationResult as OpsMutationResult | undefined;
 
@@ -209,6 +245,27 @@ export default function OpsOrderDetailRoute() {
                 </li>
               ))}
             </ul>
+          </OpsCard>
+
+          <OpsCard>
+            <OpsSectionHeading
+              title="Production PO"
+              description="Purchase order for the production partner. Creating one does not send anything."
+            />
+            <div className="px-5 py-5 md:px-6">
+              {po ? (
+                <Link to={`/ops/pos/${po.param}`} className={opsTextLinkClass}>
+                  Open PO ({po.state.replace(/_/g, " ")})
+                </Link>
+              ) : (
+                <Form method="post">
+                  <input type="hidden" name="intent" value="create-po" />
+                  <Button type="submit" variant="outline">
+                    Create PO draft
+                  </Button>
+                </Form>
+              )}
+            </div>
           </OpsCard>
 
           <div className="grid gap-8 md:grid-cols-2">
