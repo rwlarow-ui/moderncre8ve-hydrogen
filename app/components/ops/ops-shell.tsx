@@ -5,7 +5,7 @@ import {
   SignOutIcon,
   WarningCircleIcon,
 } from "@phosphor-icons/react";
-import { Form, Link, NavLink } from "react-router";
+import { Form, Link, NavLink, useLocation } from "react-router";
 import { cn } from "~/utils/cn";
 
 /* ---------------------------------------------------------------------------
@@ -46,7 +46,10 @@ export function OpsShell({ children }: { children: React.ReactNode }) {
             </span>
           </Link>
           <nav aria-label="Ops" className="hidden h-full items-stretch sm:flex">
-            <OpsNavLink to="/ops">Current orders</OpsNavLink>
+            <OpsNavLink to="/ops" exclude="/ops/pos">
+              Current orders
+            </OpsNavLink>
+            <OpsNavLink to="/ops/pos">Production POs</OpsNavLink>
           </nav>
           <div className="ml-auto flex items-center gap-5 text-sm">
             <a
@@ -80,22 +83,28 @@ export function OpsShell({ children }: { children: React.ReactNode }) {
 function OpsNavLink({
   children,
   to,
+  exclude,
 }: {
   children: React.ReactNode;
   to: string;
+  /** Path prefix that belongs to a sibling nav item and shouldn't light this one. */
+  exclude?: string;
 }) {
+  const { pathname } = useLocation();
+  const excluded = Boolean(exclude && pathname.startsWith(exclude));
   return (
     <NavLink
       to={to}
-      className={({ isActive }) =>
-        cn(
+      className={({ isActive: matched }) => {
+        const isActive = matched && !excluded;
+        return cn(
           "relative flex items-center px-3 font-sans transition-colors",
           "after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:transition-colors",
           isActive
             ? "text-body after:bg-body"
             : "text-body-subtle after:bg-transparent hover:text-body",
-        )
-      }
+        );
+      }}
     >
       {children}
     </NavLink>
