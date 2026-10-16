@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import {
   data,
@@ -118,6 +118,15 @@ export default function OpsLoginRoute() {
   // Stable identities: TurnstileWidget re-creates itself when its callbacks
   // change, so an inline closure would re-challenge after every verification.
   const handleExpire = useCallback(() => setTurnstileToken(""), []);
+  // Tokens are single-use and the action redeems one on every submission, so
+  // each response (e.g. a wrong password) needs a fresh challenge.
+  const [widgetKey, setWidgetKey] = useState(0);
+  useEffect(() => {
+    if (actionData) {
+      setTurnstileToken("");
+      setWidgetKey((key) => key + 1);
+    }
+  }, [actionData]);
   const redirectTo = searchParams.get("redirectTo") || "/ops";
 
   return (
@@ -172,6 +181,7 @@ export default function OpsLoginRoute() {
             </OpsField>
             {turnstileSiteKey ? (
               <TurnstileWidget
+                key={widgetKey}
                 siteKey={turnstileSiteKey}
                 onVerify={setTurnstileToken}
                 onExpire={handleExpire}
