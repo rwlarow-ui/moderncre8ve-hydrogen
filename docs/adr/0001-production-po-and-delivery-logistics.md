@@ -149,14 +149,42 @@ For the form: a full form *inside* Shopify checkout needs Plus, but the Hydrogen
 4. [x] Align `ops-dashboard.server.js` Admin API version with `shopify.app.toml`
 5. [ ] Flow: on order created → create PO metaobject (draft/awaiting_logistics) and start reminder timers
 6. [ ] Verify cart/order attribute limits and Flow built-in actions on this store (see sections above)
-7. [ ] Hydrogen: full logistics form on the cart page as cart attributes, required before Checkout, with "provide later" escape and server-side re-validation
+7. [x] Hydrogen: full logistics form on the cart page as cart attributes, required before Checkout, with "provide later" escape and server-side re-validation
 8. [ ] Hydrogen: `/account/orders/:id/delivery` fallback/edit form + signed guest link; write metafields; set `logistics_status`; update confirmation email template (moderncre8ve.com links)
-9. [ ] `/ops`: PO review queue, edit, approve; awaiting-logistics queue with resend
-10. [ ] PDF generation (Workers-compatible) + approved-only email send with message-ID record
-11. [ ] Tests: state transitions, validation, permissions (approve/send gated by `requireOpsAccess`)
+9. [~] `/ops`: PO review queue, edit, approve; awaiting-logistics queue built. Resend (needs the email sender) is not.
+10. [x] PDF generation (Workers-compatible) + approved-only email send with message-ID record
+11. [~] Tests: state transitions, validation, approval gate covered (`npm run test:pos`); permissions (`requireOpsAccess`) not tested (approve/send gated by `requireOpsAccess`)
 12. [ ] Dry run with one historical order before enabling for live orders; no live sends until Rob signs off
 13. [ ] Nice-to-have, later: deploy a real app and add a Thank-you/Order-status extension linking to the edit form (requires replacing the placeholder `application_url`)
 
 ## Not changed
 
 No code, metafield definitions, Flow, or customer-facing changes were made by this ADR. No PO has been sent.
+
+## Implementation notes: cart logistics form (action item 7)
+
+- Validation and attribute (de)serialization live in `app/utils/logistics.js` (tested by `npm run test:logistics`). The cart route's `CustomLogisticsUpdate` action validates server-side and merges only the logistics keys into the cart's existing attributes.
+- Cart attributes written: `logistics` (JSON), `logistics_status` (`complete|later`), plus flat `stairs`, `elevator`, `delivery_zip`.
+- **The checkout gate is UI-only.** On a non-Plus plan nothing server-side blocks `cart.checkoutUrl`, so a customer can still reach checkout by other means (e.g. a saved or edited checkout link). The order-creation step (action items 5/8) must re-validate `logistics` from `order.customAttributes` and park the PO in `awaiting_logistics` when it is missing or invalid.
+- **Still unverified (action item 6):** cart attribute value-length limits against the Storefront API. The whole form is one JSON attribute of roughly 400-700 characters; test a worst-case payload before relying on it.
+- Address prefill from the customer account is not implemented; the cart query does not fetch saved addresses.
+
+## Implementation notes: `/ops` PO review queue (action item 9)
+
+- Rules (state graph, spec generation, approval gate, logistics resolution) are pure functions in `app/utils/production-po.js`; Shopify access is in `app/utils/production-po.server.js`; pages are `/ops/pos` (queue) and `/ops/pos/:id` (detail). Order pages get a "Create PO draft" button.
+- **Nothing is sent.** Approval only sets state, `approved_by` (`ops`, since the ops login is a shared session, not per-user) and `approved_at`. `sent` is refused by the server until the PDF + email step exists.
+- One PO per order: the metaobject handle is `po-<order id>`, so creating twice returns the existing PO.
+- Approval is blocked until logistics are complete and every line has size, species and finish. Logistics are re-validated from the `moderncre8ve.logistics` metafield or the cart-derived order attributes, never trusted as stored.
+- Added to the ADR state graph: `approved -> ready_for_review` ("revoke approval"), allowed because nothing has been sent at that point. Revoking leaves the old `approved_by/at` values in place; the UI only shows them while approved or sent.
+- POs are created manually from the order page until the Flow trigger (item 5) exists. Reminders and "resend" are not built; the awaiting queue shows days waiting and the customer's phone/email for calling.
+- Needs the Admin token to have metaobject-entry write and order-metafield write scopes, and the definitions from `scripts/create-po-definitions.mjs`. The GraphQL operations could not be validated against the schema or exercised against the store in this environment.
+
+## Implementation notes: PDF + email send (action item 10)
+
+- **PDF:** `pdf-lib` (pure JS, built-in Helvetica, no font files) renders in `app/utils/po-pdf.server.js` from a document model built in `app/utils/po-document.js`. Unapproved POs are stamped "DRAFT - NOT APPROVED - DO NOT BUILD". Preview any PO at `/ops/pos/:id/pdf`. An approved PO is dated by its approval, so a re-send shows the original date. The text of the PDF can't change after approval because specs and the logistics snapshot are frozen.
+- **Email:** Resend over `fetch` (no SDK), `app/utils/po-send.server.js`. The recipient comes only from server config, never the request. Needs Oxygen env vars `RESEND_API_KEY`, `PO_FROM_EMAIL` (a sender on a domain verified in Resend), `PO_PARTNER_EMAIL`, and optionally `PO_CC_EMAIL` (also used as Reply-To). Do not put the key in `.claude/settings.local.json`. The key is for this storefront; the SEO pipeline's Resend key lives in another repo.
+- **Safety:** an explicit Send button with a confirm dialog (never automatic); only an `approved` PO can be sent; the first send carries a deterministic `Idempotency-Key` (`po-<id>-r<revision>`) so a retry can't email the partner twice; the PO is marked `sent` (with `sent_at` and `sent_message_id`) only after the provider accepts the message. If the email goes out but recording fails, the error says so and pressing Send again records it. The provider's idempotency window is finite, so don't leave that state unresolved for days.
+- **Resend:** allowed on a `sent` PO with a fresh idempotency key; it updates `sent_at` and `sent_message_id` to the latest send.
+- **Privacy:** the email body lists pieces only; the delivery address, phone and access notes are in the PDF attachment. The customer's email address is not included anywhere in the PO.
+- **Token scopes:** PO storage uses `SHOPIFY_ADMIN_API_TOKEN` (it needs metaobject and metafield-definition access). The narrow `OPS_ADMIN_API_TOKEN` has orders and customers scopes only, so it can't read or write POs unless metaobject entry and product-read scopes are added.
+- **Not verified:** a real send through Resend, the PDF rendering on Oxygen's Workers runtime (it builds, and renders in Node), and the Shopify writes (see the review-queue notes). Do a dry run with one historical order and your own address as `PO_PARTNER_EMAIL` before pointing it at the partner (item 12).
