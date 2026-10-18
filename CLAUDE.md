@@ -10,7 +10,7 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 - **Template:** forked from a third-party Hydrogen furniture theme; the hosted page builder was replaced by an in-repo page builder (`app/page-builder/`)
 - **Repo:** github.com/rwlarow-ui/moderncre8ve-hydrogen
 - **Deploy target:** Shopify Oxygen
-- **Current version:** 1.4.2 — single source of truth is `package.json`; `CHANGELOG.md` has the full history
+- **Current version:** 1.5.0 — single source of truth is `package.json`; `CHANGELOG.md` has the full history
 - **Status:** Phases 1–5 complete. **Live in production** — `moderncre8ve.com` resolves to the Hydrogen storefront on Oxygen (`powered-by: Shopify, Oxygen, Hydrogen`).
 
 ### Links
