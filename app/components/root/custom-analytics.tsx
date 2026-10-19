@@ -62,9 +62,30 @@ export function CustomAnalytics() {
       window.gtag("event", event, params);
     };
 
+    // Hydrogen holds every event until Shopify's customer-privacy script has
+    // loaded. If that script fails (e.g. a 502), no subscriber ever fires and
+    // GA4 records nothing. Watchdog: surface the failure and send a page_view
+    // anyway. Consent is left as-is (denied by default), so this only emits
+    // cookieless pings and never overrides the visitor's privacy state.
+    let pageViewSent = false;
+    const watchdog = window.setTimeout(() => {
+      if (pageViewSent || typeof window.gtag !== "function") {
+        return;
+      }
+      console.error(
+        "[analytics] Shopify customer-privacy API did not become ready; sending consent-safe fallback page_view",
+      );
+      window.gtag("event", "page_view", {
+        page_location: window.location.href,
+        fallback: "consent_api_unavailable",
+      });
+    }, 5000);
+
     // SPA navigations: GA4 config is initialized with send_page_view:false,
     // so each client-side route change must emit its own page_view.
     subscribe(AnalyticsEvent.PAGE_VIEWED, (data: PageViewPayload) => {
+      pageViewSent = true;
+      window.clearTimeout(watchdog);
       send("page_view", { page_location: data.url });
     });
 
@@ -118,6 +139,8 @@ export function CustomAnalytics() {
     subscribe(AnalyticsEvent.SEARCH_VIEWED, (data: any) => {
       send("search", { search_term: data?.searchTerm });
     });
+
+    return () => window.clearTimeout(watchdog);
   }, [id]);
 
   if (!id) {
