@@ -21,7 +21,7 @@
 | 1 | Two same-named folders on the Mac; the one linked by default is the archived repo | Infrastructure | 5 | 5 | 1 | **50** | Changes made there never reach the site. It already stranded ADR-0003, and the next fix could be stranded the same way, or reviewed against the wrong code |
 | 2 | Project docs are a stale snapshot and the knowledge base is full | Documentation | 5 | 4 | 1 | **45** | Every chat in the Project can be grounded in dead code. Because it's full, nothing new (ADRs, research) can be added |
 | 3 | "12–16 weeks" hard-coded in 20+ files, with two maker locations ("Midwest" vs "Cleveland, Ohio") | Code | 3 | 4 | 2 | **28** | Lead time is a customer promise. If it changes, a missed copy on a PDP, FAQ or JSON-LD becomes an inaccurate claim |
-| 4 | Every push to `main` deploys production (`on: [push]`), including docs-only commits (e.g. the wax-oil recipe, PR #89) | Infrastructure | 3 | 3 | 2 | **24** | Unneeded production deploys, and the deploy history gets noisy when you need to find a bad release |
+| 4 | Every push to **any** branch runs the Oxygen deploy (`on: [push]`, no branch filter); pushes to `main` deploy production, including docs-only commits (e.g. the wax-oil recipe, PR #89) | Infrastructure | 3 | 3 | 2 | **24** | Unneeded production deploys, a preview build for every scratch branch, and a noisy deploy history when you need to find a bad release |
 | 5 | Repo root has 52 loose files: reports, CSV exports, a `.docx`, HTML dashboards, blog drafts, `SEO_MIGRATION_AUDIT.md.bak`, a wax recipe | Documentation | 3 | 2 | 2 | **20** | Business documents live in the deploy repo, so every edit to them redeploys (see #4). The code is hard to find |
 | 6 | 31 remote branches: 22 already merged, 9 unmerged (4 copies of `feat/ops-hub-ui-restyle`), oldest from February | Code | 2 | 2 | 1 | **20** | It's hard to tell which branch holds live work. The collections PR and the old Weaverse branch were confused this way |
 | 7 | Collection titles fixed at render time instead of in Shopify (`BENCHES`, `Japandi Collection - Moderncre8ve`, "Featured" on `modern-scandinavian-furniture`) | Data | 2 | 2 | 1 | **20** | Dirty titles still reach collection H1s, `<title>`, breadcrumbs and Google Shopping |
@@ -38,7 +38,7 @@
 
 **Phase 1: with the next feature PRs (each ≤ ½ day)**
 5. `app/utils/brand-facts.ts` exports `LEAD_TIME = "12–16 weeks"` and `MAKERS`. Replace the 20+ literals, and settle on one phrase for Midwest/Cleveland. (#3)
-6. Deploy workflow: add `paths-ignore: ["**/*.md", "docs/**", "reports/**", "research_notes/**", "*.csv"]` to the push trigger. (#4)
+6. Deploy workflow: add `paths-ignore: ["**/*.md", "docs/**", "reports/**", "research_notes/**", "*.csv"]` to the push trigger, and decide whether non-`main` branches should keep getting Oxygen previews (if not, add `branches: [main]`). (#4)
 7. Fix the three collection titles in Shopify admin. (#7)
 8. Delete the 22 merged branches; decide on the 9 unmerged ones, keeping at most one `ops-hub-ui-restyle`. (#6)
 

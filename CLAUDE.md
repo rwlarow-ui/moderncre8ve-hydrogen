@@ -9,7 +9,7 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 - **Store:** moderncre8ve.myshopify.com (26 active + 3 draft products, 16 collections)
 - **Template:** forked from a third-party Hydrogen furniture theme; the hosted page builder was replaced by an in-repo page builder (`app/page-builder/`)
 - **Repo:** github.com/rwlarow-ui/moderncre8ve-hydrogen
-- **Source of truth:** this repo's `main` is what deploys. `github.com/rwlarow-ui/moderncre8ve-storefront` is an **archived** earlier fork — never edit it or review against it. On the owner's Mac the live clone is `~/Desktop/my-hydrogen-storefront`; `~/my-hydrogen-storefront` (same name, home folder) is the archived fork. ADRs live in `docs/adr/` here, numbered in sequence. The tech debt register is `docs/tech-debt-2026-10.md`
+- **Source of truth:** this repo's `main` is what's live in production. Note that the Oxygen workflow is `on: [push]`, so a push to **any** branch also builds an Oxygen deployment (non-`main` branches get preview environments). `github.com/rwlarow-ui/moderncre8ve-storefront` is an **archived** earlier fork — never edit it or review against it. On the owner's Mac the live clone is `~/Desktop/my-hydrogen-storefront`; `~/my-hydrogen-storefront` (same name, home folder) is the archived fork. ADRs live in `docs/adr/` here, numbered in sequence. The tech debt register is `docs/tech-debt-2026-10.md`
 - **Deploy target:** Shopify Oxygen
 - **Current version:** 1.5.0 — single source of truth is `package.json`; `CHANGELOG.md` has the full history
 - **Status:** Phases 1–5 complete. **Live in production** — `moderncre8ve.com` resolves to the Hydrogen storefront on Oxygen (`powered-by: Shopify, Oxygen, Hydrogen`).
