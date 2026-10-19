@@ -6,6 +6,9 @@
 
 ## Unreleased
 
+### Docs: typecheck is clean
+- `CLAUDE.md`: replaced the stale "Known failing check" line. `npm run typecheck` passes since `fa826f6`; added the `npx react-router typegen` tip for fresh worktrees.
+
 ---
 
 ## 1.5.0 — 2026-10-18

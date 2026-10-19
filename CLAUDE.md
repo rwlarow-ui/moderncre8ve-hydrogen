@@ -117,7 +117,7 @@ import { useLoaderData, Link, Form } from '@remix-run/react';
 ### Troubleshooting
 - **"Something's wrong here." right after the homepage loads** (the `generic-error.tsx` boundary): first load the site in an incognito window with extensions off. The 2026-10-09 report was an extension in the owner's normal profile — the page was fine in incognito and in clean automated sessions. Production hides the real error, so ask for the DevTools console output before changing code.
 - **Logo sizing:** `public/logo.png` is a tall 3004×3600 stacked wordmark, so the logo must be height-constrained by the header (`app/components/logo.tsx`), not just width-constrained, or it overflows the nav.
-- **Known failing check:** `npm run typecheck` reports 2 `MoneyV2`/`CurrencyCode` errors in `app/sections/single-product/index.tsx`; `npm run build` passes.
+- **Typecheck:** `npm run typecheck` and `npm run build` both pass (the 2 `MoneyV2`/`CurrencyCode` errors in `app/sections/single-product/index.tsx` were fixed in `fa826f6`). Treat any typecheck error as a regression. In a fresh worktree run `npx react-router typegen` first, or `server.ts` reports a missing `virtual:react-router/server-build`.
 
 ### Component Schema
 ```tsx
