@@ -60,22 +60,22 @@ export function ScrollingAnnouncement() {
     {
       name: "Instagram",
       to: socialInstagramAnnouncement,
-      icon: <InstagramLogo className="h-5 w-5" />,
+      icon: <InstagramLogo className="h-5 w-5" aria-hidden="true" />,
     },
     {
       name: "X",
       to: socialXAnnouncement,
-      icon: <XLogo className="h-5 w-5" />,
+      icon: <XLogo className="h-5 w-5" aria-hidden="true" />,
     },
     {
       name: "LinkedIn",
       to: socialLinkedInAnnouncement,
-      icon: <LinkedinLogo className="h-5 w-5" />,
+      icon: <LinkedinLogo className="h-5 w-5" aria-hidden="true" />,
     },
     {
       name: "Facebook",
       to: socialFacebookAnnouncement,
-      icon: <FacebookLogo className="h-5 w-5" />,
+      icon: <FacebookLogo className="h-5 w-5" aria-hidden="true" />,
     },
   ];
 
@@ -139,6 +139,7 @@ export function ScrollingAnnouncement() {
                 to={social.to}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`ModernCre8ve on ${social.name} (opens in a new tab)`}
                 className="flex items-center gap-2 text-lg"
               >
                 {social.icon}

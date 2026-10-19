@@ -91,14 +91,25 @@ const BlogPost = forwardRef<HTMLElement, BlogPostProps>((props, ref) => {
                   {showShareButtons && (
                     <div className="flex items-center gap-2">
                       <strong>Share:</strong>
-                      <FacebookShareButton url={articleUrl}>
-                        <FacebookLogoIcon size={24} />
+                      <FacebookShareButton
+                        url={articleUrl}
+                        aria-label="Share on Facebook"
+                      >
+                        <FacebookLogoIcon size={24} aria-hidden="true" />
                       </FacebookShareButton>
-                      <PinterestShareButton url={articleUrl} media={image?.url}>
-                        <PinterestLogoIcon size={24} />
+                      <PinterestShareButton
+                        url={articleUrl}
+                        media={image?.url}
+                        aria-label="Share on Pinterest"
+                      >
+                        <PinterestLogoIcon size={24} aria-hidden="true" />
                       </PinterestShareButton>
-                      <TwitterShareButton url={articleUrl} title={title}>
-                        <XLogoIcon size={24} />
+                      <TwitterShareButton
+                        url={articleUrl}
+                        title={title}
+                        aria-label="Share on X"
+                      >
+                        <XLogoIcon size={24} aria-hidden="true" />
                       </TwitterShareButton>
                     </div>
                   )}
