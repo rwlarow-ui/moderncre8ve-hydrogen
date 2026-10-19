@@ -6,6 +6,10 @@
 
 ## Unreleased
 
+---
+
+## 1.5.0 — 2026-10-18
+
 ### Docs: correct the live GA4 measurement ID
 - `CLAUDE.md` / `AGENTS.md` said `G-08LS6GEXG3` was the live ID and called `G-G4Q4Z6MM4B` "superseded". That is backwards. On 2026-10-08 the live site was still loading the Weaverse demo ID `G-R1KFYYKE48`; Oxygen `PUBLIC_GOOGLE_GTM_ID` was set to **`G-G4Q4Z6MM4B`**, the only data stream of reporting property `251836602`, and the live HTML was confirmed loading it on 2026-10-13. `G-08LS6GEXG3` is a connected site tag ("g4 new") on that stream, not the storefront's ID.
 - Both docs now state the live ID and warn against reverting Oxygen to `G-08LS6GEXG3`; `conversion-playbook.md` no longer cites the demo ID as the input. The older "GA4 ID" bullet under *Docs reconciliation* below was the origin of the mistake. No code change.
@@ -71,7 +75,7 @@
 ### Housekeeping
 - `seo-truth-layer/.DS_Store` was tracked despite matching `.gitignore` — untracked via `git rm --cached`.
 
-_No storefront runtime impact — all changes are dev tooling / documentation._
+_Release note: package.json was still 1.4.2 while this file already listed 1.4.3, so 1.5.0 supersedes both. Includes storefront runtime changes (PDP specifications, contact map CSP fix, logo fix, collection publishing fix) plus ops hub, tooling and docs._
 
 ---
 
