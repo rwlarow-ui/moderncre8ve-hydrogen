@@ -186,6 +186,7 @@ function CollapsibleMenuItem({
           {previewImage && (
             <div className="aspect-[16/9] w-full overflow-hidden">
               <Image
+                alt=""
                 data={previewImage as any}
                 sizes="100vw"
                 width={1200}
@@ -209,6 +210,7 @@ function CollapsibleMenuItem({
           {previewImage && (
             <div className="aspect-[16/9] w-full overflow-hidden">
               <Image
+                alt=""
                 data={previewImage as any}
                 sizes="100vw"
                 width={1200}

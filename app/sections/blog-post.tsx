@@ -53,7 +53,7 @@ const BlogPost = forwardRef<HTMLElement, BlogPostProps>((props, ref) => {
       <Section ref={ref} {...rest}>
         {image && (
           <div className="h-[520px]">
-            <Image data={image} sizes="90vw" />
+            <Image alt={image?.altText || title} data={image} sizes="90vw" />
           </div>
         )}
         <article className="prose max-w-4xl px-5 py-20 md:mx-auto lg:px-0">

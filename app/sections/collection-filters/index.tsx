@@ -111,7 +111,7 @@ const CollectionFilters = forwardRef<HTMLElement, CollectionFiltersProps>(
                   } as React.CSSProperties
                 }
               >
-                <Image data={banner} sizes="auto" width={2000} />
+                <Image alt="" data={banner} sizes="auto" width={2000} />
               </div>
             )}
           </div>

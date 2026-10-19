@@ -222,6 +222,7 @@ function MegaMenu({ items }: { items: SingleMenuItem[] }) {
               >
                 <div className="relative aspect-square w-72 max-w-72 overflow-hidden">
                   <Image
+                    alt=""
                     sizes="auto"
                     data={resource.image}
                     className="h-full w-full object-cover"

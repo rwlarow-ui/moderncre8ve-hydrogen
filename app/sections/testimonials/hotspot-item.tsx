@@ -8,6 +8,7 @@ import type {
 import { IMAGES_PLACEHOLDERS } from "~/page-builder";
 import type { ImageAspectRatio } from "~/types/image";
 import { calculateAspectRatio } from "~/utils/image";
+import { staticImageAlt } from "~/utils/static-image-alt";
 
 interface HotspotsTestimonialProps extends SectionComponentProps {
   image: PageImage | string;
@@ -20,13 +21,13 @@ let HotspotsTestimonial = forwardRef<HTMLDivElement, HotspotsTestimonialProps>(
 
     let imageData: Partial<PageImage>;
     if (typeof image === "string") {
-      imageData = { url: image, altText: "Hotspots image" };
+      imageData = { url: image, altText: staticImageAlt(image) };
     } else if (image && typeof image === "object") {
       imageData = image;
     } else {
       imageData = {
         url: IMAGES_PLACEHOLDERS.collection_1,
-        altText: "Hotspots image",
+        altText: "",
       };
     }
 

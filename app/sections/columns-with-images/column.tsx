@@ -10,6 +10,7 @@ import {
   type PageImage,
   type SectionComponentProps,
 } from "~/page-builder";
+import { staticImageAlt } from "~/utils/static-image-alt";
 
 const variants = cva("", {
   variants: {
@@ -61,7 +62,11 @@ const ColumnWithImageItem = forwardRef<
       style={{ "--radius": `${imageBorderRadius}px` } as CSSProperties}
     >
       <Image
-        data={typeof imageSrc === "object" ? imageSrc : { url: imageSrc }}
+        data={
+          typeof imageSrc === "object"
+            ? imageSrc
+            : { url: imageSrc, altText: staticImageAlt(imageSrc) }
+        }
         sizes="auto"
         className="aspect-(--image-aspect-ratio) h-auto rounded-(--radius)"
         aspectRatio={undefined}

@@ -471,6 +471,7 @@ export function Footer() {
                 style={{ width: footerLogoWidth }}
               >
                 <Image
+                  alt={footerLogoData?.altText || shopName}
                   data={footerLogoData}
                   sizes="auto"
                   width={500}

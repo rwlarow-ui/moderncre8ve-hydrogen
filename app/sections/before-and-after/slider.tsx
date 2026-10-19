@@ -13,6 +13,7 @@ import {
   type PageImage,
   type SectionComponentProps,
 } from "~/page-builder";
+import { staticImageAlt } from "~/utils/static-image-alt";
 
 interface BeforeAndAfterProps extends SectionComponentProps {
   beforeImage1: PageImage | string;
@@ -45,11 +46,14 @@ const BeforeAndAfter = forwardRef<HTMLDivElement, BeforeAndAfterProps>(
     const resizerRef = useRef<HTMLDivElement>(null);
     let beforeImage =
       typeof beforeImage1 === "string"
-        ? { url: beforeImage1, altText: "Before image" }
+        ? {
+            url: beforeImage1,
+            altText: staticImageAlt(beforeImage1) || "Before",
+          }
         : beforeImage1;
     let afterImage =
       typeof afterImage2 === "string"
-        ? { url: afterImage2, altText: "After image" }
+        ? { url: afterImage2, altText: staticImageAlt(afterImage2) || "After" }
         : afterImage2;
     const handleMouseDown = React.useCallback((e: React.MouseEvent) => {
       const startPos = {

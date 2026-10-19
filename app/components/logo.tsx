@@ -33,6 +33,7 @@ export function Logo() {
             />
             {transparentLogoData && (
               <Image
+                alt=""
                 data={transparentLogoData}
                 sizes="auto"
                 className={clsx(
