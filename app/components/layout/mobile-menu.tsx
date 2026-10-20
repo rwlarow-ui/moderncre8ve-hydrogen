@@ -242,8 +242,8 @@ function MenuTrigger({
   ...props
 }: Dialog.DialogTriggerProps & { ref?: Ref<HTMLButtonElement> }) {
   return (
-    <button ref={ref} type="button" {...props}>
-      <ListIcon className="h-5 w-5" />
+    <button ref={ref} type="button" aria-label="Open menu" {...props}>
+      <ListIcon className="h-5 w-5" aria-hidden="true" />
     </button>
   );
 }

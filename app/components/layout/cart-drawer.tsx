@@ -62,9 +62,14 @@ export function CartDrawer() {
           <Dialog.Root open={isOpen} onOpenChange={toggleCartDrawer}>
             <Dialog.Trigger
               onClick={() => publish("custom_sidecart_viewed", { cart })}
+              aria-label={
+                cart?.totalQuantity > 0
+                  ? `Cart, ${cart.totalQuantity} item${cart.totalQuantity === 1 ? "" : "s"}`
+                  : "Cart"
+              }
               className="relative flex h-8 w-8 items-center justify-center focus:ring-border"
             >
-              <ShoppingBagIcon className="h-5 w-5" />
+              <ShoppingBagIcon className="h-5 w-5" aria-hidden="true" />
               {cart?.totalQuantity > 0 && (
                 <div
                   className={clsx(
