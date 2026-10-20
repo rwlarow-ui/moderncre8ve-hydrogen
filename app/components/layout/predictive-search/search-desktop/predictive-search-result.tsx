@@ -83,7 +83,7 @@ function SearchResultItem({
           <div className="aspect-square w-full shrink-0">
             {image?.url && (
               <Image
-                alt={image.altText ?? ""}
+                alt={image.altText || title || ""}
                 src={image.url}
                 aspectRatio="1/1"
               />

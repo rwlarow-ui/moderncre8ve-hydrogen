@@ -183,6 +183,7 @@ const Blogs = forwardRef<HTMLElement, ArticlesProps>((props, ref) => {
                   {idx.image && (
                     <div className="aspect-square overflow-hidden rounded-(--border-radius)">
                       <Image
+                        alt={idx.image?.altText || idx.title}
                         data={idx.image}
                         sizes="auto"
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"

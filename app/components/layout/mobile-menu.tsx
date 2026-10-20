@@ -104,7 +104,7 @@ export function MobileMenu() {
                   <div className="mt-4 border-line-subtle border-t" />
 
                   {/* Menu content — main or sub */}
-                  <div className="py-2">
+                  <nav aria-label="Mobile navigation" className="py-2">
                     <ScrollArea className="h-[calc(100vh-5rem)]">
                       <div className="flex w-full flex-col gap-1 px-4">
                         {activeSubMenu
@@ -125,7 +125,7 @@ export function MobileMenu() {
                             ))}
                       </div>
                     </ScrollArea>
-                  </div>
+                  </nav>
                 </motion.div>
               </Dialog.Content>
             </>
@@ -186,6 +186,7 @@ function CollapsibleMenuItem({
           {previewImage && (
             <div className="aspect-[16/9] w-full overflow-hidden">
               <Image
+                alt=""
                 data={previewImage as any}
                 sizes="100vw"
                 width={1200}
@@ -209,6 +210,7 @@ function CollapsibleMenuItem({
           {previewImage && (
             <div className="aspect-[16/9] w-full overflow-hidden">
               <Image
+                alt=""
                 data={previewImage as any}
                 sizes="100vw"
                 width={1200}
@@ -240,8 +242,8 @@ function MenuTrigger({
   ...props
 }: Dialog.DialogTriggerProps & { ref?: Ref<HTMLButtonElement> }) {
   return (
-    <button ref={ref} type="button" {...props}>
-      <ListIcon className="h-5 w-5" />
+    <button ref={ref} type="button" aria-label="Open menu" {...props}>
+      <ListIcon className="h-5 w-5" aria-hidden="true" />
     </button>
   );
 }

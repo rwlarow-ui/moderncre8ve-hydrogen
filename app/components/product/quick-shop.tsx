@@ -393,6 +393,7 @@ export function QuickShopTrigger({
       <Dialog.Trigger asChild>
         <button
           type="button"
+          aria-label={buttonText || quickShopButtonTextOpen || "Quick shop"}
           className={clsx(
             // Mobile/Tablet: Always visible circular button at bottom right
             "absolute right-4 bottom-4 md:opacity-100",

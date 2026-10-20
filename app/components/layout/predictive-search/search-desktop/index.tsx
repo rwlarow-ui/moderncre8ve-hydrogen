@@ -48,8 +48,12 @@ export function PredictiveSearchButtonDesktop({ setIsSearchOpen }) {
         asChild
         className="hidden h-8 w-8 items-center justify-center focus-visible:outline-hidden lg:flex"
       >
-        <button type="button" onClick={() => setIsSearchOpen(true)}>
-          <MagnifyingGlassIcon className="h-5 w-5" />
+        <button
+          type="button"
+          aria-label="Search"
+          onClick={() => setIsSearchOpen(true)}
+        >
+          <MagnifyingGlassIcon className="h-5 w-5" aria-hidden="true" />
         </button>
       </Dialog.Trigger>
       <Dialog.Portal forceMount>

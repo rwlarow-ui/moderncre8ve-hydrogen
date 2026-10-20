@@ -3,6 +3,7 @@ import { cva } from "class-variance-authority";
 import { forwardRef } from "react";
 import { A11y, Autoplay, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { ImagePriority } from "~/hooks/use-image-priority";
 import { usePrefersReducedMotion } from "~/hooks/use-prefers-reduced-motion";
 import {
   createSchema,
@@ -131,7 +132,10 @@ const Slideshow = forwardRef<
         ].filter(Boolean)}
       >
         {children.map((child, idx) => (
-          <SwiperSlide key={idx}>{child}</SwiperSlide>
+          <SwiperSlide key={idx}>
+            {/* The first slide's image is the LCP element on pages that open with a slideshow */}
+            <ImagePriority enabled={idx === 0}>{child}</ImagePriority>
+          </SwiperSlide>
         ))}
         {showArrows && <Arrows {...props} />}
         {showDots && <Dots {...props} slidesCount={children.length} />}

@@ -33,6 +33,7 @@ export function QuickShopOptionValues({
         <div className="h-3 w-3 flex-shrink-0 overflow-hidden">
           {showSwatch && selectedOption.swatch?.image?.previewImage ? (
             <Image
+              alt=""
               data={selectedOption.swatch.image.previewImage}
               className="h-3 w-3 object-cover object-center"
               width={12}
@@ -61,6 +62,7 @@ export function QuickShopOptionValues({
             />
           ) : showImage && selectedOption.firstSelectableVariant?.image ? (
             <Image
+              alt=""
               data={selectedOption.firstSelectableVariant.image}
               className="h-3 w-3 object-cover object-center"
               width={12}
@@ -119,6 +121,7 @@ export function QuickShopOptionValues({
                       <div className="h-3 w-3 flex-shrink-0 overflow-hidden">
                         {showSwatch && swatch?.image?.previewImage ? (
                           <Image
+                            alt=""
                             data={swatch.image.previewImage}
                             className="h-full w-full object-cover object-center"
                             width={12}
@@ -146,6 +149,7 @@ export function QuickShopOptionValues({
                           />
                         ) : showImage && firstSelectableVariant?.image ? (
                           <Image
+                            alt=""
                             data={firstSelectableVariant.image}
                             className="h-full w-full object-cover object-center"
                             width={12}

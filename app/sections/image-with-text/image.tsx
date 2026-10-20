@@ -10,6 +10,7 @@ import {
 } from "~/page-builder";
 import type { ImageAspectRatio } from "~/types/image";
 import { cn } from "~/utils/cn";
+import { staticImageAlt } from "~/utils/static-image-alt";
 import { useImageWithTextContext } from "./context";
 
 const variants = cva("h-auto w-full", {
@@ -64,7 +65,7 @@ const ImageWithTextImage = forwardRef<HTMLDivElement, ImageWithTextImageProps>(
     const finalAspectRatio = propAspectRatio || contextAspectRatio;
     const imageData: Partial<PageImage> =
       typeof image === "string"
-        ? { url: image, altText: "Placeholder" }
+        ? { url: image, altText: staticImageAlt(image) }
         : image;
 
     let aspRt: string | undefined;

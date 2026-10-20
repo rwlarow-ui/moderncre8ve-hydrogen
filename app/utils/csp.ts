@@ -3,7 +3,7 @@
  *
  * Shopify's own hosts are required for the CDN and the Storefront API; the rest
  * are the third parties the storefront embeds — YouTube and Vimeo for video
- * sections, Cloudflare Turnstile for the newsletter forms, Google Tag
+ * sections (plus i.ytimg.com for the YouTube click-to-play thumbnail), Cloudflare Turnstile for the newsletter forms, Google Tag
  * Manager / Analytics, and Google Maps for the contact page map embed.
  */
 const SHOPIFY_HOSTS = ["*.shopify.com", "*.myshopify.com"];
@@ -14,7 +14,7 @@ export function getContentSecurityPolicy() {
     // `'self'` is required for the images served out of `public/` — Hydrogen
     // merges its own `'self'` default into default-src and style-src, but not
     // into img-src, so an img-src we set here replaces it outright.
-    imgSrc: ["'self'", "data:", ...SHOPIFY_HOSTS],
+    imgSrc: ["'self'", "data:", "i.ytimg.com", ...SHOPIFY_HOSTS],
     mediaSrc: ["*.youtube.com", "*.youtu.be", "*.vimeo.com", ...SHOPIFY_HOSTS],
     frameSrc: [
       "*.youtube.com",
