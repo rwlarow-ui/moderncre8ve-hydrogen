@@ -18,6 +18,7 @@ export function getContentSecurityPolicy() {
     mediaSrc: ["*.youtube.com", "*.youtu.be", "*.vimeo.com", ...SHOPIFY_HOSTS],
     frameSrc: [
       "*.youtube.com",
+      "www.youtube-nocookie.com",
       "*.youtu.be",
       "*.vimeo.com",
       "challenges.cloudflare.com",
