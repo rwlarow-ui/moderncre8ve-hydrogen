@@ -55,6 +55,7 @@ export function ProductCardOptions({
                 <TooltipTrigger>
                   <button
                     type="button"
+                    aria-label={name}
                     className={cn(
                       "flex aspect-square size-3",
                       "outline-1 outline-solid",
@@ -68,6 +69,7 @@ export function ProductCardOptions({
                   >
                     {swatch?.image?.previewImage ? (
                       <Image
+                        alt=""
                         data={swatch.image.previewImage}
                         className="h-full w-full object-cover object-center"
                         width={200}

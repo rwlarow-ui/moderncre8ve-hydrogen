@@ -110,6 +110,7 @@ let CollectionItems = forwardRef<HTMLDivElement, CollectionItemsProps>(
             {collection?.image && (
               <div className="relative h-full w-full overflow-hidden">
                 <Image
+                  alt={collection.image?.altText || collection.title}
                   data={collection.image}
                   className={clsx(["h-full w-full object-cover"])}
                 />
@@ -144,6 +145,7 @@ let CollectionItems = forwardRef<HTMLDivElement, CollectionItemsProps>(
               )}
             >
               <Image
+                alt={collection.image?.altText || collection.title}
                 data={collection.image}
                 className={clsx(["h-full w-full object-cover"])}
               />
@@ -226,6 +228,7 @@ let CollectionItems = forwardRef<HTMLDivElement, CollectionItemsProps>(
                 {third?.image && (
                   <div className={clsx("flex-grow overflow-hidden")}>
                     <Image
+                      alt={third.image?.altText || third.title}
                       data={third.image}
                       width={third.image.width || 600}
                       height={third.image.height || 800}

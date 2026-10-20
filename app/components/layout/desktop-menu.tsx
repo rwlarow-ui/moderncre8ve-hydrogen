@@ -20,7 +20,10 @@ export function DesktopMenu() {
     const menuItems = headerMenu.items as unknown as SingleMenuItem[];
 
     return (
-      <div className="hidden h-full grow justify-center lg:flex">
+      <nav
+        aria-label="Main navigation"
+        className="hidden h-full grow justify-center lg:flex"
+      >
         {menuItems.map((menuItem) => {
           const { id, items: subItems = [], title, to } = menuItem;
           const level = getMaxDepth(menuItem);
@@ -44,68 +47,71 @@ export function DesktopMenu() {
               key={id}
               value={value}
               onValueChange={setValue}
-              className="flex h-full"
+              asChild
+              aria-label={undefined}
             >
-              <NavigationMenu.List className="flex h-full">
-                <NavigationMenu.Item
-                  value={id}
-                  className="flex h-full items-center"
-                >
-                  <NavigationMenu.Trigger
-                    className={clsx([
-                      "flex h-full cursor-pointer items-center gap-1.5 px-3 py-2",
-                      "uppercase focus:outline-hidden",
-                    ])}
-                    onMouseEnter={() => {
-                      if (openMenuBy === "hover" && value !== id) {
-                        setValue(id);
-                      }
-                    }}
-                    onPointerDown={(e) => {
-                      // Allow navigation on left click while preserving submenu behavior
-                      if (e.button === 0 && !e.ctrlKey && !e.metaKey) {
-                        navigate(to);
-                      }
-                    }}
+              <div className="flex h-full">
+                <NavigationMenu.List className="flex h-full">
+                  <NavigationMenu.Item
+                    value={id}
+                    className="flex h-full items-center"
                   >
-                    <NavigationMenu.Link asChild>
-                      <span
-                        className={cn(
-                          "ff-heading relative cursor-pointer",
-                          "after:absolute after:bottom-[-0.5px] after:left-0 after:h-[2px] after:w-full after:bg-[#6A4E4E]",
-                          "after:opacity-0 hover:after:opacity-100 group-data-[state=open]:after:opacity-100",
-                          "after:transition-opacity after:duration-[360ms] after:ease-[cubic-bezier(0.22,1,0.36,1)]",
-                        )}
-                      >
-                        {title}
-                      </span>
-                    </NavigationMenu.Link>
-                  </NavigationMenu.Trigger>
-                  <NavigationMenu.Content
-                    className={cn([
-                      "absolute top-0 left-0 w-screen py-8",
-                      "px-3 md:px-4 lg:px-6",
-                      "border-line-subtle border-t bg-(--color-header-bg-hover)",
-                    ])}
-                  >
-                    <MegaMenu items={subItems} />
-                  </NavigationMenu.Content>
-                </NavigationMenu.Item>
-              </NavigationMenu.List>
-              <div className="absolute inset-x-0 top-full flex w-full justify-center shadow-header">
-                <NavigationMenu.Viewport
-                  className={cn(
-                    "relative origin-[top_center] overflow-hidden bg-(--color-header-bg-hover)",
-                    'data-[state="closed"]:animate-scale-out data-[state="open"]:animate-scale-in',
-                    "transition-[width,_height] duration-200",
-                    "h-[var(--radix-navigation-menu-viewport-height)] w-full",
-                  )}
-                />
+                    <NavigationMenu.Trigger
+                      className={clsx([
+                        "flex h-full cursor-pointer items-center gap-1.5 px-3 py-2",
+                        "uppercase focus:outline-hidden",
+                      ])}
+                      onMouseEnter={() => {
+                        if (openMenuBy === "hover" && value !== id) {
+                          setValue(id);
+                        }
+                      }}
+                      onPointerDown={(e) => {
+                        // Allow navigation on left click while preserving submenu behavior
+                        if (e.button === 0 && !e.ctrlKey && !e.metaKey) {
+                          navigate(to);
+                        }
+                      }}
+                    >
+                      <NavigationMenu.Link asChild>
+                        <span
+                          className={cn(
+                            "ff-heading relative cursor-pointer",
+                            "after:absolute after:bottom-[-0.5px] after:left-0 after:h-[2px] after:w-full after:bg-[#6A4E4E]",
+                            "after:opacity-0 hover:after:opacity-100 group-data-[state=open]:after:opacity-100",
+                            "after:transition-opacity after:duration-[360ms] after:ease-[cubic-bezier(0.22,1,0.36,1)]",
+                          )}
+                        >
+                          {title}
+                        </span>
+                      </NavigationMenu.Link>
+                    </NavigationMenu.Trigger>
+                    <NavigationMenu.Content
+                      className={cn([
+                        "absolute top-0 left-0 w-screen py-8",
+                        "px-3 md:px-4 lg:px-6",
+                        "border-line-subtle border-t bg-(--color-header-bg-hover)",
+                      ])}
+                    >
+                      <MegaMenu items={subItems} />
+                    </NavigationMenu.Content>
+                  </NavigationMenu.Item>
+                </NavigationMenu.List>
+                <div className="absolute inset-x-0 top-full flex w-full justify-center shadow-header">
+                  <NavigationMenu.Viewport
+                    className={cn(
+                      "relative origin-[top_center] overflow-hidden bg-(--color-header-bg-hover)",
+                      'data-[state="closed"]:animate-scale-out data-[state="open"]:animate-scale-in',
+                      "transition-[width,_height] duration-200",
+                      "h-[var(--radix-navigation-menu-viewport-height)] w-full",
+                    )}
+                  />
+                </div>
               </div>
             </NavigationMenu.Root>
           );
         })}
-      </div>
+      </nav>
     );
   }
   return null;
@@ -143,11 +149,7 @@ function DropdownMenu({ menuItem }: { menuItem: SingleMenuItem }) {
   const { openMenuBy } = useThemeSettings();
   const { items: childItems = [], title } = menuItem;
   return (
-    <div
-      className="h-full"
-      role="navigation"
-      onMouseLeave={() => setOpen(false)}
-    >
+    <div className="h-full" onMouseLeave={() => setOpen(false)}>
       <Root open={open} onOpenChange={setOpen} modal={false}>
         <Trigger
           className={clsx([
@@ -220,6 +222,7 @@ function MegaMenu({ items }: { items: SingleMenuItem[] }) {
               >
                 <div className="relative aspect-square w-72 max-w-72 overflow-hidden">
                   <Image
+                    alt=""
                     sizes="auto"
                     data={resource.image}
                     className="h-full w-full object-cover"

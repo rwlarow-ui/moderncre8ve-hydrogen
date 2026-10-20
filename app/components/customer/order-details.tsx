@@ -58,7 +58,12 @@ export function OrderDetails() {
                   <div className="flex gap-4" key={lineItem.id}>
                     {lineItem?.image && (
                       <div className="h-auto w-[120px] shrink-0">
-                        <Image data={lineItem.image} width={500} height={500} />
+                        <Image
+                          alt={lineItem.title}
+                          data={lineItem.image}
+                          width={500}
+                          height={500}
+                        />
                       </div>
                     )}
                     <dl className="flex flex-col">

@@ -4,6 +4,7 @@ import type { PageImage, SectionComponentProps } from "~/page-builder";
 import { createSchema, IMAGES_PLACEHOLDERS } from "~/page-builder";
 import type { ImageAspectRatio } from "~/types/image";
 import { calculateAspectRatio } from "~/utils/image";
+import { staticImageAlt } from "~/utils/static-image-alt";
 import { useHotspotsContext } from "./hotpots";
 
 interface HotspotsProps extends SectionComponentProps {
@@ -19,7 +20,7 @@ let HotspotsImage = forwardRef<HTMLDivElement, HotspotsProps>((props, ref) => {
 
   let imageData: Partial<PageImage> =
     typeof image === "string"
-      ? { url: image, altText: "Hotspots image" }
+      ? { url: image, altText: staticImageAlt(image) }
       : image;
 
   return (

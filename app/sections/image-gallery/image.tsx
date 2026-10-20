@@ -8,6 +8,7 @@ import {
   type PageImage,
   type SectionComponentProps,
 } from "~/page-builder";
+import { staticImageAlt } from "~/utils/static-image-alt";
 
 const variants = cva("h-(--image-height)", {
   variants: {
@@ -53,7 +54,10 @@ interface ImageGalleryItemProps
 const ImageGalleryItem = forwardRef<HTMLImageElement, ImageGalleryItemProps>(
   (props, ref) => {
     const { src, columnSpan, borderRadius, hideOnMobile, ...rest } = props;
-    const data = typeof src === "object" ? src : { url: src, altText: src };
+    const data =
+      typeof src === "object"
+        ? src
+        : { url: src, altText: staticImageAlt(src) };
     return (
       <Image
         ref={ref}

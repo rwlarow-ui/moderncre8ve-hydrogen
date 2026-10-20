@@ -56,6 +56,7 @@ function ProductColorOptions({
                 <TooltipTrigger>
                   <button
                     type="button"
+                    aria-label={name}
                     className={clsx(
                       "h-2.5 w-2.5 overflow-hidden outline-1 outline-solid outline-offset-1 transition-(outline-color)",
                       isSelected
@@ -79,6 +80,7 @@ function ProductColorOptions({
                   >
                     {swatch?.image?.previewImage ? (
                       <Image
+                        alt=""
                         data={swatch.image.previewImage}
                         className="h-full w-full object-cover object-center"
                         width={10}

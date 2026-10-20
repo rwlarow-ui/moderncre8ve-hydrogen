@@ -158,7 +158,7 @@ function SearchResultItem({
           <div className="h-20 w-20 shrink-0">
             {image?.url && (
               <Image
-                alt={image.altText ?? ""}
+                alt={image.altText || title || ""}
                 src={image.url}
                 width={200}
                 aspectRatio="1/1"

@@ -1,4 +1,5 @@
 import { createElement, memo, useContext, useMemo } from "react";
+import { ImagePriority } from "~/hooks/use-image-priority";
 import { componentsByType } from "./components";
 import {
   SectionContext,
@@ -75,13 +76,18 @@ const SectionNode = memo(function SectionNode({
     return null;
   }
 
-  const children = instance.children.map((child, index) =>
-    createElement(SectionNode, {
+  const children = instance.children.map((child, index) => {
+    const node = createElement(SectionNode, {
       id: child.id,
       parentId: id,
       key: `${child.id}-${index}`,
-    }),
-  );
+    });
+    // The page's first section is above the fold: let its background image
+    // load eagerly as the likely LCP element (see use-image-priority).
+    return parentId === "" && index === 0
+      ? createElement(ImagePriority, { key: `${child.id}-priority` }, node)
+      : node;
+  });
 
   return (
     <SectionContext.Provider value={contextValue}>

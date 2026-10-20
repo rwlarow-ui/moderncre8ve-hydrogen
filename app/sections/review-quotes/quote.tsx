@@ -36,6 +36,7 @@ const ReviewQuote = forwardRef<HTMLDivElement, ReviewQuoteProps>(
         {starCount > 0 && (
           <div
             className="flex gap-0.5"
+            role="img"
             aria-label={`${starCount} out of 5 stars`}
           >
             {Array.from({ length: starCount }, (_, index) => (

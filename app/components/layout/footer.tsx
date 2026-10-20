@@ -471,6 +471,7 @@ export function Footer() {
                 style={{ width: footerLogoWidth }}
               >
                 <Image
+                  alt={footerLogoData?.altText || shopName}
                   data={footerLogoData}
                   sizes="auto"
                   width={500}
@@ -574,9 +575,12 @@ export function Footer() {
                 </div>
               ) : null}
             </div>
-            <div className="order-2 block md:hidden lg:block">
+            <nav
+              aria-label="Footer navigation"
+              className="order-2 block md:hidden lg:block"
+            >
               <FooterMenu />
-            </div>
+            </nav>
 
             <div className="order-4 flex w-full flex-col gap-4 pt-6 md:order-none md:hidden md:pt-0 lg:order-4 lg:flex lg:w-fit">
               <span className="font-semibold">{newsletterTitle}</span>
@@ -645,9 +649,12 @@ export function Footer() {
             </div>
           </div>
           <div>
-            <div className="hidden md:block lg:hidden">
+            <nav
+              aria-label="Footer navigation"
+              className="hidden md:block lg:hidden"
+            >
               <FooterMenu />
-            </div>
+            </nav>
             <div className="grid grid-cols-1 items-center justify-center gap-y-6 pt-6 pb-6 md:grid-cols-2 md:pt-0 lg:grid-cols-3">
               <p className="order-3 md:col-span-2 lg:order-none lg:col-span-1">
                 {copyright}
