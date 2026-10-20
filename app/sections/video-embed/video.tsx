@@ -56,8 +56,38 @@ interface VideoItemProps
 const YOUTUBE_ID =
   /(?:youtube(?:-nocookie)?\.com\/(?:embed\/|watch\?v=|shorts\/)|youtu\.be\/)([\w-]{11})/;
 
-function withAutoplay(url: string) {
-  return `${url}${url.includes("?") ? "&" : "?"}autoplay=1`;
+/**
+ * The player URL to load after the click. An embed URL keeps its own host
+ * (youtube-nocookie.com stays privacy-enhanced) and parameters (start, list,
+ * loop, controls…); watch / shorts / youtu.be links become embed URLs that
+ * carry their parameters over (`t` becomes `start`). Autoplay is added so
+ * the click that revealed the player also starts it.
+ */
+function playerUrl(src: string, youtubeId: string) {
+  try {
+    const url = new URL(src);
+    const nocookie = url.hostname.endsWith("youtube-nocookie.com");
+    const player = url.pathname.startsWith("/embed/")
+      ? url
+      : new URL(
+          `https://www.${nocookie ? "youtube-nocookie" : "youtube"}.com/embed/${youtubeId}`,
+        );
+    if (player !== url) {
+      for (const [key, value] of url.searchParams) {
+        if (key === "v" || key === "si") continue;
+        if (key === "t") {
+          const seconds = Number.parseInt(value, 10);
+          if (seconds > 0) player.searchParams.set("start", String(seconds));
+          continue;
+        }
+        player.searchParams.set(key, value);
+      }
+    }
+    player.searchParams.set("autoplay", "1");
+    return player.toString();
+  } catch {
+    return `https://www.youtube.com/embed/${youtubeId}?autoplay=1`;
+  }
 }
 
 /**
@@ -107,11 +137,7 @@ const VideoEmbedItem = forwardRef<HTMLDivElement, VideoItemProps>(
       <div ref={ref} {...rest} className={className}>
         <iframe
           className="h-full w-full"
-          src={
-            youtubeId
-              ? withAutoplay(`https://www.youtube.com/embed/${youtubeId}`)
-              : src
-          }
+          src={youtubeId ? playerUrl(src, youtubeId) : src}
           loading="lazy"
           allowFullScreen
           title="Video player"
