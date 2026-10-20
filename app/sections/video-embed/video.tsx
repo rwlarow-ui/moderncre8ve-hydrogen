@@ -1,11 +1,13 @@
+import { PlayIcon } from "@phosphor-icons/react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 import {
   createSchema,
   type PageVideo,
   type SectionComponentProps,
 } from "~/page-builder";
+import { cn } from "~/utils/cn";
 
 const variants = cva("mx-auto aspect-video w-full", {
   variants: {
@@ -51,20 +53,72 @@ interface VideoItemProps
   videoUrl: string;
 }
 
-const VideoEmbedItem = forwardRef<HTMLIFrameElement, VideoItemProps>(
+const YOUTUBE_ID =
+  /(?:youtube(?:-nocookie)?\.com\/(?:embed\/|watch\?v=|shorts\/)|youtu\.be\/)([\w-]{11})/;
+
+function withAutoplay(url: string) {
+  return `${url}${url.includes("?") ? "&" : "?"}autoplay=1`;
+}
+
+/**
+ * YouTube embeds are shown as a lightweight thumbnail + play button and only
+ * load the player (~1 MB of script) when clicked. Other providers fall back
+ * to a lazily loaded iframe.
+ */
+const VideoEmbedItem = forwardRef<HTMLDivElement, VideoItemProps>(
   (props, ref) => {
     const { video, videoUrl, size, borderRadius, ...rest } = props;
+    const src = video?.url || videoUrl;
+    const youtubeId = src?.match(YOUTUBE_ID)?.[1];
+    const [playing, setPlaying] = useState(false);
+    const className = variants({ size, borderRadius });
+
+    if (!src) return null;
+
+    if (youtubeId && !playing) {
+      return (
+        <div
+          ref={ref}
+          {...rest}
+          className={cn(className, "relative overflow-hidden bg-black")}
+        >
+          <img
+            src={`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <button
+            type="button"
+            onClick={() => setPlaying(true)}
+            aria-label="Play video"
+            className="group absolute inset-0 flex items-center justify-center"
+          >
+            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-black/70 transition-colors group-hover:bg-black/85">
+              <PlayIcon className="h-7 w-7 text-white" weight="fill" />
+            </span>
+          </button>
+        </div>
+      );
+    }
+
     return (
-      <iframe
-        ref={ref}
-        {...rest}
-        className={variants({ size, borderRadius })}
-        src={video?.url || videoUrl}
-        allowFullScreen
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        sandbox="allow-presentation allow-same-origin allow-scripts"
-      />
+      <div ref={ref} {...rest} className={className}>
+        <iframe
+          className="h-full w-full"
+          src={
+            youtubeId
+              ? withAutoplay(`https://www.youtube.com/embed/${youtubeId}`)
+              : src
+          }
+          loading="lazy"
+          allowFullScreen
+          title="Video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          sandbox="allow-presentation allow-same-origin allow-scripts"
+        />
+      </div>
     );
   },
 );

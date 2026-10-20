@@ -145,8 +145,8 @@ export default function OpsLoginRoute() {
         <img
           src="/logo.png"
           alt="ModernCre8ve"
-          width={3004}
-          height={3600}
+          width={500}
+          height={599}
           className="h-16 w-auto self-start"
         />
 

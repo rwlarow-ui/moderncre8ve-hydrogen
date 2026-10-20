@@ -1,6 +1,7 @@
 import { Image } from "@shopify/hydrogen";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
+import { useImagePriority } from "~/hooks/use-image-priority";
 import type { PageImage, SettingsGroup } from "~/page-builder";
 
 const variants = cva("absolute inset-0 z-[-1] h-full w-full", {
@@ -34,6 +35,7 @@ export type BackgroundImageProps = VariantProps<typeof variants> & {
 
 export function BackgroundImage(props: BackgroundImageProps) {
   const { backgroundImage, backgroundFit, backgroundPosition } = props;
+  const priority = useImagePriority();
   if (!backgroundImage) return null;
 
   // Reject empty / whitespace strings — those produce a broken <img> whose
@@ -57,6 +59,8 @@ export function BackgroundImage(props: BackgroundImageProps) {
       className={variants({ backgroundFit, backgroundPosition })}
       data={data}
       sizes="auto"
+      loading={priority ? "eager" : "lazy"}
+      fetchPriority={priority ? "high" : undefined}
     />
   );
 }
