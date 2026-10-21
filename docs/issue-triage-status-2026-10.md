@@ -54,7 +54,7 @@ Remaining PSI findings: ~1 MB of image savings, almost all Shopify CDN product i
 | Issue | Status | Next step |
 |---|---|---|
 | #7 collections & inventory scope | Blocked in March on a bad Admin token; the token works now. Not checked yet. | Read product counts for "Mid Century Modern Coffee Tables", "Custom Made Furniture", "Housewares"; add products with owner approval. Inventory scope stays off unless stock display is wanted. |
-| #91 GA4 zero sessions since Oct 9 | **Not in the triage list but P0-shaped:** consent API fails to load on first page load, so Hydrogen holds back every GA4 event. Opened 2026-10-19. | Should be worked before any further SEO/analytics reporting is trusted. |
+| #91 GA4 zero sessions since Oct 9 | **Not in the triage list but P0-shaped.** Cause found: Shopify's customer-privacy script fails to load on first page load, so Hydrogen's `Analytics.Provider` never fires its subscribers. PR #92 (merged 2026-10-19) added a watchdog in `app/components/root/custom-analytics.tsx` that sends a consent-safe (cookieless) `page_view` after 5 s when that happens, so page views are no longer lost entirely. | Confirm sessions are being recorded again since Oct 19; then decide what to do about the events the fallback does not cover (`view_item`, `add_to_cart`, `purchase` still wait on the privacy API) and why the script fails to load in the first place. Reporting before Oct 19 stays unreliable. |
 | #35 placeholder products / price strings | P0, untouched since Oct 8. | Audit active products in Admin; fix translation strings. |
 | #36 Our Story page | P1, untouched since Sep 6. | Needs founder copy and workshop photos. |
 | #8 inline TODOs, #4 Biome suggestions | Code quality, low priority. | Batch into a cleanup PR. |
