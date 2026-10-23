@@ -24,12 +24,22 @@ export function readEmailConfig(env = {}) {
   const to = String(env.PO_PARTNER_EMAIL ?? "").trim();
   const cc = String(env.PO_CC_EMAIL ?? "").trim();
 
-  if (!apiKey) missing.push("RESEND_API_KEY");
-  if (!from) missing.push("PO_FROM_EMAIL");
-  else if (!FROM_RE.test(from)) invalid.push("PO_FROM_EMAIL");
-  if (!to) missing.push("PO_PARTNER_EMAIL");
-  else if (!EMAIL_RE.test(to)) invalid.push("PO_PARTNER_EMAIL");
-  if (cc && !EMAIL_RE.test(cc)) invalid.push("PO_CC_EMAIL");
+  if (!apiKey) {
+    missing.push("RESEND_API_KEY");
+  }
+  if (!from) {
+    missing.push("PO_FROM_EMAIL");
+  } else if (!FROM_RE.test(from)) {
+    invalid.push("PO_FROM_EMAIL");
+  }
+  if (!to) {
+    missing.push("PO_PARTNER_EMAIL");
+  } else if (!EMAIL_RE.test(to)) {
+    invalid.push("PO_PARTNER_EMAIL");
+  }
+  if (cc && !EMAIL_RE.test(cc)) {
+    invalid.push("PO_CC_EMAIL");
+  }
 
   return {
     ok: !missing.length && !invalid.length,

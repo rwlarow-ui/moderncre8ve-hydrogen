@@ -10,7 +10,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/tooltip";
 import { useThemeSettings } from "~/page-builder";
 import { RevealUnderline } from "~/reveal-underline";
 import { cn } from "~/utils/cn";
-import { isLightColor, isValidColor } from "~/utils/misc";
 import { OPTIONS_AS_SWATCH } from "./product-option-values";
 
 export function ProductCardOptions({

@@ -22,14 +22,14 @@ import {
   UPDATE_ADDRESS_MUTATION,
 } from "./($locale).account.address.$id";
 
-export type ActionResponse = {
+export interface ActionResponse {
   addressId?: string | null;
   createdAddress?: AddressPartialFragment;
   defaultAddress?: string | null;
   deletedAddress?: string | null;
   error: Record<AddressPartialFragment["id"], string> | null;
   updatedAddress?: AddressPartialFragment;
-};
+}
 
 export const meta: MetaFunction = () => {
   return [{ title: "Addresses" }];

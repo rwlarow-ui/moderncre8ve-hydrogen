@@ -1,11 +1,6 @@
+import type { RefObject } from "react";
 import type { ReactNode } from "react";
-import {
-  Children,
-  cloneElement,
-  forwardRef,
-  isValidElement,
-  useState,
-} from "react";
+import { Children, cloneElement, isValidElement, useState } from "react";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { SectionComponent } from "~/page-builder";
@@ -19,7 +14,10 @@ interface VideoItemsProps {
   children?: ReactNode;
 }
 
-let VideoItems = forwardRef<HTMLElement, VideoItemsProps>((props, ref) => {
+let VideoItems = ({
+  ref,
+  ...props
+}: VideoItemsProps & { ref?: RefObject<HTMLElement | null> }) => {
   let { gap = 16, videoAspectRatio = "3/4", children } = props;
   const [activeIndex, setActiveIndex] = useState(0);
   const totalSlides = Children.count(children);
@@ -64,7 +62,7 @@ let VideoItems = forwardRef<HTMLElement, VideoItemsProps>((props, ref) => {
       </div>
     </>
   );
-});
+};
 
 export let schema: SectionComponent["schema"] = {
   type: "video--items",
@@ -144,5 +142,4 @@ export let schema: SectionComponent["schema"] = {
   },
 };
 
-VideoItems.displayName = "VideoItems";
 export default VideoItems;

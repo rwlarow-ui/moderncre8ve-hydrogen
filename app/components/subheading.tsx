@@ -1,6 +1,6 @@
+import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { forwardRef } from "react";
 import { createSchema, type SectionComponentProps } from "~/page-builder";
 import { cn } from "~/utils/cn";
 
@@ -35,10 +35,14 @@ interface SubHeadingProps
   content: string;
 }
 
-const SubHeading = forwardRef<
-  HTMLHeadingElement | HTMLParagraphElement | HTMLDivElement,
-  SubHeadingProps
->((props, ref) => {
+const SubHeading = ({
+  ref,
+  ...props
+}: SubHeadingProps & {
+  ref?: RefObject<
+    HTMLHeadingElement | HTMLParagraphElement | HTMLDivElement | null
+  >;
+}) => {
   const {
     as: Tag = "p",
     content,
@@ -60,7 +64,7 @@ const SubHeading = forwardRef<
       {content}
     </Tag>
   );
-});
+};
 
 export default SubHeading;
 

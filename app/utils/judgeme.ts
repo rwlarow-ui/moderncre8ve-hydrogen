@@ -31,14 +31,14 @@ function cachedJsonFetcher(withCache: AppLoadContext["withCache"]) {
   };
 }
 
-type JudgemeProductData = {
+interface JudgemeProductData {
   product: {
     id: string;
     handle: string;
   };
-};
+}
 
-type JudgeMeReviewType = {
+interface JudgeMeReviewType {
   id: string;
   title: string;
   created_at: string;
@@ -58,13 +58,13 @@ type JudgeMeReviewType = {
       huge: string;
     };
   }[];
-};
+}
 
-export type JudgemeReviewsData = {
+export interface JudgemeReviewsData {
   rating: number;
   reviewNumber: number;
   reviews: JudgeMeReviewType[];
-};
+}
 
 const JUDGEME_PRODUCT_API = "https://judge.me/api/v1/products/-1";
 const JUDGEME_REVIEWS_API = "https://judge.me/api/v1/reviews";

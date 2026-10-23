@@ -93,7 +93,9 @@ function SitemapSection({
   title: string;
   items: SitemapItem[];
 }) {
-  if (!items.length) return null;
+  if (!items.length) {
+    return null;
+  }
   return (
     <section className="mb-10">
       <h2 className="mb-4 font-sans font-semibold text-xl">{title}</h2>

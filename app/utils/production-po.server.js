@@ -152,7 +152,9 @@ const METAFIELDS_SET_MUTATION = `
 function getConfig(config) {
   const storeDomain = config.storeDomain || config.PUBLIC_STORE_DOMAIN;
   const adminToken = config.adminApiToken || config.SHOPIFY_ADMIN_API_TOKEN;
-  if (!storeDomain) throw new Error("PUBLIC_STORE_DOMAIN is not configured.");
+  if (!storeDomain) {
+    throw new Error("PUBLIC_STORE_DOMAIN is not configured.");
+  }
   if (!adminToken) {
     throw new Error("SHOPIFY_ADMIN_API_TOKEN is not configured.");
   }
@@ -197,19 +199,27 @@ export function poIdToParam(gid) {
 
 export function poParamToId(param) {
   const digits = String(param).replace(/[^\d]/g, "");
-  if (!digits) throw new Error("Invalid PO id.");
+  if (!digits) {
+    throw new Error("Invalid PO id.");
+  }
   return `gid://shopify/Metaobject/${digits}`;
 }
 
 function orderGid(orderId) {
-  if (String(orderId).startsWith("gid://")) return orderId;
+  if (String(orderId).startsWith("gid://")) {
+    return orderId;
+  }
   const digits = String(orderId).replace(/[^\d]/g, "");
-  if (!digits) throw new Error("Invalid order id.");
+  if (!digits) {
+    throw new Error("Invalid order id.");
+  }
   return `gid://shopify/Order/${digits}`;
 }
 
 function mapPo(node) {
-  if (!node) return null;
+  if (!node) {
+    return null;
+  }
   return {
     id: node.id,
     param: poIdToParam(node.id),
@@ -239,7 +249,9 @@ export async function getProductionPo(config, param) {
     id: poParamToId(param),
   });
   const po = mapPo(data.metaobject);
-  if (!po || !po.orderId) throw new Error("Production PO not found.");
+  if (!po || !po.orderId) {
+    throw new Error("Production PO not found.");
+  }
   return po;
 }
 
@@ -260,7 +272,9 @@ async function fetchOrderForPo(config, orderId) {
   const data = await adminGraphql(config, ORDER_FOR_PO_QUERY, {
     id: orderGid(orderId),
   });
-  if (!data.order) throw new Error("Order not found.");
+  if (!data.order) {
+    throw new Error("Order not found.");
+  }
   const order = data.order;
   return {
     id: order.id,
@@ -323,7 +337,9 @@ export async function createDraftPoForOrder(config, orderId) {
   }
 
   const existing = await getPoByOrder(config, order.legacyId);
-  if (existing) return { po: existing, created: false };
+  if (existing) {
+    return { po: existing, created: false };
+  }
 
   const logistics = resolveLogistics({
     metafieldValue: order.logisticsMetafieldValue,
@@ -416,7 +432,9 @@ export async function transitionPo(config, param, to, { actor = "ops" } = {}) {
     lineSpecs: po.lineSpecs,
     snapshot: po.snapshot,
   });
-  if (!check.ok) throw new Error(check.reason);
+  if (!check.ok) {
+    throw new Error(check.reason);
+  }
 
   const values = { state: to };
   if (to === "approved") {
@@ -435,8 +453,9 @@ export async function transitionPo(config, param, to, { actor = "ops" } = {}) {
  * already-sent PO just updates the timestamp and message id.
  */
 export async function markPoSent(config, param, { messageId, resend = false }) {
-  if (!messageId)
+  if (!messageId) {
     throw new Error("A message id is required to mark a PO sent.");
+  }
   const po = await getProductionPo(config, param);
 
   if (po.state === "sent" && resend) {
@@ -451,7 +470,9 @@ export async function markPoSent(config, param, { messageId, resend = false }) {
     lineSpecs: po.lineSpecs,
     snapshot: po.snapshot,
   });
-  if (!check.ok) throw new Error(check.reason);
+  if (!check.ok) {
+    throw new Error(check.reason);
+  }
 
   return updatePoFields(config, po, {
     state: "sent",

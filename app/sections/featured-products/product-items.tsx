@@ -1,8 +1,9 @@
+import type { RefObject } from "react";
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
-import { forwardRef, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ProductCard } from "~/components/product/product-card";
@@ -99,253 +100,254 @@ interface ProductItemsProps
   arrowsShape?: "rounded-sm" | "circle" | "square";
 }
 
-const ProductItems = forwardRef<HTMLDivElement, ProductItemsProps>(
-  (props, ref) => {
-    const {
-      loaderData,
-      collection,
-      gap = 16,
-      layout = "carousel",
-      slidesPerView = 4,
-      itemsPerRow = "4" as ItemsPerRowType,
-      productsToShow = 4,
-      arrowsColor = "primary",
-      arrowsShape = "rounded-sm",
-      ...rest
-    } = props;
-    const [activeSlide, setActiveSlide] = useState(0);
-    const [isBeginning, setIsBeginning] = useState(true);
-    const [isEnd, setIsEnd] = useState(false);
-    const [isSwiperInitialized, setIsSwiperInitialized] = useState(false);
+const ProductItems = ({
+  ref,
+  ...props
+}: ProductItemsProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  const {
+    loaderData,
+    collection,
+    gap = 16,
+    layout = "carousel",
+    slidesPerView = 4,
+    itemsPerRow = "4" as ItemsPerRowType,
+    productsToShow = 4,
+    arrowsColor = "primary",
+    arrowsShape = "rounded-sm",
+    ...rest
+  } = props;
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isBeginning, setIsBeginning] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
+  const [isSwiperInitialized, setIsSwiperInitialized] = useState(false);
 
-    useEffect(() => {
-      setIsSwiperInitialized(false);
-    }, [layout, gap, slidesPerView, itemsPerRow]);
+  useEffect(() => {
+    setIsSwiperInitialized(false);
+  }, [layout, gap, slidesPerView, itemsPerRow]);
 
-    useEffect(() => {
-      if (!isSwiperInitialized) {
-        const fallbackTimer = setTimeout(() => {
-          setIsSwiperInitialized(true);
-        }, 500);
-        return () => clearTimeout(fallbackTimer);
-      }
-    }, [isSwiperInitialized]);
-
-    const productsConnection = loaderData?.products ?? [];
-
-    if (!productsConnection.length) {
-      return null;
+  useEffect(() => {
+    if (!isSwiperInitialized) {
+      const fallbackTimer = setTimeout(() => {
+        setIsSwiperInitialized(true);
+      }, 500);
+      return () => clearTimeout(fallbackTimer);
     }
+  }, [isSwiperInitialized]);
 
-    const totalProducts = loaderData?.products?.length ?? 0;
-    const maxProductsToShow = productsToShow;
-    const displayedProducts = productsConnection.slice(0, maxProductsToShow);
-    const hasMoreProducts = totalProducts > maxProductsToShow;
+  const productsConnection = loaderData?.products ?? [];
 
-    const arrowColorClasses = useMemo(() => {
-      return arrowsColor === "secondary"
-        ? [
-            "text-(--btn-secondary-text)",
-            "bg-(--btn-secondary-bg)",
-            "border-(--btn-secondary-bg)",
-            "hover:text-(--btn-secondary-text)",
-            "hover:bg-(--btn-secondary-bg)",
-            "hover:border-(--btn-secondary-bg)",
-          ]
-        : [
-            "text-(--btn-primary-text)",
-            "bg-(--btn-primary-bg)",
-            "border-(--btn-primary-bg)",
-            "hover:text-(--btn-primary-text)",
-            "hover:bg-(--btn-primary-bg)",
-            "hover:border-(--btn-primary-bg)",
-          ];
-    }, [arrowsColor]);
+  if (!productsConnection.length) {
+    return null;
+  }
 
-    const arrowShapeClasses = useMemo(() => {
-      if (arrowsShape === "circle") {
-        return "rounded-full";
-      }
-      if (arrowsShape === "square") {
-        return "";
-      }
-      return "rounded-md";
-    }, [arrowsShape]);
+  const totalProducts = loaderData?.products?.length ?? 0;
+  const maxProductsToShow = productsToShow;
+  const displayedProducts = productsConnection.slice(0, maxProductsToShow);
+  const hasMoreProducts = totalProducts > maxProductsToShow;
 
-    if (layout === "grid") {
-      return (
-        <div ref={ref} {...rest} className="relative">
-          <div className="md:hidden">
-            <Swiper
-              key={`swiper-grid-mobile-${gap}`}
-              slidesPerView={1.2}
-              centeredSlides={true}
-              spaceBetween={gap}
-              loop={true}
-              onSlideChange={(swiper) => setActiveSlide(swiper.activeIndex)}
-              onSwiper={() => {
-                requestAnimationFrame(() => {
-                  setIsSwiperInitialized(true);
-                });
-              }}
-              navigation={{
-                nextEl: ".featured-products-next",
-                prevEl: ".featured-products-prev",
-              }}
-              modules={[Navigation]}
-              className={clsx(
-                "mb-6 w-full py-4 transition-opacity duration-300",
-                isSwiperInitialized ? "opacity-100" : "opacity-0",
-              )}
-            >
-              {displayedProducts.map((product) => (
-                <SwiperSlide key={product.id}>
-                  <div className="relative h-full">
-                    <ProductCard product={product} className="h-full w-full" />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
+  const arrowColorClasses = useMemo(() => {
+    return arrowsColor === "secondary"
+      ? [
+          "text-(--btn-secondary-text)",
+          "bg-(--btn-secondary-bg)",
+          "border-(--btn-secondary-bg)",
+          "hover:text-(--btn-secondary-text)",
+          "hover:bg-(--btn-secondary-bg)",
+          "hover:border-(--btn-secondary-bg)",
+        ]
+      : [
+          "text-(--btn-primary-text)",
+          "bg-(--btn-primary-bg)",
+          "border-(--btn-primary-bg)",
+          "hover:text-(--btn-primary-text)",
+          "hover:bg-(--btn-primary-bg)",
+          "hover:border-(--btn-primary-bg)",
+        ];
+  }, [arrowsColor]);
 
-            <div className="flex justify-center gap-2 md:hidden">
-              <button
-                type="button"
-                className={clsx(
-                  "featured-products-prev border p-4",
-                  arrowColorClasses,
-                  arrowShapeClasses,
-                )}
-                aria-label="Previous product"
-              >
-                <ArrowLeft className="" size={16} />
-              </button>
-
-              <button
-                type="button"
-                className={clsx(
-                  "featured-products-next border p-4",
-                  arrowColorClasses,
-                  arrowShapeClasses,
-                )}
-                aria-label="Next product"
-              >
-                <ArrowRight className="" size={16} />
-              </button>
-            </div>
-          </div>
-
-          <div className="hidden md:block">
-            <div
-              className={clsx(
-                "grid",
-                productItemsVariants({ layout, itemsPerRow, gap }),
-              )}
-            >
-              {displayedProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  className="h-full w-full"
-                />
-              ))}
-            </div>
-
-            {hasMoreProducts && (
-              <div className="mt-8 flex justify-center">
-                <Link to="/products" variant="outline" className="uppercase">
-                  See More Products
-                </Link>
-              </div>
-            )}
-          </div>
-        </div>
-      );
+  const arrowShapeClasses = useMemo(() => {
+    if (arrowsShape === "circle") {
+      return "rounded-full";
     }
+    if (arrowsShape === "square") {
+      return "";
+    }
+    return "rounded-md";
+  }, [arrowsShape]);
 
+  if (layout === "grid") {
     return (
       <div ref={ref} {...rest} className="relative">
-        <Swiper
-          key={`swiper-carousel-${slidesPerView}-${gap}`}
-          slidesPerView={1}
-          spaceBetween={gap * 2}
-          onSlideChange={(swiper) => {
-            setActiveSlide(swiper.activeIndex);
-            setIsBeginning(swiper.isBeginning);
-            setIsEnd(swiper.isEnd);
-          }}
-          onSwiper={(swiper) => {
-            setIsBeginning(swiper.isBeginning);
-            setIsEnd(swiper.isEnd);
-            requestAnimationFrame(() => {
-              setIsSwiperInitialized(true);
-            });
-          }}
-          breakpoints={{
-            640: {
-              slidesPerView: Math.min(2, slidesPerView || 4),
-              spaceBetween: gap * 2,
-            },
-            768: {
-              slidesPerView: Math.min(3, slidesPerView || 4),
-              spaceBetween: gap * 2.5,
-            },
-            1024: {
-              slidesPerView: slidesPerView || 4,
-              spaceBetween: gap * 3,
-            },
-          }}
-          navigation={{
-            nextEl: ".featured-products-next",
-            prevEl: ".featured-products-prev",
-          }}
-          modules={[Navigation]}
-          className={clsx(
-            "mb-6 w-full py-4 transition-opacity duration-300",
-            isSwiperInitialized ? "opacity-100" : "opacity-0",
+        <div className="md:hidden">
+          <Swiper
+            key={`swiper-grid-mobile-${gap}`}
+            slidesPerView={1.2}
+            centeredSlides={true}
+            spaceBetween={gap}
+            loop={true}
+            onSlideChange={(swiper) => setActiveSlide(swiper.activeIndex)}
+            onSwiper={() => {
+              requestAnimationFrame(() => {
+                setIsSwiperInitialized(true);
+              });
+            }}
+            navigation={{
+              nextEl: ".featured-products-next",
+              prevEl: ".featured-products-prev",
+            }}
+            modules={[Navigation]}
+            className={clsx(
+              "mb-6 w-full py-4 transition-opacity duration-300",
+              isSwiperInitialized ? "opacity-100" : "opacity-0",
+            )}
+          >
+            {displayedProducts.map((product) => (
+              <SwiperSlide key={product.id}>
+                <div className="relative h-full">
+                  <ProductCard product={product} className="h-full w-full" />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          <div className="flex justify-center gap-2 md:hidden">
+            <button
+              type="button"
+              className={clsx(
+                "featured-products-prev border p-4",
+                arrowColorClasses,
+                arrowShapeClasses,
+              )}
+              aria-label="Previous product"
+            >
+              <ArrowLeft className="" size={16} />
+            </button>
+
+            <button
+              type="button"
+              className={clsx(
+                "featured-products-next border p-4",
+                arrowColorClasses,
+                arrowShapeClasses,
+              )}
+              aria-label="Next product"
+            >
+              <ArrowRight className="" size={16} />
+            </button>
+          </div>
+        </div>
+
+        <div className="hidden md:block">
+          <div
+            className={clsx(
+              "grid",
+              productItemsVariants({ layout, itemsPerRow, gap }),
+            )}
+          >
+            {displayedProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                className="h-full w-full"
+              />
+            ))}
+          </div>
+
+          {hasMoreProducts && (
+            <div className="mt-8 flex justify-center">
+              <Link to="/products" variant="outline" className="uppercase">
+                See More Products
+              </Link>
+            </div>
           )}
-        >
-          {displayedProducts.map((product, index) => (
-            <SwiperSlide key={index}>
-              <div className="relative h-full">
-                <ProductCard product={product} className="h-full" />
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-
-        <div className="flex justify-center gap-2">
-          <button
-            type="button"
-            disabled={isBeginning}
-            className={clsx(
-              "featured-products-prev border p-4",
-              arrowColorClasses,
-              arrowShapeClasses,
-              isBeginning ? "cursor-not-allowed opacity-50" : "opacity-100",
-            )}
-            aria-label="Previous product"
-          >
-            <ArrowLeft className="" size={16} />
-          </button>
-
-          <button
-            type="button"
-            disabled={isEnd}
-            className={clsx(
-              "featured-products-next border p-4",
-              arrowColorClasses,
-              arrowShapeClasses,
-              isEnd ? "cursor-not-allowed opacity-50" : "opacity-100",
-            )}
-            aria-label="Next product"
-          >
-            <ArrowRight className="" size={16} />
-          </button>
         </div>
       </div>
     );
-  },
-);
+  }
+
+  return (
+    <div ref={ref} {...rest} className="relative">
+      <Swiper
+        key={`swiper-carousel-${slidesPerView}-${gap}`}
+        slidesPerView={1}
+        spaceBetween={gap * 2}
+        onSlideChange={(swiper) => {
+          setActiveSlide(swiper.activeIndex);
+          setIsBeginning(swiper.isBeginning);
+          setIsEnd(swiper.isEnd);
+        }}
+        onSwiper={(swiper) => {
+          setIsBeginning(swiper.isBeginning);
+          setIsEnd(swiper.isEnd);
+          requestAnimationFrame(() => {
+            setIsSwiperInitialized(true);
+          });
+        }}
+        breakpoints={{
+          640: {
+            slidesPerView: Math.min(2, slidesPerView || 4),
+            spaceBetween: gap * 2,
+          },
+          768: {
+            slidesPerView: Math.min(3, slidesPerView || 4),
+            spaceBetween: gap * 2.5,
+          },
+          1024: {
+            slidesPerView: slidesPerView || 4,
+            spaceBetween: gap * 3,
+          },
+        }}
+        navigation={{
+          nextEl: ".featured-products-next",
+          prevEl: ".featured-products-prev",
+        }}
+        modules={[Navigation]}
+        className={clsx(
+          "mb-6 w-full py-4 transition-opacity duration-300",
+          isSwiperInitialized ? "opacity-100" : "opacity-0",
+        )}
+      >
+        {displayedProducts.map((product, index) => (
+          <SwiperSlide key={index}>
+            <div className="relative h-full">
+              <ProductCard product={product} className="h-full" />
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      <div className="flex justify-center gap-2">
+        <button
+          type="button"
+          disabled={isBeginning}
+          className={clsx(
+            "featured-products-prev border p-4",
+            arrowColorClasses,
+            arrowShapeClasses,
+            isBeginning ? "cursor-not-allowed opacity-50" : "opacity-100",
+          )}
+          aria-label="Previous product"
+        >
+          <ArrowLeft className="" size={16} />
+        </button>
+
+        <button
+          type="button"
+          disabled={isEnd}
+          className={clsx(
+            "featured-products-next border p-4",
+            arrowColorClasses,
+            arrowShapeClasses,
+            isEnd ? "cursor-not-allowed opacity-50" : "opacity-100",
+          )}
+          aria-label="Next product"
+        >
+          <ArrowRight className="" size={16} />
+        </button>
+      </div>
+    </div>
+  );
+};
 
 export default ProductItems;
 

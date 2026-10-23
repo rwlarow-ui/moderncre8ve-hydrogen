@@ -1,7 +1,7 @@
+import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
-import { forwardRef } from "react";
 import { Image } from "~/components/image";
 import {
   createSchema,
@@ -51,27 +51,26 @@ interface ImageGalleryItemProps
   src: PageImage;
 }
 
-const ImageGalleryItem = forwardRef<HTMLImageElement, ImageGalleryItemProps>(
-  (props, ref) => {
-    const { src, columnSpan, borderRadius, hideOnMobile, ...rest } = props;
-    const data =
-      typeof src === "object"
-        ? src
-        : { url: src, altText: staticImageAlt(src) };
-    return (
-      <Image
-        ref={ref}
-        {...rest}
-        className={clsx(variants({ columnSpan, borderRadius, hideOnMobile }))}
-        data-motion="slide-in"
-        loading="lazy"
-        data={data}
-        width={1000}
-        sizes="(min-width: 45em) 50vw, 100vw"
-      />
-    );
-  },
-);
+const ImageGalleryItem = ({
+  ref,
+  ...props
+}: ImageGalleryItemProps & { ref?: RefObject<HTMLImageElement | null> }) => {
+  const { src, columnSpan, borderRadius, hideOnMobile, ...rest } = props;
+  const data =
+    typeof src === "object" ? src : { url: src, altText: staticImageAlt(src) };
+  return (
+    <Image
+      ref={ref}
+      {...rest}
+      className={clsx(variants({ columnSpan, borderRadius, hideOnMobile }))}
+      data-motion="slide-in"
+      loading="lazy"
+      data={data}
+      width={1000}
+      sizes="(min-width: 45em) 50vw, 100vw"
+    />
+  );
+};
 
 export default ImageGalleryItem;
 

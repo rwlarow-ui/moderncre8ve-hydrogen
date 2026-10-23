@@ -1,11 +1,10 @@
-import { forwardRef } from "react";
 import { useLoaderData } from "react-router";
 import { createSchema } from "~/page-builder";
 import type { loader as productRouteLoader } from "~/routes/($locale).products.$productHandle";
 import ReviewForm from "./review-form";
 import { ReviewList } from "./review-list";
 
-const ReviewIndex = forwardRef<HTMLDivElement>((props, ref) => {
+const ReviewIndex = ({ ref, ...props }) => {
   const { productReviews } = useLoaderData<typeof productRouteLoader>();
 
   // Check if productReviews exists before using
@@ -25,7 +24,7 @@ const ReviewIndex = forwardRef<HTMLDivElement>((props, ref) => {
       ) : null}
     </div>
   );
-});
+};
 
 export default ReviewIndex;
 

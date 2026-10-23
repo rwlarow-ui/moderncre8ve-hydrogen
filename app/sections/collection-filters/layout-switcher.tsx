@@ -7,11 +7,11 @@ const LAYOUT_ICONS = {
   3: ThreeColumns,
 };
 
-export type LayoutSwitcherProps = {
+export interface LayoutSwitcherProps {
   gridSizeDesktop: number;
   gridSizeMobile: number;
   onGridSizeChange: (number: number, context: "mobile" | "desktop") => void;
-};
+}
 
 export function LayoutSwitcher({
   gridSizeDesktop,

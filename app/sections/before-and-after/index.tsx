@@ -1,19 +1,20 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import { layoutInputs, Section, type SectionProps } from "~/components/section";
 import type { ComponentSchema } from "~/page-builder";
 
 type BeforeAndAfterProps = SectionProps;
 
-const BeforeAndAfter = forwardRef<HTMLElement, BeforeAndAfterProps>(
-  (props, ref) => {
-    let { children, ...rest } = props;
-    return (
-      <Section ref={ref} {...rest}>
-        {children}
-      </Section>
-    );
-  },
-);
+const BeforeAndAfter = ({
+  ref,
+  ...props
+}: BeforeAndAfterProps & { ref?: RefObject<HTMLElement | null> }) => {
+  let { children, ...rest } = props;
+  return (
+    <Section ref={ref} {...rest}>
+      {children}
+    </Section>
+  );
+};
 
 export default BeforeAndAfter;
 

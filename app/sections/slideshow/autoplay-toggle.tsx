@@ -28,7 +28,9 @@ export function AutoplayToggle(props: AutoplayToggleProps) {
   }, [initiallyPaused]);
 
   useEffect(() => {
-    if (!swiper?.autoplay) return;
+    if (!swiper?.autoplay) {
+      return;
+    }
     if (paused) {
       swiper.autoplay.stop();
     } else {
@@ -36,7 +38,9 @@ export function AutoplayToggle(props: AutoplayToggleProps) {
     }
   }, [swiper, paused]);
 
-  if (!swiper?.autoplay) return null;
+  if (!swiper?.autoplay) {
+    return null;
+  }
 
   return (
     <button

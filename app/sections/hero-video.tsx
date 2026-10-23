@@ -1,15 +1,9 @@
+import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
 import type { CSSProperties } from "react";
-import {
-  forwardRef,
-  lazy,
-  Suspense,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import type { OverlayProps } from "~/components/overlay";
 import { Overlay, overlayInputs } from "~/components/overlay";
@@ -90,7 +84,10 @@ function getPlayerSize(id: string) {
 
 const ReactPlayer = lazy(() => import("react-player/lazy"));
 
-const HeroVideo = forwardRef<HTMLElement, HeroVideoProps>((props, ref) => {
+const HeroVideo = ({
+  ref,
+  ...props
+}: HeroVideoProps & { ref?: RefObject<HTMLElement | null> }) => {
   const {
     videoURL,
     gap,
@@ -190,7 +187,7 @@ const HeroVideo = forwardRef<HTMLElement, HeroVideoProps>((props, ref) => {
       </div>
     </section>
   );
-});
+};
 
 export default HeroVideo;
 

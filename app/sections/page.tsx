@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import { useLoaderData } from "react-router";
 import type { PageDetailsQuery } from "storefront-api.generated";
 import { Link } from "~/components/link";
@@ -7,7 +7,10 @@ import { createSchema } from "~/page-builder";
 
 interface PageProps extends SectionProps {}
 
-const Page = forwardRef<HTMLElement, PageProps>((props, ref) => {
+const Page = ({
+  ref,
+  ...props
+}: PageProps & { ref?: RefObject<HTMLElement | null> }) => {
   const { page } = useLoaderData<PageDetailsQuery>();
 
   if (page) {
@@ -32,7 +35,7 @@ const Page = forwardRef<HTMLElement, PageProps>((props, ref) => {
     );
   }
   return <Section ref={ref} {...props} />;
-});
+};
 
 export default Page;
 

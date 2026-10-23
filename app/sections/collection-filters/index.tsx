@@ -1,5 +1,6 @@
+import type { RefObject } from "react";
 import clsx from "clsx";
-import { forwardRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import type { CollectionQuery } from "storefront-api.generated";
 import { BreadCrumb } from "~/components/breadcrumb";
@@ -35,121 +36,120 @@ export interface CollectionFiltersData {
 
 interface CollectionFiltersProps extends SectionProps, CollectionFiltersData {}
 
-const CollectionFilters = forwardRef<HTMLElement, CollectionFiltersProps>(
-  (props, ref) => {
-    const {
-      showBreadcrumb,
-      showDescription,
-      showTrustStrip = true,
-      showBanner,
-      bannerHeightDesktop,
-      bannerHeightMobile,
-      bannerBorderRadius,
-      enableSort,
-      showFiltersCount,
-      enableFilter,
-      filtersPosition,
-      expandFilters,
-      showProductsCount,
-      enableSwatches,
-      displayAsButtonFor,
-      productsPerRowDesktop,
-      productsPerRowMobile,
-      loadPrevText,
-      loadMoreText,
-      ...rest
-    } = props;
-    const { collection, collections } = useLoaderData<
-      CollectionQuery & {
-        collections: Array<{ handle: string; title: string }>;
-      }
-    >();
+const CollectionFilters = ({
+  ref,
+  ...props
+}: CollectionFiltersProps & { ref?: RefObject<HTMLElement | null> }) => {
+  const {
+    showBreadcrumb,
+    showDescription,
+    showTrustStrip = true,
+    showBanner,
+    bannerHeightDesktop,
+    bannerHeightMobile,
+    bannerBorderRadius,
+    enableSort,
+    showFiltersCount,
+    enableFilter,
+    filtersPosition,
+    expandFilters,
+    showProductsCount,
+    enableSwatches,
+    displayAsButtonFor,
+    productsPerRowDesktop,
+    productsPerRowMobile,
+    loadPrevText,
+    loadMoreText,
+    ...rest
+  } = props;
+  const { collection, collections } = useLoaderData<
+    CollectionQuery & {
+      collections: Array<{ handle: string; title: string }>;
+    }
+  >();
 
-    const [gridSizeDesktop, setGridSizeDesktop] = useState(
-      Number(productsPerRowDesktop) || 2,
-    );
-    const [gridSizeMobile, setGridSizeMobile] = useState(
-      Number(productsPerRowMobile) || 1,
-    );
+  const [gridSizeDesktop, setGridSizeDesktop] = useState(
+    Number(productsPerRowDesktop) || 2,
+  );
+  const [gridSizeMobile, setGridSizeMobile] = useState(
+    Number(productsPerRowMobile) || 1,
+  );
 
-    useEffect(() => {
-      setGridSizeDesktop(Number(productsPerRowDesktop) || 2);
-      setGridSizeMobile(Number(productsPerRowMobile) || 1);
-    }, [productsPerRowDesktop, productsPerRowMobile]);
+  useEffect(() => {
+    setGridSizeDesktop(Number(productsPerRowDesktop) || 2);
+    setGridSizeMobile(Number(productsPerRowMobile) || 1);
+  }, [productsPerRowDesktop, productsPerRowMobile]);
 
-    if (collection?.products && collections) {
-      const banner = collection.metafield
-        ? collection.metafield.reference.image
-        : collection.image;
-      return (
-        <Section ref={ref} {...rest} overflow="unset">
-          <div className="py-5 lg:py-8">
-            {showBreadcrumb && (
-              <BreadCrumb page={collection.title} className="mb-2.5" />
-            )}
-            <h1 className="font-normal text-2xl uppercase tracking-tighter">
-              {collection.title}
-            </h1>
-            {showDescription && collection.description && (
-              <p className="mt-2.5 text-body-subtle">
-                {collection.description}
-              </p>
-            )}
-            {showTrustStrip && <TrustStrip className="mt-5" />}
-            {showBanner && banner && (
-              <div
-                className={clsx([
-                  "mt-6 overflow-hidden bg-gray-100",
-                  "rounded-(--banner-border-radius)",
-                  "h-(--banner-height-mobile) lg:h-(--banner-height-desktop)",
-                ])}
-                style={
-                  {
-                    "--banner-height-desktop": `${bannerHeightDesktop}px`,
-                    "--banner-height-mobile": `${bannerHeightMobile}px`,
-                    "--banner-border-radius": `${bannerBorderRadius}px`,
-                  } as React.CSSProperties
-                }
-              >
-                <Image alt="" data={banner} sizes="auto" width={2000} />
+  if (collection?.products && collections) {
+    const banner = collection.metafield
+      ? collection.metafield.reference.image
+      : collection.image;
+    return (
+      <Section ref={ref} {...rest} overflow="unset">
+        <div className="py-5 lg:py-8">
+          {showBreadcrumb && (
+            <BreadCrumb page={collection.title} className="mb-2.5" />
+          )}
+          <h1 className="font-normal text-2xl uppercase tracking-tighter">
+            {collection.title}
+          </h1>
+          {showDescription && collection.description && (
+            <p className="mt-2.5 text-body-subtle">{collection.description}</p>
+          )}
+          {showTrustStrip && <TrustStrip className="mt-5" />}
+          {showBanner && banner && (
+            <div
+              className={clsx([
+                "mt-6 overflow-hidden bg-gray-100",
+                "rounded-(--banner-border-radius)",
+                "h-(--banner-height-mobile) lg:h-(--banner-height-desktop)",
+              ])}
+              style={
+                {
+                  "--banner-height-desktop": `${bannerHeightDesktop}px`,
+                  "--banner-height-mobile": `${bannerHeightMobile}px`,
+                  "--banner-border-radius": `${bannerBorderRadius}px`,
+                } as React.CSSProperties
+              }
+            >
+              <Image alt="" data={banner} sizes="auto" width={2000} />
+            </div>
+          )}
+        </div>
+        <ToolsBar
+          width={rest.width}
+          gridSizeDesktop={gridSizeDesktop}
+          gridSizeMobile={gridSizeMobile}
+          onGridSizeChange={(v, context) => {
+            if (context === "desktop") {
+              setGridSizeDesktop(v);
+            } else {
+              setGridSizeMobile(v);
+            }
+          }}
+          {...props}
+        />
+        <div className="flex gap-5 pt-3 pb-8 lg:pb-20">
+          {enableFilter && filtersPosition === "sidebar" && (
+            <div className="hidden w-72 shrink-0 lg:block">
+              <div className="sticky top-[calc(var(--height-nav)+40px)] space-y-4">
+                <div className="font-bold uppercase">Filters</div>
+                <Filters />
               </div>
-            )}
-          </div>
-          <ToolsBar
-            width={rest.width}
+            </div>
+          )}
+          <ProductsPagination
             gridSizeDesktop={gridSizeDesktop}
             gridSizeMobile={gridSizeMobile}
-            onGridSizeChange={(v, context) => {
-              if (context === "desktop") {
-                setGridSizeDesktop(v);
-              } else {
-                setGridSizeMobile(v);
-              }
-            }}
-            {...props}
+            loadPrevText={loadPrevText}
+            loadMoreText={loadMoreText}
           />
-          <div className="flex gap-5 pt-3 pb-8 lg:pb-20">
-            {enableFilter && filtersPosition === "sidebar" && (
-              <div className="hidden w-72 shrink-0 lg:block">
-                <div className="sticky top-[calc(var(--height-nav)+40px)] space-y-4">
-                  <div className="font-bold uppercase">Filters</div>
-                  <Filters />
-                </div>
-              </div>
-            )}
-            <ProductsPagination
-              gridSizeDesktop={gridSizeDesktop}
-              gridSizeMobile={gridSizeMobile}
-              loadPrevText={loadPrevText}
-              loadMoreText={loadMoreText}
-            />
-          </div>
-        </Section>
-      );
-    }
-    return <Section ref={ref} {...rest} />;
-  },
-);
+        </div>
+      </Section>
+    );
+  }
+  return <Section ref={ref} {...rest} />;
+};
 
 export default CollectionFilters;
 

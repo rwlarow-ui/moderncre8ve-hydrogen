@@ -1,5 +1,6 @@
+import type { RefObject } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { type CSSProperties, forwardRef } from "react";
+import { type CSSProperties } from "react";
 import type { ComponentSchema, SectionComponentProps } from "~/page-builder";
 import { cn } from "~/utils/cn";
 
@@ -33,7 +34,10 @@ export interface ScrollingProps
   iconSize?: number;
 }
 
-const ScrollingText = forwardRef<HTMLElement, ScrollingProps>((props, ref) => {
+const ScrollingText = ({
+  ref,
+  ...props
+}: ScrollingProps & { ref?: RefObject<HTMLElement | null> }) => {
   let {
     content,
     textSize,
@@ -207,7 +211,7 @@ const ScrollingText = forwardRef<HTMLElement, ScrollingProps>((props, ref) => {
       </ul>
     </section>
   );
-});
+};
 
 export default ScrollingText;
 

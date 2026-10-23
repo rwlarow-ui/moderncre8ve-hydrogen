@@ -1,15 +1,18 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import { layoutInputs, Section, type SectionProps } from "~/components/section";
 import { createSchema } from "~/page-builder";
 
-const CollectionList = forwardRef<HTMLElement, SectionProps>((props, ref) => {
+const CollectionList = ({
+  ref,
+  ...props
+}: SectionProps & { ref?: RefObject<HTMLElement | null> }) => {
   const { children, ...rest } = props;
   return (
     <Section ref={ref} {...rest}>
       {children}
     </Section>
   );
-});
+};
 
 export default CollectionList;
 

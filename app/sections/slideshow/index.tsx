@@ -1,6 +1,6 @@
+import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { forwardRef } from "react";
 import { A11y, Autoplay, EffectFade } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ImagePriority } from "~/hooks/use-image-priority";
@@ -61,10 +61,11 @@ export interface SlideshowData
   changeSlidesEvery: number;
 }
 
-const Slideshow = forwardRef<
-  HTMLDivElement,
-  SlideshowData & SectionComponentProps
->((props, ref) => {
+const Slideshow = ({
+  ref,
+  ...props
+}: SlideshowData &
+  SectionComponentProps & { ref?: RefObject<HTMLDivElement | null> }) => {
   const {
     height,
     effect,
@@ -145,7 +146,7 @@ const Slideshow = forwardRef<
       </Swiper>
     </section>
   );
-});
+};
 
 export default Slideshow;
 

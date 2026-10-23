@@ -1,17 +1,18 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import { layoutInputs, Section, type SectionProps } from "~/components/section";
 import { createSchema } from "~/page-builder";
 
-const JudgemeReviewSection = forwardRef<HTMLElement, SectionProps>(
-  (props, ref) => {
-    const { children, loaderData, ...rest } = props;
-    return (
-      <Section ref={ref} {...rest} overflow="unset">
-        {children}
-      </Section>
-    );
-  },
-);
+const JudgemeReviewSection = ({
+  ref,
+  ...props
+}: SectionProps & { ref?: RefObject<HTMLElement | null> }) => {
+  const { children, loaderData, ...rest } = props;
+  return (
+    <Section ref={ref} {...rest} overflow="unset">
+      {children}
+    </Section>
+  );
+};
 
 export default JudgemeReviewSection;
 

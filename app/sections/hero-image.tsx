@@ -1,6 +1,6 @@
+import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { forwardRef } from "react";
 import { backgroundInputs } from "~/components/background-image";
 import { overlayInputs } from "~/components/overlay";
 import type { SectionProps } from "~/components/section";
@@ -55,25 +55,26 @@ const variants = cva("flex flex-col [&_.paragraph]:mx-[unset]", {
   },
 });
 
-const HeroImage = forwardRef<HTMLElement, HeroImageProps & SectionProps>(
-  (props, ref) => {
-    const { children, height, contentPosition, ...rest } = props;
-    const { enableTransparentHeader } = useThemeSettings();
-    return (
-      <Section
-        ref={ref}
-        {...rest}
-        containerClassName={variants({
-          contentPosition,
-          height,
-          enableTransparentHeader,
-        })}
-      >
-        {children}
-      </Section>
-    );
-  },
-);
+const HeroImage = ({
+  ref,
+  ...props
+}: HeroImageProps & SectionProps & { ref?: RefObject<HTMLElement | null> }) => {
+  const { children, height, contentPosition, ...rest } = props;
+  const { enableTransparentHeader } = useThemeSettings();
+  return (
+    <Section
+      ref={ref}
+      {...rest}
+      containerClassName={variants({
+        contentPosition,
+        height,
+        enableTransparentHeader,
+      })}
+    >
+      {children}
+    </Section>
+  );
+};
 
 export default HeroImage;
 

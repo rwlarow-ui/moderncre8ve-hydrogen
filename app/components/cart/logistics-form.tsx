@@ -9,7 +9,10 @@ import {
   STAIRS_OPTIONS,
 } from "~/utils/logistics";
 
-type Attribute = { key: string; value?: string | null };
+interface Attribute {
+  key: string;
+  value?: string | null;
+}
 
 const FIELD_CLASS =
   "w-full border border-line bg-white p-3 text-[#918379] focus:border-gray-500 focus:outline-none";

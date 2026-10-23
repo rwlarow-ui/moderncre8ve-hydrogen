@@ -1,7 +1,8 @@
+import type { RefObject } from "react";
 import { PlayIcon } from "@phosphor-icons/react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { forwardRef, useState } from "react";
+import { useState } from "react";
 import {
   createSchema,
   type PageVideo,
@@ -74,10 +75,14 @@ function playerUrl(src: string, youtubeId: string) {
         );
     if (player !== url) {
       for (const [key, value] of url.searchParams) {
-        if (key === "v" || key === "si") continue;
+        if (key === "v" || key === "si") {
+          continue;
+        }
         if (key === "t") {
           const seconds = Number.parseInt(value, 10);
-          if (seconds > 0) player.searchParams.set("start", String(seconds));
+          if (seconds > 0) {
+            player.searchParams.set("start", String(seconds));
+          }
           continue;
         }
         player.searchParams.set(key, value);
@@ -95,59 +100,62 @@ function playerUrl(src: string, youtubeId: string) {
  * load the player (~1 MB of script) when clicked. Other providers fall back
  * to a lazily loaded iframe.
  */
-const VideoEmbedItem = forwardRef<HTMLDivElement, VideoItemProps>(
-  (props, ref) => {
-    const { video, videoUrl, size, borderRadius, ...rest } = props;
-    const src = video?.url || videoUrl;
-    const youtubeId = src?.match(YOUTUBE_ID)?.[1];
-    const [playing, setPlaying] = useState(false);
-    const className = variants({ size, borderRadius });
+const VideoEmbedItem = ({
+  ref,
+  ...props
+}: VideoItemProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  const { video, videoUrl, size, borderRadius, ...rest } = props;
+  const src = video?.url || videoUrl;
+  const youtubeId = src?.match(YOUTUBE_ID)?.[1];
+  const [playing, setPlaying] = useState(false);
+  const className = variants({ size, borderRadius });
 
-    if (!src) return null;
+  if (!src) {
+    return null;
+  }
 
-    if (youtubeId && !playing) {
-      return (
-        <div
-          ref={ref}
-          {...rest}
-          className={cn(className, "relative overflow-hidden bg-black")}
-        >
-          <img
-            src={`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          <button
-            type="button"
-            onClick={() => setPlaying(true)}
-            aria-label="Play video"
-            className="group absolute inset-0 flex items-center justify-center"
-          >
-            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-black/70 transition-colors group-hover:bg-black/85">
-              <PlayIcon className="h-7 w-7 text-white" weight="fill" />
-            </span>
-          </button>
-        </div>
-      );
-    }
-
+  if (youtubeId && !playing) {
     return (
-      <div ref={ref} {...rest} className={className}>
-        <iframe
-          className="h-full w-full"
-          src={youtubeId ? playerUrl(src, youtubeId) : src}
+      <div
+        ref={ref}
+        {...rest}
+        className={cn(className, "relative overflow-hidden bg-black")}
+      >
+        <img
+          src={`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`}
+          alt=""
           loading="lazy"
-          allowFullScreen
-          title="Video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          sandbox="allow-presentation allow-same-origin allow-scripts"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
         />
+        <button
+          type="button"
+          onClick={() => setPlaying(true)}
+          aria-label="Play video"
+          className="group absolute inset-0 flex items-center justify-center"
+        >
+          <span className="flex h-16 w-16 items-center justify-center rounded-full bg-black/70 transition-colors group-hover:bg-black/85">
+            <PlayIcon className="h-7 w-7 text-white" weight="fill" />
+          </span>
+        </button>
       </div>
     );
-  },
-);
+  }
+
+  return (
+    <div ref={ref} {...rest} className={className}>
+      <iframe
+        className="h-full w-full"
+        src={youtubeId ? playerUrl(src, youtubeId) : src}
+        loading="lazy"
+        allowFullScreen
+        title="Video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        sandbox="allow-presentation allow-same-origin allow-scripts"
+      />
+    </div>
+  );
+};
 
 export default VideoEmbedItem;
 

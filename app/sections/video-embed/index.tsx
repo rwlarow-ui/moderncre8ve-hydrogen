@@ -1,18 +1,21 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
 import { createSchema } from "~/page-builder";
 
 type VideoEmbedProps = SectionProps;
 
-const VideoEmbed = forwardRef<HTMLElement, VideoEmbedProps>((props, ref) => {
+const VideoEmbed = ({
+  ref,
+  ...props
+}: VideoEmbedProps & { ref?: RefObject<HTMLElement | null> }) => {
   const { children, ...rest } = props;
   return (
     <Section ref={ref} {...rest} containerClassName="flex flex-col">
       {children}
     </Section>
   );
-});
+};
 
 export default VideoEmbed;
 

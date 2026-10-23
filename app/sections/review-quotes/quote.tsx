@@ -1,5 +1,5 @@
+import type { RefObject } from "react";
 import { Quotes, Star } from "@phosphor-icons/react";
-import { forwardRef } from "react";
 import { createSchema, type SectionComponentProps } from "~/page-builder";
 
 interface ReviewQuoteProps extends SectionComponentProps {
@@ -11,75 +11,76 @@ interface ReviewQuoteProps extends SectionComponentProps {
   textColor?: string;
 }
 
-const ReviewQuote = forwardRef<HTMLDivElement, ReviewQuoteProps>(
-  (props, ref) => {
-    const {
-      quote = "",
-      author = "Verified buyer",
-      product = "",
-      rating = 5,
-      accentColor = "#2CBF96",
-      textColor = "#323640",
-      ...rest
-    } = props;
+const ReviewQuote = ({
+  ref,
+  ...props
+}: ReviewQuoteProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  const {
+    quote = "",
+    author = "Verified buyer",
+    product = "",
+    rating = 5,
+    accentColor = "#2CBF96",
+    textColor = "#323640",
+    ...rest
+  } = props;
 
-    // `rating` comes from a 1–5 range input; clamp so a stray value can't
-    // render hundreds of stars (or a negative-length array).
-    const starCount = Math.max(0, Math.min(5, Math.round(rating)));
+  // `rating` comes from a 1–5 range input; clamp so a stray value can't
+  // render hundreds of stars (or a negative-length array).
+  const starCount = Math.max(0, Math.min(5, Math.round(rating)));
 
-    return (
-      <figure
-        ref={ref}
-        {...rest}
-        className="flex h-full flex-col gap-4 bg-white px-6 py-8 sm:px-8"
+  return (
+    <figure
+      ref={ref}
+      {...rest}
+      className="flex h-full flex-col gap-4 bg-white px-6 py-8 sm:px-8"
+    >
+      {starCount > 0 && (
+        <div
+          className="flex gap-0.5"
+          role="img"
+          aria-label={`${starCount} out of 5 stars`}
+        >
+          {Array.from({ length: starCount }, (_, index) => (
+            <Star
+              key={index}
+              size={18}
+              weight="fill"
+              fill={accentColor}
+              aria-hidden="true"
+            />
+          ))}
+        </div>
+      )}
+
+      <Quotes
+        size={28}
+        className="rotate-180"
+        style={{ color: `${textColor}55` }}
+        aria-hidden="true"
+      />
+
+      <blockquote
+        className="flex-1 font-serif text-base leading-relaxed"
+        style={{ color: textColor }}
       >
-        {starCount > 0 && (
-          <div
-            className="flex gap-0.5"
-            role="img"
-            aria-label={`${starCount} out of 5 stars`}
-          >
-            {Array.from({ length: starCount }, (_, index) => (
-              <Star
-                key={index}
-                size={18}
-                weight="fill"
-                fill={accentColor}
-                aria-hidden="true"
-              />
-            ))}
-          </div>
+        {quote}
+      </blockquote>
+
+      <figcaption
+        className="font-sans text-sm uppercase tracking-wide"
+        style={{ color: `${textColor}bb` }}
+      >
+        {author}
+        {product && (
+          <span className="mt-1 block normal-case tracking-normal opacity-80">
+            {product}
+          </span>
         )}
-
-        <Quotes
-          size={28}
-          className="rotate-180"
-          style={{ color: `${textColor}55` }}
-          aria-hidden="true"
-        />
-
-        <blockquote
-          className="flex-1 font-serif text-base leading-relaxed"
-          style={{ color: textColor }}
-        >
-          {quote}
-        </blockquote>
-
-        <figcaption
-          className="font-sans text-sm uppercase tracking-wide"
-          style={{ color: `${textColor}bb` }}
-        >
-          {author}
-          {product && (
-            <span className="mt-1 block normal-case tracking-normal opacity-80">
-              {product}
-            </span>
-          )}
-        </figcaption>
-      </figure>
-    );
-  },
-);
+      </figcaption>
+    </figure>
+  );
+};
 
 export default ReviewQuote;
 

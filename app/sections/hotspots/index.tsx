@@ -1,11 +1,14 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import { layoutInputs, Section } from "~/components/section";
 import type { SectionComponentProps } from "~/page-builder";
 import { createSchema } from "~/page-builder";
 
 interface HotspotsProps extends SectionComponentProps {}
 
-let Hotspots = forwardRef<HTMLElement, HotspotsProps>((props, ref) => {
+let Hotspots = ({
+  ref,
+  ...props
+}: HotspotsProps & { ref?: RefObject<HTMLElement | null> }) => {
   let { children, ...rest } = props;
   return (
     <Section
@@ -17,7 +20,7 @@ let Hotspots = forwardRef<HTMLElement, HotspotsProps>((props, ref) => {
       {children}
     </Section>
   );
-});
+};
 
 export default Hotspots;
 

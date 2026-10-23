@@ -2,7 +2,6 @@ import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import type React from "react";
 import type { HTMLAttributes } from "react";
-import { forwardRef } from "react";
 import { useAnimation } from "~/hooks/use-animation";
 import type { SectionComponentProps, SettingsGroup } from "~/page-builder";
 import { cn } from "~/utils/cn";
@@ -75,7 +74,10 @@ const variants = cva("relative", {
   },
 });
 
-export const Section = forwardRef<HTMLElement, SectionProps>((props, ref) => {
+export const Section = ({
+  ref,
+  ...props
+}: SectionProps & { ref?: React.RefObject<HTMLElement | null> }) => {
   let {
     as: Component = "section",
     width,
@@ -138,7 +140,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>((props, ref) => {
       </div>
     </Component>
   );
-});
+};
 
 export const layoutInputs: SettingsGroup["inputs"] = [
   {

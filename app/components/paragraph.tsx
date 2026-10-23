@@ -1,7 +1,7 @@
+import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import { clsx } from "clsx";
-import { forwardRef } from "react";
 import { createSchema, type SectionComponentProps } from "~/page-builder";
 
 export interface ParagraphProps
@@ -45,10 +45,12 @@ const variants = cva("paragraph", {
   },
 });
 
-const Paragraph = forwardRef<
-  HTMLParagraphElement | HTMLDivElement,
-  ParagraphProps
->((props, ref) => {
+const Paragraph = ({
+  ref,
+  ...props
+}: ParagraphProps & {
+  ref?: RefObject<HTMLParagraphElement | HTMLDivElement | null>;
+}) => {
   const {
     as: Tag = "p",
     width,
@@ -70,7 +72,7 @@ const Paragraph = forwardRef<
       dangerouslySetInnerHTML={{ __html: content }}
     />
   );
-});
+};
 
 export default Paragraph;
 

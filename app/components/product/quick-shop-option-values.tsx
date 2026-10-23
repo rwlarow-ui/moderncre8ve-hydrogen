@@ -19,7 +19,9 @@ export function QuickShopOptionValues({
 }) {
   const { name: optionName, optionValues } = option || {};
 
-  if (!optionName) return null;
+  if (!optionName) {
+    return null;
+  }
 
   const selectedValue = optionValues.find((v) => v.selected)?.name;
   const selectedOption = optionValues.find((v) => v.selected);

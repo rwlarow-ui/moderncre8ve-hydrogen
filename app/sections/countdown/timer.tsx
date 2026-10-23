@@ -1,5 +1,6 @@
+import type { RefObject } from "react";
 import type { CSSProperties } from "react";
-import { forwardRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   createSchema,
   type SectionComponentProps,
@@ -31,16 +32,17 @@ function formatNumber(num: number): string {
   return num < 10 ? `0${num}` : `${num}`;
 }
 
-type CountDownTimerData = {
+interface CountDownTimerData {
   textColor: string;
   endTime: number;
   layout?: "horizontal" | "vertical";
-};
+}
 
-const CountdownTimer = forwardRef<
-  HTMLDivElement,
-  CountDownTimerData & SectionComponentProps
->((props, ref) => {
+const CountdownTimer = ({
+  ref,
+  ...props
+}: CountDownTimerData &
+  SectionComponentProps & { ref?: RefObject<HTMLDivElement | null> }) => {
   const { textColor, endTime, layout, ...rest } = props;
   // The parent countdown section decides the timer's layout.
   const parent = useParentSection();
@@ -163,7 +165,7 @@ const CountdownTimer = forwardRef<
       </div>
     </div>
   );
-});
+};
 
 export default CountdownTimer;
 

@@ -22,30 +22,30 @@ export type PageType =
   | "CUSTOM";
 
 /** A single node in a page tree. `children` references other items by id. */
-export type PageItem = {
+export interface PageItem {
   id: string;
   type: string;
   data?: Record<string, any>;
   children?: { id: string }[];
-};
+}
 
 /**
  * A page composition: a flat list of items resolved from `rootId`. Authored as
  * a typed module under `app/page-builder/pages/`.
  */
-export type PageDefinition = {
+export interface PageDefinition {
   rootId: string;
   items: PageItem[];
-};
+}
 
 /** A page item after its component `loader` has run on the server. */
 export type LoadedPageItem = PageItem & { loaderData?: unknown };
 
 /** What a route loader hands to `<PageContent />` via `pageData`. */
-export type PageData = {
+export interface PageData {
   rootId: string;
   items: LoadedPageItem[];
-};
+}
 
 /* -------------------------------------------------------------------------- */
 /* Component contract                                                          */
@@ -64,11 +64,11 @@ export interface SectionComponentProps<L = any> {
 }
 
 /** Args passed to a section's server-side `loader`. */
-export type ComponentLoaderArgs<T = any> = {
+export interface ComponentLoaderArgs<T = any> {
   data: T;
   context: AppLoadContext;
   request: Request;
-};
+}
 
 /** A route loader that has the page-builder client on its context. */
 export interface RouteLoaderArgs {
@@ -78,30 +78,33 @@ export interface RouteLoaderArgs {
 }
 
 /** A registered section module: `default` export plus `schema`, and optionally `loader`. */
-export type SectionComponent = {
+export interface SectionComponent {
   default: React.ForwardRefExoticComponent<any> | ((props: any) => JSX.Element);
   schema: ComponentSchema;
   loader?: (args: ComponentLoaderArgs) => Promise<unknown>;
-};
+}
 
 /* -------------------------------------------------------------------------- */
 /* Resource picker values                                                      */
 /* -------------------------------------------------------------------------- */
 
-export type ResourcePickerData = { id: number; handle: string };
+export interface ResourcePickerData {
+  id: number;
+  handle: string;
+}
 export type PickedProduct = ResourcePickerData;
 export type PickedCollection = ResourcePickerData;
 export type PickedBlog = ResourcePickerData;
 export type PickedArticle = ResourcePickerData;
 
-export type PageImage = {
+export interface PageImage {
   id: string;
   url: string;
   altText: string;
   width: number;
   height: number;
   previewSrc: string;
-};
+}
 
 export type PageVideo = PageImage;
 
@@ -143,7 +146,7 @@ export type InputType =
   | "url"
   | "video";
 
-export type SchemaInput = {
+export interface SchemaInput {
   type: InputType;
   name?: string;
   label?: string;
@@ -153,15 +156,15 @@ export type SchemaInput = {
   configs?: Record<string, any>;
   condition?: string | ((data: any) => boolean);
   [key: string]: any;
-};
+}
 
 /** A labelled group of inputs. Kept as the settings vocabulary for sections. */
-export type SettingsGroup = {
+export interface SettingsGroup {
   group: string;
   inputs: SchemaInput[];
-};
+}
 
-export type ComponentSchema = {
+export interface ComponentSchema {
   type: string;
   title: string;
   settings?: SettingsGroup[];
@@ -169,12 +172,12 @@ export type ComponentSchema = {
   presets?: Record<string, any>;
   limit?: number;
   enabledOn?: { pages?: (PageType | string)[] };
-};
+}
 
-export type ThemeSchema = {
+export interface ThemeSchema {
   info: Record<string, any>;
   i18n?: Record<string, any>;
   settings: SettingsGroup[];
-};
+}
 
 export type ThemeSettings = Record<string, any>;

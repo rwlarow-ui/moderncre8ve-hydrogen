@@ -1,5 +1,5 @@
+import type { RefObject } from "react";
 import * as RadixAccordion from "@radix-ui/react-accordion";
-import { forwardRef } from "react";
 import type { ComponentSchema, SectionComponentProps } from "~/page-builder";
 import { useAccordionContext } from "./index";
 
@@ -9,54 +9,55 @@ interface AccordionGroupProps extends SectionComponentProps {
   accordionTextColor: string;
 }
 
-const AccordionGroup = forwardRef<HTMLDivElement, AccordionGroupProps>(
-  (props, ref) => {
-    let { children, accordionBackgroundColor, accordionTextColor, ...rest } =
-      props;
+const AccordionGroup = ({
+  ref,
+  ...props
+}: AccordionGroupProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  let { children, accordionBackgroundColor, accordionTextColor, ...rest } =
+    props;
 
-    // Get layout from accordion context
-    const { layout } = useAccordionContext();
+  // Get layout from accordion context
+  const { layout } = useAccordionContext();
 
-    let style = {
-      "--accordion-bg-color": accordionBackgroundColor,
-      "--accordion-text-color": accordionTextColor,
-    } as React.CSSProperties;
+  let style = {
+    "--accordion-bg-color": accordionBackgroundColor,
+    "--accordion-text-color": accordionTextColor,
+  } as React.CSSProperties;
 
-    // Distribute children for row layout
-    const childArray = Array.isArray(children) ? children : [children];
-    const leftColumn = childArray.filter((_, index) => index % 2 === 0);
-    const rightColumn = childArray.filter((_, index) => index % 2 === 1);
+  // Distribute children for row layout
+  const childArray = Array.isArray(children) ? children : [children];
+  const leftColumn = childArray.filter((_, index) => index % 2 === 0);
+  const rightColumn = childArray.filter((_, index) => index % 2 === 1);
 
-    return (
-      <div ref={ref} {...rest} style={style}>
-        {layout === "row" ? (
-          <div key="row-layout" className="grid w-full grid-cols-2 gap-4">
-            <RadixAccordion.Root
-              type="multiple"
-              className="accordion--group flex w-full flex-col gap-4"
-            >
-              {leftColumn}
-            </RadixAccordion.Root>
-            <RadixAccordion.Root
-              type="multiple"
-              className="accordion--group flex w-full flex-col gap-4"
-            >
-              {rightColumn}
-            </RadixAccordion.Root>
-          </div>
-        ) : (
+  return (
+    <div ref={ref} {...rest} style={style}>
+      {layout === "row" ? (
+        <div key="row-layout" className="grid w-full grid-cols-2 gap-4">
           <RadixAccordion.Root
-            key="column-layout"
             type="multiple"
             className="accordion--group flex w-full flex-col gap-4"
           >
-            {children}
+            {leftColumn}
           </RadixAccordion.Root>
-        )}
-      </div>
-    );
-  },
-);
+          <RadixAccordion.Root
+            type="multiple"
+            className="accordion--group flex w-full flex-col gap-4"
+          >
+            {rightColumn}
+          </RadixAccordion.Root>
+        </div>
+      ) : (
+        <RadixAccordion.Root
+          key="column-layout"
+          type="multiple"
+          className="accordion--group flex w-full flex-col gap-4"
+        >
+          {children}
+        </RadixAccordion.Root>
+      )}
+    </div>
+  );
+};
 
 export default AccordionGroup;
 

@@ -1,9 +1,9 @@
+import type { RefObject } from "react";
 import {
   FacebookLogoIcon,
   PinterestLogoIcon,
   XLogoIcon,
 } from "@phosphor-icons/react";
-import { forwardRef } from "react";
 import { useLoaderData, useRouteLoaderData } from "react-router";
 import {
   FacebookShareButton,
@@ -21,7 +21,10 @@ interface BlogPostProps extends SectionProps {
   showShareButtons: boolean;
 }
 
-const BlogPost = forwardRef<HTMLElement, BlogPostProps>((props, ref) => {
+const BlogPost = ({
+  ref,
+  ...props
+}: BlogPostProps & { ref?: RefObject<HTMLElement | null> }) => {
   const { showTags, showShareButtons, ...rest } = props;
   const { layout } = useRouteLoaderData<RootLoader>("root");
   const { article, blog, formattedDate } = useLoaderData<{
@@ -122,7 +125,7 @@ const BlogPost = forwardRef<HTMLElement, BlogPostProps>((props, ref) => {
     );
   }
   return <Section ref={ref} {...rest} />;
-});
+};
 
 export default BlogPost;
 
