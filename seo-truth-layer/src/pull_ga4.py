@@ -118,6 +118,40 @@ def pull_ga4(property_id: str, days_back: int = 7) -> pd.DataFrame:
     return df
 
 
+def pull_ga4_transactions(property_id: str, days_back: int = 7) -> pd.DataFrame:
+    """
+    Pull GA4 purchase transaction IDs for the same window as pull_ga4.
+    Used to reconcile against Shopify orders (see tracking_health.py).
+
+    Returns: transaction_id, purchase_revenue
+    """
+    creds = get_credentials()
+    client = BetaAnalyticsDataClient(credentials=creds)
+
+    end_date = datetime.utcnow().date() - timedelta(days=1)
+    start_date = end_date - timedelta(days=days_back)
+
+    response = client.run_report(RunReportRequest(
+        property=f"properties/{property_id}",
+        date_ranges=[DateRange(start_date=start_date.isoformat(), end_date=end_date.isoformat())],
+        dimensions=[Dimension(name="transactionId")],
+        metrics=[Metric(name="purchaseRevenue")],
+        limit=100000,
+    ))
+
+    rows = [
+        {
+            "transaction_id": r.dimension_values[0].value,
+            "purchase_revenue": round(float(r.metric_values[0].value), 2),
+        }
+        for r in response.rows
+        if r.dimension_values[0].value not in ("", "(not set)")
+    ]
+    df = pd.DataFrame(rows, columns=["transaction_id", "purchase_revenue"])
+    print(f"[GA4] Pulled {len(df)} transaction IDs for property {property_id}")
+    return df
+
+
 def save_ga4(df: pd.DataFrame, output_path: str = "data/ga4_raw.csv"):
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     df.to_csv(output_path, index=False)
