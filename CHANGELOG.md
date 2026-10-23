@@ -11,7 +11,11 @@
 - **Swiper:** `loop` is off when there are too few slides (featured products mobile grid: 3 or fewer products; testimonials: one slide), which silences "not enough slides for loop mode".
 - **`/llms.txt`, `/llms-full.txt`:** plain-text store summary, collections, and (full) product list with from-prices for AI shopping agents (`app/utils/llms.server.ts`).
 - **Product JSON-LD:** adds `countryOfOrigin` (US; not emitted for the Seymour chair) and `isRelatedTo` between dining tables and chairs (`app/utils/product-relations.ts`, `npm run test:relations`). Dimensions are not emitted: no dimension data exists in Shopify yet.
-- Not done here: trade intake form (the Storefront API cannot tag customers; needs an Admin-API path), the "Complete the Dining Room" configurator and Piper & Fox pages (the products do not exist in Shopify yet).
+- Not done here: the "Complete the Dining Room" configurator and Piper & Fox pages (the products do not exist in Shopify yet).
+
+### Trade intake form (`/pages/trade`)
+- New `trade-form` section posts to `/api/trade` (honeypot + Turnstile like the newsletter). The route tags the applicant `trade-applicant` through the Admin API: it creates the customer, or tags an existing one and appends the application to their note (`app/utils/trade-application.server.js`, `npm run test:trade`).
+- Uses **only `OPS_ADMIN_API_TOKEN`** (scopes `read_customers, write_customers` are enough); it never falls back to `SHOPIFY_ADMIN_API_TOKEN`. **Requires `OPS_ADMIN_API_TOKEN` to be set as an Oxygen secret** or submissions return an error asking the visitor to email info@moderncre8ve.com. Admin queries are not tagged `#graphql` so codegen does not validate them against the Storefront schema.
 
 ### Docs: typecheck is clean
 - `CLAUDE.md`: replaced the stale "Known failing check" line. `npm run typecheck` passes since `fa826f6`; added the `npx react-router typegen` tip for fresh worktrees.
