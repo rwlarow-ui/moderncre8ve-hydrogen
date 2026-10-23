@@ -51,7 +51,7 @@ export function CartDrawer() {
       fallback={
         <Link
           to="/cart"
-          className="relative flex h-8 w-8 items-center justify-center focus:ring-border"
+          className="relative flex h-11 w-11 items-center justify-center focus:ring-border"
         >
           <ShoppingBagIcon className="h-5 w-5" />
         </Link>
@@ -67,7 +67,7 @@ export function CartDrawer() {
                   ? `Cart, ${cart.totalQuantity} item${cart.totalQuantity === 1 ? "" : "s"}`
                   : "Cart"
               }
-              className="relative flex h-8 w-8 items-center justify-center focus:ring-border"
+              className="relative flex h-11 w-11 items-center justify-center focus:ring-border"
             >
               <ShoppingBagIcon className="h-5 w-5" aria-hidden="true" />
               {cart?.totalQuantity > 0 && (
