@@ -6,6 +6,13 @@
 
 ## Unreleased
 
+### 90-day plan: code items (`docs/90-day-plan-2026-10.md`)
+- **Footer:** the newsletter form, address block and `FooterMenu` were each rendered twice and toggled with `hidden`/`md:`/`lg:` classes. Each now renders once and the grid reorders per breakpoint (tablet puts the menu under the address and newsletter row). `HoneypotField` uses `useId()` (the field `name` stays `website`, the API routes read it), and the payment-icon SVG gradient ids are prefixed per icon, so the homepage no longer has duplicate `id="website"` or `linearGradient-1`. The newsletter error/message line no longer swallows the error when only a message is set.
+- **Swiper:** `loop` is off when there are too few slides (featured products mobile grid: 3 or fewer products; testimonials: one slide), which silences "not enough slides for loop mode".
+- **`/llms.txt`, `/llms-full.txt`:** plain-text store summary, collections, and (full) product list with from-prices for AI shopping agents (`app/utils/llms.server.ts`).
+- **Product JSON-LD:** adds `countryOfOrigin` (US; not emitted for the Seymour chair) and `isRelatedTo` between dining tables and chairs (`app/utils/product-relations.ts`, `npm run test:relations`). Dimensions are not emitted: no dimension data exists in Shopify yet.
+- Not done here: trade intake form (the Storefront API cannot tag customers; needs an Admin-API path), the "Complete the Dining Room" configurator and Piper & Fox pages (the products do not exist in Shopify yet).
+
 ### Docs: typecheck is clean
 - `CLAUDE.md`: replaced the stale "Known failing check" line. `npm run typecheck` passes since `fa826f6`; added the `npx react-router typegen` tip for fresh worktrees.
 

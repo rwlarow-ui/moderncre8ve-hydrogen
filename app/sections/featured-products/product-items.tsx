@@ -181,7 +181,7 @@ const ProductItems = forwardRef<HTMLDivElement, ProductItemsProps>(
               slidesPerView={1.2}
               centeredSlides={true}
               spaceBetween={gap}
-              loop={true}
+              loop={displayedProducts.length > 3}
               onSlideChange={(swiper) => setActiveSlide(swiper.activeIndex)}
               onSwiper={() => {
                 requestAnimationFrame(() => {

@@ -65,7 +65,7 @@ const TestimonialIndex = forwardRef<HTMLElement, TestimonialProps>(
     return (
       <Section ref={ref} {...rest} containerClassName="overflow-hidden">
         <Swiper
-          loop={true}
+          loop={Array.isArray(children) && children.length > 1}
           slidesPerView={1}
           spaceBetween={0}
           effect="fade"
