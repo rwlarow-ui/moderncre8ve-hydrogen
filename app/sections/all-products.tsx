@@ -1,6 +1,6 @@
+import type { RefObject } from "react";
 import { Pagination } from "@shopify/hydrogen";
 import clsx from "clsx";
-import { forwardRef } from "react";
 import { useLoaderData } from "react-router";
 import type { AllProductsQuery } from "storefront-api.generated";
 import { BreadCrumb } from "~/components/breadcrumb";
@@ -16,7 +16,10 @@ interface AllProductsProps extends SectionProps {
   nextPageText: string;
 }
 
-const AllProducts = forwardRef<HTMLElement, AllProductsProps>((props, ref) => {
+const AllProducts = ({
+  ref,
+  ...props
+}: AllProductsProps & { ref?: RefObject<HTMLElement | null> }) => {
   const { heading, prevPageText, nextPageText, ...rest } = props;
   const { products } = useLoaderData<AllProductsQuery>();
 
@@ -65,7 +68,7 @@ const AllProducts = forwardRef<HTMLElement, AllProductsProps>((props, ref) => {
       </Pagination>
     </Section>
   );
-});
+};
 
 export default AllProducts;
 

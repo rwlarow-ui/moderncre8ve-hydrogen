@@ -1,3 +1,4 @@
+import type { RefObject } from "react";
 import {
   getAdjacentAndFirstAvailableVariants,
   getProductOptions,
@@ -10,7 +11,7 @@ import type {
   ProductVariantComponent,
 } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
-import { forwardRef, useState } from "react";
+import { useState } from "react";
 import { Link, useLoaderData } from "react-router";
 import { AddToCartButton } from "~/components/product/add-to-cart-button";
 import { ProductBadges } from "~/components/product/badges";
@@ -51,10 +52,11 @@ interface ProductInformationData
   arrowsZoomShape?: "rounded-sm" | "circle" | "square";
 }
 
-const ProductInformation = forwardRef<
-  HTMLDivElement,
-  ProductInformationData & SectionProps
->((props, ref) => {
+const ProductInformation = ({
+  ref,
+  ...props
+}: ProductInformationData &
+  SectionProps & { ref?: RefObject<HTMLDivElement | null> }) => {
   const { product, storeDomain } = useLoaderData<typeof productRouteLoader>();
 
   // Optimistically selects a variant with given available variant information
@@ -363,7 +365,7 @@ const ProductInformation = forwardRef<
       No product data...
     </div>
   );
-});
+};
 
 export default ProductInformation;
 

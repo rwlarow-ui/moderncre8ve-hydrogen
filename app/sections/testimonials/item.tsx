@@ -1,8 +1,9 @@
+import type { RefObject } from "react";
 import { Circle, Handbag, Plus, Tag, XIcon } from "@phosphor-icons/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import clsx from "clsx";
 import type { CSSProperties } from "react";
-import { forwardRef, useState } from "react";
+import { useState } from "react";
 import { useFetcher } from "react-router";
 import type { ProductQuery } from "storefront-api.generated";
 import { QuickShop } from "~/components/product/quick-shop";
@@ -39,10 +40,12 @@ const ICONS = {
   tag: Tag,
 };
 
-let TestimonialHotspotsItem = forwardRef<
-  HTMLDivElement,
-  TestimonialHotspotsItemProps
->((props, ref) => {
+let TestimonialHotspotsItem = ({
+  ref,
+  ...props
+}: TestimonialHotspotsItemProps & {
+  ref?: RefObject<HTMLDivElement | null>;
+}) => {
   const {
     icon,
     iconSize,
@@ -202,7 +205,7 @@ let TestimonialHotspotsItem = forwardRef<
       </Dialog.Root>
     </>
   );
-});
+};
 
 export default TestimonialHotspotsItem;
 

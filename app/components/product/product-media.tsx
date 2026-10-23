@@ -102,8 +102,12 @@ export function ProductMedia(props: ProductMediaProps) {
         ];
 
   const shapeClass = (shape: "rounded-sm" | "circle" | "square") => {
-    if (shape === "circle") return "rounded-full";
-    if (shape === "square") return "";
+    if (shape === "circle") {
+      return "rounded-full";
+    }
+    if (shape === "square") {
+      return "";
+    }
     return "rounded-md"; // closest to rounded-sm in existing styles
   };
 
@@ -469,7 +473,9 @@ function getSelectedVariantMediaIndex(
   media: MediaFragment[],
   selectedVariant: ProductVariantFragment,
 ) {
-  if (!selectedVariant) return 0;
+  if (!selectedVariant) {
+    return 0;
+  }
   const mediaUrl = selectedVariant.image?.url;
   return media.findIndex((med) => med.previewImage?.url === mediaUrl);
 }
@@ -503,12 +509,20 @@ function ProductMediaDots({
   activeIndex,
   onDotClick,
 }: ProductMediaDotsProps) {
-  if (slidesCount === 0) return null;
+  if (slidesCount === 0) {
+    return null;
+  }
   const maxContainerWidth = "min(320px, 80vw)";
   const calculateDotWidth = (count: number) => {
-    if (count <= 4) return "48px";
-    if (count <= 6) return "32px";
-    if (count <= 8) return "24px";
+    if (count <= 4) {
+      return "48px";
+    }
+    if (count <= 6) {
+      return "32px";
+    }
+    if (count <= 8) {
+      return "24px";
+    }
     return "16px";
   };
 

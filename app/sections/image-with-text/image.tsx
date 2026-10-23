@@ -1,6 +1,7 @@
+import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { forwardRef, type Ref } from "react";
+import { type Ref } from "react";
 import { Image } from "~/components/image";
 import {
   createSchema,
@@ -52,45 +53,46 @@ interface ImageWithTextImageProps
   imageAspectRatio?: ImageAspectRatio;
 }
 
-const ImageWithTextImage = forwardRef<HTMLDivElement, ImageWithTextImageProps>(
-  (props, ref) => {
-    const {
-      image = IMAGES_PLACEHOLDERS.image,
-      borderRadius,
-      objectFit,
-      imageAspectRatio: propAspectRatio,
-      ...rest
-    } = props;
-    const { imageAspectRatio: contextAspectRatio } = useImageWithTextContext();
-    const finalAspectRatio = propAspectRatio || contextAspectRatio;
-    const imageData: Partial<PageImage> =
-      typeof image === "string"
-        ? { url: image, altText: staticImageAlt(image) }
-        : image;
+const ImageWithTextImage = ({
+  ref,
+  ...props
+}: ImageWithTextImageProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  const {
+    image = IMAGES_PLACEHOLDERS.image,
+    borderRadius,
+    objectFit,
+    imageAspectRatio: propAspectRatio,
+    ...rest
+  } = props;
+  const { imageAspectRatio: contextAspectRatio } = useImageWithTextContext();
+  const finalAspectRatio = propAspectRatio || contextAspectRatio;
+  const imageData: Partial<PageImage> =
+    typeof image === "string"
+      ? { url: image, altText: staticImageAlt(image) }
+      : image;
 
-    let aspRt: string | undefined;
-    if (finalAspectRatio === "adapt") {
-      if (imageData.width && imageData.height) {
-        aspRt = `${imageData.width}/${imageData.height}`;
-      }
-    } else {
-      aspRt = finalAspectRatio;
+  let aspRt: string | undefined;
+  if (finalAspectRatio === "adapt") {
+    if (imageData.width && imageData.height) {
+      aspRt = `${imageData.width}/${imageData.height}`;
     }
+  } else {
+    aspRt = finalAspectRatio;
+  }
 
-    return (
-      <Image
-        ref={ref as Ref<HTMLImageElement>}
-        {...rest}
-        data={imageData}
-        data-motion="slide-in"
-        sizes="auto"
-        aspectRatio={aspRt}
-        className={cn("h-auto w-full", variants({ objectFit, borderRadius }))}
-        data-aspect-ratio={finalAspectRatio}
-      />
-    );
-  },
-);
+  return (
+    <Image
+      ref={ref as Ref<HTMLImageElement>}
+      {...rest}
+      data={imageData}
+      data-motion="slide-in"
+      sizes="auto"
+      aspectRatio={aspRt}
+      className={cn("h-auto w-full", variants({ objectFit, borderRadius }))}
+      data-aspect-ratio={finalAspectRatio}
+    />
+  );
+};
 
 export default ImageWithTextImage;
 

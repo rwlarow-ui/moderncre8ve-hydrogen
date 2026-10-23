@@ -34,7 +34,9 @@ const STATIC_IMAGE_ALT: Record<string, string> = {
 };
 
 export function staticImageAlt(src?: string | null): string {
-  if (!src) return "";
+  if (!src) {
+    return "";
+  }
   const path = src.split(/[?#]/)[0];
   return STATIC_IMAGE_ALT[path] ?? "";
 }

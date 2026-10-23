@@ -1,6 +1,6 @@
+import type { RefObject } from "react";
 import { Pagination } from "@shopify/hydrogen";
 import type { Collection } from "@shopify/hydrogen/storefront-api-types";
-import { forwardRef } from "react";
 import { useLoaderData } from "react-router";
 import type { CollectionsQuery } from "storefront-api.generated";
 import { variants } from "~/components/link";
@@ -21,75 +21,76 @@ interface CollectionsItemsProps {
   gap: number;
 }
 
-const CollectionsItems = forwardRef<HTMLDivElement, CollectionsItemsProps>(
-  (props, ref) => {
-    const { collections } = useLoaderData<CollectionsQuery>();
-    const {
-      prevButtonText,
-      nextButtonText,
-      imageAspectRatio,
-      collectionNameColor,
-      ctaText = "Shop the collection",
-      showTrustStrip = true,
-      gap = 24,
-      ...rest
-    } = props;
+const CollectionsItems = ({
+  ref,
+  ...props
+}: CollectionsItemsProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  const { collections } = useLoaderData<CollectionsQuery>();
+  const {
+    prevButtonText,
+    nextButtonText,
+    imageAspectRatio,
+    collectionNameColor,
+    ctaText = "Shop the collection",
+    showTrustStrip = true,
+    gap = 24,
+    ...rest
+  } = props;
 
-    const style = {
-      "--gap": `${gap}px`,
-    } as React.CSSProperties;
+  const style = {
+    "--gap": `${gap}px`,
+  } as React.CSSProperties;
 
-    return (
-      <div ref={ref} {...rest}>
-        <Pagination connection={collections}>
-          {({
-            nodes,
-            isLoading,
-            hasPreviousPage,
-            hasNextPage,
-            NextLink,
-            PreviousLink,
-          }) => (
-            <div className="flex w-full flex-col items-center gap-8">
-              {showTrustStrip && <TrustStrip className="w-full" />}
-              {hasPreviousPage && (
-                <PreviousLink
-                  className={cn("mx-auto", variants({ variant: "outline" }))}
-                >
-                  {isLoading ? "Loading..." : prevButtonText}
-                </PreviousLink>
-              )}
-              <div
-                className={cn(
-                  "grid w-full grid-cols-2 gap-(--gap) md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3",
-                )}
-                style={style}
+  return (
+    <div ref={ref} {...rest}>
+      <Pagination connection={collections}>
+        {({
+          nodes,
+          isLoading,
+          hasPreviousPage,
+          hasNextPage,
+          NextLink,
+          PreviousLink,
+        }) => (
+          <div className="flex w-full flex-col items-center gap-8">
+            {showTrustStrip && <TrustStrip className="w-full" />}
+            {hasPreviousPage && (
+              <PreviousLink
+                className={cn("mx-auto", variants({ variant: "outline" }))}
               >
-                {nodes.map((collection, i) => (
-                  <CollectionCard
-                    key={collection.id}
-                    collection={collection as Collection}
-                    imageAspectRatio={imageAspectRatio}
-                    collectionNameColor={collectionNameColor}
-                    ctaText={ctaText}
-                    loading={getImageLoadingPriority(i, 2)}
-                  />
-                ))}
-              </div>
-              {hasNextPage && (
-                <NextLink
-                  className={cn("mx-auto", variants({ variant: "outline" }))}
-                >
-                  {isLoading ? "Loading..." : nextButtonText}
-                </NextLink>
+                {isLoading ? "Loading..." : prevButtonText}
+              </PreviousLink>
+            )}
+            <div
+              className={cn(
+                "grid w-full grid-cols-2 gap-(--gap) md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3",
               )}
+              style={style}
+            >
+              {nodes.map((collection, i) => (
+                <CollectionCard
+                  key={collection.id}
+                  collection={collection as Collection}
+                  imageAspectRatio={imageAspectRatio}
+                  collectionNameColor={collectionNameColor}
+                  ctaText={ctaText}
+                  loading={getImageLoadingPriority(i, 2)}
+                />
+              ))}
             </div>
-          )}
-        </Pagination>
-      </div>
-    );
-  },
-);
+            {hasNextPage && (
+              <NextLink
+                className={cn("mx-auto", variants({ variant: "outline" }))}
+              >
+                {isLoading ? "Loading..." : nextButtonText}
+              </NextLink>
+            )}
+          </div>
+        )}
+      </Pagination>
+    </div>
+  );
+};
 
 export default CollectionsItems;
 

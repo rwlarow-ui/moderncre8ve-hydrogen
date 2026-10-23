@@ -150,7 +150,9 @@ function HreflangLinks() {
   // E.g. "/en-gb/products/foo" → "/products/foo", "/en-gb" → "/"
   let basePath = pathname;
   for (const { pathPrefix } of STOREFRONT_HREFLANGS) {
-    if (!pathPrefix) continue;
+    if (!pathPrefix) {
+      continue;
+    }
     if (pathname === pathPrefix || pathname.startsWith(`${pathPrefix}/`)) {
       basePath = pathname.slice(pathPrefix.length) || "/";
       break;

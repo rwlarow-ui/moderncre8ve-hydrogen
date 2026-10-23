@@ -32,7 +32,9 @@ export function buildPoNumber(orderName, revision = 1) {
 
 function deliveryRows(snapshot) {
   const logistics = snapshot?.logistics;
-  if (!logistics || snapshot?.status !== "complete") return null;
+  if (!logistics || snapshot?.status !== "complete") {
+    return null;
+  }
 
   const address = [
     logistics.address1,
@@ -55,7 +57,9 @@ function deliveryRows(snapshot) {
   if (logistics.stairwellWidthIn != null) {
     rows.push(["Stairwell width", `${logistics.stairwellWidthIn} in`]);
   }
-  if (logistics.notes) rows.push(["Access notes", logistics.notes]);
+  if (logistics.notes) {
+    rows.push(["Access notes", logistics.notes]);
+  }
   return rows.filter(([, value]) => value !== "" && value != null);
 }
 
@@ -111,12 +115,16 @@ export function wrapText(text, maxWidth, measure) {
         current = candidate;
         continue;
       }
-      if (current) lines.push(current);
+      if (current) {
+        lines.push(current);
+      }
       current = "";
       let rest = word;
       while (measure(rest) > maxWidth && rest.length > 1) {
         let cut = rest.length - 1;
-        while (cut > 1 && measure(rest.slice(0, cut)) > maxWidth) cut -= 1;
+        while (cut > 1 && measure(rest.slice(0, cut)) > maxWidth) {
+          cut -= 1;
+        }
         lines.push(rest.slice(0, cut));
         rest = rest.slice(cut);
       }

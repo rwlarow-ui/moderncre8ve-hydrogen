@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import { useLoaderData } from "react-router";
 import type { SectionProps } from "~/components/section";
 import { Section } from "~/components/section";
@@ -18,49 +18,52 @@ interface CollectionSeoBlockProps extends SectionProps {
  * if no entry exists in the local descriptions map.
  * Also checks for a `custom.seo_rich_description` metafield override.
  */
-const CollectionSeoBlock = forwardRef<HTMLElement, CollectionSeoBlockProps>(
-  (props, ref) => {
-    const {
-      showHeading = true,
-      heading = "About This Collection",
-      headingSize = "h2",
-      ...rest
-    } = props;
-    const loaderData = useLoaderData<any>();
-    const collection = loaderData?.collection;
-    const handle = collection?.handle ?? "";
+const CollectionSeoBlock = ({
+  ref,
+  ...props
+}: CollectionSeoBlockProps & { ref?: RefObject<HTMLElement | null> }) => {
+  const {
+    showHeading = true,
+    heading = "About This Collection",
+    headingSize = "h2",
+    ...rest
+  } = props;
+  const loaderData = useLoaderData<any>();
+  const collection = loaderData?.collection;
+  const handle = collection?.handle ?? "";
 
-    // Priority: metafield > local map > Shopify descriptionHtml
-    const metafieldDesc = collection?.seoMetafields?.find(
-      (mf: any) => mf?.key === "seo_rich_description",
-    )?.value;
+  // Priority: metafield > local map > Shopify descriptionHtml
+  const metafieldDesc = collection?.seoMetafields?.find(
+    (mf: any) => mf?.key === "seo_rich_description",
+  )?.value;
 
-    const localDesc = collectionSeoDescriptions[handle]?.rich;
-    const shopifyDesc = collection?.descriptionHtml;
+  const localDesc = collectionSeoDescriptions[handle]?.rich;
+  const shopifyDesc = collection?.descriptionHtml;
 
-    const content = metafieldDesc || localDesc || shopifyDesc;
+  const content = metafieldDesc || localDesc || shopifyDesc;
 
-    if (!content) return null;
+  if (!content) {
+    return null;
+  }
 
-    const HeadingTag = headingSize;
+  const HeadingTag = headingSize;
 
-    return (
-      <Section ref={ref} {...rest}>
-        <div className="mx-auto w-full max-w-4xl px-4 py-8 md:py-12">
-          {showHeading && (
-            <HeadingTag className="mb-6 font-sans font-semibold text-xl tracking-tight md:text-2xl">
-              {heading}
-            </HeadingTag>
-          )}
-          <div
-            className="collection-seo-prose font-serif text-gray-600 text-sm leading-relaxed md:text-base [&_a]:underline [&_a]:underline-offset-4 [&_p]:mb-4 [&_strong]:font-semibold [&_strong]:text-gray-800"
-            dangerouslySetInnerHTML={{ __html: toRenderableHtml(content) }}
-          />
-        </div>
-      </Section>
-    );
-  },
-);
+  return (
+    <Section ref={ref} {...rest}>
+      <div className="mx-auto w-full max-w-4xl px-4 py-8 md:py-12">
+        {showHeading && (
+          <HeadingTag className="mb-6 font-sans font-semibold text-xl tracking-tight md:text-2xl">
+            {heading}
+          </HeadingTag>
+        )}
+        <div
+          className="collection-seo-prose font-serif text-gray-600 text-sm leading-relaxed md:text-base [&_a]:underline [&_a]:underline-offset-4 [&_p]:mb-4 [&_strong]:font-semibold [&_strong]:text-gray-800"
+          dangerouslySetInnerHTML={{ __html: toRenderableHtml(content) }}
+        />
+      </div>
+    </Section>
+  );
+};
 
 export default CollectionSeoBlock;
 

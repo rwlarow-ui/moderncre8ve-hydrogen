@@ -59,9 +59,13 @@ function optionValues(options) {
 
 function parseWidth(raw) {
   const text = clean(raw, 8);
-  if (!text) return null;
+  if (!text) {
+    return null;
+  }
   const number = Number(text);
-  if (!Number.isFinite(number)) return Number.NaN;
+  if (!Number.isFinite(number)) {
+    return Number.NaN;
+  }
   return Math.round(number * 10) / 10;
 }
 
@@ -99,12 +103,18 @@ export function validateLogistics(input = {}) {
   if (!optionValues(DWELLING_OPTIONS).includes(value.dwelling)) {
     errors.dwelling = "Choose the type of home.";
   }
-  if (!value.address1) errors.address1 = "Enter the delivery address.";
-  if (!value.city) errors.city = "Enter the city.";
+  if (!value.address1) {
+    errors.address1 = "Enter the delivery address.";
+  }
+  if (!value.city) {
+    errors.city = "Enter the city.";
+  }
   if (!STATE_RE.test(value.state)) {
     errors.state = "Use the 2-letter state code.";
   }
-  if (!ZIP_RE.test(value.zip)) errors.zip = "Enter a valid ZIP code.";
+  if (!ZIP_RE.test(value.zip)) {
+    errors.zip = "Enter a valid ZIP code.";
+  }
   if (value.phone.replace(/\D/g, "").length < 10) {
     errors.phone = "Enter a phone number the delivery team can reach.";
   }
@@ -126,8 +136,9 @@ export function validateLogistics(input = {}) {
   ]) {
     const width = value[field];
     if (width === null) {
-      if (required)
+      if (required) {
         errors[field] = `Enter the width of the ${label} in inches.`;
+      }
     } else if (
       Number.isNaN(width) ||
       width < MIN_WIDTH_IN ||
@@ -198,7 +209,9 @@ export function readLogistics(attributes = []) {
  * @returns {{ status: "none" | "later" | "complete", value: object | null }}
  */
 export function parseLogisticsJson(raw) {
-  if (!raw) return { status: "none", value: null };
+  if (!raw) {
+    return { status: "none", value: null };
+  }
 
   let parsed;
   try {
@@ -208,8 +221,12 @@ export function parseLogisticsJson(raw) {
   }
 
   const result = validateLogistics(parsed);
-  if (!result.ok) return { status: "none", value: null };
-  if (result.value.later) return { status: "later", value: null };
+  if (!result.ok) {
+    return { status: "none", value: null };
+  }
+  if (result.value.later) {
+    return { status: "later", value: null };
+  }
   return { status: "complete", value: result.value };
 }
 

@@ -36,7 +36,9 @@ export type BackgroundImageProps = VariantProps<typeof variants> & {
 export function BackgroundImage(props: BackgroundImageProps) {
   const { backgroundImage, backgroundFit, backgroundPosition } = props;
   const priority = useImagePriority();
-  if (!backgroundImage) return null;
+  if (!backgroundImage) {
+    return null;
+  }
 
   // Reject empty / whitespace strings — those produce a broken <img> whose
   // visible alt text leaks into the layout (see v1.x audit — FAQ/Trade).
@@ -52,7 +54,9 @@ export function BackgroundImage(props: BackgroundImageProps) {
 
   // If we received a structured image object but it has no url, bail out
   // rather than rendering a broken <img>.
-  if (!data?.url) return null;
+  if (!data?.url) {
+    return null;
+  }
 
   return (
     <Image

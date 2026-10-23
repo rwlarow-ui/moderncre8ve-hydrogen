@@ -1,18 +1,21 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import type { SectionProps } from "~/components/section";
 import { Section, sectionSettings } from "~/components/section";
 import { createSchema } from "~/page-builder";
 
 type NewsLetterProps = SectionProps;
 
-const NewsLetter = forwardRef<HTMLElement, NewsLetterProps>((props, ref) => {
+const NewsLetter = ({
+  ref,
+  ...props
+}: NewsLetterProps & { ref?: RefObject<HTMLElement | null> }) => {
   const { children, ...rest } = props;
   return (
     <Section ref={ref} {...rest}>
       {children}
     </Section>
   );
-});
+};
 
 export default NewsLetter;
 

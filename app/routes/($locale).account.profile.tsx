@@ -38,10 +38,10 @@ export const CUSTOMER_UPDATE_MUTATION = `#graphql
   }
 ` as const;
 
-export type ActionResponse = {
+export interface ActionResponse {
   error: string | null;
   customer: CustomerUpdateMutation["customerUpdate"]["customer"] | null;
-};
+}
 
 export const meta: MetaFunction = () => {
   return [{ title: "Profile" }];

@@ -1,5 +1,5 @@
+import type { RefObject } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { forwardRef } from "react";
 import Heading, {
   type HeadingProps,
   headingInputs,
@@ -70,100 +70,55 @@ let variants = cva("flex flex-col [&_.paragraph]:mx-[unset]", {
   },
 });
 
-let VideoEmbedContent = forwardRef<HTMLDivElement, VideoEmbedContentProps>(
-  (props, ref) => {
-    const {
-      gap,
-      contentPosition,
-      displayMode = "vertical",
-      // Heading props
-      headingContent,
-      headingTagName,
-      color,
-      size,
-      mobileSize,
-      desktopSize,
-      weight,
-      letterSpacing,
-      alignment,
-      minSize,
-      maxSize,
-      animate,
-      // Paragraph props
-      paragraphContent,
-      paragraphTag = "p",
-      paragraphColor,
-      paragraphSize,
-      paragraphAlignment,
-      paragraphWidth,
-      // Button/Link props
-      buttonContent,
-      to,
-      variant,
-      openInNewTab,
-      textColor,
-      buttonBackgroundColor,
-      borderColor,
-      textColorHover,
-      backgroundColorHover,
-      borderColorHover,
-      textColorDecor,
-      ...rest
-    } = props;
+let VideoEmbedContent = ({
+  ref,
+  ...props
+}: VideoEmbedContentProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  const {
+    gap,
+    contentPosition,
+    displayMode = "vertical",
+    // Heading props
+    headingContent,
+    headingTagName,
+    color,
+    size,
+    mobileSize,
+    desktopSize,
+    weight,
+    letterSpacing,
+    alignment,
+    minSize,
+    maxSize,
+    animate,
+    // Paragraph props
+    paragraphContent,
+    paragraphTag = "p",
+    paragraphColor,
+    paragraphSize,
+    paragraphAlignment,
+    paragraphWidth,
+    // Button/Link props
+    buttonContent,
+    to,
+    variant,
+    openInNewTab,
+    textColor,
+    buttonBackgroundColor,
+    borderColor,
+    textColorHover,
+    backgroundColorHover,
+    borderColorHover,
+    textColorDecor,
+    ...rest
+  } = props;
 
-    if (displayMode === "horizontal") {
-      return (
-        <div
-          ref={ref}
-          {...rest}
-          className="flex w-full items-center justify-between"
-        >
-          {headingContent && (
-            <Heading
-              content={headingContent}
-              as={headingTagName}
-              color={color}
-              size={size}
-              mobileSize={mobileSize}
-              desktopSize={desktopSize}
-              weight={weight}
-              letterSpacing={letterSpacing}
-              alignment="left"
-              minSize={minSize}
-              maxSize={maxSize}
-              animate={animate}
-              className="flex-1"
-            />
-          )}
-          {buttonContent && (
-            <Link
-              variant={variant}
-              textColor={textColor}
-              backgroundColor={buttonBackgroundColor}
-              borderColor={borderColor}
-              textColorHover={textColorHover}
-              backgroundColorHover={backgroundColorHover}
-              borderColorHover={borderColorHover}
-              textColorDecor={textColorDecor}
-              openInNewTab={openInNewTab}
-              to={to}
-              className="mr-1 w-fit flex-shrink-0"
-            >
-              {buttonContent}
-            </Link>
-          )}
-        </div>
-      );
-    }
-
+  if (displayMode === "horizontal") {
     return (
       <div
         ref={ref}
         {...rest}
-        className={variants({
-          contentPosition,
-          gap,
-        })}
+        className="flex w-full items-center justify-between"
       >
         {headingContent && (
           <Heading
@@ -175,20 +130,11 @@ let VideoEmbedContent = forwardRef<HTMLDivElement, VideoEmbedContentProps>(
             desktopSize={desktopSize}
             weight={weight}
             letterSpacing={letterSpacing}
-            alignment={alignment}
+            alignment="left"
             minSize={minSize}
             maxSize={maxSize}
             animate={animate}
-          />
-        )}
-        {paragraphContent && (
-          <Paragraph
-            content={paragraphContent}
-            as={paragraphTag}
-            color={paragraphColor}
-            textSize={paragraphSize}
-            alignment={paragraphAlignment}
-            width={paragraphWidth}
+            className="flex-1"
           />
         )}
         {buttonContent && (
@@ -203,15 +149,70 @@ let VideoEmbedContent = forwardRef<HTMLDivElement, VideoEmbedContentProps>(
             textColorDecor={textColorDecor}
             openInNewTab={openInNewTab}
             to={to}
-            className="w-fit"
+            className="mr-1 w-fit flex-shrink-0"
           >
             {buttonContent}
           </Link>
         )}
       </div>
     );
-  },
-);
+  }
+
+  return (
+    <div
+      ref={ref}
+      {...rest}
+      className={variants({
+        contentPosition,
+        gap,
+      })}
+    >
+      {headingContent && (
+        <Heading
+          content={headingContent}
+          as={headingTagName}
+          color={color}
+          size={size}
+          mobileSize={mobileSize}
+          desktopSize={desktopSize}
+          weight={weight}
+          letterSpacing={letterSpacing}
+          alignment={alignment}
+          minSize={minSize}
+          maxSize={maxSize}
+          animate={animate}
+        />
+      )}
+      {paragraphContent && (
+        <Paragraph
+          content={paragraphContent}
+          as={paragraphTag}
+          color={paragraphColor}
+          textSize={paragraphSize}
+          alignment={paragraphAlignment}
+          width={paragraphWidth}
+        />
+      )}
+      {buttonContent && (
+        <Link
+          variant={variant}
+          textColor={textColor}
+          backgroundColor={buttonBackgroundColor}
+          borderColor={borderColor}
+          textColorHover={textColorHover}
+          backgroundColorHover={backgroundColorHover}
+          borderColorHover={borderColorHover}
+          textColorDecor={textColorDecor}
+          openInNewTab={openInNewTab}
+          to={to}
+          className="w-fit"
+        >
+          {buttonContent}
+        </Link>
+      )}
+    </div>
+  );
+};
 
 export default VideoEmbedContent;
 

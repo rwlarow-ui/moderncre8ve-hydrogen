@@ -1,6 +1,6 @@
+import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { forwardRef } from "react";
 import { createSchema, type SectionComponentProps } from "~/page-builder";
 import { cn } from "~/utils/cn";
 import { useImageWithTextContext } from "./context";
@@ -47,10 +47,10 @@ interface ImageWithTextContentProps
   extends VariantProps<typeof variants>,
     SectionComponentProps {}
 
-const ImageWithTextContent = forwardRef<
-  HTMLDivElement,
-  ImageWithTextContentProps
->((props, ref) => {
+const ImageWithTextContent = ({
+  ref,
+  ...props
+}: ImageWithTextContentProps & { ref?: RefObject<HTMLDivElement | null> }) => {
   const { gap, contentPosition, children, ...rest } = props;
   const { imageCount } = useImageWithTextContext();
 
@@ -68,7 +68,7 @@ const ImageWithTextContent = forwardRef<
       {children}
     </div>
   );
-});
+};
 
 export default ImageWithTextContent;
 

@@ -1,5 +1,5 @@
+import type { RefObject } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { forwardRef } from "react";
 import { createSchema, type SectionComponentProps } from "~/page-builder";
 
 let variants = cva("", {
@@ -32,17 +32,18 @@ interface ContentInformationProps
   extends VariantProps<typeof variants>,
     SectionComponentProps {}
 
-const ContentInformation = forwardRef<HTMLDivElement, ContentInformationProps>(
-  (props, ref) => {
-    let { children, gap, ...rest } = props;
+const ContentInformation = ({
+  ref,
+  ...props
+}: ContentInformationProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  let { children, gap, ...rest } = props;
 
-    return (
-      <div ref={ref} {...rest} className={variants({ gap })}>
-        {children}
-      </div>
-    );
-  },
-);
+  return (
+    <div ref={ref} {...rest} className={variants({ gap })}>
+      {children}
+    </div>
+  );
+};
 
 export default ContentInformation;
 

@@ -24,7 +24,9 @@ export function PredictiveSearchResult({ items, type }: SearchResultTypeProps) {
 
   // Drag scrolling functionality for queries
   const handleMouseDown = (e: React.MouseEvent) => {
-    if (type !== "queries" || !scrollRef.current) return;
+    if (type !== "queries" || !scrollRef.current) {
+      return;
+    }
 
     e.preventDefault();
     const slider = scrollRef.current;
@@ -33,7 +35,9 @@ export function PredictiveSearchResult({ items, type }: SearchResultTypeProps) {
     isDragging.current = false;
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (!scrollRef.current) return;
+      if (!scrollRef.current) {
+        return;
+      }
 
       e.preventDefault();
       isDragging.current = true;
@@ -109,11 +113,11 @@ export function PredictiveSearchResult({ items, type }: SearchResultTypeProps) {
   );
 }
 
-type SearchResultItemProps = {
+interface SearchResultItemProps {
   item: NormalizedPredictiveSearchResultItem;
   type: NormalizedPredictiveSearchResults[number]["type"];
   isDragging?: React.MutableRefObject<boolean>;
-};
+}
 
 function SearchResultItem({
   item: {

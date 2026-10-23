@@ -1,4 +1,5 @@
-import { forwardRef, lazy, Suspense } from "react";
+import type { RefObject } from "react";
+import { lazy, Suspense } from "react";
 import { Link } from "react-router";
 import type { PageVideo, PickedBlog, SectionComponent } from "~/page-builder";
 
@@ -35,7 +36,10 @@ interface VideoItemProps {
   contentBackgroundColor?: string;
 }
 
-let VideoItem = forwardRef<HTMLElement, VideoItemProps>((props, ref) => {
+let VideoItem = ({
+  ref,
+  ...props
+}: VideoItemProps & { ref?: RefObject<HTMLElement | null> }) => {
   let { video, date, author, videoTitle, videoHandle, contentBackgroundColor } =
     props;
 
@@ -121,7 +125,7 @@ let VideoItem = forwardRef<HTMLElement, VideoItemProps>((props, ref) => {
       </Tag>
     </div>
   );
-});
+};
 
 export let schema: SectionComponent["schema"] = {
   type: "video--item",
@@ -170,5 +174,4 @@ export let schema: SectionComponent["schema"] = {
   ],
 };
 
-VideoItem.displayName = "VideoItem";
 export default VideoItem;

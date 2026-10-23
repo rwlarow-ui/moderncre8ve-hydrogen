@@ -45,12 +45,12 @@ export type ProductSpecKey =
   | "door-type"
   | "door-material";
 
-type SpecDefinition = {
+interface SpecDefinition {
   key: ProductSpecKey;
   label: string;
   /** schema.org Product property this spec maps to, if any. */
   schemaProperty?: "material" | "color" | "size";
-};
+}
 
 /** Display order on the PDP. */
 export const PRODUCT_SPEC_DEFINITIONS: SpecDefinition[] = [
@@ -88,16 +88,16 @@ export const PRODUCT_SPEC_DEFINITIONS: SpecDefinition[] = [
   { key: "door-material", label: "Door material" },
 ];
 
-export type ProductSpec = {
+export interface ProductSpec {
   key: ProductSpecKey;
   label: string;
   values: string[];
-};
+}
 
-type MetaobjectRef = {
+interface MetaobjectRef {
   handle?: string | null;
   label?: { value?: string | null } | null;
-};
+}
 
 type SpecMetafield = null | {
   key: string;
@@ -112,10 +112,14 @@ type SpecMetafield = null | {
 export function parseProductSpecs(
   metafields: ReadonlyArray<SpecMetafield> | null | undefined,
 ): ProductSpec[] {
-  if (!metafields?.length) return [];
+  if (!metafields?.length) {
+    return [];
+  }
   const byKey = new Map<string, string[]>();
   for (const mf of metafields) {
-    if (!mf?.key) continue;
+    if (!mf?.key) {
+      continue;
+    }
     const values = (mf.references?.nodes ?? [])
       .map((node) => (node as MetaobjectRef)?.label?.value?.trim())
       .filter((v): v is string => Boolean(v));
@@ -138,7 +142,9 @@ export function parseProductSpecs(
  * else goes into `additionalProperty` as PropertyValue pairs.
  */
 export function productSpecsJsonLd(specs: ProductSpec[]) {
-  if (!specs.length) return {};
+  if (!specs.length) {
+    return {};
+  }
   const pick = (prop: "material" | "color" | "size") => {
     const values = specs
       .filter(

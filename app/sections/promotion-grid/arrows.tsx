@@ -2,7 +2,6 @@ import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
-import type React from "react";
 
 let variants = cva(
   [

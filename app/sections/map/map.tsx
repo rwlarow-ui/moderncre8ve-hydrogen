@@ -1,6 +1,7 @@
+import type { RefObject } from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import clsx from "clsx";
-import { createContext, forwardRef, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import Heading from "~/components/heading";
 import type { SectionProps } from "~/components/section";
 import { Section, sectionSettings } from "~/components/section";
@@ -52,7 +53,10 @@ export const MapContext = createContext<{
   addressFontColor: "#524B46",
 });
 
-let MapSection = forwardRef<HTMLElement, MapSectionProps>((props, ref) => {
+let MapSection = ({
+  ref,
+  ...props
+}: MapSectionProps & { ref?: RefObject<HTMLElement | null> }) => {
   let {
     heading,
     children,
@@ -115,7 +119,9 @@ let MapSection = forwardRef<HTMLElement, MapSectionProps>((props, ref) => {
   const [highlightBg, setHighlightBg] = useState<string | null>(null);
   useEffect(() => {
     const current = triggerRef.current;
-    if (!current) return;
+    if (!current) {
+      return;
+    }
     const sectionEl = current.closest("section") as HTMLElement | null;
     if (sectionEl) {
       const raw = getComputedStyle(sectionEl)
@@ -207,7 +213,7 @@ let MapSection = forwardRef<HTMLElement, MapSectionProps>((props, ref) => {
       </Section>
     </MapContext.Provider>
   );
-});
+};
 
 export default MapSection;
 
