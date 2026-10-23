@@ -11,7 +11,7 @@
     "dev:ca": "shopify hydrogen dev --codegen --port 3456 --customer-account-push__unstable",
     "preview": "shopify hydrogen preview --build",
     "start": "shopify hydrogen preview",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "react-router typegen && tsc --noEmit",
     "healthcheck": "node .claude/skills/healthcheck/scripts/healthcheck.mjs",
     "check:homepage": "node scripts/check-homepage-integrity.mjs",
     "check:collections": "node --env-file=.env scripts/check-collections.mjs",
