@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 
 declare global {
   interface Window {
@@ -110,6 +110,7 @@ export function TurnstileWidget({
  * The field name is intentionally deceptive ("website").
  */
 export function HoneypotField() {
+  const id = useId();
   return (
     <div
       aria-hidden="true"
@@ -121,10 +122,10 @@ export function HoneypotField() {
         overflow: "hidden",
       }}
     >
-      <label htmlFor="website">Website</label>
+      <label htmlFor={id}>Website</label>
       <input
         type="text"
-        id="website"
+        id={id}
         name="website"
         tabIndex={-1}
         autoComplete="off"

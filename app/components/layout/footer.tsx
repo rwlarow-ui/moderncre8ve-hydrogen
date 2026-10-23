@@ -56,7 +56,7 @@ const PAYMENT_ICON_MAP: Record<string, React.ComponentType<any>> = {
           y1="-2.00617467%"
           x2="54.8768726%"
           y2="100%"
-          id="linearGradient-1"
+          id="visa-linearGradient-1"
         >
           <stop stop-color="#222357" offset="0%" />
           <stop stop-color="#254AA5" offset="100%" />
@@ -65,7 +65,7 @@ const PAYMENT_ICON_MAP: Record<string, React.ComponentType<any>> = {
       <g>
         <path
           d="M132.397094,56.2397455 C132.251036,44.7242808 142.65954,38.2977599 150.500511,34.4772086 C158.556724,30.5567233 161.262627,28.0430004 161.231878,24.5376253 C161.17038,19.1719416 154.805357,16.804276 148.847757,16.7120293 C138.454628,16.5505975 132.412467,19.5178668 127.607952,21.7625368 L123.864273,4.24334875 C128.684163,2.02174043 137.609033,0.084559486 146.864453,-7.10542736e-15 C168.588553,-7.10542736e-15 182.802234,10.7236802 182.879107,27.3511501 C182.963666,48.4525854 153.69071,49.6210438 153.890577,59.05327 C153.959762,61.912918 156.688728,64.964747 162.669389,65.7411565 C165.628971,66.133205 173.800493,66.433007 183.0636,62.1665965 L186.699658,79.11693 C181.718335,80.931115 175.314876,82.6684285 167.343223,82.6684285 C146.895202,82.6684285 132.512402,71.798691 132.397094,56.2397455 M221.6381,81.2078555 C217.671491,81.2078555 214.327548,78.8940005 212.836226,75.342502 L181.802894,1.24533061 L203.511621,1.24533061 L207.831842,13.1835926 L234.360459,13.1835926 L236.866494,1.24533061 L256,1.24533061 L239.303345,81.2078555 L221.6381,81.2078555 M224.674554,59.6067505 L230.939643,29.5804456 L213.781755,29.5804456 L224.674554,59.6067505 M106.076031,81.2078555 L88.9642665,1.24533061 L109.650591,1.24533061 L126.754669,81.2078555 L106.076031,81.2078555 M75.473185,81.2078555 L53.941265,26.7822953 L45.2316377,73.059396 C44.2092367,78.2252115 40.1734431,81.2078555 35.6917903,81.2078555 L0.491982464,81.2078555 L0,78.886313 C7.22599245,77.318119 15.4359498,74.7890215 20.409585,72.083118 C23.4537265,70.4303645 24.322383,68.985166 25.3217224,65.0569935 L41.8185094,1.24533061 L63.68098,1.24533061 L97.1972855,81.2078555 L75.473185,81.2078555"
-          fill="url(#linearGradient-1)"
+          fill="url(#visa-linearGradient-1)"
           transform="translate(128.000000, 41.334214) scale(1, -1) translate(-128.000000, -41.334214) "
         />
       </g>
@@ -120,7 +120,7 @@ const PAYMENT_ICON_MAP: Record<string, React.ComponentType<any>> = {
           y1="9.06316954%"
           x2="88.6006499%"
           y2="80.4988417%"
-          id="linearGradient-1"
+          id="discover-linearGradient-1"
         >
           <stop stop-color="#F34F26" offset="0%" />
           <stop stop-color="#F69E35" offset="100%" />
@@ -172,7 +172,7 @@ const PAYMENT_ICON_MAP: Record<string, React.ComponentType<any>> = {
       <g>
         <g>
           <use
-            fill="url(#linearGradient-1)"
+            fill="url(#discover-linearGradient-1)"
             fillRule="evenodd"
             xlinkHref="#path-2"
           />
@@ -216,7 +216,7 @@ const PAYMENT_ICON_MAP: Record<string, React.ComponentType<any>> = {
           y1="50.1241953%"
           x2="232.39121%"
           y2="50.1241953%"
-          id="linearGradient-1"
+          id="jcb-linearGradient-1"
         >
           <stop stop-color="#007940" offset="0%" />
           <stop stop-color="#00873F" offset="22.85%" />
@@ -228,7 +228,7 @@ const PAYMENT_ICON_MAP: Record<string, React.ComponentType<any>> = {
           y1="49.95997%"
           x2="100.273441%"
           y2="49.95997%"
-          id="linearGradient-2"
+          id="jcb-linearGradient-2"
         >
           <stop stop-color="#007940" offset="0%" />
           <stop stop-color="#00873F" offset="22.85%" />
@@ -240,7 +240,7 @@ const PAYMENT_ICON_MAP: Record<string, React.ComponentType<any>> = {
           y1="49.8578253%"
           x2="253.671294%"
           y2="49.8578253%"
-          id="linearGradient-3"
+          id="jcb-linearGradient-3"
         >
           <stop stop-color="#007940" offset="0%" />
           <stop stop-color="#00873F" offset="22.85%" />
@@ -252,7 +252,7 @@ const PAYMENT_ICON_MAP: Record<string, React.ComponentType<any>> = {
           y1="50.0058048%"
           x2="101.808162%"
           y2="50.0058048%"
-          id="linearGradient-4"
+          id="jcb-linearGradient-4"
         >
           <stop stop-color="#1F286F" offset="0%" />
           <stop stop-color="#004E94" offset="47.51%" />
@@ -264,7 +264,7 @@ const PAYMENT_ICON_MAP: Record<string, React.ComponentType<any>> = {
           y1="49.9142191%"
           x2="98.13299%"
           y2="49.9142191%"
-          id="linearGradient-5"
+          id="jcb-linearGradient-5"
         >
           <stop stop-color="#6C2C2F" offset="0%" />
           <stop stop-color="#882730" offset="17.35%" />
@@ -280,23 +280,23 @@ const PAYMENT_ICON_MAP: Record<string, React.ComponentType<any>> = {
         />
         <path
           d="M185.584353,117.046455 L202.01467,117.046455 C202.484108,117.046455 203.579463,116.889977 204.048901,116.889977 C207.178485,116.26406 209.838631,113.447434 209.838631,109.535453 C209.838631,105.779952 207.178485,102.963326 204.048901,102.18093 C203.579463,102.024451 202.640588,102.024451 202.01467,102.024451 L185.584353,102.024451 L185.584353,117.046455 Z"
-          fill="url(#linearGradient-1)"
+          fill="url(#jcb-linearGradient-1)"
         />
         <path
           d="M200.13692,13.3007339 C184.488999,13.3007339 171.657702,25.9755506 171.657702,41.7799516 L171.657702,71.354524 L211.872861,71.354524 C212.811737,71.354524 213.907092,71.354524 214.689488,71.511003 C223.765282,71.980441 230.493888,76.6748175 230.493888,84.8117365 C230.493888,91.2273845 225.955991,96.7041575 217.506113,97.799512 L217.506113,98.11247 C226.738387,98.738387 233.779952,103.902201 233.779952,111.882641 C233.779952,120.488998 225.955991,126.122251 215.628363,126.122251 L171.501223,126.122251 L171.501223,184.019561 L213.281174,184.019561 C228.929097,184.019561 241.760392,171.344744 241.760392,155.540344 L241.760392,13.3007339 L200.13692,13.3007339 L200.13692,13.3007339 Z"
-          fill="url(#linearGradient-2)"
+          fill="url(#jcb-linearGradient-2)"
         />
         <path
           d="M207.804402,86.6894875 C207.804402,82.933986 205.144255,80.4303185 202.01467,79.960881 C201.701713,79.960881 200.919316,79.8044015 200.449879,79.8044015 L185.584353,79.8044015 L185.584353,93.574573 L200.449879,93.574573 C200.919316,93.574573 201.858192,93.574573 202.01467,93.4180935 C205.144255,92.948656 207.804402,90.4449885 207.804402,86.6894875 L207.804402,86.6894875 Z"
-          fill="url(#linearGradient-3)"
+          fill="url(#jcb-linearGradient-3)"
         />
         <path
           d="M42.7188266,13.3007339 C27.0709047,13.3007339 14.2396088,25.9755506 14.2396088,41.7799516 L14.2396088,112.03912 C22.2200489,115.951101 30.5134475,118.454768 38.8068461,118.454768 C48.6650368,118.454768 53.9853305,112.508558 53.9853305,104.371639 L53.9853305,71.1980445 L78.3960885,71.1980445 L78.3960885,104.215159 C78.3960885,117.046455 70.415648,127.530563 43.3447434,127.530563 C26.9144255,127.530563 14.0831296,123.931541 14.0831296,123.931541 L14.0831296,183.863082 L55.863081,183.863082 C71.5110025,183.863082 84.3422985,171.188265 84.3422985,155.383864 L84.3422985,13.3007339 L42.7188266,13.3007339 L42.7188266,13.3007339 Z"
-          fill="url(#linearGradient-4)"
+          fill="url(#jcb-linearGradient-4)"
         />
         <path
           d="M121.427874,13.3007339 C105.779951,13.3007339 92.9486555,25.9755506 92.9486555,41.7799517 L92.9486555,79.0220055 C100.146699,72.919316 112.665037,69.0073355 132.850856,69.946211 C143.647922,70.4156485 155.227384,73.3887535 155.227384,73.3887535 L155.227384,85.4376535 C149.437654,82.4645485 142.552568,79.8044015 133.633252,79.178485 C118.298289,78.0831305 109.066015,85.594133 109.066015,98.738387 C109.066015,112.03912 118.298289,119.550123 133.633252,118.298289 C142.552568,117.672372 149.437654,114.855746 155.227384,112.03912 L155.227384,124.08802 C155.227384,124.08802 143.804402,127.061126 132.850856,127.530563 C112.665037,128.469438 100.146699,124.557458 92.9486555,118.454768 L92.9486555,184.17604 L134.728607,184.17604 C150.376529,184.17604 163.207824,171.501223 163.207824,155.696822 L163.207824,13.3007339 L121.427874,13.3007339 L121.427874,13.3007339 Z"
-          fill="url(#linearGradient-5)"
+          fill="url(#jcb-linearGradient-5)"
         />
       </g>
     </PaymentIcon>
@@ -464,10 +464,10 @@ export function Footer() {
     >
       <div className={cn("h-full w-full", variants({ width: footerWidth }))}>
         <div className="divide-line-subtle md:space-y-6 md:divide-y">
-          <div className="grid w-full grid-cols-1 gap-0 pb-0 md:gap-8 md:pb-6 lg:grid-cols-2">
+          <div className="grid w-full grid-cols-1 gap-0 pb-0 md:grid-cols-2 md:gap-8 md:pb-6">
             {footerLogoData ? (
               <div
-                className="relative md:order-none lg:order-1"
+                className="relative md:order-1 md:col-span-2 lg:order-1 lg:col-span-1"
                 style={{ width: footerLogoWidth }}
               >
                 <Image
@@ -479,89 +479,11 @@ export function Footer() {
                 />
               </div>
             ) : (
-              <div className="font-medium text-base uppercase md:order-none lg:order-1">
+              <div className="font-medium text-base uppercase md:order-1 md:col-span-2 lg:order-1 lg:col-span-1">
                 {shopName}
               </div>
             )}
-            <div className="hidden gap-4 md:flex lg:hidden">
-              <div className="flex w-full flex-col gap-2">
-                <div className="flex flex-col gap-2">
-                  <span className="font-semibold">{addressTitle}</span>
-                  <div className="space-y-2">
-                    <p>{storeAddress}</p>
-                    <p>{storeEmail}</p>
-                  </div>
-                </div>
-                {bio && (
-                  <div className="flex flex-col gap-4">
-                    <div dangerouslySetInnerHTML={{ __html: bio }} />
-                  </div>
-                )}
-              </div>
-              <div className="flex w-full flex-col gap-6">
-                <span className="font-semibold">{newsletterTitle}</span>
-                <div className="space-y-2">
-                  <p>{newsletterDescription}</p>
-                  <fetcher.Form
-                    onSubmit={(event: FormEvent<HTMLFormElement>) => {
-                      setMessage("");
-                      setError("");
-                      fetcher.submit(event.currentTarget);
-                    }}
-                    action="/api/customer"
-                    method="POST"
-                    encType="multipart/form-data"
-                    className="flex h-[54px] gap-3"
-                  >
-                    <HoneypotField />
-                    <input
-                      type="hidden"
-                      name="cf-turnstile-response"
-                      value={turnstileToken}
-                    />
-                    <input
-                      name="email"
-                      type="email"
-                      required
-                      placeholder={newsletterPlaceholder}
-                      className="w-full border border-line bg-white px-3 text-body placeholder:text-[#918379] lg:w-80"
-                    />
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      loading={fetcher.state === "submitting"}
-                      className="uppercase"
-                    >
-                      {newsletterButtonText}
-                    </Button>
-                  </fetcher.Form>
-                  {turnstileSiteKey && (
-                    <TurnstileWidget
-                      siteKey={turnstileSiteKey}
-                      onVerify={setTurnstileToken}
-                      onExpire={() => setTurnstileToken("")}
-                      size="compact"
-                      appearance="interaction-only"
-                      className="mt-1"
-                    />
-                  )}
-                  <div className="h-8">
-                    {error && (
-                      <div className="mb-6 flex w-fit gap-1 border-red-500 border-l-4 bg-red-100 px-2 py-1 text-red-700">
-                        <p className="font-semibold">ERROR:</p>
-                        <p>{error}</p>
-                      </div>
-                    )}
-                    {message && (
-                      <div className="mb-6 flex w-fit gap-1 border-green-500 border-l-4 bg-green-100 px-2 py-1 text-green-700">
-                        <p>{message}</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col gap-2 md:order-none md:hidden lg:order-3 lg:flex">
+            <div className="flex flex-col gap-2 md:order-2 lg:order-3">
               <div className="flex flex-col gap-2">
                 <span className="font-semibold">{addressTitle}</span>
                 <div className="space-y-2">
@@ -577,12 +499,12 @@ export function Footer() {
             </div>
             <nav
               aria-label="Footer navigation"
-              className="order-2 block md:hidden lg:block"
+              className="order-2 md:order-4 md:col-span-2 lg:order-2 lg:col-span-1"
             >
               <FooterMenu />
             </nav>
 
-            <div className="order-4 flex w-full flex-col gap-4 pt-6 md:order-none md:hidden md:pt-0 lg:order-4 lg:flex lg:w-fit">
+            <div className="order-4 flex w-full flex-col gap-4 pt-6 md:order-3 md:pt-0 lg:order-4 lg:w-fit">
               <span className="font-semibold">{newsletterTitle}</span>
               <div className="space-y-2">
                 <p>{newsletterDescription}</p>
@@ -629,32 +551,25 @@ export function Footer() {
                     className="mt-1"
                   />
                 )}
-                {error ||
-                  (message && (
-                    <div className="h-8">
-                      {error && (
-                        <div className="mb-6 flex w-fit gap-1 border-red-500 border-l-4 bg-red-100 px-2 py-1 text-red-700">
-                          <p className="font-semibold">ERROR:</p>
-                          <p>{error}</p>
-                        </div>
-                      )}
-                      {message && (
-                        <div className="mb-6 flex w-fit gap-1 border-green-500 border-l-4 bg-green-100 px-2 py-1 text-green-700">
-                          <p>{message}</p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                {(error || message) && (
+                  <div className="h-8">
+                    {error && (
+                      <div className="mb-6 flex w-fit gap-1 border-red-500 border-l-4 bg-red-100 px-2 py-1 text-red-700">
+                        <p className="font-semibold">ERROR:</p>
+                        <p>{error}</p>
+                      </div>
+                    )}
+                    {message && (
+                      <div className="mb-6 flex w-fit gap-1 border-green-500 border-l-4 bg-green-100 px-2 py-1 text-green-700">
+                        <p>{message}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
           <div>
-            <nav
-              aria-label="Footer navigation"
-              className="hidden md:block lg:hidden"
-            >
-              <FooterMenu />
-            </nav>
             <div className="grid grid-cols-1 items-center justify-center gap-y-6 pt-6 pb-6 md:grid-cols-2 md:pt-0 lg:grid-cols-3">
               <p className="order-3 md:col-span-2 lg:order-none lg:col-span-1">
                 {copyright}
