@@ -1,21 +1,22 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
 import type { ComponentSchema } from "~/page-builder";
 
 interface CollectionListDynamicProps extends SectionProps {}
 
-let CollectionListDynamic = forwardRef<HTMLElement, CollectionListDynamicProps>(
-  (props, ref) => {
-    let { children, ...rest } = props;
+let CollectionListDynamic = ({
+  ref,
+  ...props
+}: CollectionListDynamicProps & { ref?: RefObject<HTMLElement | null> }) => {
+  let { children, ...rest } = props;
 
-    return (
-      <Section ref={ref} {...rest} containerClassName={"flex flex-col"}>
-        {children}
-      </Section>
-    );
-  },
-);
+  return (
+    <Section ref={ref} {...rest} containerClassName={"flex flex-col"}>
+      {children}
+    </Section>
+  );
+};
 
 export default CollectionListDynamic;
 

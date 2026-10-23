@@ -4,10 +4,10 @@ import { getPageDefinition } from "./pages";
 import { generateDataFromSchema } from "./schema";
 import type { LoadedPageItem, PageData, PageItem, PageType } from "./types";
 
-export type LoadPageParams = {
+export interface LoadPageParams {
   type?: PageType;
   handle?: string;
-};
+}
 
 /**
  * Runs a section's `loader`, if it declares one.

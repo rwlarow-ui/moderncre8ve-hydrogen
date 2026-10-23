@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import {
   createSchema,
   IMAGES_PLACEHOLDERS,
@@ -11,10 +11,12 @@ interface ColumnsWithImagesItemsProps extends SectionComponentProps {
   imageAspectRatio: ImageAspectRatio;
 }
 
-const ColumnsWithImagesItems = forwardRef<
-  HTMLDivElement,
-  ColumnsWithImagesItemsProps
->((props, ref) => {
+const ColumnsWithImagesItems = ({
+  ref,
+  ...props
+}: ColumnsWithImagesItemsProps & {
+  ref?: RefObject<HTMLDivElement | null>;
+}) => {
   const { children, gap, imageAspectRatio, ...rest } = props;
 
   return (
@@ -32,7 +34,7 @@ const ColumnsWithImagesItems = forwardRef<
       {children}
     </div>
   );
-});
+};
 
 export default ColumnsWithImagesItems;
 

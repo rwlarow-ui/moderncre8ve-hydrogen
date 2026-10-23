@@ -1,23 +1,15 @@
 import { FunnelXIcon, SlidersIcon, XIcon } from "@phosphor-icons/react";
 import * as Dialog from "@radix-ui/react-dialog";
-import {
-  Analytics,
-  getPaginationVariables,
-  Pagination,
-} from "@shopify/hydrogen";
+import { Analytics, getPaginationVariables } from "@shopify/hydrogen";
 import type { ProductFilter } from "@shopify/hydrogen/storefront-api-types";
 import type { LoaderFunctionArgs, MetaArgs } from "@shopify/remix-oxygen";
 import { clsx } from "clsx";
 import React, { useState } from "react";
 import { useLoaderData, useSearchParams } from "react-router";
-import type {
-  ProductCardFragment,
-  SearchQuery,
-} from "storefront-api.generated";
+import type { SearchQuery } from "storefront-api.generated";
 import { AnimatedDrawer } from "~/components/animate-drawer";
 import { Button } from "~/components/button";
 import { FiltersSearchPage } from "~/components/layout/filter-search-page";
-import { variants } from "~/components/link";
 import { ProductCard } from "~/components/product/product-card";
 import { ScrollArea } from "~/components/scroll-area";
 import { Section } from "~/components/section";
@@ -286,8 +278,11 @@ export default function Search() {
                 gridSizeDesktop={gridSizeDesktop}
                 gridSizeMobile={gridSizeMobile}
                 onGridSizeChange={(v, context) => {
-                  if (context === "desktop") setGridSizeDesktop(v);
-                  else setGridSizeMobile(v);
+                  if (context === "desktop") {
+                    setGridSizeDesktop(v);
+                  } else {
+                    setGridSizeMobile(v);
+                  }
                 }}
               />
               <FiltersDrawer filtersPosition={"drawer"} />

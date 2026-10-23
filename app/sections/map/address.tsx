@@ -1,3 +1,4 @@
+import type { RefObject } from "react";
 import {
   MapPinLineIcon,
   MinusCircleIcon,
@@ -5,7 +6,7 @@ import {
 } from "@phosphor-icons/react";
 import * as Accordion from "@radix-ui/react-accordion";
 import clsx from "clsx";
-import { forwardRef, useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import type { ComponentSchema } from "~/page-builder";
 import { cn } from "~/utils/cn";
 import { MapContext } from "./map";
@@ -18,7 +19,10 @@ interface AddressProps {
   openingHoursSat?: string;
 }
 
-let Address = forwardRef<HTMLDivElement, AddressProps>((props, _ref) => {
+let Address = ({
+  ref: _ref,
+  ...props
+}: AddressProps & { ref?: RefObject<HTMLDivElement | null> }) => {
   let {
     address,
     nameStore,
@@ -295,7 +299,7 @@ let Address = forwardRef<HTMLDivElement, AddressProps>((props, _ref) => {
       </div>
     </div>
   );
-});
+};
 
 export default Address;
 

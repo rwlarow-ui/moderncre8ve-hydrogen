@@ -1,4 +1,5 @@
-import { forwardRef, useState } from "react";
+import type { RefObject } from "react";
+import { useState } from "react";
 import { useLoaderData } from "react-router";
 import type { SectionProps } from "~/components/section";
 import { Section } from "~/components/section";
@@ -11,45 +12,48 @@ interface CollectionFaqProps extends SectionProps {
   maxQuestions: number;
 }
 
-const CollectionFaq = forwardRef<HTMLElement, CollectionFaqProps>(
-  (props, ref) => {
-    const {
-      heading = "Frequently Asked Questions",
-      headingSize = "h2",
-      maxQuestions = 10,
-      ...rest
-    } = props;
-    const loaderData = useLoaderData<any>();
-    const collection = loaderData?.collection;
-    const handle = collection?.handle ?? "";
-    const faqs = collectionFaqs[handle];
+const CollectionFaq = ({
+  ref,
+  ...props
+}: CollectionFaqProps & { ref?: RefObject<HTMLElement | null> }) => {
+  const {
+    heading = "Frequently Asked Questions",
+    headingSize = "h2",
+    maxQuestions = 10,
+    ...rest
+  } = props;
+  const loaderData = useLoaderData<any>();
+  const collection = loaderData?.collection;
+  const handle = collection?.handle ?? "";
+  const faqs = collectionFaqs[handle];
 
-    if (!faqs?.length) return null;
+  if (!faqs?.length) {
+    return null;
+  }
 
-    const displayFaqs = faqs.slice(0, maxQuestions);
-    const HeadingTag = headingSize;
+  const displayFaqs = faqs.slice(0, maxQuestions);
+  const HeadingTag = headingSize;
 
-    return (
-      <Section ref={ref} {...rest}>
-        <div className="mx-auto w-full max-w-4xl px-4 py-8 md:py-12">
-          <HeadingTag className="mb-8 text-center font-sans font-semibold text-2xl tracking-tight md:text-3xl">
-            {heading}
-          </HeadingTag>
-          <div className="divide-y divide-gray-200">
-            {displayFaqs.map((faq, index) => (
-              <FaqItem
-                key={`${handle}-faq-${index}`}
-                question={faq.question}
-                answer={faq.answer}
-                defaultOpen={index === 0}
-              />
-            ))}
-          </div>
+  return (
+    <Section ref={ref} {...rest}>
+      <div className="mx-auto w-full max-w-4xl px-4 py-8 md:py-12">
+        <HeadingTag className="mb-8 text-center font-sans font-semibold text-2xl tracking-tight md:text-3xl">
+          {heading}
+        </HeadingTag>
+        <div className="divide-y divide-gray-200">
+          {displayFaqs.map((faq, index) => (
+            <FaqItem
+              key={`${handle}-faq-${index}`}
+              question={faq.question}
+              answer={faq.answer}
+              defaultOpen={index === 0}
+            />
+          ))}
         </div>
-      </Section>
-    );
-  },
-);
+      </div>
+    </Section>
+  );
+};
 
 function FaqItem({
   question,

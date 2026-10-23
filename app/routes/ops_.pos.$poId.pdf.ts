@@ -11,7 +11,9 @@ import { getProductionPo } from "~/utils/production-po.server";
  */
 export async function loader({ request, context, params }: LoaderFunctionArgs) {
   await requireOpsAccess(request, context);
-  if (!params.poId) throw new Response("PO not found.", { status: 404 });
+  if (!params.poId) {
+    throw new Response("PO not found.", { status: 404 });
+  }
 
   let po: Awaited<ReturnType<typeof getProductionPo>>;
   try {

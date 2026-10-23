@@ -1,6 +1,6 @@
+import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { forwardRef } from "react";
 import { BackgroundImage } from "~/components/background-image";
 import Heading, {
   type HeadingProps,
@@ -102,139 +102,140 @@ interface PromotionItemProps
   textColorDecor?: string;
 }
 
-const PromotionGridItem = forwardRef<HTMLDivElement, PromotionItemProps>(
-  (props, ref) => {
-    const {
-      contentPosition,
-      backgroundImage,
-      borderRadius,
-      enableOverlay,
-      overlayColor,
-      overlayColorHover,
-      overlayOpacity,
-      // Heading props
-      headingContent,
-      headingTagName,
-      color,
-      size,
-      mobileSize,
-      desktopSize,
-      weight,
-      letterSpacing,
-      alignment,
-      minSize,
-      maxSize,
-      animate,
-      // Subheading props
-      subheadingContent,
-      subheadingTag = "p",
-      subheadingColor,
-      subheadingSize,
-      subheadingWeight,
-      subheadingAlignment,
-      // Paragraph props
-      paragraphContent,
-      paragraphTag = "p",
-      paragraphColor,
-      paragraphSize,
-      paragraphAlignment,
-      paragraphWidth,
-      // Button/Link props
-      buttonContent,
-      to,
-      variant,
-      openInNewTab,
-      textColor,
-      buttonBackgroundColor,
-      borderColor,
-      textColorHover,
-      backgroundColorHover,
-      borderColorHover,
-      textColorDecor,
-      ...rest
-    } = props;
+const PromotionGridItem = ({
+  ref,
+  ...props
+}: PromotionItemProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  const {
+    contentPosition,
+    backgroundImage,
+    borderRadius,
+    enableOverlay,
+    overlayColor,
+    overlayColorHover,
+    overlayOpacity,
+    // Heading props
+    headingContent,
+    headingTagName,
+    color,
+    size,
+    mobileSize,
+    desktopSize,
+    weight,
+    letterSpacing,
+    alignment,
+    minSize,
+    maxSize,
+    animate,
+    // Subheading props
+    subheadingContent,
+    subheadingTag = "p",
+    subheadingColor,
+    subheadingSize,
+    subheadingWeight,
+    subheadingAlignment,
+    // Paragraph props
+    paragraphContent,
+    paragraphTag = "p",
+    paragraphColor,
+    paragraphSize,
+    paragraphAlignment,
+    paragraphWidth,
+    // Button/Link props
+    buttonContent,
+    to,
+    variant,
+    openInNewTab,
+    textColor,
+    buttonBackgroundColor,
+    borderColor,
+    textColorHover,
+    backgroundColorHover,
+    borderColorHover,
+    textColorDecor,
+    ...rest
+  } = props;
 
-    // Generate dynamic classes for subheading text
-    const subheadingClasses = [
-      `text-${subheadingAlignment || "center"}`,
-      subheadingSize === "large" ? "text-lg" : "text-base",
-      subheadingWeight === "medium" ? "font-medium" : "font-normal",
-    ].join(" ");
+  // Generate dynamic classes for subheading text
+  const subheadingClasses = [
+    `text-${subheadingAlignment || "center"}`,
+    subheadingSize === "large" ? "text-lg" : "text-base",
+    subheadingWeight === "medium" ? "font-medium" : "font-normal",
+  ].join(" ");
 
-    // Create the subheading element based on the selected tag
-    const SubheadingTag = subheadingTag;
+  // Create the subheading element based on the selected tag
+  const SubheadingTag = subheadingTag;
 
-    return (
-      <div
-        ref={ref}
-        {...rest}
-        data-motion="slide-in"
-        className={variants({ contentPosition, borderRadius })}
-      >
-        <BackgroundImage backgroundImage={backgroundImage} />
-        <Overlay
-          enableOverlay={enableOverlay}
-          overlayColor={overlayColor}
-          overlayColorHover={overlayColorHover}
-          overlayOpacity={overlayOpacity}
-        />
-        <div className="flex flex-col gap-2">
-          {headingContent && (
-            <Heading
-              content={headingContent}
-              as={headingTagName}
-              color={color}
-              size={size}
-              mobileSize={mobileSize}
-              desktopSize={desktopSize}
-              weight={weight}
-              letterSpacing={letterSpacing}
-              alignment={alignment}
-              minSize={minSize}
-              maxSize={maxSize}
-              animate={animate}
-            />
-          )}
-          {subheadingContent && (
-            <SubheadingTag
-              className={subheadingClasses}
-              style={{ color: subheadingColor }}
-            >
-              {subheadingContent}
-            </SubheadingTag>
-          )}
-        </div>
-        {paragraphContent && (
-          <Paragraph
-            content={paragraphContent}
-            as={paragraphTag}
-            color={paragraphColor}
-            textSize={paragraphSize}
-            alignment={paragraphAlignment}
-            width={paragraphWidth}
+  return (
+    <div
+      ref={ref}
+      {...rest}
+      data-motion="slide-in"
+      className={variants({ contentPosition, borderRadius })}
+    >
+      <BackgroundImage backgroundImage={backgroundImage} />
+      <Overlay
+        enableOverlay={enableOverlay}
+        overlayColor={overlayColor}
+        overlayColorHover={overlayColorHover}
+        overlayOpacity={overlayOpacity}
+      />
+      <div className="flex flex-col gap-2">
+        {headingContent && (
+          <Heading
+            content={headingContent}
+            as={headingTagName}
+            color={color}
+            size={size}
+            mobileSize={mobileSize}
+            desktopSize={desktopSize}
+            weight={weight}
+            letterSpacing={letterSpacing}
+            alignment={alignment}
+            minSize={minSize}
+            maxSize={maxSize}
+            animate={animate}
           />
         )}
-        {buttonContent && (
-          <Link
-            variant={variant}
-            textColor={textColor}
-            backgroundColor={buttonBackgroundColor}
-            borderColor={borderColor}
-            textColorHover={textColorHover}
-            backgroundColorHover={backgroundColorHover}
-            borderColorHover={borderColorHover}
-            textColorDecor={textColorDecor}
-            openInNewTab={openInNewTab}
-            to={to}
-            className="w-fit"
+        {subheadingContent && (
+          <SubheadingTag
+            className={subheadingClasses}
+            style={{ color: subheadingColor }}
           >
-            {buttonContent}
-          </Link>
+            {subheadingContent}
+          </SubheadingTag>
         )}
       </div>
-    );
-  },
-);
+      {paragraphContent && (
+        <Paragraph
+          content={paragraphContent}
+          as={paragraphTag}
+          color={paragraphColor}
+          textSize={paragraphSize}
+          alignment={paragraphAlignment}
+          width={paragraphWidth}
+        />
+      )}
+      {buttonContent && (
+        <Link
+          variant={variant}
+          textColor={textColor}
+          backgroundColor={buttonBackgroundColor}
+          borderColor={borderColor}
+          textColorHover={textColorHover}
+          backgroundColorHover={backgroundColorHover}
+          borderColorHover={borderColorHover}
+          textColorDecor={textColorDecor}
+          openInNewTab={openInNewTab}
+          to={to}
+          className="w-fit"
+        >
+          {buttonContent}
+        </Link>
+      )}
+    </div>
+  );
+};
 
 export default PromotionGridItem;
 

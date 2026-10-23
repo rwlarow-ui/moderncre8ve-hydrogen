@@ -114,11 +114,11 @@ async function getLayoutData({ storefront, env }: AppLoadContext) {
   };
 }
 
-type Swatch = {
+interface Swatch {
   id: string;
   name: string;
   value: string;
-};
+}
 
 async function getSwatchesConfigs(context: AppLoadContext) {
   const { METAOBJECT_COLORS_TYPE: type } = context.env;

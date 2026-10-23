@@ -1,5 +1,5 @@
+import type { RefObject } from "react";
 import type { ReactNode } from "react";
-import { forwardRef } from "react";
 import {
   Section,
   type SectionProps,
@@ -11,7 +11,10 @@ interface VideosProps extends SectionProps {
   children?: ReactNode;
 }
 
-let Videos = forwardRef<HTMLElement, VideosProps>((props, ref) => {
+let Videos = ({
+  ref,
+  ...props
+}: VideosProps & { ref?: RefObject<HTMLElement | null> }) => {
   let { children, ...rest } = props;
 
   return (
@@ -19,7 +22,7 @@ let Videos = forwardRef<HTMLElement, VideosProps>((props, ref) => {
       {children}
     </Section>
   );
-});
+};
 
 export let schema: SectionComponent["schema"] = {
   title: "Videos",
@@ -39,5 +42,4 @@ export let schema: SectionComponent["schema"] = {
   },
 };
 
-Videos.displayName = "Videos";
 export default Videos;

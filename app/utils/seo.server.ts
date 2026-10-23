@@ -458,9 +458,9 @@ function collection({
   };
 }
 
-type CollectionListRequiredFields = {
+interface CollectionListRequiredFields {
   nodes: Omit<CollectionRequiredFields, "products">[];
-};
+}
 
 function collectionsJsonLd({
   url,

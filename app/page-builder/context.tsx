@@ -1,14 +1,14 @@
 import { createContext, useContext } from "react";
 
 /** A page item after schema defaults, saved data and loader data are merged. */
-export type SectionInstance = {
+export interface SectionInstance {
   id: string;
   type: string;
   parentId: string;
   /** The merged props the section is rendered with. */
   data: Record<string, any>;
   children: { id: string }[];
-};
+}
 
 export type SectionTree = Map<string, SectionInstance>;
 

@@ -1,6 +1,6 @@
-import { ArrowRight } from "@phosphor-icons/react";
+import type { Ref } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { forwardRef, type HTMLAttributes } from "react";
+import { type HTMLAttributes } from "react";
 import {
   Link as RemixLink,
   type LinkProps as RemixLinkProps,
@@ -147,85 +147,86 @@ export function useHrefWithLocale(href: LinkProps["to"]) {
  *
  * Ultimately, it is up to you to decide how to implement this behavior.
  */
-export const Link = forwardRef(
-  (props: LinkProps, ref: React.Ref<HTMLAnchorElement>) => {
-    let {
-      to,
-      text,
-      variant,
-      openInNewTab,
-      className,
-      style,
-      textColor,
-      backgroundColor,
-      borderColor,
-      textColorHover,
-      backgroundColorHover,
-      borderColorHover,
-      textColorDecor,
-      children,
-      ...rest
-    } = props;
-    const { enableViewTransition } = useThemeSettings();
-    const href = useHrefWithLocale(to);
+export const Link = ({
+  ref,
+  ...props
+}: LinkProps & { ref?: Ref<HTMLAnchorElement> }) => {
+  let {
+    to,
+    text,
+    variant,
+    openInNewTab,
+    className,
+    style,
+    textColor,
+    backgroundColor,
+    borderColor,
+    textColorHover,
+    backgroundColorHover,
+    borderColorHover,
+    textColorDecor,
+    children,
+    ...rest
+  } = props;
+  const { enableViewTransition } = useThemeSettings();
+  const href = useHrefWithLocale(to);
 
-    if (variant === "custom") {
-      style = {
-        ...style,
-        "--btn-text": textColor,
-        "--btn-bg": backgroundColor,
-        "--btn-border": borderColor,
-        "--btn-bg-hover": backgroundColorHover,
-        "--btn-text-hover": textColorHover,
-        "--btn-border-hover": borderColorHover,
-      } as React.CSSProperties;
-    }
-    if (variant === "decor") {
-      style = {
-        ...style,
-        "--btn-text-decor": textColorDecor,
-      } as React.CSSProperties;
-    }
+  if (variant === "custom") {
+    style = {
+      ...style,
+      "--btn-text": textColor,
+      "--btn-bg": backgroundColor,
+      "--btn-border": borderColor,
+      "--btn-bg-hover": backgroundColorHover,
+      "--btn-text-hover": textColorHover,
+      "--btn-border-hover": borderColorHover,
+    } as React.CSSProperties;
+  }
+  if (variant === "decor") {
+    style = {
+      ...style,
+      "--btn-text-decor": textColorDecor,
+    } as React.CSSProperties;
+  }
 
-    if (!(text || children)) {
-      return null;
-    }
+  if (!(text || children)) {
+    return null;
+  }
 
-    return (
-      <RemixLink
-        ref={ref}
-        viewTransition={enableViewTransition}
-        to={href}
-        style={style}
-        target={openInNewTab ? "_blank" : undefined}
-        className={cn(variants({ variant, className }))}
-        {...rest}
-      >
-        {variant === "decor" ? (
-          <span className="inline-flex items-center gap-2.5">
-            {children || text}
-            <span className="transform transition-transform duration-300 group-hover:translate-x-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-              >
-                <path
-                  d="M14.0575 4.74121L13.1737 5.62508L16.9236 9.37496H0.625V10.625H16.9234L13.1737 14.3748L14.0575 15.2586L19.3163 9.99992L14.0575 4.74121Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
+  return (
+    <RemixLink
+      ref={ref}
+      viewTransition={enableViewTransition}
+      to={href}
+      style={style}
+      target={openInNewTab ? "_blank" : undefined}
+      className={cn(variants({ variant, className }))}
+      {...rest}
+    >
+      {variant === "decor" ? (
+        <span className="inline-flex items-center gap-2.5">
+          {children || text}
+          <span className="transform transition-transform duration-300 group-hover:translate-x-1">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+            >
+              <path
+                d="M14.0575 4.74121L13.1737 5.62508L16.9236 9.37496H0.625V10.625H16.9234L13.1737 14.3748L14.0575 15.2586L19.3163 9.99992L14.0575 4.74121Z"
+                fill="currentColor"
+              />
+            </svg>
           </span>
-        ) : (
-          children || text
-        )}
-      </RemixLink>
-    );
-  },
-);
+        </span>
+      ) : (
+        children || text
+      )}
+    </RemixLink>
+  );
+};
 
 export default Link;
 
@@ -249,7 +250,7 @@ export const linkContentInputs: SettingsGroup["inputs"] = [
     name: "openInNewTab",
     label: "Open in new tab",
     defaultValue: false,
-    condition: (data: LinkData) => !!data.to,
+    condition: (data: LinkData) => Boolean(data.to),
   },
   {
     type: "select",

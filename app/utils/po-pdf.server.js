@@ -23,8 +23,11 @@ function makeSafe(font) {
   return (text) => {
     let out = "";
     for (const char of String(text ?? "").replace(/[\r\t]/g, " ")) {
-      if (char === "\n" || supported.has(char.codePointAt(0))) out += char;
-      else out += "?";
+      if (char === "\n" || supported.has(char.codePointAt(0))) {
+        out += char;
+      } else {
+        out += "?";
+      }
     }
     return out;
   };
@@ -64,7 +67,9 @@ export async function renderPoPdf(doc) {
     }
   };
   const ensure = (height) => {
-    if (y - height < MARGIN + 24) newPage();
+    if (y - height < MARGIN + 24) {
+      newPage();
+    }
   };
   const text = (
     value,
@@ -150,7 +155,9 @@ export async function renderPoPdf(doc) {
       ["Other options", line.other],
       ["Notes", line.notes],
     ]) {
-      if (value) row(label, value);
+      if (value) {
+        row(label, value);
+      }
     }
     y -= 8;
   }
@@ -158,7 +165,9 @@ export async function renderPoPdf(doc) {
   // Delivery
   heading("Delivery and logistics (white glove, in-home assembly)");
   if (doc.delivery) {
-    for (const [label, value] of doc.delivery) row(label, value);
+    for (const [label, value] of doc.delivery) {
+      row(label, value);
+    }
   } else {
     row("Status", "Delivery details have not been provided yet.");
   }

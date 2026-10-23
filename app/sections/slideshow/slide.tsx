@@ -1,6 +1,6 @@
+import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { forwardRef } from "react";
 import { backgroundInputs } from "~/components/background-image";
 import Heading, {
   type HeadingProps,
@@ -93,7 +93,10 @@ export interface SlideProps
   textColorDecor?: string;
 }
 
-const Slide = forwardRef<HTMLDivElement, SlideProps>((props, ref) => {
+const Slide = ({
+  ref,
+  ...props
+}: SlideProps & { ref?: RefObject<HTMLDivElement | null> }) => {
   const [scope] = useAnimation(ref);
   const {
     width,
@@ -231,7 +234,7 @@ const Slide = forwardRef<HTMLDivElement, SlideProps>((props, ref) => {
       </div>
     </div>
   );
-});
+};
 
 export default Slide;
 

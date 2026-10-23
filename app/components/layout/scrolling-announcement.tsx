@@ -93,7 +93,9 @@ export function ScrollingAnnouncement() {
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el) {
+      return;
+    }
 
     updateHeight();
 
@@ -108,7 +110,9 @@ export function ScrollingAnnouncement() {
     };
   }, [topbarText]);
 
-  if (!topbarText || slides.length === 0) return null;
+  if (!topbarText || slides.length === 0) {
+    return null;
+  }
 
   return (
     <div

@@ -1,5 +1,5 @@
+import type { RefObject } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { forwardRef } from "react";
 import type { SectionComponentProps } from "~/page-builder";
 import { createSchema } from "~/page-builder";
 
@@ -39,7 +39,10 @@ let variants = cva("flex flex-col [&_.paragraph]:mx-[unset]", {
   },
 });
 
-let Hotspots = forwardRef<HTMLDivElement, HotspotsProps>((props, ref) => {
+let Hotspots = ({
+  ref,
+  ...props
+}: HotspotsProps & { ref?: RefObject<HTMLDivElement | null> }) => {
   let { contentPosition, gap, children, ...rest } = props;
   return (
     <div
@@ -53,7 +56,7 @@ let Hotspots = forwardRef<HTMLDivElement, HotspotsProps>((props, ref) => {
       {children}
     </div>
   );
-});
+};
 
 export default Hotspots;
 

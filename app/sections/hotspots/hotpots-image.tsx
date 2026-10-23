@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import { Image } from "~/components/image";
 import type { PageImage, SectionComponentProps } from "~/page-builder";
 import { createSchema, IMAGES_PLACEHOLDERS } from "~/page-builder";
@@ -12,7 +12,10 @@ interface HotspotsProps extends SectionComponentProps {
   aspectRatio?: ImageAspectRatio;
 }
 
-let HotspotsImage = forwardRef<HTMLDivElement, HotspotsProps>((props, ref) => {
+let HotspotsImage = ({
+  ref,
+  ...props
+}: HotspotsProps & { ref?: RefObject<HTMLDivElement | null> }) => {
   let { image, aspectRatio: localAspectRatio, children, ...rest } = props;
 
   const { aspectRatio: parentAspectRatio } = useHotspotsContext();
@@ -39,7 +42,7 @@ let HotspotsImage = forwardRef<HTMLDivElement, HotspotsProps>((props, ref) => {
       {children}
     </div>
   );
-});
+};
 
 export default HotspotsImage;
 

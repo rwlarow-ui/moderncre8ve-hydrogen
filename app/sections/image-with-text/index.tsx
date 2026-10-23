@@ -1,4 +1,5 @@
-import { forwardRef, useState } from "react";
+import type { RefObject } from "react";
+import { useState } from "react";
 import { backgroundInputs } from "~/components/background-image";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
@@ -8,40 +9,41 @@ import { type ImageAspectRatioType, ImageWithTextContext } from "./context";
 
 type ImageWithTextProps = SectionProps;
 
-const ImageWithText = forwardRef<HTMLElement, ImageWithTextProps>(
-  (props, ref) => {
-    const { children, ...rest } = props;
+const ImageWithText = ({
+  ref,
+  ...props
+}: ImageWithTextProps & { ref?: RefObject<HTMLElement | null> }) => {
+  const { children, ...rest } = props;
 
-    const [imageCount, setImageCount] = useState(0);
-    const [imageAspectRatio, setImageAspectRatio] =
-      useState<ImageAspectRatioType>("1/1");
+  const [imageCount, setImageCount] = useState(0);
+  const [imageAspectRatio, setImageAspectRatio] =
+    useState<ImageAspectRatioType>("1/1");
 
-    return (
-      <ImageWithTextContext.Provider
-        value={{
-          imageCount,
-          setImageCount,
-          imageAspectRatio,
-          setImageAspectRatio,
-        }}
+  return (
+    <ImageWithTextContext.Provider
+      value={{
+        imageCount,
+        setImageCount,
+        imageAspectRatio,
+        setImageAspectRatio,
+      }}
+    >
+      <Section
+        ref={ref}
+        {...rest}
+        containerClassName={cn(
+          "px-0 sm:px-0",
+          imageCount <= 1
+            ? "flex flex-col md:flex-row"
+            : imageCount > 1 &&
+                "relative flex aspect-square flex-row md:aspect-[unset] lg:aspect-auto",
+        )}
       >
-        <Section
-          ref={ref}
-          {...rest}
-          containerClassName={cn(
-            "px-0 sm:px-0",
-            imageCount <= 1
-              ? "flex flex-col md:flex-row"
-              : imageCount > 1 &&
-                  "relative flex aspect-square flex-row md:aspect-[unset] lg:aspect-auto",
-          )}
-        >
-          {children}
-        </Section>
-      </ImageWithTextContext.Provider>
-    );
-  },
-);
+        {children}
+      </Section>
+    </ImageWithTextContext.Provider>
+  );
+};
 
 export default ImageWithText;
 

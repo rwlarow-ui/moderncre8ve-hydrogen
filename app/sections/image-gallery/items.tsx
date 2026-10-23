@@ -1,7 +1,7 @@
+import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import type { CSSProperties } from "react";
-import { forwardRef } from "react";
 import {
   createSchema,
   IMAGES_PLACEHOLDERS,
@@ -37,22 +37,23 @@ interface ImageGalleyItemsProps
   height: number;
 }
 
-const ImageGalleyItems = forwardRef<HTMLDivElement, ImageGalleyItemsProps>(
-  (props, ref) => {
-    const { children, gap, height, ...rest } = props;
+const ImageGalleyItems = ({
+  ref,
+  ...props
+}: ImageGalleyItemsProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  const { children, gap, height, ...rest } = props;
 
-    return (
-      <div
-        ref={ref}
-        {...rest}
-        className={variants({ gap })}
-        style={{ "--image-height": `${height}px` } as CSSProperties}
-      >
-        {children}
-      </div>
-    );
-  },
-);
+  return (
+    <div
+      ref={ref}
+      {...rest}
+      className={variants({ gap })}
+      style={{ "--image-height": `${height}px` } as CSSProperties}
+    >
+      {children}
+    </div>
+  );
+};
 
 export default ImageGalleyItems;
 

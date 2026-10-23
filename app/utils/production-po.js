@@ -76,7 +76,9 @@ export function initialPoState(logisticsStatus) {
  * a logistics refresh.
  */
 export function stateAfterLogisticsRefresh(state, logisticsStatus) {
-  if (!isEditableState(state)) return state;
+  if (!isEditableState(state)) {
+    return state;
+  }
   return initialPoState(logisticsStatus);
 }
 
@@ -158,9 +160,13 @@ export function applySpecEdits(existing = [], edits = []) {
  */
 export function resolveLogistics({ metafieldValue, attributes } = {}) {
   const fromMetafield = parseLogisticsJson(metafieldValue);
-  if (fromMetafield.status === "complete") return fromMetafield;
+  if (fromMetafield.status === "complete") {
+    return fromMetafield;
+  }
   const fromAttributes = readLogistics(attributes);
-  if (fromAttributes.status === "complete") return fromAttributes;
+  if (fromAttributes.status === "complete") {
+    return fromAttributes;
+  }
   if (fromMetafield.status === "later" || fromAttributes.status === "later") {
     return { status: "later", value: null };
   }
@@ -190,8 +196,12 @@ export function buildSnapshot({ order, logistics, now = new Date() }) {
  */
 export function reviewBlockers({ state, lineSpecs = [], snapshot } = {}) {
   const blockers = [];
-  if (state === "cancelled") blockers.push("This PO is cancelled.");
-  if (state === "sent") blockers.push("This PO has already been sent.");
+  if (state === "cancelled") {
+    blockers.push("This PO is cancelled.");
+  }
+  if (state === "sent") {
+    blockers.push("This PO has already been sent.");
+  }
 
   if (snapshot?.status !== "complete" || !snapshot?.logistics) {
     blockers.push(
@@ -199,12 +209,20 @@ export function reviewBlockers({ state, lineSpecs = [], snapshot } = {}) {
     );
   }
 
-  if (!lineSpecs.length) blockers.push("The PO has no line items.");
+  if (!lineSpecs.length) {
+    blockers.push("The PO has no line items.");
+  }
   lineSpecs.forEach((spec, index) => {
     const label = `Line ${index + 1} (${spec.product || "unnamed"})`;
-    if (!spec.size) blockers.push(`${label}: size is missing.`);
-    if (!spec.species) blockers.push(`${label}: species/material is missing.`);
-    if (!spec.finish) blockers.push(`${label}: finish is missing.`);
+    if (!spec.size) {
+      blockers.push(`${label}: size is missing.`);
+    }
+    if (!spec.species) {
+      blockers.push(`${label}: species/material is missing.`);
+    }
+    if (!spec.finish) {
+      blockers.push(`${label}: finish is missing.`);
+    }
   });
 
   return blockers;
@@ -231,7 +249,9 @@ export function checkTransition({ state, to, lineSpecs, snapshot }) {
   }
   if (to === "approved") {
     const blockers = reviewBlockers({ state, lineSpecs, snapshot });
-    if (blockers.length) return { ok: false, reason: blockers.join(" ") };
+    if (blockers.length) {
+      return { ok: false, reason: blockers.join(" ") };
+    }
   }
   return { ok: true, reason: "" };
 }
@@ -242,7 +262,9 @@ export function parsePoFields(fields = []) {
     fields.map((field) => [field.key, field.value]),
   );
   const json = (raw, fallback) => {
-    if (!raw) return fallback;
+    if (!raw) {
+      return fallback;
+    }
     try {
       return JSON.parse(raw);
     } catch {
@@ -267,6 +289,8 @@ export function parsePoFields(fields = []) {
 /** Whole days since an ISO timestamp (0 for missing/invalid). */
 export function daysSince(iso, now = new Date()) {
   const time = Date.parse(iso ?? "");
-  if (Number.isNaN(time)) return 0;
+  if (Number.isNaN(time)) {
+    return 0;
+  }
   return Math.max(0, Math.floor((now.getTime() - time) / 86_400_000));
 }

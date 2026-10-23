@@ -1,20 +1,21 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
 import { createSchema } from "~/page-builder";
 
 type PromotionGridProps = SectionProps;
 
-const PromotionGrid = forwardRef<HTMLElement, PromotionGridProps>(
-  (props, ref) => {
-    const { children, ...rest } = props;
-    return (
-      <Section ref={ref} {...rest}>
-        {children}
-      </Section>
-    );
-  },
-);
+const PromotionGrid = ({
+  ref,
+  ...props
+}: PromotionGridProps & { ref?: RefObject<HTMLElement | null> }) => {
+  const { children, ...rest } = props;
+  return (
+    <Section ref={ref} {...rest}>
+      {children}
+    </Section>
+  );
+};
 
 export default PromotionGrid;
 

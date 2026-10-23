@@ -1,7 +1,7 @@
+import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import type { CSSProperties } from "react";
-import { forwardRef } from "react";
 import { Image } from "~/components/image";
 import Link, { type LinkProps, linkContentInputs } from "~/components/link";
 import {
@@ -35,10 +35,10 @@ interface ColumnWithImageItemProps
   content: string;
 }
 
-const ColumnWithImageItem = forwardRef<
-  HTMLDivElement,
-  ColumnWithImageItemProps
->((props, ref) => {
+const ColumnWithImageItem = ({
+  ref,
+  ...props
+}: ColumnWithImageItemProps & { ref?: RefObject<HTMLDivElement | null> }) => {
   const {
     imageSrc,
     imageBorderRadius,
@@ -82,7 +82,7 @@ const ColumnWithImageItem = forwardRef<
       </div>
     </div>
   );
-});
+};
 
 export default ColumnWithImageItem;
 

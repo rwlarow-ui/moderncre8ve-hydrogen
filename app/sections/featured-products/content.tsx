@@ -1,5 +1,5 @@
+import type { RefObject } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { forwardRef } from "react";
 import Heading, {
   type HeadingProps,
   headingInputs,
@@ -70,10 +70,10 @@ let variants = cva("flex flex-col [&_.paragraph]:mx-[unset]", {
   },
 });
 
-const FeaturedContentProducts = forwardRef<
-  HTMLDivElement,
-  FeaturedProductsLoaderData
->((props, ref) => {
+const FeaturedContentProducts = ({
+  ref,
+  ...props
+}: FeaturedProductsLoaderData & { ref?: RefObject<HTMLDivElement | null> }) => {
   const {
     gap,
     contentPosition,
@@ -212,7 +212,7 @@ const FeaturedContentProducts = forwardRef<
       )}
     </div>
   );
-});
+};
 
 export default FeaturedContentProducts;
 

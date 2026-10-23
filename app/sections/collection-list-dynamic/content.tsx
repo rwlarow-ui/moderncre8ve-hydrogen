@@ -1,5 +1,5 @@
+import type { RefObject } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { forwardRef } from "react";
 import Heading, {
   type HeadingProps,
   headingInputs,
@@ -70,10 +70,10 @@ let variants = cva("flex flex-col [&_.paragraph]:mx-[unset]", {
   },
 });
 
-let CollectionContentDynamic = forwardRef<
-  HTMLDivElement,
-  CollectionListDynamicProps
->((props, ref) => {
+let CollectionContentDynamic = ({
+  ref,
+  ...props
+}: CollectionListDynamicProps & { ref?: RefObject<HTMLDivElement | null> }) => {
   const {
     gap,
     contentPosition,
@@ -212,7 +212,7 @@ let CollectionContentDynamic = forwardRef<
       )}
     </div>
   );
-});
+};
 
 export default CollectionContentDynamic;
 

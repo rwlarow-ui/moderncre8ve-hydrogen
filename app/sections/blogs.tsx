@@ -1,4 +1,5 @@
-import { type CSSProperties, forwardRef, useState } from "react";
+import type { RefObject } from "react";
+import { type CSSProperties, useState } from "react";
 import { useLoaderData } from "react-router";
 import type { ArticleFragment, BlogQuery } from "storefront-api.generated";
 import { Button } from "~/components/button";
@@ -31,7 +32,10 @@ interface BlogsProps
   showSeperator?: boolean;
 }
 
-const Blogs = forwardRef<HTMLElement, BlogsProps>((props, ref) => {
+const Blogs = ({
+  ref,
+  ...props
+}: BlogsProps & { ref?: RefObject<HTMLElement | null> }) => {
   const {
     layout,
     showExcerpt,
@@ -129,7 +133,7 @@ const Blogs = forwardRef<HTMLElement, BlogsProps>((props, ref) => {
     );
   }
   return <Section ref={ref} {...rest} />;
-});
+};
 
 export interface ArticleCardProps {
   article: ArticleFragment;

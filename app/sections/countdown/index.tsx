@@ -1,6 +1,6 @@
+import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { forwardRef } from "react";
 import { backgroundInputs } from "~/components/background-image";
 import { overlayInputs } from "~/components/overlay";
 import type { SectionProps } from "~/components/section";
@@ -26,7 +26,10 @@ interface CountdownProps extends VariantProps<typeof variants>, SectionProps {
   scenario?: "scenario1" | "scenario2";
 }
 
-const Countdown = forwardRef<HTMLElement, CountdownProps>((props, ref) => {
+const Countdown = ({
+  ref,
+  ...props
+}: CountdownProps & { ref?: RefObject<HTMLElement | null> }) => {
   const {
     children,
     height,
@@ -68,7 +71,7 @@ const Countdown = forwardRef<HTMLElement, CountdownProps>((props, ref) => {
       </div>
     </Section>
   );
-});
+};
 
 export default Countdown;
 

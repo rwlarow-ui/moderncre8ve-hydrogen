@@ -1,8 +1,9 @@
+import type { RefObject } from "react";
 import { HandbagIcon, PlusIcon, TagIcon, XIcon } from "@phosphor-icons/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import clsx from "clsx";
 import type { CSSProperties } from "react";
-import { forwardRef, useState } from "react";
+import { useState } from "react";
 import { useFetcher } from "react-router";
 import type { ProductQuery } from "storefront-api.generated";
 import { QuickShop } from "~/components/product/quick-shop";
@@ -51,174 +52,172 @@ function CircleDotIcon(props: any) {
   );
 }
 
-const HotspotsItem = forwardRef<HTMLDivElement, HotspotsItemProps>(
-  (props, ref) => {
-    const {
-      icon,
-      iconSize,
-      offsetX,
-      offsetY,
-      product,
-      showPrice,
-      showViewDetailsLink,
-      viewDetailsLinkText,
-      children,
-      loaderData,
-      ...rest
-    } = props;
-    const resolvedProduct = loaderData?.product ?? null;
-    const hasResolvedProduct = Boolean(
-      product?.handle && resolvedProduct?.handle,
-    );
-    const productHandle = resolvedProduct?.handle ?? product?.handle ?? "";
+const HotspotsItem = ({
+  ref,
+  ...props
+}: HotspotsItemProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  const {
+    icon,
+    iconSize,
+    offsetX,
+    offsetY,
+    product,
+    showPrice,
+    showViewDetailsLink,
+    viewDetailsLinkText,
+    children,
+    loaderData,
+    ...rest
+  } = props;
+  const resolvedProduct = loaderData?.product ?? null;
+  const hasResolvedProduct = Boolean(
+    product?.handle && resolvedProduct?.handle,
+  );
+  const productHandle = resolvedProduct?.handle ?? product?.handle ?? "";
 
+  if (!hasResolvedProduct) {
+    return null;
+  }
+
+  const Icon = ICONS[icon];
+  const [showQuickShop, setShowQuickShop] = useState(false);
+  const { load, data: quickShopData, state } = useFetcher();
+  const apiPath = usePrefixPathWithLocale(
+    `/api/product?handle=${productHandle}`,
+  );
+
+  // Handle click - open quick shop on mobile and tablet, popup on desktop
+  const handleClick = () => {
     if (!hasResolvedProduct) {
-      return null;
+      return;
     }
 
-    const Icon = ICONS[icon];
-    const [showQuickShop, setShowQuickShop] = useState(false);
-    const { load, data: quickShopData, state } = useFetcher();
-    const apiPath = usePrefixPathWithLocale(
-      `/api/product?handle=${productHandle}`,
-    );
-
-    // Handle click - open quick shop on mobile and tablet, popup on desktop
-    const handleClick = () => {
-      if (!hasResolvedProduct) {
-        return;
+    if (window.innerWidth < 1024) {
+      // Mobile and tablet breakpoint
+      // On mobile and tablet, open QuickShop
+      if (!quickShopData && state !== "loading") {
+        load(apiPath);
       }
+      setShowQuickShop(true);
+    }
+  };
 
-      if (window.innerWidth < 1024) {
-        // Mobile and tablet breakpoint
-        // On mobile and tablet, open QuickShop
-        if (!quickShopData && state !== "loading") {
-          load(apiPath);
+  return (
+    <>
+      <div
+        ref={ref}
+        {...rest}
+        className="absolute -translate-x-1/2 -translate-y-1/2 hover:z-1"
+        style={
+          {
+            top: `${offsetY}%`,
+            left: `${offsetX}%`,
+            "--translate-x-ratio": offsetX > 50 ? 1 : -1,
+            "--translate-y-ratio": offsetY > 50 ? 1 : -1,
+            "--spot-size": `${iconSize + 16}px`,
+          } as CSSProperties
         }
-        setShowQuickShop(true);
-      }
-    };
-
-    return (
-      <>
-        <div
-          ref={ref}
-          {...rest}
-          className="absolute -translate-x-1/2 -translate-y-1/2 hover:z-1"
-          style={
-            {
-              top: `${offsetY}%`,
-              left: `${offsetX}%`,
-              "--translate-x-ratio": offsetX > 50 ? 1 : -1,
-              "--translate-y-ratio": offsetY > 50 ? 1 : -1,
-              "--spot-size": `${iconSize + 16}px`,
-            } as CSSProperties
-          }
-        >
-          <div className="group relative flex cursor-pointer">
-            <span
-              className={clsx(
-                "absolute inline-flex animate-ping rounded-full",
-                {
-                  "top-1/2 left-1/2 h-3/4 w-3/4 -translate-x-1/2 -translate-y-1/2 bg-white opacity-100 group-hover:opacity-100":
-                    icon === "circle",
-                  "h-full w-full bg-gray-700 opacity-75": icon !== "circle",
-                },
-              )}
-              style={{ animationDuration: "1500ms" }}
-            />
-            <span
-              className={clsx(
-                "group relative inline-flex rounded-full transition-all duration-300",
-                {
-                  "bg-white p-2 hover:scale-110 hover:shadow-lg":
-                    icon !== "circle",
-                  "bg-transparent hover:drop-shadow-lg": icon === "circle",
-                },
-              )}
-              onClick={handleClick}
-            >
-              <Icon style={{ width: iconSize, height: iconSize }} />
-              {/* Desktop popup - only on actual desktop screens (1024px+) */}
-              {hasResolvedProduct ? (
-                <div className="hidden lg:block">
-                  <ProductPopup
-                    product={resolvedProduct}
-                    offsetX={offsetX}
-                    offsetY={offsetY}
-                    showPrice={showPrice}
-                    showViewDetailsLink={showViewDetailsLink}
-                    viewDetailsLinkText={viewDetailsLinkText}
-                  />
-                </div>
-              ) : null}
-            </span>
-          </div>
-        </div>
-
-        {/* Mobile Quick Shop */}
-        <Dialog.Root
-          open={hasResolvedProduct ? showQuickShop : false}
-          onOpenChange={setShowQuickShop}
-        >
-          <Dialog.Portal>
-            <Dialog.Overlay
-              className={clsx(
-                "fixed inset-0 z-10 bg-black/50",
-                showQuickShop ? "animate-fade-in" : "animate-fade-out",
-              )}
-            />
-            <Dialog.Content
-              className={clsx(
-                "fixed inset-y-0 right-0 z-10 w-full bg-background py-2.5 shadow-2xl md:max-w-[430px] lg:hidden",
-                showQuickShop
-                  ? "animate-slide-in-right"
-                  : "animate-slide-out-right",
-              )}
-              aria-describedby={undefined}
-            >
-              <div className="flex h-full flex-col">
-                {/* Header */}
-                <div className="flex flex-shrink-0 items-center justify-between px-5 py-3">
-                  <Dialog.Title asChild>
-                    <span className="font-semibold uppercase">Quick Shop</span>
-                  </Dialog.Title>
-                  <button
-                    type="button"
-                    onClick={() => setShowQuickShop(false)}
-                    className="rounded p-1 transition-colors hover:bg-gray-100"
-                  >
-                    <XIcon className="h-5 w-5" />
-                  </button>
-                </div>
-
-                {/* Content */}
-                <ScrollArea className="flex-1" size="sm">
-                  <div className="px-5 py-4">
-                    {quickShopData ? (
-                      <QuickShop
-                        data={quickShopData as any}
-                        showDescription={false}
-                        setShowDescription={() => {}}
-                        onCloseAll={() => setShowQuickShop(false)}
-                      />
-                    ) : (
-                      <div className="py-8 text-center">
-                        <p className="text-body-subtle">
-                          Loading product data...
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </ScrollArea>
+      >
+        <div className="group relative flex cursor-pointer">
+          <span
+            className={clsx("absolute inline-flex animate-ping rounded-full", {
+              "top-1/2 left-1/2 h-3/4 w-3/4 -translate-x-1/2 -translate-y-1/2 bg-white opacity-100 group-hover:opacity-100":
+                icon === "circle",
+              "h-full w-full bg-gray-700 opacity-75": icon !== "circle",
+            })}
+            style={{ animationDuration: "1500ms" }}
+          />
+          <span
+            className={clsx(
+              "group relative inline-flex rounded-full transition-all duration-300",
+              {
+                "bg-white p-2 hover:scale-110 hover:shadow-lg":
+                  icon !== "circle",
+                "bg-transparent hover:drop-shadow-lg": icon === "circle",
+              },
+            )}
+            onClick={handleClick}
+          >
+            <Icon style={{ width: iconSize, height: iconSize }} />
+            {/* Desktop popup - only on actual desktop screens (1024px+) */}
+            {hasResolvedProduct ? (
+              <div className="hidden lg:block">
+                <ProductPopup
+                  product={resolvedProduct}
+                  offsetX={offsetX}
+                  offsetY={offsetY}
+                  showPrice={showPrice}
+                  showViewDetailsLink={showViewDetailsLink}
+                  viewDetailsLinkText={viewDetailsLinkText}
+                />
               </div>
-            </Dialog.Content>
-          </Dialog.Portal>
-        </Dialog.Root>
-      </>
-    );
-  },
-);
+            ) : null}
+          </span>
+        </div>
+      </div>
+
+      {/* Mobile Quick Shop */}
+      <Dialog.Root
+        open={hasResolvedProduct ? showQuickShop : false}
+        onOpenChange={setShowQuickShop}
+      >
+        <Dialog.Portal>
+          <Dialog.Overlay
+            className={clsx(
+              "fixed inset-0 z-10 bg-black/50",
+              showQuickShop ? "animate-fade-in" : "animate-fade-out",
+            )}
+          />
+          <Dialog.Content
+            className={clsx(
+              "fixed inset-y-0 right-0 z-10 w-full bg-background py-2.5 shadow-2xl md:max-w-[430px] lg:hidden",
+              showQuickShop
+                ? "animate-slide-in-right"
+                : "animate-slide-out-right",
+            )}
+            aria-describedby={undefined}
+          >
+            <div className="flex h-full flex-col">
+              {/* Header */}
+              <div className="flex flex-shrink-0 items-center justify-between px-5 py-3">
+                <Dialog.Title asChild>
+                  <span className="font-semibold uppercase">Quick Shop</span>
+                </Dialog.Title>
+                <button
+                  type="button"
+                  onClick={() => setShowQuickShop(false)}
+                  className="rounded p-1 transition-colors hover:bg-gray-100"
+                >
+                  <XIcon className="h-5 w-5" />
+                </button>
+              </div>
+
+              {/* Content */}
+              <ScrollArea className="flex-1" size="sm">
+                <div className="px-5 py-4">
+                  {quickShopData ? (
+                    <QuickShop
+                      data={quickShopData as any}
+                      showDescription={false}
+                      setShowDescription={() => {}}
+                      onCloseAll={() => setShowQuickShop(false)}
+                    />
+                  ) : (
+                    <div className="py-8 text-center">
+                      <p className="text-body-subtle">
+                        Loading product data...
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </ScrollArea>
+            </div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </>
+  );
+};
 
 export default HotspotsItem;
 

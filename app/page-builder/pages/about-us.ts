@@ -1,4 +1,94 @@
-import type { PageDefinition } from "../types";
+import type { PageDefinition, PageItem } from "../types";
+
+/**
+ * "Our Story" — the maker narrative behind the pieces (issue #36).
+ *
+ * TODO: the photos below are the closest craftsmanship shots in the repo. The
+ * brief asks for real workshop shots (the 3,600 sq ft floor, the widebelt
+ * sander, raw lumber, works in progress). Swap the `image` paths in the story,
+ * workshop and process sections once those files are added to
+ * `public/images/`.
+ */
+
+interface SplitOptions {
+  id: string;
+  background: string;
+  imageFirst: boolean;
+  image: string;
+  aspect: string;
+  eyebrow: string;
+  heading: string;
+  paragraphs: string[];
+  /** Extra content nodes appended after the paragraphs (e.g. a button). */
+  extra?: PageItem[];
+}
+
+/** An image-with-text band expanded into the flat item list the builder uses. */
+function split(o: SplitOptions): PageItem[] {
+  const images = `${o.id}-images`;
+  const content = `${o.id}-content`;
+  const paragraphItems: PageItem[] = o.paragraphs.map((text, i) => ({
+    id: `${o.id}-p${i + 1}`,
+    type: "paragraph",
+    data: { content: text },
+  }));
+  const extra = o.extra ?? [];
+  const ordered = [{ id: images }, { id: content }];
+  if (!o.imageFirst) ordered.reverse();
+  return [
+    {
+      id: o.id,
+      type: "image-with-text",
+      children: ordered,
+      data: {
+        verticalPadding: "none",
+        backgroundColor: o.background,
+        backgroundFor: "content",
+      },
+    },
+    {
+      id: images,
+      type: "image-with-text--images",
+      children: [{ id: `${o.id}-image` }],
+      data: { imageAspectRatio: o.aspect },
+    },
+    {
+      id: `${o.id}-image`,
+      type: "image-with-text--image",
+      data: { image: o.image, objectFit: "cover", borderRadius: 0 },
+    },
+    {
+      id: content,
+      type: "image-with-text--content",
+      children: [
+        { id: `${o.id}-sub` },
+        { id: `${o.id}-heading` },
+        ...paragraphItems.map((p) => ({ id: p.id })),
+        ...extra.map((e) => ({ id: e.id })),
+      ],
+      data: { gap: "5", contentPosition: "center center" },
+    },
+    {
+      id: `${o.id}-sub`,
+      type: "subheading",
+      data: { content: o.eyebrow },
+    },
+    {
+      id: `${o.id}-heading`,
+      type: "heading",
+      data: { content: o.heading, as: "h2" },
+    },
+    ...paragraphItems,
+    ...extra,
+  ];
+}
+
+const SECTIONS = [
+  "about-story",
+  "about-workshop",
+  "about-process",
+  "about-giving",
+];
 
 export const aboutUs: PageDefinition = {
   rootId: "about-root",
@@ -6,38 +96,12 @@ export const aboutUs: PageDefinition = {
     {
       id: "about-root",
       type: "main",
-      children: [
-        {
-          id: "about-hero",
-        },
-        {
-          id: "about-iwt-story",
-        },
-        {
-          id: "about-video",
-        },
-        {
-          id: "about-iwt-philosophy",
-        },
-        {
-          id: "about-columns-team",
-        },
-        {
-          id: "about-iwt-charities",
-        },
-      ],
+      children: [{ id: "about-hero" }, ...SECTIONS.map((id) => ({ id }))],
     },
     {
       id: "about-hero",
       type: "hero-image",
-      children: [
-        {
-          id: "about-hero-sub",
-        },
-        {
-          id: "about-hero-heading",
-        },
-      ],
+      children: [{ id: "about-hero-sub" }, { id: "about-hero-heading" }],
       data: {
         height: "large",
         contentPosition: "center center",
@@ -50,413 +114,89 @@ export const aboutUs: PageDefinition = {
     {
       id: "about-hero-sub",
       type: "subheading",
-      data: {
-        content: "Handcrafted furniture from Cleveland, Ohio since 2013",
-        color: "#ffffff",
-      },
+      data: { content: "Our Story", color: "#ffffff" },
     },
     {
       id: "about-hero-heading",
       type: "heading",
       data: {
-        content: "About ModernCre8ve",
+        content: "Handcrafted in Cleveland Since 2013",
         as: "h1",
         color: "#ffffff",
         size: "default",
       },
     },
-    {
-      id: "about-iwt-story",
-      type: "image-with-text",
-      children: [
+
+    // 1. The story
+    ...split({
+      id: "about-story",
+      background: "#F0F0EF",
+      imageFirst: true,
+      image: "/images/heroes/dsc_1417-edit.jpg",
+      aspect: "3/4",
+      eyebrow: "Where It Started",
+      heading: "Great Design, Honest Materials, Real Craftsmanship",
+      paragraphs: [
+        "ModernCre8ve was founded in Cleveland, Ohio in 2013 by Robert and Parrish, with a simple belief: great design, honest materials and real craftsmanship belong together.",
+        "We sell direct. There are no showrooms, no veneers and no overseas mass production in between, so the quality goes up and the price comes down compared with what you'd pay at retail for the same solid hardwood.",
+      ],
+    }),
+
+    // 2. The workshop
+    ...split({
+      id: "about-workshop",
+      background: "#FFFFFF",
+      imageFirst: false,
+      image: "/images/heroes/img_2158.jpg",
+      aspect: "3/4",
+      eyebrow: "The Workshop",
+      heading: "3,600 Square Feet of Wood, Steel and Finish",
+      paragraphs: [
+        "Every piece is made in our 3,600 sq ft facility, with a $15,000 widebelt sander, and on-site welding and finishing, so the whole build stays under one roof and under our eye.",
+        "We partner with Amish craftsmen, and source hardwood directly from local mills in Amish country. Steel comes from Cleveland-area fabricators.",
+      ],
+    }),
+
+    // 3. The process
+    ...split({
+      id: "about-process",
+      background: "#F0F0EF",
+      imageFirst: true,
+      image: "/images/heroes/img_1524.jpg",
+      aspect: "3/4",
+      eyebrow: "The Process",
+      heading: "Made to Order, One Piece at a Time",
+      paragraphs: [
+        "Nothing sits on a shelf waiting for you. Each piece is built to order, one at a time, with custom dimensions and options available.",
+        "You'll receive build photos during production, and we stay in hands-on contact with you from first inquiry to white glove delivery.",
+      ],
+      extra: [
         {
-          id: "about-iwt-story-images",
-        },
-        {
-          id: "about-iwt-story-content",
+          id: "about-process-button",
+          type: "button",
+          data: {
+            text: "Start a Custom Order",
+            to: "/pages/custom-orders",
+            variant: "primary",
+          },
         },
       ],
-      data: {
-        verticalPadding: "none",
-        backgroundColor: "#F0F0EF",
-        backgroundFor: "content",
-      },
-    },
-    {
-      id: "about-iwt-story-images",
-      type: "image-with-text--images",
-      children: [
-        {
-          id: "about-iwt-story-image",
-        },
+    }),
+
+    // 4. Giving back
+    ...split({
+      id: "about-giving",
+      background: "#FFFFFF",
+      imageFirst: false,
+      image:
+        "/images/heroes/20241114_202310_img_2586_4af8f63f-4ad5-4678-af69-b36481707fe1.jpg",
+      aspect: "1/1",
+      eyebrow: "Giving Back",
+      heading: "Making a Difference, However Small",
+      paragraphs: [
+        "We sponsor children through Save the Children, because a small business can still make a real difference.",
+        "“If you think you are too small to make a difference, try sleeping with a mosquito.” — Dalai Lama",
       ],
-      data: {
-        imageAspectRatio: "3/4",
-      },
-    },
-    {
-      id: "about-iwt-story-image",
-      type: "image-with-text--image",
-      data: {
-        image: "/images/heroes/dsc_1417-edit.jpg",
-        objectFit: "cover",
-        borderRadius: 0,
-      },
-    },
-    {
-      id: "about-iwt-story-content",
-      type: "image-with-text--content",
-      children: [
-        {
-          id: "about-iwt-story-sub",
-        },
-        {
-          id: "about-iwt-story-heading",
-        },
-        {
-          id: "about-iwt-story-p1",
-        },
-        {
-          id: "about-iwt-story-p2",
-        },
-      ],
-      data: {
-        gap: "5",
-        contentPosition: "center center",
-      },
-    },
-    {
-      id: "about-iwt-story-sub",
-      type: "subheading",
-      data: {
-        content: "Our Story",
-      },
-    },
-    {
-      id: "about-iwt-story-heading",
-      type: "heading",
-      data: {
-        content: "Where Heritage Meets Modern Design",
-        as: "h2",
-      },
-    },
-    {
-      id: "about-iwt-story-p1",
-      type: "paragraph",
-      data: {
-        content:
-          "Founded in Cleveland, Ohio in 2013, ModernCre8ve marries modern design with the world-class execution of old-world Amish craftsmen. Every piece is handmade one at a time using domestic-sourced hardwood lumber.",
-      },
-    },
-    {
-      id: "about-iwt-story-p2",
-      type: "paragraph",
-      data: {
-        content:
-          "What started as a passion project quickly grew into a studio dedicated to creating furniture that honors both form and function. We believe great design should be accessible, built to last, and made with integrity.",
-      },
-    },
-    {
-      id: "about-video",
-      type: "video-embed",
-      children: [
-        {
-          id: "about-video-content",
-        },
-        {
-          id: "about-video-item",
-        },
-      ],
-    },
-    {
-      id: "about-video-content",
-      type: "video-embed-content",
-      data: {
-        displayMode: "vertical",
-        contentPosition: "center center",
-        headingContent: "Inside the Workshop",
-        paragraphContent:
-          "See how every piece of ModernCre8ve furniture is handcrafted from start to finish.",
-      },
-    },
-    {
-      id: "about-video-item",
-      type: "video-embed--item",
-      data: {
-        size: "large",
-        borderRadius: 0,
-      },
-    },
-    {
-      id: "about-iwt-philosophy",
-      type: "image-with-text",
-      children: [
-        {
-          id: "about-iwt-phil-content",
-        },
-        {
-          id: "about-iwt-phil-images",
-        },
-      ],
-      data: {
-        verticalPadding: "none",
-        backgroundColor: "#FFFFFF",
-        backgroundFor: "content",
-      },
-    },
-    {
-      id: "about-iwt-phil-images",
-      type: "image-with-text--images",
-      children: [
-        {
-          id: "about-iwt-phil-image",
-        },
-      ],
-      data: {
-        imageAspectRatio: "3/4",
-      },
-    },
-    {
-      id: "about-iwt-phil-image",
-      type: "image-with-text--image",
-      data: {
-        image: "/images/heroes/img_1524.jpg",
-        objectFit: "cover",
-        borderRadius: 0,
-      },
-    },
-    {
-      id: "about-iwt-phil-content",
-      type: "image-with-text--content",
-      children: [
-        {
-          id: "about-iwt-phil-sub",
-        },
-        {
-          id: "about-iwt-phil-heading",
-        },
-        {
-          id: "about-iwt-phil-p1",
-        },
-        {
-          id: "about-iwt-phil-p2",
-        },
-      ],
-      data: {
-        gap: "5",
-        contentPosition: "center center",
-      },
-    },
-    {
-      id: "about-iwt-phil-sub",
-      type: "subheading",
-      data: {
-        content: "Our Philosophy",
-      },
-    },
-    {
-      id: "about-iwt-phil-heading",
-      type: "heading",
-      data: {
-        content: "Solid Hardwood Furniture Built to Last Generations",
-        as: "h2",
-      },
-    },
-    {
-      id: "about-iwt-phil-p1",
-      type: "paragraph",
-      data: {
-        content:
-          "We believe furniture should be more than functional — it should tell a story. Every grain pattern, every joint, every finish is chosen with intention. Our mid-century modern, Scandinavian, and Japandi-inspired designs bring warmth and character to modern spaces.",
-      },
-    },
-    {
-      id: "about-iwt-phil-p2",
-      type: "paragraph",
-      data: {
-        content:
-          "By working directly with Amish craftsmen in Ohio, we maintain the highest standards of quality while keeping our process sustainable and our prices fair. No middlemen, no mass production — just honest furniture made the right way.",
-      },
-    },
-    {
-      id: "about-columns-team",
-      type: "columns-with-images",
-      children: [
-        {
-          id: "about-team-sub",
-        },
-        {
-          id: "about-team-heading",
-        },
-        {
-          id: "about-team-items",
-        },
-      ],
-      data: {
-        gap: 48,
-      },
-    },
-    {
-      id: "about-team-sub",
-      type: "subheading",
-      data: {
-        content: "The People Behind the Pieces",
-      },
-    },
-    {
-      id: "about-team-heading",
-      type: "heading",
-      data: {
-        content: "Meet the Team",
-        as: "h2",
-      },
-    },
-    {
-      id: "about-team-items",
-      type: "columns-with-images--items",
-      children: [
-        {
-          id: "about-team-1",
-        },
-        {
-          id: "about-team-2",
-        },
-        {
-          id: "about-team-3",
-        },
-      ],
-      data: {
-        gap: 40,
-        imageAspectRatio: "3/4",
-      },
-    },
-    {
-      id: "about-team-1",
-      type: "column-with-image--item",
-      data: {
-        imageSrc: "/images/heroes/img_2158.jpg",
-        size: "medium",
-        heading: "Randy Larow",
-        content:
-          "Founder & Designer — Randy launched ModernCre8ve in 2013 with a vision to make handcrafted modern furniture accessible to everyone.",
-        imageBorderRadius: 0,
-      },
-    },
-    {
-      id: "about-team-2",
-      type: "column-with-image--item",
-      data: {
-        imageSrc: "/images/heroes/dsc_1417-edit_1.jpg",
-        size: "medium",
-        heading: "The Artisans",
-        content:
-          "Our team of Amish craftsmen bring decades of woodworking expertise to every piece, using traditional joinery and modern precision.",
-        imageBorderRadius: 0,
-      },
-    },
-    {
-      id: "about-team-3",
-      type: "column-with-image--item",
-      data: {
-        imageSrc: "/images/heroes/img_1426_2.jpg",
-        size: "medium",
-        heading: "Customer Experience",
-        content:
-          "From your first inquiry to white-glove delivery, our team is dedicated to making your experience seamless and personal.",
-        imageBorderRadius: 0,
-      },
-    },
-    {
-      id: "about-iwt-charities",
-      type: "image-with-text",
-      children: [
-        {
-          id: "about-iwt-charity-images",
-        },
-        {
-          id: "about-iwt-charity-content",
-        },
-      ],
-      data: {
-        verticalPadding: "none",
-        backgroundColor: "#F0F0EF",
-        backgroundFor: "content",
-      },
-    },
-    {
-      id: "about-iwt-charity-images",
-      type: "image-with-text--images",
-      children: [
-        {
-          id: "about-iwt-charity-image",
-        },
-      ],
-      data: {
-        imageAspectRatio: "1/1",
-      },
-    },
-    {
-      id: "about-iwt-charity-image",
-      type: "image-with-text--image",
-      data: {
-        image: "/images/heroes/img_1426.jpg",
-        objectFit: "cover",
-        borderRadius: 0,
-      },
-    },
-    {
-      id: "about-iwt-charity-content",
-      type: "image-with-text--content",
-      children: [
-        {
-          id: "about-iwt-charity-sub",
-        },
-        {
-          id: "about-iwt-charity-heading",
-        },
-        {
-          id: "about-iwt-charity-paragraph",
-        },
-        {
-          id: "about-iwt-charity-button",
-        },
-      ],
-      data: {
-        gap: "5",
-        contentPosition: "center center",
-      },
-    },
-    {
-      id: "about-iwt-charity-sub",
-      type: "subheading",
-      data: {
-        content: "Giving Back",
-      },
-    },
-    {
-      id: "about-iwt-charity-heading",
-      type: "heading",
-      data: {
-        content: "Rooted in Community",
-        as: "h2",
-      },
-    },
-    {
-      id: "about-iwt-charity-paragraph",
-      type: "paragraph",
-      data: {
-        content:
-          "ModernCre8ve is proud to support organizations that strengthen our Cleveland community and beyond. We believe in building more than furniture — we're building a better future through meaningful partnerships and charitable giving.",
-      },
-    },
-    {
-      id: "about-iwt-charity-button",
-      type: "button",
-      data: {
-        text: "Contact Us",
-        to: "/pages/contact",
-        variant: "primary",
-      },
-    },
+    }),
   ],
 };

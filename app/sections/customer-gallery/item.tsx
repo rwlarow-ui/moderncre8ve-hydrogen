@@ -1,4 +1,5 @@
-import { forwardRef, useState } from "react";
+import type { RefObject } from "react";
+import { useState } from "react";
 import type { PageImage } from "~/page-builder";
 import { createSchema, type SectionComponentProps } from "~/page-builder";
 
@@ -9,10 +10,10 @@ interface CustomerGalleryItemProps extends SectionComponentProps {
   productUrl?: string;
 }
 
-const CustomerGalleryItem = forwardRef<
-  HTMLDivElement,
-  CustomerGalleryItemProps
->((props, ref) => {
+const CustomerGalleryItem = ({
+  ref,
+  ...props
+}: CustomerGalleryItemProps & { ref?: RefObject<HTMLDivElement | null> }) => {
   const {
     image,
     caption = "Customer photo",
@@ -83,7 +84,7 @@ const CustomerGalleryItem = forwardRef<
       )}
     </div>
   );
-});
+};
 
 export default CustomerGalleryItem;
 

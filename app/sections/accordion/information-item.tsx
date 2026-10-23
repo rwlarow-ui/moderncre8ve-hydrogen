@@ -1,21 +1,22 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import { createSchema, type SectionComponentProps } from "~/page-builder";
 
 interface InformationItemProps extends SectionComponentProps {
   // allowMultiple: boolean;
 }
 
-const InformationItem = forwardRef<HTMLDivElement, InformationItemProps>(
-  (props, ref) => {
-    let { children, ...rest } = props;
+const InformationItem = ({
+  ref,
+  ...props
+}: InformationItemProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  let { children, ...rest } = props;
 
-    return (
-      <div ref={ref} {...rest}>
-        {children}
-      </div>
-    );
-  },
-);
+  return (
+    <div ref={ref} {...rest}>
+      {children}
+    </div>
+  );
+};
 
 export default InformationItem;
 

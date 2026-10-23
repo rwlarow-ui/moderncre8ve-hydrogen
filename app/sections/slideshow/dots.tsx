@@ -70,7 +70,9 @@ export function Dots(props: SlideshowDotsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    if (!swiper) return;
+    if (!swiper) {
+      return;
+    }
 
     const handleSlideChange = () => {
       const currentIndex = swiper.realIndex || swiper.activeIndex;
@@ -94,7 +96,9 @@ export function Dots(props: SlideshowDotsProps) {
     }
   };
 
-  if (slidesCount === 0) return null;
+  if (slidesCount === 0) {
+    return null;
+  }
 
   return (
     <div

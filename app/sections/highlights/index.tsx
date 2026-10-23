@@ -1,9 +1,9 @@
+import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { forwardRef } from "react";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
-import { createSchema, type SectionComponentProps } from "~/page-builder";
+import { createSchema } from "~/page-builder";
 
 export interface HighlightsProps extends VariantProps<typeof variants> {
   backgroundColor?: string;
@@ -22,33 +22,35 @@ let variants = cva("w-full", {
   },
 });
 
-let Highlights = forwardRef<HTMLElement, HighlightsProps & SectionProps>(
-  (props, ref) => {
-    let { children, backgroundColor = "#FFFFFF", alignment, ...rest } = props;
+let Highlights = ({
+  ref,
+  ...props
+}: HighlightsProps &
+  SectionProps & { ref?: RefObject<HTMLElement | null> }) => {
+  let { children, backgroundColor = "#FFFFFF", alignment, ...rest } = props;
 
-    return (
-      <Section
-        ref={ref}
-        {...rest}
-        className={variants({ alignment })}
-        style={{ backgroundColor }}
+  return (
+    <Section
+      ref={ref}
+      {...rest}
+      className={variants({ alignment })}
+      style={{ backgroundColor }}
+    >
+      <div
+        style={{
+          backgroundColor,
+          borderRadius: "0px 40px 40px 40px",
+          paddingTop: "5rem",
+          paddingBottom: "5rem",
+        }}
       >
-        <div
-          style={{
-            backgroundColor,
-            borderRadius: "0px 40px 40px 40px",
-            paddingTop: "5rem",
-            paddingBottom: "5rem",
-          }}
-        >
-          <div className="mx-auto grid max-w-7xl grid-cols-1 items-center justify-center gap-4 border border-[#A79D95] md:grid-cols-3">
-            {children}
-          </div>
+        <div className="mx-auto grid max-w-7xl grid-cols-1 items-center justify-center gap-4 border border-[#A79D95] md:grid-cols-3">
+          {children}
         </div>
-      </Section>
-    );
-  },
-);
+      </div>
+    </Section>
+  );
+};
 
 export default Highlights;
 

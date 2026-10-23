@@ -1,5 +1,5 @@
+import type { RefObject } from "react";
 import { ArrowLeft, ArrowRight, Quotes, Star } from "@phosphor-icons/react";
-import { forwardRef } from "react";
 import Heading, {
   type HeadingProps,
   headingInputs,
@@ -21,129 +21,130 @@ interface TestimonialContentProps
   subHeadingAlignment?: "left" | "center" | "right";
 }
 
-let TestimonialContent = forwardRef<HTMLDivElement, TestimonialContentProps>(
-  (props, ref) => {
-    let {
-      alignment,
-      headingTagName,
-      color,
-      size,
-      mobileSize,
-      desktopSize,
-      minSize,
-      maxSize,
-      weight,
-      letterSpacing,
-      content,
-      description,
-      ratting,
-      author,
-      // Description styling props
-      subHeadingTag = "h4",
-      subHeadingSize = "large",
-      subHeadingWeight = "normal",
-      subHeadingColor = "#4B5563",
-      subHeadingAlignment = "left",
-      children,
-      ...rest
-    } = props;
+let TestimonialContent = ({
+  ref,
+  ...props
+}: TestimonialContentProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  let {
+    alignment,
+    headingTagName,
+    color,
+    size,
+    mobileSize,
+    desktopSize,
+    minSize,
+    maxSize,
+    weight,
+    letterSpacing,
+    content,
+    description,
+    ratting,
+    author,
+    // Description styling props
+    subHeadingTag = "h4",
+    subHeadingSize = "large",
+    subHeadingWeight = "normal",
+    subHeadingColor = "#4B5563",
+    subHeadingAlignment = "left",
+    children,
+    ...rest
+  } = props;
 
-    // Generate dynamic classes for description text
-    const descriptionClasses = [
-      `text-${subHeadingAlignment}`,
-      subHeadingSize === "large" ? "text-lg" : "text-base",
-      subHeadingWeight === "medium" ? "font-medium" : "font-normal",
-    ].join(" ");
+  // Generate dynamic classes for description text
+  const descriptionClasses = [
+    `text-${subHeadingAlignment}`,
+    subHeadingSize === "large" ? "text-lg" : "text-base",
+    subHeadingWeight === "medium" ? "font-medium" : "font-normal",
+  ].join(" ");
 
-    // Create the description element based on the selected tag
-    const DescriptionTag = subHeadingTag;
+  // Create the description element based on the selected tag
+  const DescriptionTag = subHeadingTag;
 
-    const handlePrevSlide = () => {
-      if (window.testimonialSwiper) {
-        window.testimonialSwiper.slidePrev();
-      }
-    };
+  const handlePrevSlide = () => {
+    if (window.testimonialSwiper) {
+      window.testimonialSwiper.slidePrev();
+    }
+  };
 
-    const handleNextSlide = () => {
-      if (window.testimonialSwiper) {
-        window.testimonialSwiper.slideNext();
-      }
-    };
+  const handleNextSlide = () => {
+    if (window.testimonialSwiper) {
+      window.testimonialSwiper.slideNext();
+    }
+  };
 
-    const renderStars = () => {
-      const stars = [];
-      for (let i = 0; i < ratting; i++) {
-        stars.push(<Star size={24} weight="fill" fill="#918379" key={i} />);
-      }
-      return stars;
-    };
-    return (
-      <div
-        ref={ref}
-        {...rest}
-        className="flex flex-1 flex-col justify-center gap-5"
-      >
-        {content && (
-          <Heading
-            content={content}
-            as={headingTagName}
-            color={color}
-            size={size}
-            mobileSize={mobileSize}
-            desktopSize={desktopSize}
-            minSize={minSize}
-            maxSize={maxSize}
-            weight={weight}
-            letterSpacing={letterSpacing}
-            alignment={alignment}
-            className="h-1/2"
-          />
-        )}
-        <div className="flex h-1/2 flex-col justify-end gap-16">
-          <div className="flex flex-col gap-5">
-            <Quotes size={32} className="rotate-180" />
-            {description && (
-              <DescriptionTag
-                className={`testimonial-description ${descriptionClasses}`}
-                style={{ color: subHeadingColor }}
-              >
-                {description}
-              </DescriptionTag>
-            )}
+  const renderStars = () => {
+    const stars = [];
+    for (let i = 0; i < ratting; i++) {
+      stars.push(<Star size={24} weight="fill" fill="#918379" key={i} />);
+    }
+    return stars;
+  };
+  return (
+    <div
+      ref={ref}
+      {...rest}
+      className="flex flex-1 flex-col justify-center gap-5"
+    >
+      {content && (
+        <Heading
+          content={content}
+          as={headingTagName}
+          color={color}
+          size={size}
+          mobileSize={mobileSize}
+          desktopSize={desktopSize}
+          minSize={minSize}
+          maxSize={maxSize}
+          weight={weight}
+          letterSpacing={letterSpacing}
+          alignment={alignment}
+          className="h-1/2"
+        />
+      )}
+      <div className="flex h-1/2 flex-col justify-end gap-16">
+        <div className="flex flex-col gap-5">
+          <Quotes size={32} className="rotate-180" />
+          {description && (
+            <DescriptionTag
+              className={`testimonial-description ${descriptionClasses}`}
+              style={{ color: subHeadingColor }}
+            >
+              {description}
+            </DescriptionTag>
+          )}
+        </div>
+        <div className="flex justify-between">
+          <div className="flex flex-col gap-4">
+            <span className="flex gap-0.5">{renderStars()}</span>
+            <p className="text-base">{author}</p>
           </div>
-          <div className="flex justify-between">
-            <div className="flex flex-col gap-4">
-              <span className="flex gap-0.5">{renderStars()}</span>
-              <p className="text-base">{author}</p>
-            </div>
-            <div className="flex gap-2">
-              <span
-                onClick={handlePrevSlide}
-                className="h-fit w-fit cursor-pointer rounded-full bg-[#EDEAE6] p-4"
-              >
-                <ArrowLeft
-                  size={16}
-                  weight="thin"
-                  className="transition-opacity hover:opacity-70"
-                />
-              </span>
-              <span
-                onClick={handleNextSlide}
-                className="h-fit w-fit cursor-pointer rounded-full bg-[#EDEAE6] p-4"
-              >
-                <ArrowRight
-                  size={16}
-                  weight="thin"
-                  className="transition-opacity hover:opacity-70"
-                />
-              </span>
-            </div>
+          <div className="flex gap-2">
+            <span
+              onClick={handlePrevSlide}
+              className="h-fit w-fit cursor-pointer rounded-full bg-[#EDEAE6] p-4"
+            >
+              <ArrowLeft
+                size={16}
+                weight="thin"
+                className="transition-opacity hover:opacity-70"
+              />
+            </span>
+            <span
+              onClick={handleNextSlide}
+              className="h-fit w-fit cursor-pointer rounded-full bg-[#EDEAE6] p-4"
+            >
+              <ArrowRight
+                size={16}
+                weight="thin"
+                className="transition-opacity hover:opacity-70"
+              />
+            </span>
           </div>
         </div>
       </div>
-    );
-  },
-);
+    </div>
+  );
+};
 
 export default TestimonialContent;
 

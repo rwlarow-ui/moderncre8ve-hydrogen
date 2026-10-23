@@ -1,12 +1,7 @@
 import { List } from "@phosphor-icons/react";
 import { Image } from "@shopify/hydrogen";
 import clsx from "clsx";
-import React, {
-  type CSSProperties,
-  forwardRef,
-  useEffect,
-  useRef,
-} from "react";
+import React, { type CSSProperties, useEffect, useRef } from "react";
 import {
   type ComponentSchema,
   IMAGES_PLACEHOLDERS,
@@ -26,231 +21,233 @@ interface BeforeAndAfterProps extends SectionComponentProps {
   sliderHeightMobile: number;
 }
 
-const BeforeAndAfter = forwardRef<HTMLDivElement, BeforeAndAfterProps>(
-  (props, ref) => {
-    let {
-      beforeImage1,
-      afterImage2,
-      separatorColor,
-      showList,
-      listColor,
-      separatorWidth,
-      sliderHeightDesktop,
-      sliderHeightMobile,
-      ...rest
-    } = props;
+const BeforeAndAfter = ({
+  ref,
+  ...props
+}: BeforeAndAfterProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
+  let {
+    beforeImage1,
+    afterImage2,
+    separatorColor,
+    showList,
+    listColor,
+    separatorWidth,
+    sliderHeightDesktop,
+    sliderHeightMobile,
+    ...rest
+  } = props;
 
-    const containerRef = useRef<HTMLDivElement>(null);
-    const firstHalfRef = useRef<HTMLDivElement>(null);
-    const secondHalfRef = useRef<HTMLDivElement>(null);
-    const resizerRef = useRef<HTMLDivElement>(null);
-    let beforeImage =
-      typeof beforeImage1 === "string"
-        ? {
-            url: beforeImage1,
-            altText: staticImageAlt(beforeImage1) || "Before",
-          }
-        : beforeImage1;
-    let afterImage =
-      typeof afterImage2 === "string"
-        ? { url: afterImage2, altText: staticImageAlt(afterImage2) || "After" }
-        : afterImage2;
-    const handleMouseDown = React.useCallback((e: React.MouseEvent) => {
-      const startPos = {
-        x: e.clientX,
-        y: e.clientY,
-      };
-      const currentLeftWidth = Number.parseFloat(
-        window.getComputedStyle(resizerRef.current as Element).left,
-      );
+  const containerRef = useRef<HTMLDivElement>(null);
+  const firstHalfRef = useRef<HTMLDivElement>(null);
+  const secondHalfRef = useRef<HTMLDivElement>(null);
+  const resizerRef = useRef<HTMLDivElement>(null);
+  let beforeImage =
+    typeof beforeImage1 === "string"
+      ? {
+          url: beforeImage1,
+          altText: staticImageAlt(beforeImage1) || "Before",
+        }
+      : beforeImage1;
+  let afterImage =
+    typeof afterImage2 === "string"
+      ? { url: afterImage2, altText: staticImageAlt(afterImage2) || "After" }
+      : afterImage2;
+  const handleMouseDown = React.useCallback((e: React.MouseEvent) => {
+    const startPos = {
+      x: e.clientX,
+      y: e.clientY,
+    };
+    const currentLeftWidth = Number.parseFloat(
+      window.getComputedStyle(resizerRef.current as Element).left,
+    );
 
-      const handleMouseMove = (e: MouseEvent) => {
-        const dx = e.clientX - startPos.x;
-        const dy = e.clientY - startPos.y;
-        updateWidth(currentLeftWidth, dx);
-        updateCursor();
-      };
+    const handleMouseMove = (e: MouseEvent) => {
+      const dx = e.clientX - startPos.x;
+      const dy = e.clientY - startPos.y;
+      updateWidth(currentLeftWidth, dx);
+      updateCursor();
+    };
 
-      const handleMouseUp = () => {
-        document.removeEventListener("mousemove", handleMouseMove);
-        document.removeEventListener("mouseup", handleMouseUp);
-        resetCursor();
-      };
+    const handleMouseUp = () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+      resetCursor();
+    };
 
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
 
-      return () => {
-        document.removeEventListener("mousemove", handleMouseMove);
-        document.removeEventListener("mouseup", handleMouseUp);
-      };
-    }, []);
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);
 
-    const handleTouchStart = React.useCallback((e: React.TouchEvent) => {
+  const handleTouchStart = React.useCallback((e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    const startPos = {
+      x: touch.clientX,
+      y: touch.clientY,
+    };
+    const currentLeftWidth = Number.parseFloat(
+      window.getComputedStyle(resizerRef.current as Element).left,
+    );
+
+    const handleTouchMove = (e: TouchEvent) => {
       const touch = e.touches[0];
-      const startPos = {
-        x: touch.clientX,
-        y: touch.clientY,
-      };
-      const currentLeftWidth = Number.parseFloat(
-        window.getComputedStyle(resizerRef.current as Element).left,
-      );
-
-      const handleTouchMove = (e: TouchEvent) => {
-        const touch = e.touches[0];
-        const dx = touch.clientX - startPos.x;
-        const dy = touch.clientY - startPos.y;
-        updateWidth(currentLeftWidth, dx);
-        updateCursor();
-      };
-
-      const handleTouchEnd = () => {
-        document.removeEventListener("touchmove", handleTouchMove);
-        document.removeEventListener("touchend", handleTouchEnd);
-        resetCursor();
-      };
-
-      document.addEventListener("touchmove", handleTouchMove);
-      document.addEventListener("touchend", handleTouchEnd);
-
-      return () => {
-        document.removeEventListener("touchmove", handleTouchMove);
-        document.removeEventListener("touchend", handleTouchEnd);
-      };
-    }, []);
-
-    const updateWidth = (currentLeftWidth: number, dx: number) => {
-      const container = containerRef.current;
-      const firstHalfEle = firstHalfRef.current;
-      const resizerEle = resizerRef.current;
-
-      if (!(container && firstHalfEle && resizerEle)) {
-        return;
-      }
-
-      const containerWidth = container.getBoundingClientRect().width;
-      const delta = currentLeftWidth + dx;
-      const newFirstHalfWidth = (delta * 100) / containerWidth;
-      const normalizedWidth = Math.min(Math.max(0, newFirstHalfWidth), 100);
-
-      firstHalfEle.style.clipPath = `inset(0 0 0 ${normalizedWidth}%)`;
-      resizerEle.style.left = `${normalizedWidth}%`;
+      const dx = touch.clientX - startPos.x;
+      const dy = touch.clientY - startPos.y;
+      updateWidth(currentLeftWidth, dx);
+      updateCursor();
     };
 
-    const updateCursor = () => {
-      const container = containerRef.current;
-      const firstHalfEle = firstHalfRef.current;
-      const resizerEle = resizerRef.current;
-      const secondHalfEle = secondHalfRef.current;
-
-      if (!(container && firstHalfEle && resizerEle && secondHalfEle)) {
-        return;
-      }
-
-      resizerEle.style.cursor = "ew-resize";
-      document.body.style.cursor = "ew-resize";
-      firstHalfEle.style.userSelect = "none";
-      firstHalfEle.style.pointerEvents = "none";
-      secondHalfEle.style.userSelect = "none";
-      secondHalfEle.style.pointerEvents = "none";
+    const handleTouchEnd = () => {
+      document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchend", handleTouchEnd);
+      resetCursor();
     };
 
-    const resetCursor = () => {
-      const container = containerRef.current;
-      const firstHalfEle = firstHalfRef.current;
-      const resizerEle = resizerRef.current;
-      const secondHalfEle = secondHalfRef.current;
+    document.addEventListener("touchmove", handleTouchMove);
+    document.addEventListener("touchend", handleTouchEnd);
 
-      if (!(container && firstHalfEle && resizerEle && secondHalfEle)) {
-        return;
-      }
-
-      resizerEle.style.removeProperty("cursor");
-      document.body.style.removeProperty("cursor");
-      firstHalfEle.style.removeProperty("user-select");
-      firstHalfEle.style.removeProperty("pointer-events");
-      secondHalfEle.style.removeProperty("user-select");
-      secondHalfEle.style.removeProperty("pointer-events");
+    return () => {
+      document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchend", handleTouchEnd);
     };
+  }, []);
 
-    useEffect(() => {
-      const resizerEle = resizerRef.current;
-      const containerEle = containerRef.current;
-      if (!(resizerEle && containerEle)) return;
-      const defaultWidth = 50;
-      resizerEle.style.left = `${defaultWidth}%`;
-      updateWidth(
-        (defaultWidth * containerRef.current.getBoundingClientRect().width) /
-          100,
-        0,
-      );
-    }, [afterImage]);
+  const updateWidth = (currentLeftWidth: number, dx: number) => {
+    const container = containerRef.current;
+    const firstHalfEle = firstHalfRef.current;
+    const resizerEle = resizerRef.current;
 
-    let sliderStyle: CSSProperties = {
-      "--separator-color": separatorColor,
-      "--list-color": listColor,
-      "--separator-width": `${separatorWidth}px`,
-      "--slider-height-desktop": `${sliderHeightDesktop}px`,
-      "--slider-height-mobile": `${sliderHeightMobile}px`,
-    } as CSSProperties;
+    if (!(container && firstHalfEle && resizerEle)) {
+      return;
+    }
 
-    return (
+    const containerWidth = container.getBoundingClientRect().width;
+    const delta = currentLeftWidth + dx;
+    const newFirstHalfWidth = (delta * 100) / containerWidth;
+    const normalizedWidth = Math.min(Math.max(0, newFirstHalfWidth), 100);
+
+    firstHalfEle.style.clipPath = `inset(0 0 0 ${normalizedWidth}%)`;
+    resizerEle.style.left = `${normalizedWidth}%`;
+  };
+
+  const updateCursor = () => {
+    const container = containerRef.current;
+    const firstHalfEle = firstHalfRef.current;
+    const resizerEle = resizerRef.current;
+    const secondHalfEle = secondHalfRef.current;
+
+    if (!(container && firstHalfEle && resizerEle && secondHalfEle)) {
+      return;
+    }
+
+    resizerEle.style.cursor = "ew-resize";
+    document.body.style.cursor = "ew-resize";
+    firstHalfEle.style.userSelect = "none";
+    firstHalfEle.style.pointerEvents = "none";
+    secondHalfEle.style.userSelect = "none";
+    secondHalfEle.style.pointerEvents = "none";
+  };
+
+  const resetCursor = () => {
+    const container = containerRef.current;
+    const firstHalfEle = firstHalfRef.current;
+    const resizerEle = resizerRef.current;
+    const secondHalfEle = secondHalfRef.current;
+
+    if (!(container && firstHalfEle && resizerEle && secondHalfEle)) {
+      return;
+    }
+
+    resizerEle.style.removeProperty("cursor");
+    document.body.style.removeProperty("cursor");
+    firstHalfEle.style.removeProperty("user-select");
+    firstHalfEle.style.removeProperty("pointer-events");
+    secondHalfEle.style.removeProperty("user-select");
+    secondHalfEle.style.removeProperty("pointer-events");
+  };
+
+  useEffect(() => {
+    const resizerEle = resizerRef.current;
+    const containerEle = containerRef.current;
+    if (!(resizerEle && containerEle)) {
+      return;
+    }
+    const defaultWidth = 50;
+    resizerEle.style.left = `${defaultWidth}%`;
+    updateWidth(
+      (defaultWidth * containerRef.current.getBoundingClientRect().width) / 100,
+      0,
+    );
+  }, [afterImage]);
+
+  let sliderStyle: CSSProperties = {
+    "--separator-color": separatorColor,
+    "--list-color": listColor,
+    "--separator-width": `${separatorWidth}px`,
+    "--slider-height-desktop": `${sliderHeightDesktop}px`,
+    "--slider-height-mobile": `${sliderHeightMobile}px`,
+  } as CSSProperties;
+
+  return (
+    <div
+      data-motion="slide-in"
+      ref={containerRef}
+      {...rest}
+      className="relative h-[var(--slider-height-mobile)] w-full select-none sm:h-[var(--slider-height-desktop)]"
+      style={sliderStyle}
+    >
+      <div className="absolute top-0 left-0 h-full w-full" ref={firstHalfRef}>
+        {afterImage && (
+          <Image
+            data={afterImage}
+            sizes="auto"
+            className="box-border h-full w-full object-cover object-center"
+          />
+        )}
+      </div>
       <div
-        data-motion="slide-in"
-        ref={containerRef}
-        {...rest}
-        className="relative h-[var(--slider-height-mobile)] w-full select-none sm:h-[var(--slider-height-desktop)]"
-        style={sliderStyle}
+        ref={resizerRef}
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+        className={clsx(
+          "absolute top-0 left-1/2 z-10 flex h-full transform touch-none select-none items-center",
+          {
+            "-translate-x-full": !showList,
+            "-translate-x-1": showList,
+          },
+        )}
       >
-        <div className="absolute top-0 left-0 h-full w-full" ref={firstHalfRef}>
-          {afterImage && (
-            <Image
-              data={afterImage}
-              sizes="auto"
-              className="box-border h-full w-full object-cover object-center"
-            />
-          )}
-        </div>
-        <div
-          ref={resizerRef}
-          onMouseDown={handleMouseDown}
-          onTouchStart={handleTouchStart}
-          className={clsx(
-            "absolute top-0 left-1/2 z-10 flex h-full transform touch-none select-none items-center",
-            {
-              "-translate-x-full": !showList,
-              "-translate-x-1": showList,
-            },
-          )}
-        >
-          <div className="relative h-full">
-            {/* Separator Bar */}
-            <div className="relative h-full w-[var(--separator-width)] cursor-ew-resize bg-[var(--separator-color)]" />
+        <div className="relative h-full">
+          {/* Separator Bar */}
+          <div className="relative h-full w-[var(--separator-width)] cursor-ew-resize bg-[var(--separator-color)]" />
 
-            {/* List Icon */}
-            {showList && (
-              <div className="absolute top-1/2 left-1/2 z-20 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center">
-                <List
-                  size={32}
-                  className="rotate-90 transform rounded-full bg-[var(--separator-color)] p-1 text-[var(--list-color)]"
-                />
-              </div>
-            )}
-          </div>
-        </div>
-        <div ref={secondHalfRef} className="h-full w-full">
-          {beforeImage && (
-            <Image
-              data={beforeImage}
-              sizes="auto"
-              className="box-border h-full w-full object-cover object-center"
-            />
+          {/* List Icon */}
+          {showList && (
+            <div className="absolute top-1/2 left-1/2 z-20 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center">
+              <List
+                size={32}
+                className="rotate-90 transform rounded-full bg-[var(--separator-color)] p-1 text-[var(--list-color)]"
+              />
+            </div>
           )}
         </div>
       </div>
-    );
-  },
-);
+      <div ref={secondHalfRef} className="h-full w-full">
+        {beforeImage && (
+          <Image
+            data={beforeImage}
+            sizes="auto"
+            className="box-border h-full w-full object-cover object-center"
+          />
+        )}
+      </div>
+    </div>
+  );
+};
 
 export default BeforeAndAfter;
 

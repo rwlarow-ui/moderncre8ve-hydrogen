@@ -1,12 +1,7 @@
+import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import {
-  forwardRef,
-  type ReactNode,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { BackgroundImage } from "~/components/background-image";
@@ -87,7 +82,10 @@ const getContentPositionClasses = (position: string) => {
   return positionMap[position] || "items-start justify-start";
 };
 
-const TabsLayout = forwardRef<HTMLDivElement, any>((props, ref) => {
+const TabsLayout = ({
+  ref,
+  ...props
+}: any & { ref?: RefObject<HTMLDivElement | null> }) => {
   const { tabsData, activeTab, setActiveTab, tabsHeight = 600, rest } = props;
   const [displayedTab, setDisplayedTab] = useState(activeTab);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -253,10 +251,13 @@ const TabsLayout = forwardRef<HTMLDivElement, any>((props, ref) => {
       </div>
     </div>
   );
-});
+};
 
 // Slider Layout Component
-let SliderLayout = forwardRef<HTMLDivElement, any>((props, ref) => {
+let SliderLayout = ({
+  ref,
+  ...props
+}: any & { ref?: RefObject<HTMLDivElement | null> }) => {
   let {
     childrenArray,
     totalSlides,
@@ -335,7 +336,7 @@ let SliderLayout = forwardRef<HTMLDivElement, any>((props, ref) => {
       )}
     </div>
   );
-});
+};
 
 const extractTabsData = (childInstances: any, childrenArray: ReactNode[]) => {
   if (!childrenArray || childrenArray.length === 0) {
@@ -458,126 +459,127 @@ const extractTabsData = (childInstances: any, childrenArray: ReactNode[]) => {
   });
 };
 
-let PromotionSlider = forwardRef<HTMLDivElement, GridItemProps>(
-  (props, ref) => {
-    let {
-      children,
-      layout = "slider",
-      slidesToShow = 2,
-      gap = 20,
-      autoPlay = false,
-      autoPlayDelay = 5,
-      showDots = true,
-      showArrows = true,
-      arrowsIcon = "caret",
-      iconSize = 24,
-      showArrowsOnHover = false,
-      arrowsColor = "white",
-      arrowsShape = "circle",
-      dotsColor = "light",
-      tabsHeight = 600,
-      ...rest
-    } = props;
+let PromotionSlider = ({
+  ref,
+  ...props
+}: GridItemProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  let {
+    children,
+    layout = "slider",
+    slidesToShow = 2,
+    gap = 20,
+    autoPlay = false,
+    autoPlayDelay = 5,
+    showDots = true,
+    showArrows = true,
+    arrowsIcon = "caret",
+    iconSize = 24,
+    showArrowsOnHover = false,
+    arrowsColor = "white",
+    arrowsShape = "circle",
+    dotsColor = "light",
+    tabsHeight = 600,
+    ...rest
+  } = props;
 
-    let [swiperKey, setSwiperKey] = useState(0);
-    let [activeTab, setActiveTab] = useState(0);
-    let [refreshKey, setRefreshKey] = useState(0);
-    let childInstances = useChildSections();
+  let [swiperKey, setSwiperKey] = useState(0);
+  let [activeTab, setActiveTab] = useState(0);
+  let [refreshKey, setRefreshKey] = useState(0);
+  let childInstances = useChildSections();
 
-    let childrenArray = Array.isArray(children)
-      ? (children as ReactNode[])
-      : children
-        ? [children as ReactNode]
-        : [];
-    let totalSlides = childrenArray.length;
+  let childrenArray = Array.isArray(children)
+    ? (children as ReactNode[])
+    : children
+      ? [children as ReactNode]
+      : [];
+  let totalSlides = childrenArray.length;
 
-    useEffect(() => {
-      if (layout === "tabs" && childInstances?.length > 0) {
-        let checkInterval = setInterval(() => {
-          setRefreshKey((prev) => {
-            return prev + 1;
-          });
-        }, 1000);
-
-        return () => {
-          return clearInterval(checkInterval);
-        };
-      }
-    }, [layout, childInstances, childrenArray]);
-
-    let childrenKey = useMemo(() => {
-      return childrenArray
-        .map((child: any) => {
-          return (
-            child?.props?.["data-section-id"] ||
-            `child-${Math.random().toString(36).slice(2, 11)}`
-          );
-        })
-        .join("-");
-    }, [childrenArray]);
-
-    useEffect(() => {
-      if (layout === "tabs") {
+  useEffect(() => {
+    if (layout === "tabs" && childInstances?.length > 0) {
+      let checkInterval = setInterval(() => {
         setRefreshKey((prev) => {
           return prev + 1;
         });
-      }
-    }, [layout, childrenKey]);
+      }, 1000);
 
-    let tabsData = useMemo(() => {
-      return layout === "tabs"
-        ? extractTabsData(childInstances, childrenArray)
-        : [];
-    }, [childInstances, childrenArray, layout, refreshKey]);
+      return () => {
+        return clearInterval(checkInterval);
+      };
+    }
+  }, [layout, childInstances, childrenArray]);
 
-    useEffect(() => {
-      setSwiperKey((prev) => {
+  let childrenKey = useMemo(() => {
+    return childrenArray
+      .map((child: any) => {
+        return (
+          child?.props?.["data-section-id"] ||
+          `child-${Math.random().toString(36).slice(2, 11)}`
+        );
+      })
+      .join("-");
+  }, [childrenArray]);
+
+  useEffect(() => {
+    if (layout === "tabs") {
+      setRefreshKey((prev) => {
         return prev + 1;
       });
-    }, [slidesToShow, showDots, showArrows, autoPlay, autoPlayDelay]);
-
-    if (totalSlides === 0) {
-      return (
-        <div ref={ref} {...rest} className={variants({ slidesToShow, gap })} />
-      );
     }
+  }, [layout, childrenKey]);
 
-    if (layout === "tabs") {
-      return (
-        <TabsLayout
-          ref={ref}
-          tabsData={tabsData}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          tabsHeight={tabsHeight}
-          rest={rest}
-        />
-      );
-    }
+  let tabsData = useMemo(() => {
+    return layout === "tabs"
+      ? extractTabsData(childInstances, childrenArray)
+      : [];
+  }, [childInstances, childrenArray, layout, refreshKey]);
 
+  useEffect(() => {
+    setSwiperKey((prev) => {
+      return prev + 1;
+    });
+  }, [slidesToShow, showDots, showArrows, autoPlay, autoPlayDelay]);
+
+  if (totalSlides === 0) {
     return (
-      <SliderLayout
+      <div ref={ref} {...rest} className={variants({ slidesToShow, gap })} />
+    );
+  }
+
+  if (layout === "tabs") {
+    return (
+      <TabsLayout
         ref={ref}
-        childrenArray={childrenArray}
-        totalSlides={totalSlides}
-        slidesToShow={slidesToShow}
-        gap={gap}
-        showArrows={showArrows}
-        showDots={showDots}
-        autoPlay={autoPlay}
-        autoPlayDelay={autoPlayDelay}
-        swiperKey={swiperKey}
-        arrowsIcon={arrowsIcon}
-        iconSize={iconSize}
-        showArrowsOnHover={showArrowsOnHover}
-        arrowsColor={arrowsColor}
-        arrowsShape={arrowsShape}
-        dotsColor={dotsColor}
+        tabsData={tabsData}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        tabsHeight={tabsHeight}
         rest={rest}
       />
     );
-  },
-);
+  }
+
+  return (
+    <SliderLayout
+      ref={ref}
+      childrenArray={childrenArray}
+      totalSlides={totalSlides}
+      slidesToShow={slidesToShow}
+      gap={gap}
+      showArrows={showArrows}
+      showDots={showDots}
+      autoPlay={autoPlay}
+      autoPlayDelay={autoPlayDelay}
+      swiperKey={swiperKey}
+      arrowsIcon={arrowsIcon}
+      iconSize={iconSize}
+      showArrowsOnHover={showArrowsOnHover}
+      arrowsColor={arrowsColor}
+      arrowsShape={arrowsShape}
+      dotsColor={dotsColor}
+      rest={rest}
+    />
+  );
+};
 
 export default PromotionSlider;
 

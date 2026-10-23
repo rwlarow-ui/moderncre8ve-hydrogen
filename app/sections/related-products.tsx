@@ -1,4 +1,5 @@
-import { forwardRef, Suspense } from "react";
+import type { RefObject } from "react";
+import { Suspense } from "react";
 import { Await, useLoaderData } from "react-router";
 import type { ProductCardFragment } from "storefront-api.generated";
 import Heading, {
@@ -16,69 +17,70 @@ interface RelatedProductsProps
   headingTagName?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }
 
-const RelatedProducts = forwardRef<HTMLElement, RelatedProductsProps>(
-  (props, ref) => {
-    const { recommended } = useLoaderData<{
-      recommended: { nodes: ProductCardFragment[] };
-    }>();
-    const {
-      headingTagName,
-      content,
-      size,
-      mobileSize,
-      desktopSize,
-      color,
-      weight,
-      letterSpacing,
-      alignment,
-      minSize,
-      maxSize,
-      ...rest
-    } = props;
-    if (recommended) {
-      return (
-        <Section ref={ref} {...rest} overflow="unset">
-          {content && (
-            <Heading
-              content={content}
-              as={headingTagName}
-              color={color}
-              size={size}
-              mobileSize={mobileSize}
-              desktopSize={desktopSize}
-              minSize={minSize}
-              maxSize={maxSize}
-              weight={weight}
-              letterSpacing={letterSpacing}
-              alignment={alignment}
-            />
-          )}
-          <Suspense>
-            <Await
-              errorElement="There was a problem loading related products"
-              resolve={recommended}
-            >
-              {(products) => {
-                return (
-                  <Swimlane>
-                    {products.nodes.slice(0, 12).map((product) => (
-                      <ProductCard
-                        key={product.id}
-                        product={product}
-                        className="w-80 snap-start"
-                      />
-                    ))}
-                  </Swimlane>
-                );
-              }}
-            </Await>
-          </Suspense>
-        </Section>
-      );
-    }
-    return <section ref={ref} {...rest} />;
-  },
-);
+const RelatedProducts = ({
+  ref,
+  ...props
+}: RelatedProductsProps & { ref?: RefObject<HTMLElement | null> }) => {
+  const { recommended } = useLoaderData<{
+    recommended: { nodes: ProductCardFragment[] };
+  }>();
+  const {
+    headingTagName,
+    content,
+    size,
+    mobileSize,
+    desktopSize,
+    color,
+    weight,
+    letterSpacing,
+    alignment,
+    minSize,
+    maxSize,
+    ...rest
+  } = props;
+  if (recommended) {
+    return (
+      <Section ref={ref} {...rest} overflow="unset">
+        {content && (
+          <Heading
+            content={content}
+            as={headingTagName}
+            color={color}
+            size={size}
+            mobileSize={mobileSize}
+            desktopSize={desktopSize}
+            minSize={minSize}
+            maxSize={maxSize}
+            weight={weight}
+            letterSpacing={letterSpacing}
+            alignment={alignment}
+          />
+        )}
+        <Suspense>
+          <Await
+            errorElement="There was a problem loading related products"
+            resolve={recommended}
+          >
+            {(products) => {
+              return (
+                <Swimlane>
+                  {products.nodes.slice(0, 12).map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      className="w-80 snap-start"
+                    />
+                  ))}
+                </Swimlane>
+              );
+            }}
+          </Await>
+        </Suspense>
+      </Section>
+    );
+  }
+  return <section ref={ref} {...rest} />;
+};
 
 export default RelatedProducts;
 

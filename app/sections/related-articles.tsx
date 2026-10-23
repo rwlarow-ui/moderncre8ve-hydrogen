@@ -1,5 +1,5 @@
+import type { RefObject } from "react";
 import { ArrowRight } from "@phosphor-icons/react";
-import { forwardRef } from "react";
 import { Link, useLoaderData } from "react-router";
 import type { ArticleFragment } from "storefront-api.generated";
 import { layoutInputs, Section, type SectionProps } from "~/components/section";
@@ -15,77 +15,78 @@ interface RelatedArticlesProps
   viewAllText?: string;
 }
 
-const RelatedArticles = forwardRef<HTMLElement, RelatedArticlesProps>(
-  (props, ref) => {
-    const { blog, relatedArticles } = useLoaderData<{
-      relatedArticles: ArticleFragment[];
-      blog: { handle: string };
-    }>();
-    const {
-      heading,
-      showViewAll,
-      viewAllText,
-      showExcerpt,
-      showAuthor,
-      showDate,
-      showReadmore,
-      imageAspectRatio,
-      ...rest
-    } = props;
+const RelatedArticles = ({
+  ref,
+  ...props
+}: RelatedArticlesProps & { ref?: RefObject<HTMLElement | null> }) => {
+  const { blog, relatedArticles } = useLoaderData<{
+    relatedArticles: ArticleFragment[];
+    blog: { handle: string };
+  }>();
+  const {
+    heading,
+    showViewAll,
+    viewAllText,
+    showExcerpt,
+    showAuthor,
+    showDate,
+    showReadmore,
+    imageAspectRatio,
+    ...rest
+  } = props;
 
-    if (relatedArticles.length > 0) {
-      return (
-        <Section ref={ref} {...rest} className="">
-          {/* Header section with title and view all button */}
-          <div className="mb-10 flex w-full items-center justify-between">
+  if (relatedArticles.length > 0) {
+    return (
+      <Section ref={ref} {...rest} className="">
+        {/* Header section with title and view all button */}
+        <div className="mb-10 flex w-full items-center justify-between">
+          <div className="flex items-center gap-2">
+            <h2 className="font-tenor text-[#29231E] text-[26px] uppercase leading-[1.1] tracking-[0.02em]">
+              {heading}
+            </h2>
+          </div>
+          {showViewAll && (
             <div className="flex items-center gap-2">
-              <h2 className="font-tenor text-[#29231E] text-[26px] uppercase leading-[1.1] tracking-[0.02em]">
-                {heading}
-              </h2>
-            </div>
-            {showViewAll && (
-              <div className="flex items-center gap-2">
-                <Link
-                  to={`/blogs/${blog.handle}`}
-                  className="flex items-center gap-2.5 px-1 py-1 text-[#29231E] transition-opacity hover:opacity-70"
-                >
-                  <span className="font-open-sans text-sm uppercase leading-[1em] tracking-[0.02em]">
-                    {viewAllText}
-                  </span>
-                  <ArrowRight
-                    size={20}
-                    weight="regular"
-                    className="text-[#29231E]"
-                  />
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Articles grid */}
-          <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-3 md:gap-4">
-            {relatedArticles.slice(0, 3).map((article, i) => (
-              <div key={article.id} className="flex flex-col gap-4">
-                <ArticleCard
-                  blogHandle={blog.handle}
-                  article={article}
-                  loading={getImageLoadingPriority(i, 2)}
-                  showAuthor={showAuthor}
-                  showExcerpt={showExcerpt}
-                  showDate={showDate}
-                  showReadmore={showReadmore}
-                  imageAspectRatio={imageAspectRatio}
-                  className="w-full"
+              <Link
+                to={`/blogs/${blog.handle}`}
+                className="flex items-center gap-2.5 px-1 py-1 text-[#29231E] transition-opacity hover:opacity-70"
+              >
+                <span className="font-open-sans text-sm uppercase leading-[1em] tracking-[0.02em]">
+                  {viewAllText}
+                </span>
+                <ArrowRight
+                  size={20}
+                  weight="regular"
+                  className="text-[#29231E]"
                 />
-              </div>
-            ))}
-          </div>
-        </Section>
-      );
-    }
-    return <section ref={ref} />;
-  },
-);
+              </Link>
+            </div>
+          )}
+        </div>
+
+        {/* Articles grid */}
+        <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-3 md:gap-4">
+          {relatedArticles.slice(0, 3).map((article, i) => (
+            <div key={article.id} className="flex flex-col gap-4">
+              <ArticleCard
+                blogHandle={blog.handle}
+                article={article}
+                loading={getImageLoadingPriority(i, 2)}
+                showAuthor={showAuthor}
+                showExcerpt={showExcerpt}
+                showDate={showDate}
+                showReadmore={showReadmore}
+                imageAspectRatio={imageAspectRatio}
+                className="w-full"
+              />
+            </div>
+          ))}
+        </div>
+      </Section>
+    );
+  }
+  return <section ref={ref} />;
+};
 
 export default RelatedArticles;
 

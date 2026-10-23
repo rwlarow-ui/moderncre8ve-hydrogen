@@ -1,6 +1,6 @@
-import { ArrowRight } from "@phosphor-icons/react";
+import type { RefObject } from "react";
 import clsx from "clsx";
-import { type CSSProperties, forwardRef, useState } from "react";
+import { type CSSProperties, useState } from "react";
 import { backgroundInputs } from "~/components/background-image";
 import { Button } from "~/components/button";
 import Heading, {
@@ -18,7 +18,7 @@ import {
   type SectionComponentProps,
 } from "~/page-builder";
 
-type ArticleData = {
+interface ArticleData {
   blogs: PickedBlog;
   articlePerRow: number;
   showSeperator: boolean;
@@ -35,7 +35,7 @@ type ArticleData = {
   // Heading props
   headingContent?: string;
   headingTagName?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-};
+}
 
 export interface ArticlesProps
   extends SectionComponentProps<Awaited<ReturnType<typeof loader>>>,
@@ -49,7 +49,10 @@ let articlesPerRowClasses: { [item: number]: string } = {
   4: "sm:grid-cols-4",
 };
 
-const Blogs = forwardRef<HTMLElement, ArticlesProps>((props, ref) => {
+const Blogs = ({
+  ref,
+  ...props
+}: ArticlesProps & { ref?: RefObject<HTMLElement | null> }) => {
   let {
     blogs,
     articlePerRow,
@@ -231,7 +234,7 @@ const Blogs = forwardRef<HTMLElement, ArticlesProps>((props, ref) => {
       </div>
     </Section>
   );
-});
+};
 
 export default Blogs;
 

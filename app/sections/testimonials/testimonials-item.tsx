@@ -1,23 +1,24 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import { createSchema, type SectionComponentProps } from "~/page-builder";
 
 interface TestimonialProps extends SectionComponentProps {}
 
-const TestimonialItem = forwardRef<HTMLDivElement, TestimonialProps>(
-  (props, ref) => {
-    const { children, ...rest } = props;
+const TestimonialItem = ({
+  ref,
+  ...props
+}: TestimonialProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  const { children, ...rest } = props;
 
-    return (
-      <div
-        ref={ref}
-        {...rest}
-        className="flex h-full flex-col gap-10 md:flex-row"
-      >
-        {children}
-      </div>
-    );
-  },
-);
+  return (
+    <div
+      ref={ref}
+      {...rest}
+      className="flex h-full flex-col gap-10 md:flex-row"
+    >
+      {children}
+    </div>
+  );
+};
 
 export default TestimonialItem;
 

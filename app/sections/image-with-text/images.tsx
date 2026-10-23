@@ -1,4 +1,5 @@
-import { Children, forwardRef, useEffect } from "react";
+import type { RefObject } from "react";
+import { Children, useEffect } from "react";
 import { createSchema, type SectionComponentProps } from "~/page-builder";
 import { cn } from "~/utils/cn";
 import type { ImageAspectRatioType } from "./context";
@@ -8,31 +9,32 @@ interface ImageWithTextImageProps extends SectionComponentProps {
   imageAspectRatio: ImageAspectRatioType;
 }
 
-let ImageWithTextImages = forwardRef<HTMLDivElement, ImageWithTextImageProps>(
-  (props, ref) => {
-    let { imageAspectRatio, children, ...rest } = props;
-    const { setImageCount, setImageAspectRatio } = useImageWithTextContext();
-    const imageCount = Children.count(children);
+let ImageWithTextImages = ({
+  ref,
+  ...props
+}: ImageWithTextImageProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  let { imageAspectRatio, children, ...rest } = props;
+  const { setImageCount, setImageAspectRatio } = useImageWithTextContext();
+  const imageCount = Children.count(children);
 
-    useEffect(() => {
-      setImageCount(imageCount);
-      setImageAspectRatio(imageAspectRatio);
-    }, [imageCount, setImageCount, imageAspectRatio, setImageAspectRatio]);
+  useEffect(() => {
+    setImageCount(imageCount);
+    setImageAspectRatio(imageAspectRatio);
+  }, [imageCount, setImageCount, imageAspectRatio, setImageAspectRatio]);
 
-    return (
-      <div
-        ref={ref}
-        {...rest}
-        className={cn(
-          "flex h-full w-full",
-          imageCount <= 1 ? "aspect-square w-full md:w-1/2" : "",
-        )}
-      >
-        {children}
-      </div>
-    );
-  },
-);
+  return (
+    <div
+      ref={ref}
+      {...rest}
+      className={cn(
+        "flex h-full w-full",
+        imageCount <= 1 ? "aspect-square w-full md:w-1/2" : "",
+      )}
+    >
+      {children}
+    </div>
+  );
+};
 
 export default ImageWithTextImages;
 

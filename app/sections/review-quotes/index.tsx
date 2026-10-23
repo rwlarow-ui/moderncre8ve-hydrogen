@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
 import { createSchema } from "~/page-builder";
@@ -11,49 +11,50 @@ interface ReviewQuotesProps extends SectionProps {
   accentColor: string;
 }
 
-const ReviewQuotes = forwardRef<HTMLElement, ReviewQuotesProps>(
-  (props, ref) => {
-    const {
-      subheading = "Customer Reviews",
-      heading = "What Owners Say",
-      backgroundColor = "#F0F0EF",
-      textColor = "#323640",
-      accentColor = "#2CBF96",
-      children,
-      ...rest
-    } = props;
+const ReviewQuotes = ({
+  ref,
+  ...props
+}: ReviewQuotesProps & { ref?: RefObject<HTMLElement | null> }) => {
+  const {
+    subheading = "Customer Reviews",
+    heading = "What Owners Say",
+    backgroundColor = "#F0F0EF",
+    textColor = "#323640",
+    accentColor = "#2CBF96",
+    children,
+    ...rest
+  } = props;
 
-    return (
-      <Section ref={ref} {...rest} style={{ backgroundColor }}>
-        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-          {(subheading || heading) && (
-            <div className="mb-10 text-center">
-              {subheading && (
-                <p
-                  className="mb-2 font-sans text-xs uppercase tracking-[0.2em]"
-                  style={{ color: accentColor }}
-                >
-                  {subheading}
-                </p>
-              )}
-              {heading && (
-                <h2
-                  className="font-normal font-sans text-2xl uppercase tracking-wide lg:text-3xl"
-                  style={{ color: textColor }}
-                >
-                  {heading}
-                </h2>
-              )}
-            </div>
-          )}
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
-            {children}
+  return (
+    <Section ref={ref} {...rest} style={{ backgroundColor }}>
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+        {(subheading || heading) && (
+          <div className="mb-10 text-center">
+            {subheading && (
+              <p
+                className="mb-2 font-sans text-xs uppercase tracking-[0.2em]"
+                style={{ color: accentColor }}
+              >
+                {subheading}
+              </p>
+            )}
+            {heading && (
+              <h2
+                className="font-normal font-sans text-2xl uppercase tracking-wide lg:text-3xl"
+                style={{ color: textColor }}
+              >
+                {heading}
+              </h2>
+            )}
           </div>
+        )}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
+          {children}
         </div>
-      </Section>
-    );
-  },
-);
+      </div>
+    </Section>
+  );
+};
 
 export default ReviewQuotes;
 

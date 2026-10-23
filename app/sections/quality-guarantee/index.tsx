@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
 import { createSchema } from "~/page-builder";
@@ -11,40 +11,41 @@ interface QualityGuaranteeProps extends SectionProps {
   borderColor: string;
 }
 
-const QualityGuarantee = forwardRef<HTMLElement, QualityGuaranteeProps>(
-  (props, ref) => {
-    const {
-      heading = "Our Promise to You",
-      backgroundColor = "#ffffff",
-      textColor = "#323640",
-      accentColor = "#2CBF96",
-      borderColor = "#DBD7D1",
-      children,
-      ...rest
-    } = props;
+const QualityGuarantee = ({
+  ref,
+  ...props
+}: QualityGuaranteeProps & { ref?: RefObject<HTMLElement | null> }) => {
+  const {
+    heading = "Our Promise to You",
+    backgroundColor = "#ffffff",
+    textColor = "#323640",
+    accentColor = "#2CBF96",
+    borderColor = "#DBD7D1",
+    children,
+    ...rest
+  } = props;
 
-    return (
-      <Section ref={ref} {...rest} style={{ backgroundColor }}>
-        <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
-          {heading && (
-            <h2
-              className="mb-8 text-center font-normal font-sans text-2xl uppercase tracking-wide lg:text-3xl"
-              style={{ color: textColor }}
-            >
-              {heading}
-            </h2>
-          )}
-          <div
-            className="grid grid-cols-1 gap-0 divide-y md:grid-cols-3 md:gap-0 md:divide-x md:divide-y-0"
-            style={{ borderColor }}
+  return (
+    <Section ref={ref} {...rest} style={{ backgroundColor }}>
+      <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+        {heading && (
+          <h2
+            className="mb-8 text-center font-normal font-sans text-2xl uppercase tracking-wide lg:text-3xl"
+            style={{ color: textColor }}
           >
-            {children}
-          </div>
+            {heading}
+          </h2>
+        )}
+        <div
+          className="grid grid-cols-1 gap-0 divide-y md:grid-cols-3 md:gap-0 md:divide-x md:divide-y-0"
+          style={{ borderColor }}
+        >
+          {children}
         </div>
-      </Section>
-    );
-  },
-);
+      </div>
+    </Section>
+  );
+};
 
 export default QualityGuarantee;
 

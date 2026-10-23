@@ -1,5 +1,6 @@
+import type { RefObject } from "react";
 import clsx from "clsx";
-import { Children, createContext, forwardRef, useContext } from "react";
+import { Children, createContext, useContext } from "react";
 import type { SectionComponentProps } from "~/page-builder";
 import { createSchema } from "~/page-builder";
 import type { ImageAspectRatio } from "~/types/image";
@@ -15,7 +16,10 @@ export const HotspotsContext = createContext<{
 
 export const useHotspotsContext = () => useContext(HotspotsContext);
 
-let Hotspots = forwardRef<HTMLDivElement, HotspotsProps>((props, ref) => {
+let Hotspots = ({
+  ref,
+  ...props
+}: HotspotsProps & { ref?: RefObject<HTMLDivElement | null> }) => {
   let { children, gap = 20, aspectRatio = "adapt", ...rest } = props;
 
   const childrenCount = Children.count(children);
@@ -40,7 +44,7 @@ let Hotspots = forwardRef<HTMLDivElement, HotspotsProps>((props, ref) => {
       </div>
     </HotspotsContext.Provider>
   );
-});
+};
 
 export default Hotspots;
 

@@ -1,20 +1,21 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import type { SectionProps } from "~/components/section";
 import { Section, sectionSettings } from "~/components/section";
 import { createSchema } from "~/page-builder";
 
 type ColumnsWithImagesProps = SectionProps;
 
-const ColumnsWithImages = forwardRef<HTMLElement, ColumnsWithImagesProps>(
-  (props, ref) => {
-    const { children, ...rest } = props;
-    return (
-      <Section ref={ref} {...rest}>
-        {children}
-      </Section>
-    );
-  },
-);
+const ColumnsWithImages = ({
+  ref,
+  ...props
+}: ColumnsWithImagesProps & { ref?: RefObject<HTMLElement | null> }) => {
+  const { children, ...rest } = props;
+  return (
+    <Section ref={ref} {...rest}>
+      {children}
+    </Section>
+  );
+};
 
 export default ColumnsWithImages;
 

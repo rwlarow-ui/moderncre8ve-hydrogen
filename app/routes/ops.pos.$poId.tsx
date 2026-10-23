@@ -42,7 +42,9 @@ const SPEC_FIELDS = ["size", "species", "leaf", "finish", "notes"] as const;
 
 export async function loader({ request, context, params }: LoaderFunctionArgs) {
   await requireOpsAccess(request, context);
-  if (!params.poId) throw new Response("PO not found.", { status: 404 });
+  if (!params.poId) {
+    throw new Response("PO not found.", { status: 404 });
+  }
 
   let po: Awaited<ReturnType<typeof getProductionPo>>;
   try {
@@ -83,7 +85,9 @@ export async function loader({ request, context, params }: LoaderFunctionArgs) {
 
 export async function action({ request, context, params }: ActionFunctionArgs) {
   await requireOpsAccess(request, context);
-  if (!params.poId) throw new Response("PO not found.", { status: 404 });
+  if (!params.poId) {
+    throw new Response("PO not found.", { status: 404 });
+  }
 
   const formData = await request.formData();
   const intent = String(formData.get("intent") || "");
@@ -448,7 +452,9 @@ function SendBlock({
         <Form
           method="post"
           onSubmit={(event) => {
-            if (!window.confirm(confirmText)) event.preventDefault();
+            if (!window.confirm(confirmText)) {
+              event.preventDefault();
+            }
           }}
         >
           <input type="hidden" name="intent" value={intent} />

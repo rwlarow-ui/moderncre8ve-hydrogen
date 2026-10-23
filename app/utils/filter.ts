@@ -3,10 +3,10 @@ import type { Location, useLocation } from "react-router";
 
 export const FILTER_URL_PREFIX = "filter.";
 
-export type AppliedFilter = {
+export interface AppliedFilter {
   label: string;
   filter: ProductFilter;
-};
+}
 
 export type SortParam =
   | "price-low-high"

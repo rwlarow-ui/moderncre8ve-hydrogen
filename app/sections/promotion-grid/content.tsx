@@ -1,5 +1,5 @@
+import type { RefObject } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { forwardRef } from "react";
 import { createSchema, type SectionComponentProps } from "~/page-builder";
 
 interface PromotionGridProps
@@ -38,23 +38,24 @@ let variants = cva("flex flex-col [&_.paragraph]:mx-[unset]", {
   },
 });
 
-const PromotionGrid = forwardRef<HTMLDivElement, PromotionGridProps>(
-  (props, ref) => {
-    const { children, gap, contentPosition, ...rest } = props;
-    return (
-      <div
-        ref={ref}
-        {...rest}
-        className={variants({
-          contentPosition,
-          gap,
-        })}
-      >
-        {children}
-      </div>
-    );
-  },
-);
+const PromotionGrid = ({
+  ref,
+  ...props
+}: PromotionGridProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  const { children, gap, contentPosition, ...rest } = props;
+  return (
+    <div
+      ref={ref}
+      {...rest}
+      className={variants({
+        contentPosition,
+        gap,
+      })}
+    >
+      {children}
+    </div>
+  );
+};
 
 export default PromotionGrid;
 

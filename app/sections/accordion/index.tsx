@@ -1,5 +1,6 @@
+import type { RefObject } from "react";
 import clsx from "clsx";
-import { createContext, forwardRef, useContext, useMemo } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { backgroundInputs } from "~/components/background-image";
 import { overlayInputs } from "~/components/overlay";
 import type { SectionProps } from "~/components/section";
@@ -30,34 +31,35 @@ interface AccordionSectionProps extends SectionProps {
   accordionLayout: "column" | "row";
 }
 
-const AccordionSection = forwardRef<HTMLElement, AccordionSectionProps>(
-  (props, ref) => {
-    let { accordionLayout, children, ...rest } = props;
+const AccordionSection = ({
+  ref,
+  ...props
+}: AccordionSectionProps & { ref?: RefObject<HTMLElement | null> }) => {
+  let { accordionLayout, children, ...rest } = props;
 
-    // Memoize context value to prevent unnecessary re-renders
-    const contextValue = useMemo(
-      () => ({ layout: accordionLayout }),
-      [accordionLayout],
-    );
+  // Memoize context value to prevent unnecessary re-renders
+  const contextValue = useMemo(
+    () => ({ layout: accordionLayout }),
+    [accordionLayout],
+  );
 
-    return (
-      <Section ref={ref} {...rest}>
-        <AccordionProvider value={contextValue}>
-          <div
-            className={clsx(
-              "grid h-full w-full items-center gap-8 md:gap-12 lg:gap-16",
-              accordionLayout === "row"
-                ? "grid-cols-1 justify-start"
-                : "grid-cols-1 md:grid-cols-2",
-            )}
-          >
-            {children}
-          </div>
-        </AccordionProvider>
-      </Section>
-    );
-  },
-);
+  return (
+    <Section ref={ref} {...rest}>
+      <AccordionProvider value={contextValue}>
+        <div
+          className={clsx(
+            "grid h-full w-full items-center gap-8 md:gap-12 lg:gap-16",
+            accordionLayout === "row"
+              ? "grid-cols-1 justify-start"
+              : "grid-cols-1 md:grid-cols-2",
+          )}
+        >
+          {children}
+        </div>
+      </AccordionProvider>
+    </Section>
+  );
+};
 
 export default AccordionSection;
 

@@ -12,10 +12,10 @@ type PredictiveSearchResultItemImage =
 type PredictiveSearchResultItemPrice =
   PredictiveProductFragment["selectedOrFirstAvailableVariant"]["price"];
 
-export type NormalizedPredictiveSearch = {
+export interface NormalizedPredictiveSearch {
   results: NormalizedPredictiveSearchResults;
   totalResults: number;
-};
+}
 
 export type NormalizedPredictiveSearchResults = Array<
   | { type: "queries"; items: NormalizedPredictiveSearchResultItem[] }
@@ -25,7 +25,7 @@ export type NormalizedPredictiveSearchResults = Array<
   | { type: "articles"; items: NormalizedPredictiveSearchResultItem[] }
 >;
 
-export type NormalizedPredictiveSearchResultItem = {
+export interface NormalizedPredictiveSearchResultItem {
   __typename?: "SearchQuerySuggestion" | "Product" | "Article";
   handle: string;
   id: string;
@@ -36,4 +36,4 @@ export type NormalizedPredictiveSearchResultItem = {
   title: string;
   vendor: string;
   url: string;
-};
+}

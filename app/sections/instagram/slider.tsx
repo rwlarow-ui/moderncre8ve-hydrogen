@@ -1,9 +1,8 @@
-import { forwardRef } from "react";
 import type { ComponentSchema } from "~/page-builder";
 
-const InstagramSlider = forwardRef<HTMLDivElement>((_, ref) => {
+const InstagramSlider = ({ ref, ..._ }) => {
   return <div ref={ref} />;
-});
+};
 
 export default InstagramSlider;
 

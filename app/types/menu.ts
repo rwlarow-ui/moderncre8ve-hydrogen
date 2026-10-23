@@ -4,11 +4,11 @@ import type {
   ParentMenuItemFragment,
 } from "storefront-api.generated";
 
-type EnhancedMenuItemProps = {
+interface EnhancedMenuItemProps {
   to: string;
   target: string;
   isExternal?: boolean;
-};
+}
 
 type ChildEnhancedMenuItem = ChildMenuItemFragment & EnhancedMenuItemProps;
 

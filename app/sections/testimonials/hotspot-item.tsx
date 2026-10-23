@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import type { RefObject } from "react";
 import { Image } from "~/components/image";
 import type {
   ComponentSchema,
@@ -15,42 +15,43 @@ interface HotspotsTestimonialProps extends SectionComponentProps {
   aspectRatio: ImageAspectRatio;
 }
 
-let HotspotsTestimonial = forwardRef<HTMLDivElement, HotspotsTestimonialProps>(
-  (props, ref) => {
-    let { image, aspectRatio, children, ...rest } = props;
+let HotspotsTestimonial = ({
+  ref,
+  ...props
+}: HotspotsTestimonialProps & { ref?: RefObject<HTMLDivElement | null> }) => {
+  let { image, aspectRatio, children, ...rest } = props;
 
-    let imageData: Partial<PageImage>;
-    if (typeof image === "string") {
-      imageData = { url: image, altText: staticImageAlt(image) };
-    } else if (image && typeof image === "object") {
-      imageData = image;
-    } else {
-      imageData = {
-        url: IMAGES_PLACEHOLDERS.collection_1,
-        altText: "",
-      };
-    }
+  let imageData: Partial<PageImage>;
+  if (typeof image === "string") {
+    imageData = { url: image, altText: staticImageAlt(image) };
+  } else if (image && typeof image === "object") {
+    imageData = image;
+  } else {
+    imageData = {
+      url: IMAGES_PLACEHOLDERS.collection_1,
+      altText: "",
+    };
+  }
 
-    return (
-      <div
-        ref={ref}
-        {...rest}
-        className="relative h-full w-full flex-1 overflow-hidden"
-        style={{ aspectRatio: calculateAspectRatio(imageData, aspectRatio) }}
-      >
-        {imageData.url && (
-          <Image
-            data={imageData}
-            sizes="auto"
-            className="z-0 h-full w-full object-cover"
-            data-motion="zoom-in"
-          />
-        )}
-        <div className="absolute inset-0 z-10">{children}</div>
-      </div>
-    );
-  },
-);
+  return (
+    <div
+      ref={ref}
+      {...rest}
+      className="relative h-full w-full flex-1 overflow-hidden"
+      style={{ aspectRatio: calculateAspectRatio(imageData, aspectRatio) }}
+    >
+      {imageData.url && (
+        <Image
+          data={imageData}
+          sizes="auto"
+          className="z-0 h-full w-full object-cover"
+          data-motion="zoom-in"
+        />
+      )}
+      <div className="absolute inset-0 z-10">{children}</div>
+    </div>
+  );
+};
 
 export default HotspotsTestimonial;
 
