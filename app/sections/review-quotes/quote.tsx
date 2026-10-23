@@ -69,11 +69,11 @@ const ReviewQuote = ({
 
       <figcaption
         className="font-sans text-sm uppercase tracking-wide"
-        style={{ color: `${textColor}bb` }}
+        style={{ color: `${textColor}d9` }}
       >
         {author}
         {product && (
-          <span className="mt-1 block normal-case tracking-normal opacity-80">
+          <span className="mt-1 block normal-case tracking-normal">
             {product}
           </span>
         )}

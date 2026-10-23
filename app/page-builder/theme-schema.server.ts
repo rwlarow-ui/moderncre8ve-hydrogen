@@ -597,7 +597,7 @@ export const themeSchema: ThemeSchema = {
             step: 1,
             unit: "px",
           },
-          defaultValue: 14,
+          defaultValue: 16,
         },
         {
           type: "range",
