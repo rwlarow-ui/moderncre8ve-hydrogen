@@ -1,5 +1,5 @@
 import { getShopAnalytics } from "@shopify/hydrogen";
-import type { AppLoadContext, LoaderFunctionArgs } from "react-router";
+import type { AppLoadContext } from "react-router";
 import type {
   LayoutQuery,
   MenuFragment,
@@ -10,14 +10,13 @@ import { getThemeSettings } from "~/page-builder/theme.server";
 import type { EnhancedMenu } from "~/types/menu";
 import { seoPayload } from "~/utils/seo.server";
 
+type RootLoaderArgs = { request: Request; context: AppLoadContext };
+
 /**
  * Load data necessary for rendering content above the fold. This is the critical data
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
-export async function loadCriticalData({
-  request,
-  context,
-}: LoaderFunctionArgs) {
+export async function loadCriticalData({ request, context }: RootLoaderArgs) {
   const [layout, swatchesConfigs] = await Promise.all([
     getLayoutData(context),
     getSwatchesConfigs(context),
@@ -55,7 +54,7 @@ export async function loadCriticalData({
  * fetched after the initial page load. If it's unavailable, the page should still 200.
  * Make sure to not throw any errors here, as it will cause the page to 500.
  */
-export function loadDeferredData({ context }: LoaderFunctionArgs) {
+export function loadDeferredData({ context }: RootLoaderArgs) {
   const { cart, customerAccount } = context;
 
   return {

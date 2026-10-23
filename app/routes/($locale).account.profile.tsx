@@ -1,9 +1,5 @@
 import type { CustomerUpdateInput } from "@shopify/hydrogen/customer-account-api-types";
-import {
-  type ActionFunctionArgs,
-  data,
-  type LoaderFunctionArgs,
-} from "@shopify/remix-oxygen";
+import { data } from "@shopify/remix-oxygen";
 import type { CustomerUpdateMutation } from "customer-account-api.generated";
 import {
   Form,
@@ -12,6 +8,7 @@ import {
   useNavigation,
   useOutletContext,
 } from "react-router";
+import type { Route } from "./+types/($locale).account.profile";
 
 // https://shopify.dev/docs/api/customer/latest/mutations/customerUpdate
 export const CUSTOMER_UPDATE_MUTATION = `#graphql
@@ -47,13 +44,13 @@ export const meta: MetaFunction = () => {
   return [{ title: "Profile" }];
 };
 
-export async function loader({ context }: LoaderFunctionArgs) {
+export async function loader({ context }: Route.LoaderArgs) {
   await context.customerAccount.handleAuthStatus();
 
   return {};
 }
 
-export async function action({ request, context }: ActionFunctionArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   const { customerAccount } = context;
 
   if (request.method !== "PUT") {

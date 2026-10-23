@@ -1,9 +1,5 @@
 import type { CustomerAddressInput } from "@shopify/hydrogen/customer-account-api-types";
-import {
-  type ActionFunctionArgs,
-  data,
-  type LoaderFunctionArgs,
-} from "@shopify/remix-oxygen";
+import { data } from "@shopify/remix-oxygen";
 import type {
   AddressPartialFragment,
   CustomerDetailsFragment,
@@ -16,6 +12,7 @@ import {
   useNavigation,
   useOutletContext,
 } from "react-router";
+import type { Route } from "./+types/($locale).account.addresses";
 import {
   CREATE_ADDRESS_MUTATION,
   DELETE_ADDRESS_MUTATION,
@@ -35,13 +32,13 @@ export const meta: MetaFunction = () => {
   return [{ title: "Addresses" }];
 };
 
-export async function loader({ context }: LoaderFunctionArgs) {
+export async function loader({ context }: Route.LoaderArgs) {
   await context.customerAccount.handleAuthStatus();
 
   return {};
 }
 
-export async function action({ request, context }: ActionFunctionArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   const { customerAccount } = context;
 
   try {

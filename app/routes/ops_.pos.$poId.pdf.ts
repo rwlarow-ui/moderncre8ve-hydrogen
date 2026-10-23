@@ -1,15 +1,15 @@
-import type { LoaderFunctionArgs } from "react-router";
 import { requireOpsAccess } from "~/utils/ops-auth.server";
 import { buildPoDocument } from "~/utils/po-document";
 import { renderPoPdf } from "~/utils/po-pdf.server";
 import { getProductionPo } from "~/utils/production-po.server";
+import type { Route } from "./+types/ops_.pos.$poId.pdf";
 
 /**
  * Preview of the exact PDF the partner receives. Outside the /ops layout
  * (`ops_`) because it returns a file, so it checks ops access itself. POs
  * that aren't approved yet are stamped DRAFT by the document builder.
  */
-export async function loader({ request, context, params }: LoaderFunctionArgs) {
+export async function loader({ request, context, params }: Route.LoaderArgs) {
   await requireOpsAccess(request, context);
   if (!params.poId) {
     throw new Response("PO not found.", { status: 404 });

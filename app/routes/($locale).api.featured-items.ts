@@ -1,15 +1,16 @@
-import { data, type LoaderFunctionArgs } from "@shopify/remix-oxygen";
+import { data } from "@shopify/remix-oxygen";
 import type { FeaturedItemsQuery } from "storefront-api.generated";
 import invariant from "tiny-invariant";
 import { PRODUCT_CARD_FRAGMENT } from "~/graphql/fragments";
 import { maybeFilterOutCombinedListingsQuery } from "~/utils/combined-listings";
+import type { Route } from "./+types/($locale).api.featured-items";
 
-export async function loader({ context: { storefront } }: LoaderFunctionArgs) {
+export async function loader({ context: { storefront } }: Route.LoaderArgs) {
   return data(await getFeaturedData(storefront));
 }
 
 export async function getFeaturedData(
-  storefront: LoaderFunctionArgs["context"]["storefront"],
+  storefront: Route.LoaderArgs["context"]["storefront"],
   variables: { pageBy?: number } = {},
 ) {
   const featuredItemsData = await storefront.query<FeaturedItemsQuery>(

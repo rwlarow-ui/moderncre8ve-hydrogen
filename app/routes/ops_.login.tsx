@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import {
   data,
   Form,
@@ -25,12 +24,13 @@ import {
   safeEqual,
 } from "~/utils/ops-login-throttle.server";
 import { verifyTurnstile } from "~/utils/turnstile.server";
+import type { Route } from "./+types/ops_.login";
 
 export const headers = () => ({ "X-Robots-Tag": "noindex, nofollow" });
 
 export const meta = () => [{ name: "robots", content: "noindex, nofollow" }];
 
-export async function loader({ request, context }: LoaderFunctionArgs) {
+export async function loader({ request, context }: Route.LoaderArgs) {
   if (isOpsAuthenticated(context.session)) {
     const url = new URL(request.url);
     const redirectTo = url.searchParams.get("redirectTo") || "/ops";
@@ -40,7 +40,7 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
   return null;
 }
 
-export async function action({ request, context }: ActionFunctionArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   const formData = await request.formData();
   const password = String(formData.get("password") || "");
   const redirectTo = String(formData.get("redirectTo") || "/ops");

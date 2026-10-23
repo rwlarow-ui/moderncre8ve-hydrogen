@@ -1,5 +1,4 @@
 import { ArrowSquareOutIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
-import type { LoaderFunctionArgs } from "react-router";
 import { Form, Link, useLoaderData, useNavigation } from "react-router";
 import { Button } from "~/components/button";
 import {
@@ -20,8 +19,9 @@ import {
 import { requireOpsAccess } from "~/utils/ops-auth.server";
 import { listCurrentOrders } from "~/utils/ops-dashboard.server";
 import type { OpsDashboardFilters } from "~/utils/ops-dashboard.types";
+import type { Route } from "./+types/ops._index";
 
-export async function loader({ request, context }: LoaderFunctionArgs) {
+export async function loader({ request, context }: Route.LoaderArgs) {
   await requireOpsAccess(request, context);
 
   const url = new URL(request.url);

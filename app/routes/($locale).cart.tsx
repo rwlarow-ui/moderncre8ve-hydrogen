@@ -8,12 +8,7 @@ import type {
   CartLineInput,
   CartLineUpdateInput,
 } from "@shopify/hydrogen/storefront-api-types";
-import {
-  type ActionFunctionArgs,
-  data,
-  type LoaderFunctionArgs,
-  redirect,
-} from "@shopify/remix-oxygen";
+import { data, redirect } from "@shopify/remix-oxygen";
 import { Await, useRouteLoaderData } from "react-router";
 import type { CartApiQueryFragment } from "storefront-api.generated";
 import invariant from "tiny-invariant";
@@ -21,11 +16,12 @@ import { Cart } from "~/components/cart/cart";
 import { Section } from "~/components/section";
 import type { RootLoader } from "~/root";
 import { mergeCartAttributes, validateLogistics } from "~/utils/logistics";
+import type { Route } from "./+types/($locale).cart";
 
 /** Custom cart action: saves the delivery-logistics form (ADR-0001). */
 export const LOGISTICS_UPDATE_ACTION = "CustomLogisticsUpdate";
 
-export async function action({ request, context }: ActionFunctionArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   const { cart } = context;
   const formData = await request.formData();
   const { action: cartFormAction, inputs } = CartForm.getFormInput(formData);
@@ -112,7 +108,7 @@ export async function action({ request, context }: ActionFunctionArgs) {
   );
 }
 
-export async function loader({ context }: LoaderFunctionArgs) {
+export async function loader({ context }: Route.LoaderArgs) {
   const { cart } = context;
   return await cart.get();
 }

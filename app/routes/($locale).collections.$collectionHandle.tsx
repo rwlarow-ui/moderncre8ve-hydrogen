@@ -7,11 +7,7 @@ import type {
   ProductCollectionSortKeys,
   ProductFilter,
 } from "@shopify/hydrogen/storefront-api-types";
-import {
-  type LoaderFunctionArgs,
-  type MetaArgs,
-  redirect,
-} from "@shopify/remix-oxygen";
+import { type MetaArgs, redirect } from "@shopify/remix-oxygen";
 import { useLoaderData } from "react-router";
 import type { CollectionQuery } from "storefront-api.generated";
 import invariant from "tiny-invariant";
@@ -25,10 +21,11 @@ import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { FILTER_URL_PREFIX, type SortParam } from "~/utils/filter";
 import { redirectIfHandleIsLocalized } from "~/utils/redirect";
 import { seoPayload } from "~/utils/seo.server";
+import type { Route } from "./+types/($locale).collections.$collectionHandle";
 
 export const headers = routeHeaders;
 
-export async function loader({ params, request, context }: LoaderFunctionArgs) {
+export async function loader({ params, request, context }: Route.LoaderArgs) {
   const paginationVariables = getPaginationVariables(request, {
     pageBy: PAGINATION_SIZE,
   });

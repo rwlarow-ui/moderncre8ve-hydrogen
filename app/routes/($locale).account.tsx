@@ -4,7 +4,7 @@ import {
   flattenConnection,
   generateCacheControlHeader,
 } from "@shopify/hydrogen";
-import { data, type LoaderFunctionArgs } from "@shopify/remix-oxygen";
+import { data } from "@shopify/remix-oxygen";
 import type {
   CustomerDetailsFragment,
   CustomerDetailsQuery,
@@ -27,6 +27,7 @@ import { Section } from "~/components/section";
 import { Swimlane } from "~/components/swimlane";
 import { usePrefixPathWithLocale } from "~/hooks/use-prefix-path-with-locale";
 import { routeHeaders } from "~/utils/cache";
+import type { Route } from "./+types/($locale).account";
 import { doLogout } from "./($locale).account_.logout";
 import {
   type FeaturedData,
@@ -35,7 +36,7 @@ import {
 
 export const headers = routeHeaders;
 
-export async function loader({ context }: LoaderFunctionArgs) {
+export async function loader({ context }: Route.LoaderArgs) {
   const { data: d, errors } =
     await context.customerAccount.query<CustomerDetailsQuery>(
       CUSTOMER_DETAILS_QUERY,

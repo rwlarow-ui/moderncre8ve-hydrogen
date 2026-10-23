@@ -1,4 +1,3 @@
-import type { LoaderFunctionArgs } from "react-router";
 import { Link, useLoaderData } from "react-router";
 import {
   formatDate,
@@ -12,6 +11,7 @@ import { cn } from "~/utils/cn";
 import { requireOpsAccess } from "~/utils/ops-auth.server";
 import { daysSince, PO_STATE_LABELS } from "~/utils/production-po";
 import { listProductionPos } from "~/utils/production-po.server";
+import type { Route } from "./+types/ops.pos._index";
 
 const VIEWS = [
   {
@@ -42,7 +42,7 @@ const VIEWS = [
 
 type ViewKey = (typeof VIEWS)[number]["key"];
 
-export async function loader({ request, context }: LoaderFunctionArgs) {
+export async function loader({ request, context }: Route.LoaderArgs) {
   await requireOpsAccess(request, context);
 
   const requested = new URL(request.url).searchParams.get("view");

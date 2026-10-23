@@ -4,11 +4,7 @@ import {
   getSelectedProductOptions,
   useOptimisticVariant,
 } from "@shopify/hydrogen";
-import type {
-  ActionFunctionArgs,
-  LoaderFunctionArgs,
-  MetaArgs,
-} from "@shopify/remix-oxygen";
+import type { MetaArgs } from "@shopify/remix-oxygen";
 import { data } from "@shopify/remix-oxygen";
 import { useEffect } from "react";
 import { useLoaderData } from "react-router";
@@ -31,10 +27,11 @@ import {
 } from "~/utils/redirect";
 import { seoPayload } from "~/utils/seo.server";
 import { verifyTurnstile } from "~/utils/turnstile.server";
+import type { Route } from "./+types/($locale).products.$productHandle";
 
 export const headers = routeHeaders;
 
-export async function loader({ params, request, context }: LoaderFunctionArgs) {
+export async function loader({ params, request, context }: Route.LoaderArgs) {
   const { productHandle: handle } = params;
 
   invariant(handle, "Missing productHandle param, check route filename");
@@ -79,10 +76,7 @@ export async function loader({ params, request, context }: LoaderFunctionArgs) {
   };
 }
 
-export async function action({
-  request,
-  context: { env },
-}: ActionFunctionArgs) {
+export async function action({ request, context: { env } }: Route.ActionArgs) {
   try {
     const formData = await request.formData();
 

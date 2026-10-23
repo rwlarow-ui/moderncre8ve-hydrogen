@@ -1,5 +1,5 @@
 import { mapSelectedProductOptionToObject } from "@shopify/hydrogen";
-import { data, type LoaderFunctionArgs } from "@shopify/remix-oxygen";
+import { data } from "@shopify/remix-oxygen";
 import type {
   PredictiveArticleFragment,
   PredictiveCollectionFragment,
@@ -13,6 +13,7 @@ import type {
   NormalizedPredictiveSearch,
   NormalizedPredictiveSearchResults,
 } from "~/types/predictive-search";
+import type { Route } from "./+types/($locale).api.predictive-search";
 
 type PredictiveSearchResultItem =
   | PredictiveArticleFragment
@@ -34,7 +35,7 @@ const DEFAULT_SEARCH_TYPES: PredictiveSearchTypes[] = [
  * Fetches the search results from the predictive search API
  * requested by the SearchForm component
  */
-export async function action({ request, params, context }: LoaderFunctionArgs) {
+export async function action({ request, params, context }: Route.ActionArgs) {
   if (request.method !== "POST") {
     throw new Error("Invalid request method");
   }
@@ -52,7 +53,7 @@ async function fetchPredictiveSearchResults({
   params,
   request,
   context,
-}: Pick<LoaderFunctionArgs, "params" | "context" | "request">) {
+}: Pick<Route.ActionArgs, "params" | "context" | "request">) {
   const url = new URL(request.url);
   const searchParams = new URLSearchParams(url.search);
   let body: FormData | null = null;
@@ -112,7 +113,7 @@ async function fetchPredictiveSearchResults({
  */
 function normalizePredictiveSearchResults(
   predictiveSearch: PredictiveSearchQuery["predictiveSearch"],
-  locale: LoaderFunctionArgs["params"]["locale"],
+  locale: Route.ActionArgs["params"]["locale"],
 ): NormalizedPredictiveSearch {
   let totalResults = 0;
   if (!predictiveSearch) {

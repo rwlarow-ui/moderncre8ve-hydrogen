@@ -1,5 +1,5 @@
 import type { CustomerAddressInput } from "@shopify/hydrogen/customer-account-api-types";
-import { type ActionFunction, data, redirect } from "@shopify/remix-oxygen";
+import { data, redirect } from "@shopify/remix-oxygen";
 import type {
   CustomerAddressCreateMutation,
   CustomerAddressDeleteMutation,
@@ -8,13 +8,14 @@ import type {
 import invariant from "tiny-invariant";
 // biome-ignore lint/style/noExportedImports: <explanation> --- IGNORE ---
 import { AccountEditAddressForm } from "~/components/customer/edit-address-form";
+import type { Route } from "./+types/($locale).account.address.$id";
 import { doLogout } from "./($locale).account_.logout";
 
 export const handle = {
   renderInModal: true,
 };
 
-export const action: ActionFunction = async ({ request, context, params }) => {
+export async function action({ request, context, params }: Route.ActionArgs) {
   const { customerAccount } = context;
   const formData = await request.formData();
 
@@ -145,7 +146,7 @@ export const action: ActionFunction = async ({ request, context, params }) => {
       );
     }
   }
-};
+}
 
 export default AccountEditAddressForm;
 

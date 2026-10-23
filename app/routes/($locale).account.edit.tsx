@@ -2,7 +2,7 @@ import type {
   Customer,
   CustomerUpdateInput,
 } from "@shopify/hydrogen/customer-account-api-types";
-import { type ActionFunction, data, redirect } from "@shopify/remix-oxygen";
+import { data, redirect } from "@shopify/remix-oxygen";
 import type { CustomerUpdateMutation } from "customer-account-api.generated";
 import {
   Form,
@@ -13,6 +13,7 @@ import {
 import invariant from "tiny-invariant";
 import { Button } from "~/components/button";
 import Link from "~/components/link";
+import type { Route } from "./+types/($locale).account.edit";
 import { CUSTOMER_UPDATE_MUTATION } from "./($locale).account.profile";
 import { doLogout } from "./($locale).account_.logout";
 
@@ -47,7 +48,7 @@ export const handle = {
   renderInModal: true,
 };
 
-export const action: ActionFunction = async ({ request, context, params }) => {
+export async function action({ request, context, params }: Route.ActionArgs) {
   const formData = await request.formData();
 
   // Double-check current user is logged in.
@@ -92,7 +93,7 @@ export const action: ActionFunction = async ({ request, context, params }) => {
       },
     );
   }
-};
+}
 
 /**
  * Since this component is nested in `accounts/`, it is rendered in a modal via `<Outlet>` in `account.tsx`.

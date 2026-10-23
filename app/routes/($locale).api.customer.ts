@@ -1,7 +1,7 @@
-import type { ActionFunction, ActionFunctionArgs } from "react-router";
 import { data } from "react-router";
 import type { CustomerCreateMutation } from "storefront-api.generated";
 import { verifyTurnstile } from "~/utils/turnstile.server";
+import type { Route } from "./+types/($locale).api.customer";
 
 const CUSTOMER_CREATE = `#graphql
   mutation customerCreate($input: CustomerCreateInput!) {
@@ -22,10 +22,7 @@ const CUSTOMER_CREATE = `#graphql
   }
 ` as const;
 
-export const action: ActionFunction = async ({
-  request,
-  context,
-}: ActionFunctionArgs) => {
+export async function action({ request, context }: Route.ActionArgs) {
   const formData = await request.formData();
 
   // --- Honeypot check ---
@@ -101,7 +98,7 @@ export const action: ActionFunction = async ({
     },
     { status: 500 },
   );
-};
+}
 
 export interface CustomerApiPlayLoad {
   ok: boolean;

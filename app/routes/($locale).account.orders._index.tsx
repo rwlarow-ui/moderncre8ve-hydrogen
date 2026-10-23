@@ -4,13 +4,13 @@ import {
   Money,
   Pagination,
 } from "@shopify/hydrogen";
-import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import type {
   CustomerOrdersFragment,
   OrderItemFragment,
 } from "customer-account-api.generated";
 import type * as React from "react";
 import { Link, type MetaFunction, useLoaderData } from "react-router";
+import type { Route } from "./+types/($locale).account.orders._index";
 
 // https://shopify.dev/docs/api/customer/latest/objects/Order
 const ORDER_ITEM_FRAGMENT = `#graphql
@@ -75,7 +75,7 @@ export const meta: MetaFunction = () => {
   return [{ title: "Orders" }];
 };
 
-export async function loader({ request, context }: LoaderFunctionArgs) {
+export async function loader({ request, context }: Route.LoaderArgs) {
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 20,
   });

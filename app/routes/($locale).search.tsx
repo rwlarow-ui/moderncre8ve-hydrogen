@@ -2,7 +2,7 @@ import { FunnelXIcon, SlidersIcon, XIcon } from "@phosphor-icons/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Analytics, getPaginationVariables } from "@shopify/hydrogen";
 import type { ProductFilter } from "@shopify/hydrogen/storefront-api-types";
-import type { LoaderFunctionArgs, MetaArgs } from "@shopify/remix-oxygen";
+import type { MetaArgs } from "@shopify/remix-oxygen";
 import { clsx } from "clsx";
 import React, { useState } from "react";
 import { useLoaderData, useSearchParams } from "react-router";
@@ -23,11 +23,12 @@ import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import type { SortParam } from "~/utils/filter";
 import { FILTER_URL_PREFIX } from "~/utils/filter";
 import { seoPayload } from "~/utils/seo.server";
+import type { Route } from "./+types/($locale).search";
 
 export async function loader({
   request,
   context: { storefront },
-}: LoaderFunctionArgs) {
+}: Route.LoaderArgs) {
   const { searchParams } = new URL(request.url);
   const searchTerm = searchParams.get("q");
   const sortParam = searchParams.get("sort") as SortParam | null;

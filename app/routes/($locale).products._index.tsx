@@ -1,6 +1,5 @@
 import type { SeoConfig } from "@shopify/hydrogen";
 import { getPaginationVariables } from "@shopify/hydrogen";
-import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import { type MetaFunction, useLoaderData } from "react-router";
 import invariant from "tiny-invariant";
 import { PRODUCT_CARD_FRAGMENT } from "~/graphql/fragments";
@@ -11,10 +10,11 @@ import { maybeFilterOutCombinedListingsQuery } from "~/utils/combined-listings";
 import { PAGINATION_SIZE } from "~/utils/const";
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { seoPayload } from "~/utils/seo.server";
+import type { Route } from "./+types/($locale).products._index";
 
 export const headers = routeHeaders;
 
-export async function loader({ request, context }: LoaderFunctionArgs) {
+export async function loader({ request, context }: Route.LoaderArgs) {
   const { storefront } = context;
   const variables = getPaginationVariables(request, {
     pageBy: PAGINATION_SIZE,

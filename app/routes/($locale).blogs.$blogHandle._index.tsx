@@ -1,6 +1,6 @@
 import type { SeoConfig } from "@shopify/hydrogen";
 import { flattenConnection } from "@shopify/hydrogen";
-import { data, type LoaderFunctionArgs } from "@shopify/remix-oxygen";
+import { data } from "@shopify/remix-oxygen";
 import { type MetaFunction, useLoaderData } from "react-router";
 import type { BlogQuery } from "storefront-api.generated";
 import invariant from "tiny-invariant";
@@ -11,10 +11,11 @@ import { PAGINATION_SIZE } from "~/utils/const";
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { redirectIfHandleIsLocalized } from "~/utils/redirect";
 import { seoPayload } from "~/utils/seo.server";
+import type { Route } from "./+types/($locale).blogs.$blogHandle._index";
 
 export const headers = routeHeaders;
 
-export const loader = async (args: LoaderFunctionArgs) => {
+export const loader = async (args: Route.LoaderArgs) => {
   const { params, request, context } = args;
   const storefront = context.storefront;
   const { language, country } = storefront.i18n;

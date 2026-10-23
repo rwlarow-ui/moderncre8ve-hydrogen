@@ -1,3 +1,4 @@
+import type { Route } from "./+types/root";
 import "@fontsource-variable/jost";
 import "@fontsource/spectral/400.css";
 import spectralWoff2Url from "@fontsource/spectral/files/spectral-latin-400-normal.woff2?url";
@@ -5,11 +6,7 @@ import jostWoff2Url from "@fontsource-variable/jost/files/jost-latin-wght-normal
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import type { SeoConfig } from "@shopify/hydrogen";
 import { Analytics, useNonce } from "@shopify/hydrogen";
-import type {
-  LinksFunction,
-  LoaderFunctionArgs,
-  MetaArgs,
-} from "@shopify/remix-oxygen";
+import type { LinksFunction, MetaArgs } from "@shopify/remix-oxygen";
 import type { CSSProperties } from "react";
 import {
   isRouteErrorResponse,
@@ -85,7 +82,7 @@ export const links: LinksFunction = () => {
   ];
 };
 
-export async function loader(args: LoaderFunctionArgs) {
+export async function loader(args: Route.LoaderArgs) {
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 

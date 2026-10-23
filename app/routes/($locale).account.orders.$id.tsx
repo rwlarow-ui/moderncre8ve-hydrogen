@@ -1,16 +1,17 @@
 import { flattenConnection } from "@shopify/hydrogen";
 import type { FulfillmentStatus } from "@shopify/hydrogen/customer-account-api-types";
-import { type LoaderFunctionArgs, redirect } from "@shopify/remix-oxygen";
+import { redirect } from "@shopify/remix-oxygen";
 import type { OrderFragment, OrderQuery } from "customer-account-api.generated";
 import type { MetaFunction } from "react-router";
 // biome-ignore lint/style/noExportedImports: <explanation> --- IGNORE ---
 import { OrderDetails } from "~/components/customer/order-details";
+import type { Route } from "./+types/($locale).account.orders.$id";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   return [{ title: `Order ${data?.order?.name}` }];
 };
 
-export async function loader({ request, context, params }: LoaderFunctionArgs) {
+export async function loader({ request, context, params }: Route.LoaderArgs) {
   if (!params.id) {
     return redirect(params?.locale ? `${params.locale}/account` : "/account");
   }

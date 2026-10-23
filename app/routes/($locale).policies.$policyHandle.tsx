@@ -1,4 +1,3 @@
-import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import { useLoaderData } from "react-router";
 import type { PoliciesHandleQuery } from "storefront-api.generated";
 import invariant from "tiny-invariant";
@@ -7,10 +6,11 @@ import Link from "~/components/link";
 import { Section } from "~/components/section";
 import { routeHeaders } from "~/utils/cache";
 import { seoPayload } from "~/utils/seo.server";
+import type { Route } from "./+types/($locale).policies.$policyHandle";
 
 export const headers = routeHeaders;
 
-export async function loader({ request, params, context }: LoaderFunctionArgs) {
+export async function loader({ request, params, context }: Route.LoaderArgs) {
   invariant(params.policyHandle, "Missing policy handle");
 
   const policyName = params.policyHandle.replace(

@@ -1,4 +1,5 @@
-import { type LoaderFunctionArgs, redirect } from "@shopify/remix-oxygen";
+import { redirect } from "@shopify/remix-oxygen";
+import type { Route } from "./+types/($locale).discount.$code";
 
 /**
  * Automatically applies a discount found on the url
@@ -12,7 +13,7 @@ import { type LoaderFunctionArgs, redirect } from "@shopify/remix-oxygen";
  * ```
  * @preserve
  */
-export async function loader({ request, context, params }: LoaderFunctionArgs) {
+export async function loader({ request, context, params }: Route.LoaderArgs) {
   const { cart, session } = context;
   // N.B. This route will probably be removed in the future.
   const { code } = params;
