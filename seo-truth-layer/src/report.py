@@ -3,6 +3,8 @@ Generate the weekly SEO brief as Markdown.
 Outputs: reports/weekly_brief.md
 """
 
+from __future__ import annotations
+
 import os
 from datetime import datetime
 
@@ -14,6 +16,8 @@ def generate_brief(
     actions_df: pd.DataFrame,
     gsc_df: pd.DataFrame,
     ga4_df: pd.DataFrame,
+    health: dict | None = None,
+    missing_orders: pd.DataFrame | None = None,
 ) -> str:
     """
     Generate a human-readable weekly SEO brief.
@@ -61,6 +65,28 @@ def generate_brief(
         f"| Pages Ranking | {total_pages} |",
         "",
     ])
+
+    # --- Tracking Health (Shopify vs GA4) ---
+    if health and health["shopify_orders"] is not None:
+        rate = health["capture_rate"]
+        lines.extend([
+            "## Tracking Health (Shopify vs GA4)",
+            "",
+            "| Metric | Value |",
+            "|--------|-------|",
+            f"| Shopify orders | {health['shopify_orders']} |",
+            f"| Shopify revenue | ${health['shopify_revenue']:,.2f} |",
+            f"| Orders missing from GA4 | {health['ga4_missing']} |",
+            f"| Revenue missing from GA4 | ${health['missing_revenue']:,.2f} |",
+            f"| GA4 capture rate | {'n/a' if rate is None else f'{rate:.0%}'} |",
+            "",
+        ])
+        if missing_orders is not None and not missing_orders.empty:
+            lines.append("Unmatched orders: " + ", ".join(
+                f"{r['order_name']} (${r['amount']:,.2f})"
+                for _, r in missing_orders.head(10).iterrows()
+            ))
+            lines.append("")
 
     # --- Top Pages by Clicks ---
     lines.extend(["## Top 10 Pages by Organic Clicks", ""])

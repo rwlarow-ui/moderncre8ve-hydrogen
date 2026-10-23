@@ -6,12 +6,18 @@ The merge creates a single source of truth: for every page,
 you see both its search performance AND its revenue performance.
 """
 
+from __future__ import annotations
+
 import os
 import pandas as pd
 from .transform import normalize_gsc, normalize_ga4
 
 
-def merge_truth(gsc_df: pd.DataFrame, ga4_df: pd.DataFrame) -> pd.DataFrame:
+def merge_truth(
+    gsc_df: pd.DataFrame,
+    ga4_df: pd.DataFrame,
+    shopify_page_df: pd.DataFrame | None = None,
+) -> pd.DataFrame:
     """
     Merge GSC (query-level) with GA4 (page-level) data.
 
@@ -66,9 +72,23 @@ def merge_truth(gsc_df: pd.DataFrame, ga4_df: pd.DataFrame) -> pd.DataFrame:
             "transactions": 0, "new_users": 0,
         })
 
+    # --- Shopify revenue (ground truth), optional ---
+    if shopify_page_df is not None and not shopify_page_df.empty:
+        shop = shopify_page_df.copy()
+        shop["page_path"] = shop["page_path"].str.rstrip("/").replace("", "/")
+        shop = shop.groupby("page_path", as_index=False).sum(numeric_only=True)
+        merged = merged.merge(shop, on="page_path", how="left")
+        merged = merged.fillna({"shopify_orders": 0, "shopify_revenue": 0.0})
+        revenue_col = "shopify_revenue"
+    else:
+        merged["shopify_orders"] = 0
+        merged["shopify_revenue"] = 0.0
+        revenue_col = "purchase_revenue"
+
     # --- Derived metrics ---
+    # Prefer Shopify revenue when available; GA4 can drop purchase events.
     merged["revenue_per_click"] = (
-        merged["purchase_revenue"] / merged["total_clicks"].replace(0, 1)
+        merged[revenue_col] / merged["total_clicks"].replace(0, 1)
     ).round(2)
 
     merged["click_to_session_ratio"] = (
