@@ -1,5 +1,4 @@
 import { ArrowSquareOutIcon } from "@phosphor-icons/react";
-import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import {
   data,
   Form,
@@ -41,8 +40,9 @@ import {
   createDraftPoForOrder,
   findProductionPoForOrder,
 } from "~/utils/production-po.server";
+import type { Route } from "./+types/ops.orders.$orderId";
 
-export async function loader({ request, context, params }: LoaderFunctionArgs) {
+export async function loader({ request, context, params }: Route.LoaderArgs) {
   await requireOpsAccess(request, context);
 
   if (!params.orderId) {
@@ -62,7 +62,7 @@ export async function loader({ request, context, params }: LoaderFunctionArgs) {
   };
 }
 
-export async function action({ request, context, params }: ActionFunctionArgs) {
+export async function action({ request, context, params }: Route.ActionArgs) {
   await requireOpsAccess(request, context);
 
   const formData = await request.formData();

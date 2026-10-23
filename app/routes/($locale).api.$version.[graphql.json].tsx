@@ -1,4 +1,4 @@
-import type { LoaderFunctionArgs } from "react-router";
+import type { Route } from "./+types/($locale).api.$version.[graphql.json]";
 
 const ALLOWED_VERSIONS = new Set([
   "2024-01",
@@ -10,7 +10,7 @@ const ALLOWED_VERSIONS = new Set([
   "unstable",
 ]);
 
-export async function action({ params, context, request }: LoaderFunctionArgs) {
+export async function action({ params, context, request }: Route.ActionArgs) {
   // Validate API version to prevent URL manipulation
   if (!params.version || !ALLOWED_VERSIONS.has(params.version)) {
     return new Response("Invalid API version", { status: 400 });

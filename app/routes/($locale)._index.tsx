@@ -1,6 +1,5 @@
 import type { SeoConfig } from "@shopify/hydrogen";
 import { AnalyticsPageType } from "@shopify/hydrogen";
-import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import { type MetaFunction, useLoaderData } from "react-router";
 import type { ShopQuery } from "storefront-api.generated";
 import type { PageType } from "~/page-builder";
@@ -9,10 +8,11 @@ import { PageContent } from "~/page-builder/renderer";
 import { routeHeaders } from "~/utils/cache";
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { seoPayload } from "~/utils/seo.server";
+import type { Route } from "./+types/($locale)._index";
 
 export const headers = routeHeaders;
 
-export async function loader(args: LoaderFunctionArgs) {
+export async function loader(args: Route.LoaderArgs) {
   const { params, context, request } = args;
   const { pathPrefix } = context.storefront.i18n;
   const locale = pathPrefix.slice(1);

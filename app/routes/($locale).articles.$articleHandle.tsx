@@ -1,5 +1,5 @@
-import type { LoaderFunctionArgs } from "react-router";
 import { redirect } from "react-router";
+import type { Route } from "./+types/($locale).articles.$articleHandle";
 
 const BLOG_HANDLE = "mid-century-modern-scandi-japandi-design-blog";
 
@@ -9,7 +9,7 @@ const BLOG_HANDLE = "mid-century-modern-scandi-japandi-design-blog";
  * All 37 article slugs still exist under the blog, so we do a blanket
  * 301 redirect rather than maintaining a lookup table.
  */
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function loader({ params }: Route.LoaderArgs) {
   const { articleHandle, locale } = params;
   const prefix = locale ? `/${locale}` : "";
   throw redirect(`${prefix}/blogs/${BLOG_HANDLE}/${articleHandle}`, 301);

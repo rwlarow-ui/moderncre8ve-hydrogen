@@ -1,9 +1,9 @@
 import type { SeoConfig } from "@shopify/hydrogen";
-import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import type { MetaFunction } from "react-router";
 import { Link, useLoaderData } from "react-router";
 import { routeHeaders } from "~/utils/cache";
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
+import type { Route } from "./+types/($locale).sitemap-html";
 
 export const headers = routeHeaders;
 
@@ -19,7 +19,7 @@ interface SitemapData {
   articles: SitemapItem[];
 }
 
-export async function loader({ request, context }: LoaderFunctionArgs) {
+export async function loader({ request, context }: Route.LoaderArgs) {
   const { storefront } = context;
 
   const [collectionsResult, productsResult, pagesResult, articlesResult] =

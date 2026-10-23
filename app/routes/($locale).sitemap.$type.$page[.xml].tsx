@@ -1,10 +1,10 @@
 import { getSitemap } from "@shopify/hydrogen";
-import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import {
   normalizePathname,
   STOREFRONT_LOCALE_PREFIXES,
   SUPPORTED_STOREFRONT_LOCALES,
 } from "~/utils/const";
+import type { Route } from "./+types/($locale).sitemap.$type.$page[.xml]";
 
 const BLOG_HANDLE = "mid-century-modern-scandi-japandi-design-blog";
 
@@ -12,7 +12,7 @@ export async function loader({
   request,
   params,
   context: { storefront },
-}: LoaderFunctionArgs) {
+}: Route.LoaderArgs) {
   const response = await getSitemap({
     storefront,
     request,

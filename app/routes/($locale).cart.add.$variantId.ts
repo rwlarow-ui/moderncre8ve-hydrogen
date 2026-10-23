@@ -1,8 +1,8 @@
 import type { CartLineInput } from "@shopify/hydrogen/storefront-api-types";
-import type { ActionFunctionArgs } from "react-router";
 import { data } from "react-router";
+import type { Route } from "./+types/($locale).cart.add.$variantId";
 
-export async function action({ params, context }: ActionFunctionArgs) {
+export async function action({ params, context }: Route.ActionArgs) {
   const { cart, session } = context;
 
   try {

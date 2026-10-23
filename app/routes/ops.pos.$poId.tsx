@@ -1,4 +1,3 @@
-import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import {
   data,
   Form,
@@ -37,10 +36,11 @@ import {
   savePoSpecs,
   transitionPo,
 } from "~/utils/production-po.server";
+import type { Route } from "./+types/ops.pos.$poId";
 
 const SPEC_FIELDS = ["size", "species", "leaf", "finish", "notes"] as const;
 
-export async function loader({ request, context, params }: LoaderFunctionArgs) {
+export async function loader({ request, context, params }: Route.LoaderArgs) {
   await requireOpsAccess(request, context);
   if (!params.poId) {
     throw new Response("PO not found.", { status: 404 });
@@ -83,7 +83,7 @@ export async function loader({ request, context, params }: LoaderFunctionArgs) {
   };
 }
 
-export async function action({ request, context, params }: ActionFunctionArgs) {
+export async function action({ request, context, params }: Route.ActionArgs) {
   await requireOpsAccess(request, context);
   if (!params.poId) {
     throw new Response("PO not found.", { status: 404 });

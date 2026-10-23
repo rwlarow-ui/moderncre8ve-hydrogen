@@ -1,8 +1,9 @@
-import { type LoaderFunctionArgs, redirect } from "@shopify/remix-oxygen";
+import { redirect } from "@shopify/remix-oxygen";
 import type { GetShopPrimaryDomainQuery } from "storefront-api.generated";
 import invariant from "tiny-invariant";
 import { Button } from "~/components/button";
 import { Section } from "~/components/section";
+import type { Route } from "./+types/($locale).$shopid.orders.$token.authenticate";
 
 /*
  If your online store had active orders before you launched your Hydrogen storefront,
@@ -14,7 +15,7 @@ import { Section } from "~/components/section";
 export async function loader({
   request,
   context: { storefront },
-}: LoaderFunctionArgs) {
+}: Route.LoaderArgs) {
   const { origin } = new URL(request.url);
   const { shop } = await storefront.query<GetShopPrimaryDomainQuery>(
     SHOP_PRIMARY_DOMAIN_QUERY,
