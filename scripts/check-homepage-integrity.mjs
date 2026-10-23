@@ -6,7 +6,7 @@ const requiredPaths = [
   "/collections",
   "/collections/mid-century-modern-dining-tables",
   "/collections/scandinavian-design-furniture",
-  "/collections/all-products",
+  "/collections/best-sellers",
   "/products/minimalist-bed-frame-ohio",
   "/products/scandinavian-oval-dining-table-mar-vista",
   "/products/the-seymour-modern-dining-chair",
@@ -161,7 +161,8 @@ async function main() {
 function extractInternalLinks(html) {
   return [...html.matchAll(/href="([^"]+)"/g)]
     .map((match) => match[1])
-    .filter((href) => href.startsWith("/") && !href.startsWith("//"));
+    .filter((href) => href.startsWith("/") && !href.startsWith("//"))
+    .map((href) => href.split(/[?#]/)[0]);
 }
 
 function extractBodyHtml(html) {
