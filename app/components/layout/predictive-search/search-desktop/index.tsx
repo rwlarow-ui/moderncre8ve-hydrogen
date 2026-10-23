@@ -46,7 +46,7 @@ export function PredictiveSearchButtonDesktop({ setIsSearchOpen }) {
     >
       <Dialog.Trigger
         asChild
-        className="hidden h-8 w-8 items-center justify-center focus-visible:outline-hidden lg:flex"
+        className="hidden h-11 w-11 items-center justify-center focus-visible:outline-hidden lg:flex"
       >
         <button
           type="button"

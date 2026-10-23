@@ -102,7 +102,7 @@ export function Header() {
         <DesktopMenu />
         <div className="z-1 flex items-center gap-1">
           <PredictiveSearchButtonDesktop setIsSearchOpen={setIsSearchOpen} />
-          <AccountLink className="relative flex h-8 w-8 items-center justify-center" />
+          <AccountLink className="relative flex h-11 w-11 items-center justify-center" />
           <CartDrawer />
         </div>
       </div>

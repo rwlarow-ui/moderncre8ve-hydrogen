@@ -26,7 +26,7 @@ export function PredictiveSearchButtonMobile({ setIsSearchOpen }) {
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger
         asChild
-        className="flex h-8 w-8 items-center justify-center focus-visible:outline-none lg:hidden"
+        className="flex h-11 w-11 items-center justify-center focus-visible:outline-none lg:hidden"
       >
         <button
           type="button"
