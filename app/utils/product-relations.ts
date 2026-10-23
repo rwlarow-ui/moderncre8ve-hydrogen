@@ -9,6 +9,8 @@ const DINING_TABLES = [
   "the-santa-monica-mid-century-modern-dining-table",
   "mid-century-modern-extendable-dining-table-santa-monica",
   "scandinavian-oval-dining-table-mar-vista",
+  // Live handle (product-attributes.plan.mjs); the older SEO docs use the second.
+  "scandinavian-dining-table-extendable-dining-table",
   "the-vista-scandinavian-extendable-dining-table",
   "bossa-nova-modern-dining-table-small-handmade-ohio",
 ];
