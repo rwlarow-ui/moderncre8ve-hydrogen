@@ -6,11 +6,9 @@ import type {
   ProductQuery,
   ProductVariantFragment,
 } from "storefront-api.generated";
-import { Button } from "~/components/button";
-import { Image } from "~/components/image";
 import Link from "~/components/link";
 import { AddToCartButton } from "~/components/product/add-to-cart-button";
-import { ProductBadges, SoldOutBadge } from "~/components/product/badges";
+import { ProductBadges } from "~/components/product/badges";
 import { ProductMedia } from "~/components/product/product-media";
 import { Quantity } from "~/components/product/quantity";
 import { CompareAtPrice } from "~/components/product/variant-prices";
@@ -20,7 +18,6 @@ import { useAnimation } from "~/hooks/use-animation";
 import {
   type ComponentLoaderArgs,
   createSchema,
-  IMAGES_PLACEHOLDERS,
   type PickedProduct,
   type SectionComponentProps,
 } from "~/page-builder";
@@ -100,60 +97,9 @@ const SingleProduct = forwardRef<HTMLElement, SingleProductProps>(
     // Get price range for when no variant is selected
     const priceRange = product?.priceRange;
 
+    // No product assigned: render nothing rather than placeholder content
     if (!product) {
-      return (
-        <Section ref={ref} {...rest}>
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="grid items-start gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-2">
-              <Image
-                data={{
-                  url: IMAGES_PLACEHOLDERS.product_2,
-                  width: 1660,
-                  height: 1660,
-                }}
-                loading="lazy"
-                width={1660}
-                aspectRatio="1/1"
-                sizes="auto"
-              />
-              <div className="flex flex-col items-start justify-start gap-4">
-                <SoldOutBadge />
-                <h3 data-motion="fade-up" className="tracking-tight">
-                  EXAMPLE PRODUCT TITLE
-                </h3>
-                <Money
-                  withoutTrailingZeros
-                  data={{ amount: "19.99", currencyCode: "USD" }}
-                  as="span"
-                  className="text-lg"
-                />
-                <p className="text-body-subtle">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-                <Button
-                  type="button"
-                  className="w-full cursor-not-allowed"
-                  disabled
-                >
-                  SOLD OUT
-                </Button>
-                <Link
-                  to="#"
-                  prefetch="intent"
-                  variant="underline"
-                  className="w-fit cursor-not-allowed"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  View full details →
-                </Link>
-              </div>
-            </div>
-          </div>
-        </Section>
-      );
+      return null;
     }
 
     // Get the product options array
