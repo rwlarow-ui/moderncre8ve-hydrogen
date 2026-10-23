@@ -36,7 +36,7 @@ export function MobileMenu() {
     <Dialog.Root open={mainMenuOpen} onOpenChange={setMainMenuOpen}>
       <Dialog.Trigger
         asChild
-        className="relative flex h-8 w-8 items-center justify-center focus-visible:outline-hidden lg:hidden"
+        className="relative flex h-11 w-11 items-center justify-center focus-visible:outline-hidden lg:hidden"
       >
         <MenuTrigger />
       </Dialog.Trigger>
