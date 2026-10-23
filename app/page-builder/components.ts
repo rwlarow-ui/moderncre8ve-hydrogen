@@ -83,6 +83,7 @@ import * as TestimonialHotspotsItems from "~/sections/testimonials/hotspot-item"
 import * as Testimonial from "~/sections/testimonials/index";
 import * as TestimonialHotspotsItem from "~/sections/testimonials/item";
 import * as TestimonialItem from "~/sections/testimonials/testimonials-item";
+import * as TradeForm from "~/sections/trade-form";
 import * as VideoEmbed from "~/sections/video-embed";
 import * as VideoEmbedContent from "~/sections/video-embed/content";
 import * as VideoEmbedItem from "~/sections/video-embed/video";
@@ -147,6 +148,7 @@ export const components: SectionComponent[] = [
   CountDownTimer,
   NewsLetter,
   NewsLetterForm,
+  TradeForm,
   FeaturedProducts,
   FeaturedContentProducts,
   FeaturedProductItems,

@@ -25,6 +25,7 @@
     "test:logistics": "node --test tests/logistics.test.mjs",
     "test:pos": "node --test tests/production-po.test.mjs",
     "test:send": "node --test tests/po-send.test.mjs",
+    "test:trade": "node --test tests/trade-application.test.mjs",
     "codegen": "shopify hydrogen codegen",
     "hydrogen": "shopify hydrogen",
     "clean": "rm -rf dist node_modules package-lock.json pnpm-lock.yaml .shopify .react-router",

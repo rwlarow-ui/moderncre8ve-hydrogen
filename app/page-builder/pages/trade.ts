@@ -11,6 +11,9 @@ export const trade: PageDefinition = {
           id: "trade-hero",
         },
         {
+          id: "trade-form",
+        },
+        {
           id: "trade-map",
         },
         {
@@ -58,6 +61,10 @@ export const trade: PageDefinition = {
         color: "#ffffff",
         size: "default",
       },
+    },
+    {
+      id: "trade-form",
+      type: "trade-form",
     },
     {
       id: "trade-map",
