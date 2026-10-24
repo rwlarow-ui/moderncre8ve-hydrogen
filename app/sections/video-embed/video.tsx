@@ -1,7 +1,7 @@
-import type { RefObject } from "react";
 import { PlayIcon } from "@phosphor-icons/react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
+import type { RefObject } from "react";
 import { useState } from "react";
 import {
   createSchema,

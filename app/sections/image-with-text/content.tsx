@@ -1,6 +1,6 @@
-import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
+import type { RefObject } from "react";
 import { createSchema, type SectionComponentProps } from "~/page-builder";
 import { cn } from "~/utils/cn";
 import { useImageWithTextContext } from "./context";

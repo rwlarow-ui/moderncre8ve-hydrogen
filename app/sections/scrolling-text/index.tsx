@@ -1,6 +1,5 @@
-import type { RefObject } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { type CSSProperties } from "react";
+import type { CSSProperties, RefObject } from "react";
 import type { ComponentSchema, SectionComponentProps } from "~/page-builder";
 import { cn } from "~/utils/cn";
 

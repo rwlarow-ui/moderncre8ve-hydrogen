@@ -1,8 +1,7 @@
-import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
-import type { CSSProperties } from "react";
+import type { CSSProperties, RefObject } from "react";
 import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import type { OverlayProps } from "~/components/overlay";

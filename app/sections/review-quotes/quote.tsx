@@ -1,5 +1,5 @@
-import type { RefObject } from "react";
 import { Quotes, Star } from "@phosphor-icons/react";
+import type { RefObject } from "react";
 import { createSchema, type SectionComponentProps } from "~/page-builder";
 
 interface ReviewQuoteProps extends SectionComponentProps {

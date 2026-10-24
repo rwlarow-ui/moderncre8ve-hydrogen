@@ -1,5 +1,4 @@
-import type { RefObject } from "react";
-import type { ReactNode } from "react";
+import type { ReactNode, RefObject } from "react";
 import { Children, cloneElement, isValidElement, useState } from "react";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";

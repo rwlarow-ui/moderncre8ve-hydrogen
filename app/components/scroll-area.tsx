@@ -1,7 +1,7 @@
-import type { RefObject } from "react";
 import type { ScrollAreaProps as RadixScrollAreaProps } from "@radix-ui/react-scroll-area";
 import { Root, Scrollbar, Thumb, Viewport } from "@radix-ui/react-scroll-area";
 import { cva, type VariantProps } from "class-variance-authority";
+import type { RefObject } from "react";
 import { cn } from "~/utils/cn";
 
 const variants = cva("", {

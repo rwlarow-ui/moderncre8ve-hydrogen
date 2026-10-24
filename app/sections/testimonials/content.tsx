@@ -1,5 +1,5 @@
-import type { RefObject } from "react";
 import { ArrowLeft, ArrowRight, Quotes, Star } from "@phosphor-icons/react";
+import type { RefObject } from "react";
 import Heading, {
   type HeadingProps,
   headingInputs,

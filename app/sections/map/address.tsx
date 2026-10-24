@@ -1,4 +1,3 @@
-import type { RefObject } from "react";
 import {
   MapPinLineIcon,
   MinusCircleIcon,
@@ -6,6 +5,7 @@ import {
 } from "@phosphor-icons/react";
 import * as Accordion from "@radix-ui/react-accordion";
 import clsx from "clsx";
+import type { RefObject } from "react";
 import { useContext, useEffect, useRef, useState } from "react";
 import type { ComponentSchema } from "~/page-builder";
 import { cn } from "~/utils/cn";

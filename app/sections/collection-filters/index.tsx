@@ -1,5 +1,5 @@
-import type { RefObject } from "react";
 import clsx from "clsx";
+import type { RefObject } from "react";
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router";
 import type { CollectionQuery } from "storefront-api.generated";

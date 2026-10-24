@@ -1,8 +1,8 @@
-import type { RefObject } from "react";
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
+import type { RefObject } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";

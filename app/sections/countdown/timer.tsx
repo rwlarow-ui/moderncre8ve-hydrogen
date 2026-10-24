@@ -1,5 +1,4 @@
-import type { RefObject } from "react";
-import type { CSSProperties } from "react";
+import type { CSSProperties, RefObject } from "react";
 import { useEffect, useState } from "react";
 import {
   createSchema,

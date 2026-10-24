@@ -1,5 +1,5 @@
-import type { RefObject } from "react";
 import * as RadixAccordion from "@radix-ui/react-accordion";
+import type { RefObject } from "react";
 import type { ComponentSchema, SectionComponentProps } from "~/page-builder";
 import { useAccordionContext } from "./index";
 

@@ -1,7 +1,6 @@
-import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import { type Ref } from "react";
+import type { Ref, RefObject } from "react";
 import { Image } from "~/components/image";
 import {
   createSchema,
