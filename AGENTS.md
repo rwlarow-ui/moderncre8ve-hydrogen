@@ -82,7 +82,7 @@ Composer and Crypto.com servers visible in sessions are from another project —
 **Shopify Hydrogen** storefront with **React Router v7** (not Remix) and an in-repo page builder — page compositions are TypeScript modules, not hosted data.
 
 ### Stack
-Hydrogen 2025.5.0, React Router v7, Vite, Biome, TailwindCSS v4
+Hydrogen 2026.4.8, React Router 7.16 (React 19.2), Vite, Biome, TailwindCSS v4. Loaders and actions are typed with `Route.LoaderArgs` / `Route.ActionArgs` from the generated `./+types/*` route types
 
 ### Directory Structure
 ```

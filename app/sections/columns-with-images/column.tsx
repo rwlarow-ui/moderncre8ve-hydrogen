@@ -1,7 +1,6 @@
-import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import type { CSSProperties } from "react";
+import type { CSSProperties, RefObject } from "react";
 import { Image } from "~/components/image";
 import Link, { type LinkProps, linkContentInputs } from "~/components/link";
 import {

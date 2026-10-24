@@ -1,6 +1,6 @@
-import type { RefObject } from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import clsx from "clsx";
+import type { RefObject } from "react";
 import { createContext, useEffect, useRef, useState } from "react";
 import Heading from "~/components/heading";
 import type { SectionProps } from "~/components/section";

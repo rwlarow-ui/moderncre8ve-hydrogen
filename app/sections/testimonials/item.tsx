@@ -1,8 +1,7 @@
-import type { RefObject } from "react";
 import { Circle, Handbag, Plus, Tag, XIcon } from "@phosphor-icons/react";
 import * as Dialog from "@radix-ui/react-dialog";
 import clsx from "clsx";
-import type { CSSProperties } from "react";
+import type { CSSProperties, RefObject } from "react";
 import { useState } from "react";
 import { useFetcher } from "react-router";
 import type { ProductQuery } from "storefront-api.generated";

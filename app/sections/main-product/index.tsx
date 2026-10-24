@@ -1,4 +1,3 @@
-import type { RefObject } from "react";
 import {
   getAdjacentAndFirstAvailableVariants,
   getProductOptions,
@@ -11,6 +10,7 @@ import type {
   ProductVariantComponent,
 } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
+import type { RefObject } from "react";
 import { useState } from "react";
 import { Link, useLoaderData } from "react-router";
 import { AddToCartButton } from "~/components/product/add-to-cart-button";

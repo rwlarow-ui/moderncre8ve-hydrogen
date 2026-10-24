@@ -1,4 +1,3 @@
-import type { RefObject } from "react";
 import type {
   TooltipContentProps,
   TooltipProps,
@@ -12,6 +11,7 @@ import {
   Root,
   Trigger,
 } from "@radix-ui/react-tooltip";
+import type { RefObject } from "react";
 import { cn } from "~/utils/cn";
 
 export const TooltipProvider = Provider;

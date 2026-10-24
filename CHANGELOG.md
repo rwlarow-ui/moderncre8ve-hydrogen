@@ -6,6 +6,19 @@
 
 ## Unreleased
 
+### Hydrogen 2026.4 upgrade and typed route args
+- `@shopify/hydrogen` 2025.5.0 → **2026.4.8** (via 2025.5.1), `react-router` 7.16.0, React 19.2; `remix-oxygen`, `mini-oxygen` and `workers-types` aligned to Hydrogen 2026.4 (#118).
+- Loaders and actions now take `Route.LoaderArgs` / `Route.ActionArgs` from the generated React Router route types instead of hand-written arg types (`2da3cba`). CI runs `react-router typegen` before typecheck (`714946b`). Fresh clones and worktrees need `npx react-router typegen` before `tsc`.
+- Typecheck and build pass on the merged result of the migration and the upgrade (re-run `npm run healthcheck` after any further dependency bump).
+
+### Accessibility pass (#117)
+- Homepage hero slides passed `backgroundColor` instead of `buttonBackgroundColor`, leaving the CTAs transparent with dark text over dark photos; they are now filled.
+- Header icon buttons (menu, search, account, cart) are 44×44 touch targets, including the mobile menu `Dialog.Trigger`, so the forwarded class no longer shrinks it.
+- Review-quotes caption contrast raised; default body font size 14px → 16px.
+
+### Tooling
+- Added the `run-my-hydrogen-storefront` skill (`.claude/skills/`) with a Playwright driver for running and screenshotting the storefront (#116).
+
 ### 90-day plan: code items (`docs/90-day-plan-2026-10.md`)
 - **Footer:** the newsletter form, address block and `FooterMenu` were each rendered twice and toggled with `hidden`/`md:`/`lg:` classes. Each now renders once and the grid reorders per breakpoint (tablet puts the menu under the address and newsletter row). `HoneypotField` uses `useId()` (the field `name` stays `website`, the API routes read it), and the payment-icon SVG gradient ids are prefixed per icon, so the homepage no longer has duplicate `id="website"` or `linearGradient-1`. The newsletter error/message line no longer swallows the error when only a message is set.
 - **Swiper:** `loop` is off when there are too few slides (featured products mobile grid: 3 or fewer products; testimonials: one slide), which silences "not enough slides for loop mode".

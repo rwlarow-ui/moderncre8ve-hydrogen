@@ -1,6 +1,6 @@
-import type { RefObject } from "react";
 import { Pagination } from "@shopify/hydrogen";
 import type { Collection } from "@shopify/hydrogen/storefront-api-types";
+import type { RefObject } from "react";
 import { useLoaderData } from "react-router";
 import type { CollectionsQuery } from "storefront-api.generated";
 import { variants } from "~/components/link";

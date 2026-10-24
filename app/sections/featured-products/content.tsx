@@ -1,5 +1,5 @@
-import type { RefObject } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
+import type { RefObject } from "react";
 import Heading, {
   type HeadingProps,
   headingInputs,
