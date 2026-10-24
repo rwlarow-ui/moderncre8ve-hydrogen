@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This file provides guidance to Codex (Codex.ai/code) when working with code in this repository.
+This file provides guidance to Codex when working with code in this repository.
 
 ## Project: ModernCre8ve Hydrogen Storefront
 
@@ -51,7 +51,8 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 | `app/root.tsx` | Root layout, font preloads |
 
 ### Admin API Access
-- **Token:** `SHOPIFY_ADMIN_API_TOKEN` in `.env` (full admin write scopes)
+- **Token:** `SHOPIFY_ADMIN_API_TOKEN` in `.env` (full admin write scopes — local scripts only; keep it out of Oxygen once the ops token is live)
+- **Ops hub token:** `OPS_ADMIN_API_TOKEN` — separate Dev Dashboard app with only `read_orders, read_all_orders, write_orders, read_customers, write_customers`; preferred over `SHOPIFY_ADMIN_API_TOKEN` by the hub and the ops MCP server. Mint with `node scripts/get-admin-token.mjs --ops <client_id> <client_secret>`, check with `node scripts/verify-ops-token.mjs`
 - **App:** "Claude2" in Shopify Dev Dashboard (Client ID: `fd5964839bc3fb47703bafb47d25d3fc`)
 
 ### Google Analytics / GTM
@@ -113,6 +114,11 @@ import { useLoaderData, Link, Form } from '@remix-run/react';
 - Sections may export a `loader`; it runs server-side during `loadPage` and its result arrives as the `loaderData` prop
 - `useThemeSettings()` reads the settings the root loader resolved from `theme-schema.server.ts` — the single source of truth for theme values
 
+### Troubleshooting
+- **"Something's wrong here." right after the homepage loads** (the `generic-error.tsx` boundary): first load the site in an incognito window with extensions off. The 2026-10-09 report was an extension in the owner's normal profile — the page was fine in incognito and in clean automated sessions. Production hides the real error, so ask for the DevTools console output before changing code.
+- **Logo sizing:** `public/logo.png` / `logo-alt.png` are tall 500×599 stacked wordmarks (downsized from 3004×3600 in #30 — keep them small, they load on every page), so the logo must be height-constrained by the header (`app/components/logo.tsx`), not just width-constrained, or it overflows the nav.
+- **Typecheck:** `npm run typecheck` and `npm run build` both pass (the 2 `MoneyV2`/`CurrencyCode` errors in `app/sections/single-product/index.tsx` were fixed in `fa826f6`). Treat any typecheck error as a regression. In a fresh worktree run `npx react-router typegen` first, or `server.ts` reports a missing `virtual:react-router/server-build`.
+
 ### Component Schema
 ```tsx
 export let schema = createSchema({
@@ -138,13 +144,24 @@ export let schema = createSchema({
 - **Biome**: Double quotes, semicolons required. Config is self-contained in `biome.json`
 - **Imports**: Use `~/*` alias for app directory
 
+### Domains (Shopify Admin → Settings → Domains)
+| Host | Serves | Notes |
+|------|--------|-------|
+| `moderncre8ve.com` | Hydrogen on Oxygen | **Primary of the Hydrogen storefront (MODERNCRE8VE Production). Never change it.** `www` 301s to the apex |
+| `checkout.moderncre8ve.com` | Online Store (Liquid) | **Primary of the Online Store.** Hosts checkout; its theme is the published Hydrogen Redirect theme (JS redirect to `moderncre8ve.com`, `noindex`, canonical to the storefront) |
+| `moderncre8ve.myshopify.com` | 301 → `checkout.moderncre8ve.com` | Non-primary |
+
+- `PUBLIC_CHECKOUT_DOMAIN` must be the checkout host: Hydrogen's Customer Privacy API derives its cookie domain from the common suffix of it and the storefront host, so with the myshopify host consent never initialises and storefront GA4 events are dropped (#58, #62).
+- Make **one** domain change at a time and verify with `curl -sI https://moderncre8ve.com/` (must stay 200 with `powered-by: … Hydrogen`) before the next. Setting the checkout subdomain to target Hydrogen as Primary 301'd the whole site on 2026-10-09.
+- Redirect-theme rollback: publish the previous MAIN theme "AD: 25-06 MASTER MASTER CURRENT". DNS is at GoDaddy.
+
 ### Environment
-Required: `PUBLIC_STORE_DOMAIN`, `PUBLIC_STOREFRONT_API_TOKEN`, `SESSION_SECRET`, `SHOPIFY_ADMIN_API_TOKEN`, `PUBLIC_GOOGLE_GTM_ID`
+Required: `PUBLIC_STORE_DOMAIN`, `PUBLIC_CHECKOUT_DOMAIN` (`checkout.moderncre8ve.com` — the Online Store's primary domain, see Domains), `PUBLIC_STOREFRONT_API_TOKEN`, `SESSION_SECRET`, `SHOPIFY_ADMIN_API_TOKEN`, `PUBLIC_GOOGLE_GTM_ID`
 
 ### Common Tasks
 - **Update GraphQL**: Edit `app/graphql/`, run `npm run codegen`
 - **Add theme settings**: Edit `app/page-builder/theme-schema.server.ts` + `app/page-builder/global-style.tsx`, use `useThemeSettings()`
 - **New section**: Create in `app/sections/`, export `schema` via `createSchema()`, register in `app/page-builder/components.ts`
 - **Debug**: GraphiQL at `localhost:3456/graphiql`
-- **Health check**: `/healthcheck` skill (`.claude/skills/healthcheck/`) or `npm run healthcheck` — tiers `static` / `env` / `live`, typecheck judged against the known baseline
-- **Deploy**: Use `~/.Codex/scripts/deploy.sh` (see global AGENTS.md for flags)
+- **Health check**: `/healthcheck` skill (`.claude/skills/healthcheck/`) or `npm run healthcheck` — tiers `static` / `env` / `live`
+- **Deploy**: Use `~/.claude/scripts/deploy.sh` (see global AGENTS.md for flags)
