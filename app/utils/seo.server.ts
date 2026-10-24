@@ -12,6 +12,10 @@ import type { BreadcrumbList, CollectionPage, Offer } from "schema-dts";
 import type { ProductQuery, ShopFragment } from "storefront-api.generated";
 import { collectionFaqs } from "~/utils/collection-faqs";
 import { collectionSeoDescriptions } from "~/utils/collection-seo-descriptions";
+import {
+  parseProductDimensions,
+  productDimensionsJsonLd,
+} from "~/utils/product-dimensions";
 import { productRelationsJsonLd } from "~/utils/product-relations";
 import { parseProductSpecs, productSpecsJsonLd } from "~/utils/product-specs";
 
@@ -285,6 +289,10 @@ function productJsonLd({
       // material / color / size / additionalProperty from Shopify category
       // metafields (shopify.* → shopify--* metaobjects).
       ...productSpecsJsonLd(parseProductSpecs(productData.specs)),
+      // width / depth / height (QuantitativeValue, inches) when set in Shopify.
+      ...productDimensionsJsonLd(
+        parseProductDimensions(productData.dimensions),
+      ),
       ...(productData.handle &&
         productRelationsJsonLd(productData.handle, origin)),
     },

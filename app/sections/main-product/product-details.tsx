@@ -3,6 +3,7 @@ import * as Accordion from "@radix-ui/react-accordion";
 import clsx from "clsx";
 import { Link, useLoaderData } from "react-router";
 import type { loader as productLoader } from "~/routes/($locale).products.$productHandle";
+import { parseProductDimensions } from "~/utils/product-dimensions";
 import { type ProductSpec, parseProductSpecs } from "~/utils/product-specs";
 
 interface ProductDetailsProps {
@@ -41,7 +42,15 @@ export function ProductDetails({
 
   const { description, descriptionHtml, summary } = product || {};
   const { shippingPolicy, refundPolicy } = shop || {};
-  const specs = showSpecifications ? parseProductSpecs(product?.specs) : [];
+  const specs: Pick<ProductSpec, "label" | "values">[] = showSpecifications
+    ? [
+        ...parseProductSpecs(product?.specs),
+        ...parseProductDimensions(product?.dimensions).map((d) => ({
+          label: d.label,
+          values: [`${d.inches} in`],
+        })),
+      ]
+    : [];
   const details = [
     showShortDescription &&
       summary && {
@@ -136,7 +145,7 @@ export function ProductDetails({
  * Category attributes as a definition list. Server-rendered (not lazy) so the
  * values are in the initial HTML for crawlers and AI shopping agents.
  */
-function formatSpecsAsHtml(specs: ProductSpec[]) {
+function formatSpecsAsHtml(specs: Pick<ProductSpec, "label" | "values">[]) {
   const rows = specs
     .map(
       (s) =>

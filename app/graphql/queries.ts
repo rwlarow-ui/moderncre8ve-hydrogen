@@ -85,6 +85,16 @@ export const PRODUCT_QUERY = `#graphql
           }
         }
       }
+      # Keep in sync with PRODUCT_DIMENSION_KEYS in app/utils/product-dimensions.ts.
+      dimensions: metafields(identifiers: [
+        { namespace: "custom", key: "width_in" }
+        { namespace: "custom", key: "depth_in" }
+        { namespace: "custom", key: "height_in" }
+      ]) {
+        key
+        namespace
+        value
+      }
       options {
         ...ProductOption
       }
