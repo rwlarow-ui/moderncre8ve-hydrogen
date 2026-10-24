@@ -1,5 +1,5 @@
-import type { RefObject } from "react";
 import clsx from "clsx";
+import type { RefObject } from "react";
 import { Children, createContext, useContext } from "react";
 import type { SectionComponentProps } from "~/page-builder";
 import { createSchema } from "~/page-builder";

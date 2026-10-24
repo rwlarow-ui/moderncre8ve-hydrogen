@@ -1,6 +1,6 @@
-import type { RefObject } from "react";
 import { Pagination } from "@shopify/hydrogen";
 import clsx from "clsx";
+import type { RefObject } from "react";
 import { useLoaderData } from "react-router";
 import type { AllProductsQuery } from "storefront-api.generated";
 import { BreadCrumb } from "~/components/breadcrumb";

@@ -1,6 +1,6 @@
-import type { RefObject } from "react";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
+import type { RefObject } from "react";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";

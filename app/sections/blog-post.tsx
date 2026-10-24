@@ -1,9 +1,9 @@
-import type { RefObject } from "react";
 import {
   FacebookLogoIcon,
   PinterestLogoIcon,
   XLogoIcon,
 } from "@phosphor-icons/react";
+import type { RefObject } from "react";
 import { useLoaderData, useRouteLoaderData } from "react-router";
 import {
   FacebookShareButton,

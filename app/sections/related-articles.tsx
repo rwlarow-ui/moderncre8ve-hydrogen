@@ -1,5 +1,5 @@
-import type { RefObject } from "react";
 import { ArrowRight } from "@phosphor-icons/react";
+import type { RefObject } from "react";
 import { Link, useLoaderData } from "react-router";
 import type { ArticleFragment } from "storefront-api.generated";
 import { layoutInputs, Section, type SectionProps } from "~/components/section";

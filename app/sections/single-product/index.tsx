@@ -1,7 +1,7 @@
-import type { RefObject } from "react";
 import { getProductOptions, Money, ShopPayButton } from "@shopify/hydrogen";
 import type { MoneyV2 } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
+import type { RefObject } from "react";
 import { useState } from "react";
 import type { ProductQuery } from "storefront-api.generated";
 import Link from "~/components/link";

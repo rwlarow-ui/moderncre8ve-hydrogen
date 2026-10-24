@@ -1,6 +1,5 @@
-import type { Ref } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { type HTMLAttributes } from "react";
+import type { HTMLAttributes, Ref } from "react";
 import {
   Link as RemixLink,
   type LinkProps as RemixLinkProps,
