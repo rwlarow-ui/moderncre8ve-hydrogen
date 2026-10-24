@@ -200,15 +200,64 @@ function DropdownMenu({ menuItem }: { menuItem: SingleMenuItem }) {
   );
 }
 
+const isImageTile = (item: SingleMenuItem) =>
+  Boolean(item.resource?.image) && item.items.length === 0;
+
 function MegaMenu({ items }: { items: SingleMenuItem[] }) {
+  // Text link columns sit together on the left, image tiles together on the
+  // right, so the panel reads as two groups instead of alternating blocks.
+  const columns = items.filter((item) => !isImageTile(item));
+  const tiles = items.filter(isImageTile);
+
   return (
-    <div className="mx-auto flex max-w-(--page-width) gap-4">
-      {items.map(({ id, title, to, items: children, resource }, idx) =>
-        resource?.image && children.length === 0 ? (
+    <div className="mx-auto flex max-w-(--page-width) items-start justify-between gap-x-12">
+      {columns.length > 0 && (
+        <div
+          className="grid shrink-0 gap-x-10"
+          style={{
+            gridTemplateColumns: `repeat(${columns.length}, minmax(12rem, 1fr))`,
+          }}
+        >
+          {columns.map(({ id, title, to, items: children }, idx) => (
+            <SlideIn
+              key={id}
+              className="space-y-4"
+              style={{ "--idx": idx } as React.CSSProperties}
+            >
+              <NavigationMenu.Link asChild>
+                <Link
+                  to={to}
+                  prefetch="intent"
+                  className="uppercase transition-none"
+                >
+                  <span>{title}</span>
+                </Link>
+              </NavigationMenu.Link>
+              <ul className="flex flex-col gap-3">
+                {children.map((cItem) => (
+                  <li key={cItem.id}>
+                    <NavigationMenu.Link asChild>
+                      <Link
+                        to={cItem.to}
+                        prefetch="intent"
+                        className="relative block text-balance leading-snug transition-none"
+                      >
+                        <span>{cItem.title}</span>
+                      </Link>
+                    </NavigationMenu.Link>
+                  </li>
+                ))}
+              </ul>
+            </SlideIn>
+          ))}
+        </div>
+      )}
+      <div className="flex min-w-0 gap-4">
+        {tiles.map(({ id, title, to, resource }, idx) => (
           <SlideIn
             key={id}
-            className="group/item overflow-hidden"
-            style={{ "--idx": idx } as React.CSSProperties}
+            className="group/item w-52 shrink-0 overflow-hidden xl:w-60"
+            style={{ "--idx": columns.length + idx } as React.CSSProperties}
           >
             <NavigationMenu.Link asChild>
               <Link
@@ -217,15 +266,17 @@ function MegaMenu({ items }: { items: SingleMenuItem[] }) {
                 className={clsx([
                   "text-left",
                   "font-normal uppercase",
-                  "flex flex-col gap-5",
+                  "flex flex-col gap-4",
                 ])}
               >
-                <div className="relative aspect-square w-72 max-w-72 overflow-hidden">
+                {/* One fixed ratio and a neutral backdrop keep tiles uniform
+                    even when source photos differ in crop or background. */}
+                <div className="relative aspect-4/5 w-full overflow-hidden bg-(--color-header-bg-hover)">
                   <Image
                     alt=""
-                    sizes="auto"
-                    data={resource.image}
-                    className="h-full w-full object-cover"
+                    sizes="240px"
+                    data={resource?.image}
+                    className="h-full w-full object-cover mix-blend-multiply"
                     width={300}
                   />
                   <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-300 group-hover/item:opacity-20" />
@@ -234,39 +285,8 @@ function MegaMenu({ items }: { items: SingleMenuItem[] }) {
               </Link>
             </NavigationMenu.Link>
           </SlideIn>
-        ) : (
-          <SlideIn
-            key={id}
-            className="max-w-72 grow space-y-4"
-            style={{ "--idx": idx } as React.CSSProperties}
-          >
-            <NavigationMenu.Link asChild>
-              <Link
-                to={to}
-                prefetch="intent"
-                className="uppercase transition-none"
-              >
-                <span>{title}</span>
-              </Link>
-            </NavigationMenu.Link>
-            <div className="flex flex-col gap-1.5">
-              {children.map((cItem) => (
-                <div key={cItem.id}>
-                  <NavigationMenu.Link asChild>
-                    <Link
-                      to={cItem.to}
-                      prefetch="intent"
-                      className="relative inline transition-none"
-                    >
-                      <span>{cItem.title}</span>
-                    </Link>
-                  </NavigationMenu.Link>
-                </div>
-              ))}
-            </div>
-          </SlideIn>
-        ),
-      )}
+        ))}
+      </div>
     </div>
   );
 }
