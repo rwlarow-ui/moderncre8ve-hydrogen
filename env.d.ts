@@ -27,6 +27,8 @@ declare global {
     PO_PARTNER_EMAIL?: string;
     /** Optional copy to the shop; also used as Reply-To. */
     PO_CC_EMAIL?: string;
+    /** Trade-application alert recipient; falls back to PO_CC_EMAIL. */
+    TRADE_NOTIFY_EMAIL?: string;
     JUDGEME_PRIVATE_API_TOKEN: string;
     CUSTOM_COLLECTION_BANNER_METAFIELD: string;
     METAOBJECT_COLORS_TYPE: string;
