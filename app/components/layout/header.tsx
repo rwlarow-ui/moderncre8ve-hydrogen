@@ -81,6 +81,14 @@ export function Header() {
               "hover:[&_.cart-count]:text-(--color-transparent-header-text)",
               "[&_.main-logo]:opacity-0",
               "[&_.transparent-logo]:opacity-100",
+              // The header turns light on hover or while a mega menu is open,
+              // so swap back to the dark logo. These must live here: the
+              // `group-hover/header` utilities on the logo images lose to the
+              // rules above on specificity.
+              "hover:[&_.main-logo]:opacity-100",
+              "hover:[&_.transparent-logo]:opacity-0",
+              "has-[[data-state=open]]:[&_.main-logo]:opacity-100",
+              "has-[[data-state=open]]:[&_.transparent-logo]:opacity-0",
             ]
           : [
               "[&_.cart-count]:text-(--color-header-bg)",
