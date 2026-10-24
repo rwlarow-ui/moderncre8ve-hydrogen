@@ -190,6 +190,7 @@ export async function submitTradeApplication(env, values, fetchImpl = fetch) {
 }
 
 const RESEND_URL = "https://api.resend.com/emails";
+const NOTIFY_TIMEOUT_MS = 8000;
 
 /**
  * Best-effort owner alert for a new trade applicant (plain text, so nothing
@@ -219,6 +220,7 @@ export async function notifyTradeApplication(
 
   const response = await fetchImpl(RESEND_URL, {
     method: "POST",
+    signal: AbortSignal.timeout(NOTIFY_TIMEOUT_MS),
     headers: {
       Authorization: `Bearer ${env.RESEND_API_KEY}`,
       "Content-Type": "application/json",

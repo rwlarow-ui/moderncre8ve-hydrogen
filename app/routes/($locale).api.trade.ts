@@ -41,13 +41,16 @@ export const action: ActionFunction = async ({
 
   try {
     const result = await submitTradeApplication(context.env, values);
-    // Best-effort: the applicant is already tagged, so an alert failure must
-    // not turn a successful application into an error.
-    try {
-      await notifyTradeApplication(context.env, values, result);
-    } catch (notifyErr) {
+    // Best-effort and off the response path: the applicant is already tagged,
+    // so a slow or failing alert must not delay or fail the submission.
+    const notification = notifyTradeApplication(
+      context.env,
+      values,
+      result,
+    ).catch((notifyErr) => {
       console.error("Trade notification failed:", notifyErr);
-    }
+    });
+    context.waitUntil?.(notification);
   } catch (err) {
     console.error("Trade application failed:", err);
     return data(
