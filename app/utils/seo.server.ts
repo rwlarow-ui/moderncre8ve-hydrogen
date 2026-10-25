@@ -99,7 +99,7 @@ function home(): SeoConfig {
     title: "Handcrafted Mid-Century Modern & Scandinavian Furniture",
     titleTemplate: "%s | ModernCre8ve",
     description:
-      "Shop handcrafted mid-century modern, Scandinavian & Japandi furniture. Made by Amish artisans in solid hardwoods. 12–16 week lead times. Free white glove delivery.",
+      "Handcrafted mid-century modern, Scandinavian & Japandi furniture by Amish artisans in solid hardwoods. 12–16 week lead times. Free white glove delivery.",
     handle: "@moderncre8ve",
     robots: {
       noIndex: false,
@@ -599,13 +599,13 @@ function blog({
 /** Fallback meta descriptions for pages that lack one in Shopify */
 const PAGE_META_DESCRIPTIONS: Record<string, string> = {
   "about-us":
-    "ModernCre8ve handcrafts mid-century modern, Scandinavian, and Japandi furniture from solid hardwoods in Cleveland, Ohio. 12–16 week lead times, white glove delivery.",
+    "Cleveland-made mid-century modern, Scandinavian & Japandi furniture, handcrafted from solid hardwoods. 12–16 week lead times, white glove delivery.",
   "about-us-1":
-    "ModernCre8ve handcrafts mid-century modern, Scandinavian, and Japandi furniture from solid hardwoods in Cleveland, Ohio. 12–16 week lead times, white glove delivery.",
+    "Cleveland-made mid-century modern, Scandinavian & Japandi furniture, handcrafted from solid hardwoods. 12–16 week lead times, white glove delivery.",
   "trade-1":
-    "Interior designers and architects: apply for the ModernCre8ve trade program. Exclusive pricing on handcrafted modern furniture for your residential and commercial projects.",
+    "Designers and architects: join the ModernCre8ve trade program for exclusive pricing on handcrafted modern furniture for residential and commercial projects.",
   "shipping-policy":
-    "ModernCre8ve shipping details: white glove in-home delivery with assembly for furniture orders. Wax products ship in 3–5 business days. Free shipping on most orders.",
+    "ModernCre8ve shipping: white glove in-home delivery with assembly for furniture orders. Wax products ship in 3–5 business days. Free shipping on most orders.",
   "wrong-turn":
     "The page you're looking for has moved or doesn't exist. Browse our handcrafted modern furniture collections or contact us for help.",
 };
