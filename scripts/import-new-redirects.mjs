@@ -104,10 +104,6 @@ const PRODUCT_HANDLE_REDIRECTS = [
     from: "/products/copy-of-santa-monica-bench-modern-walnut-bench",
     to: "/products/santa-monica-bench-modern-walnut-bench",
   },
-  {
-    from: "/products/van-aiken-boho-bed-fram",
-    to: "/products/van-aiken-boho-bed-frame",
-  },
 ];
 
 // --- Existing blog redirects to fix (delete old blanket → create 1:1) ---
@@ -447,7 +443,9 @@ async function main() {
 
   // --- Phase 3: Product handle cleanup redirects ---
   console.log("--- Phase 3: Creating product handle cleanup redirects ---");
-  console.log("    Rename the target product handles in Shopify Admin first.\n");
+  console.log(
+    "    Rename the target product handles in Shopify Admin first.\n",
+  );
 
   let productCreated = 0;
   let productSkipped = 0;
