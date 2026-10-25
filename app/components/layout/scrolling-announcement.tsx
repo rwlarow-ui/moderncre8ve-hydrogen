@@ -159,7 +159,7 @@ export function ScrollingAnnouncement() {
               nextEl: ".announcement-next",
             }}
             slidesPerView={1}
-            loop
+            loop={slides.length > 1}
             autoHeight
             className="w-full"
           >
