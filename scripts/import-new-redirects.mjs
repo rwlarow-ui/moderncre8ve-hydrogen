@@ -3,6 +3,7 @@
 /**
  * Import new SEO redirects to Shopify Admin via GraphQL API
  * These are the gaps found in the SEO Migration Audit (v1.2.4)
+ * plus product-handle cleanup redirects from the April 2026 content audit.
  *
  * Also updates existing blog redirects from blanket (→ index) to 1:1 (→ article)
  *
@@ -53,7 +54,7 @@ if (!ADMIN_TOKEN) {
 console.log(`🔑 Using token: shpat_...${ADMIN_TOKEN.slice(-6)}`);
 const API_VERSION = "2024-10";
 
-// --- 8 NEW redirects to create ---
+// --- New redirects to create ---
 // Note: /collections/all is Shopify's built-in all-products page — no redirect needed FROM it
 const NEW_REDIRECTS = [
   {
@@ -92,7 +93,24 @@ const REDIRECT_REPAIRS = [
   },
 ];
 
-// --- 4 EXISTING blog redirects to fix (delete old blanket → create 1:1) ---
+// --- Product handle cleanup redirects ---
+// Run this phase after the clean product handles exist in Shopify Admin.
+const PRODUCT_HANDLE_REDIRECTS = [
+  {
+    from: "/products/capri-modern-dining-table-set_",
+    to: "/products/capri-modern-dining-table-set",
+  },
+  {
+    from: "/products/copy-of-santa-monica-bench-modern-walnut-bench",
+    to: "/products/santa-monica-bench-modern-walnut-bench",
+  },
+  {
+    from: "/products/van-aiken-boho-bed-fram",
+    to: "/products/van-aiken-boho-bed-frame",
+  },
+];
+
+// --- Existing blog redirects to fix (delete old blanket → create 1:1) ---
 const BLOG_REDIRECT_FIXES = [
   // Removed: /blogs/.../how-to-choose-the-perfect-dining-table — article lives at native URL, no redirect needed
   {
@@ -350,11 +368,13 @@ async function testAuth() {
 }
 
 async function main() {
-  console.log("=== ModernCre8ve SEO Redirect Import (v1.2.4) ===\n");
+  console.log("=== ModernCre8ve SEO Redirect Import ===\n");
   await testAuth();
 
-  // --- Phase 1: Create 8 new redirects ---
-  console.log("--- Phase 1: Creating 8 new redirects ---\n");
+  // --- Phase 1: Create new redirects ---
+  console.log(
+    `--- Phase 1: Creating ${NEW_REDIRECTS.length} new redirects ---\n`,
+  );
 
   let created = 0;
   let skipped = 0;
@@ -425,8 +445,44 @@ async function main() {
     `\nPhase 2 complete: ${repaired} repaired, ${repairSkipped} skipped, ${repairFailed} failed\n`,
   );
 
-  // --- Phase 3: Fix 4 blog article redirects (blanket → 1:1) ---
-  console.log("--- Phase 3: Fixing 4 blog article redirects ---\n");
+  // --- Phase 3: Product handle cleanup redirects ---
+  console.log("--- Phase 3: Creating product handle cleanup redirects ---");
+  console.log("    Rename the target product handles in Shopify Admin first.\n");
+
+  let productCreated = 0;
+  let productSkipped = 0;
+  let productFailed = 0;
+
+  for (const { from, to } of PRODUCT_HANDLE_REDIRECTS) {
+    try {
+      const result = await upsertRedirect(from, to);
+      if (result.success && !result.skipped) {
+        console.log(`  ✅ ${from} → ${to}`);
+        productCreated++;
+      } else if (result.skipped) {
+        console.log(`  ⏭️  ${from} → already correct`);
+        productSkipped++;
+      } else {
+        const msg = result.errors.map((e) => e.message).join(", ");
+        console.log(`  ❌ ${from} → FAILED: ${msg}`);
+        productFailed++;
+      }
+    } catch (err) {
+      console.log(`  ❌ ${from} → ERROR: ${err.message}`);
+      productFailed++;
+    }
+
+    await new Promise((r) => setTimeout(r, 300));
+  }
+
+  console.log(
+    `\nPhase 3 complete: ${productCreated} created, ${productSkipped} skipped, ${productFailed} failed\n`,
+  );
+
+  // --- Phase 4: Fix blog article redirects (blanket → 1:1) ---
+  console.log(
+    `--- Phase 4: Fixing ${BLOG_REDIRECT_FIXES.length} blog article redirects ---\n`,
+  );
 
   let fixed = 0;
   let blogSkipped = 0;
@@ -482,10 +538,13 @@ async function main() {
     `Repairs:         ${repaired} repaired, ${repairSkipped} skipped, ${repairFailed} failed`,
   );
   console.log(
+    `Product handles: ${productCreated} created, ${productSkipped} skipped, ${productFailed} failed`,
+  );
+  console.log(
     `Blog fixes:      ${fixed} fixed, ${blogSkipped} already correct, ${blogFailed} failed`,
   );
   console.log(
-    `Total redirects: 77 existing + ${created + fixed} new = ${77 + created + fixed} total`,
+    "Review Shopify Admin > Content > Menus > URL redirects for final totals.",
   );
 }
 
