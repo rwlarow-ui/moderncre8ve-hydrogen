@@ -188,3 +188,53 @@ export async function submitTradeApplication(env, values, fetchImpl = fetch) {
   assertNoUserErrors(created.customerCreate?.userErrors);
   return { created: true, customerId: created.customerCreate.customer.id };
 }
+
+const RESEND_URL = "https://api.resend.com/emails";
+const NOTIFY_TIMEOUT_MS = 8000;
+
+/**
+ * Best-effort owner alert for a new trade applicant (plain text, so nothing
+ * from the form is ever interpreted as markup). The recipient comes from server
+ * config only. Reuses the PO email sender; returns `{ sent: false }` when mail
+ * isn't configured so a missing key never blocks an application.
+ */
+export async function notifyTradeApplication(
+  env,
+  values,
+  { created, customerId },
+  fetchImpl = fetch,
+) {
+  const to = env.TRADE_NOTIFY_EMAIL || env.PO_CC_EMAIL;
+  if (!env.RESEND_API_KEY || !env.PO_FROM_EMAIL || !to) {
+    return { sent: false };
+  }
+  const adminId = String(customerId).split("/").pop();
+  const text = [
+    `${values.firstName} ${values.lastName} <${values.email}> applied for a trade account.`,
+    "",
+    buildApplicationNote(values),
+    "",
+    `${created ? "New customer" : "Existing customer"}, tagged ${TRADE_TAG}.`,
+    `https://${env.PUBLIC_STORE_DOMAIN}/admin/customers/${adminId}`,
+  ].join("\n");
+
+  const response = await fetchImpl(RESEND_URL, {
+    method: "POST",
+    signal: AbortSignal.timeout(NOTIFY_TIMEOUT_MS),
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: env.PO_FROM_EMAIL,
+      to: [to],
+      reply_to: values.email,
+      subject: `Trade application: ${values.business}`.replace(/[\r\n]+/g, " "),
+      text,
+    }),
+  });
+  if (!response.ok) {
+    throw new Error(`Trade notification failed (${response.status}).`);
+  }
+  return { sent: true };
+}

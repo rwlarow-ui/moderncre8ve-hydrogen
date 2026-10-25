@@ -1,6 +1,7 @@
 import type { ActionFunction, ActionFunctionArgs } from "react-router";
 import { data } from "react-router";
 import {
+  notifyTradeApplication,
   parseTradeApplication,
   submitTradeApplication,
 } from "~/utils/trade-application.server";
@@ -39,7 +40,17 @@ export const action: ActionFunction = async ({
   }
 
   try {
-    await submitTradeApplication(context.env, values);
+    const result = await submitTradeApplication(context.env, values);
+    // Best-effort and off the response path: the applicant is already tagged,
+    // so a slow or failing alert must not delay or fail the submission.
+    const notification = notifyTradeApplication(
+      context.env,
+      values,
+      result,
+    ).catch((notifyErr) => {
+      console.error("Trade notification failed:", notifyErr);
+    });
+    context.waitUntil?.(notification);
   } catch (err) {
     console.error("Trade application failed:", err);
     return data(

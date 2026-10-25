@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  notifyTradeApplication,
   parseTradeApplication,
   submitTradeApplication,
   TRADE_TAG,
@@ -85,4 +86,46 @@ test("refuses to run without the ops token (no fallback to full admin token)", a
     ),
     /not configured/,
   );
+});
+
+const mailEnv = {
+  ...env,
+  RESEND_API_KEY: "re_x",
+  PO_FROM_EMAIL: "Shop <shop@x.com>",
+  TRADE_NOTIFY_EMAIL: "owner@x.com",
+};
+
+test("notifies the owner with a plain-text alert, replyable to the applicant", async () => {
+  const calls = [];
+  const f = async (url, init) => {
+    calls.push({ url, init });
+    return { ok: true };
+  };
+  const { values } = parseTradeApplication(
+    form({ ...valid, business: "Lee\nBcc: evil@x.com" }),
+  );
+  const r = await notifyTradeApplication(
+    mailEnv,
+    values,
+    { created: true, customerId: "gid://shopify/Customer/42" },
+    f,
+  );
+  assert.equal(r.sent, true);
+  const body = JSON.parse(calls[0].init.body);
+  assert.deepEqual(body.to, ["owner@x.com"]);
+  assert.equal(body.reply_to, "ada@studio.com");
+  assert.doesNotMatch(body.subject, /[\r\n]/);
+  assert.match(body.text, /admin\/customers\/42/);
+});
+
+test("skips the alert when mail isn't configured", async () => {
+  const r = await notifyTradeApplication(
+    env,
+    parseTradeApplication(form(valid)).values,
+    { created: true, customerId: "gid://1" },
+    async () => {
+      throw new Error("should not fetch");
+    },
+  );
+  assert.equal(r.sent, false);
 });
