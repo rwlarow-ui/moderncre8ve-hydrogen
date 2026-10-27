@@ -3,12 +3,20 @@ name: Claude Code Review
 on:
   pull_request:
     types: [opened, synchronize, ready_for_review, reopened]
-    # Optional: Only run on specific file changes
-    # paths:
-    #   - "src/**/*.ts"
-    #   - "src/**/*.tsx"
-    #   - "src/**/*.js"
-    #   - "src/**/*.jsx"
+    # Only review PRs that touch code or build config, not docs, CSVs or reports
+    paths:
+      - "app/**"
+      - "scripts/**"
+      - "tests/**"
+      - "server.ts"
+      - "vite.config.ts"
+      - "react-router.config.ts"
+      - "codegen.ts"
+      - "env.d.ts"
+      - "biome.json"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/**"
 
 jobs:
   claude-review:
