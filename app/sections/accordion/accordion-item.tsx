@@ -2,6 +2,7 @@ import { MinusCircle, PlusCircle } from "@phosphor-icons/react";
 import * as Accordion from "@radix-ui/react-accordion";
 import { Image } from "@shopify/hydrogen";
 import type React from "react";
+import { useProductFinishCopy } from "~/hooks/use-product-finish-copy";
 import type { ComponentSchema, SectionComponentProps } from "~/page-builder";
 import { cn } from "~/utils/cn";
 
@@ -19,6 +20,7 @@ const AccordionItem = ({
   ...props
 }: AccordionItemProps & { ref?: React.RefObject<HTMLDivElement | null> }) => {
   const { title, content, icon, ...rest } = props;
+  const displayContent = useProductFinishCopy(content);
 
   const renderIcon = () => {
     if (!icon) {
@@ -92,7 +94,7 @@ const AccordionItem = ({
           "data-[state=open]:animate-expand",
         )}
       >
-        <div className="p-4">{content}</div>
+        <div className="p-4">{displayContent}</div>
       </Accordion.Content>
     </Accordion.Item>
   );
