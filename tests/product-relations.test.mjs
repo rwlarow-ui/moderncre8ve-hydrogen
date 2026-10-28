@@ -27,3 +27,13 @@ test("unmapped product gets origin only", () => {
   assert.equal(ld.countryOfOrigin.name, "US");
   assert.equal("isRelatedTo" in ld, false);
 });
+
+test("imported product emits no countryOfOrigin but keeps relations", () => {
+  const ld = productRelationsJsonLd(
+    "scandinavian-oval-dining-table-mar-vista",
+    origin,
+    { imported: true },
+  );
+  assert.equal("countryOfOrigin" in ld, false);
+  assert.ok(ld.isRelatedTo.length > 0);
+});

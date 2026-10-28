@@ -11,6 +11,7 @@ import { useLoaderData } from "react-router";
 import type { ProductQuery } from "storefront-api.generated";
 import invariant from "tiny-invariant";
 import { PRODUCT_QUERY } from "~/graphql/queries";
+import { adaptProductPage } from "~/page-builder/adapt-product-page";
 import { loadPage } from "~/page-builder/page.server";
 import { PageContent } from "~/page-builder/renderer";
 import { routeHeaders } from "~/utils/cache";
@@ -21,6 +22,7 @@ import {
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
 import { createJudgeMeReview, getJudgeMeProductReviews } from "~/utils/judgeme";
 import { getRecommendedProducts } from "~/utils/product";
+import { productClass } from "~/utils/product-class";
 import {
   redirectIfCombinedListing,
   redirectIfHandleIsLocalized,
@@ -67,7 +69,7 @@ export async function loader({ params, request, context }: Route.LoaderArgs) {
   return {
     shop,
     product,
-    pageData,
+    pageData: adaptProductPage(pageData, productClass(product)),
     productReviews,
     storeDomain: shop.primaryDomain.url,
     seo: seoPayload.product({ product, url: request.url }),

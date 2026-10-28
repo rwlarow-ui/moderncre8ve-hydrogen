@@ -17,7 +17,12 @@ const DINING_TABLES = [
 
 const DINING_CHAIRS = ["the-seymour-modern-dining-chair"];
 
-/** Products NOT made in the USA — no countryOfOrigin is emitted for these. */
+/**
+ * Products NOT made in the USA — no countryOfOrigin is emitted for these.
+ * Callers also pass `imported: true` for products from an import vendor (see
+ * `productClass` in product-class.ts), so a new Piper + Fox listing never
+ * claims US origin by default.
+ */
 const NON_US_ORIGIN = new Set(["the-seymour-modern-dining-chair"]);
 
 export function relatedProductHandles(handle: string): string[] {
@@ -27,10 +32,15 @@ export function relatedProductHandles(handle: string): string[] {
 }
 
 /** countryOfOrigin / isRelatedTo fields for the Product node. */
-export function productRelationsJsonLd(handle: string, origin: string) {
+export function productRelationsJsonLd(
+  handle: string,
+  origin: string,
+  { imported = false }: { imported?: boolean } = {},
+) {
   const related = relatedProductHandles(handle);
+  const usMade = !imported && !NON_US_ORIGIN.has(handle);
   return {
-    ...(!NON_US_ORIGIN.has(handle) && {
+    ...(usMade && {
       countryOfOrigin: { "@type": "Country" as const, name: "US" },
     }),
     ...(related.length && {

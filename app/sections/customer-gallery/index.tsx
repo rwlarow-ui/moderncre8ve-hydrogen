@@ -157,22 +157,18 @@ export const schema = createSchema({
       {
         type: "customer-gallery-item",
         caption: "Mid-Century Walnut Credenza",
-        customerName: "Sarah M., Chicago",
       },
       {
         type: "customer-gallery-item",
         caption: "Japandi Dining Table",
-        customerName: "Michael T., Austin",
       },
       {
         type: "customer-gallery-item",
         caption: "Scandinavian Bookshelf",
-        customerName: "Emily R., Portland",
       },
       {
         type: "customer-gallery-item",
         caption: "Modern Console Table",
-        customerName: "David L., Denver",
       },
     ],
   },
