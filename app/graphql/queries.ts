@@ -11,6 +11,7 @@ export const PRODUCT_QUERY = `#graphql
       id
       title
       vendor
+      productType
       handle
       publishedAt
       descriptionHtml

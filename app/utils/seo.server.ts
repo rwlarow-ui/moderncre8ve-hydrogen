@@ -12,6 +12,7 @@ import type { BreadcrumbList, CollectionPage, Offer } from "schema-dts";
 import type { ProductQuery, ShopFragment } from "storefront-api.generated";
 import { collectionFaqs } from "~/utils/collection-faqs";
 import { collectionSeoDescriptions } from "~/utils/collection-seo-descriptions";
+import { productClass } from "~/utils/product-class";
 import {
   parseProductDimensions,
   productDimensionsJsonLd,
@@ -294,7 +295,9 @@ function productJsonLd({
         parseProductDimensions(productData.dimensions),
       ),
       ...(productData.handle &&
-        productRelationsJsonLd(productData.handle, origin)),
+        productRelationsJsonLd(productData.handle, origin, {
+          imported: productClass(productData) === "imported",
+        })),
     },
   ];
 }

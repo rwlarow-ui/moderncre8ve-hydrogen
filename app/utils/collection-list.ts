@@ -13,7 +13,7 @@
 export const PRIORITY_COLLECTION_HANDLES = [
   "custom-made-expandable-dining-tables",
   "mid-century-modern-dining-tables",
-  "modern-bed-frames",
+  "handmade-modern-bed-frames",
   "oval-dining-tables",
   "modern-dining-chairs",
   "bedroom",

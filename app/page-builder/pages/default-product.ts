@@ -14,9 +14,12 @@ import type { PageDefinition } from "../types";
  *   - specs-subheading
  * Their authored content is in the pull request that introduced this file.
  *
- * Likewise `reviews-index` has type "judgeme-review-index" while the component
- * registers "judgeme-review--index" (two dashes), so it renders nothing. Both
- * quirks predate this file and are preserved rather than silently fixed.
+ * The "What Our Customers Say" reviews block and the "In Your Home" customer
+ * gallery were removed (2026-10-28): the reviews index never rendered (type
+ * "judgeme-review-index" vs the registered "judgeme-review--index"), leaving a
+ * heading with nothing under it, and the gallery showed the same four
+ * placeholder names and captions on every product, including wax. Bring the
+ * gallery back only with real customer photos and permission to use them.
  */
 export const defaultProduct: PageDefinition = {
   rootId: "product-root",
@@ -39,12 +42,6 @@ export const defaultProduct: PageDefinition = {
         },
         {
           id: "product-process",
-        },
-        {
-          id: "product-reviews",
-        },
-        {
-          id: "product-gallery",
         },
         {
           id: "product-related",
@@ -386,95 +383,6 @@ export const defaultProduct: PageDefinition = {
         iconType: "delivery",
         accentColor: "#2CBF96",
         textColor: "#323640",
-      },
-    },
-    {
-      id: "product-reviews",
-      type: "judgeme-reviews",
-      data: {},
-      children: [
-        {
-          id: "reviews-heading",
-        },
-        {
-          id: "reviews-index",
-        },
-      ],
-    },
-    {
-      id: "reviews-heading",
-      type: "heading",
-      data: {
-        content: "What Our Customers Say",
-        as: "h2",
-        size: "scale",
-        minSize: 24,
-        maxSize: 36,
-        alignment: "center",
-        color: "#323640",
-      },
-    },
-    {
-      id: "reviews-index",
-      type: "judgeme-review-index",
-    },
-    {
-      id: "product-gallery",
-      type: "customer-gallery",
-      data: {
-        heading: "In Your Home",
-        subheading:
-          "See how our customers style their ModernCre8ve pieces. Tag @moderncre8ve to be featured.",
-        backgroundColor: "#ffffff",
-        textColor: "#323640",
-        ctaText: "Share Your Space on Instagram",
-        ctaUrl: "https://www.instagram.com/moderncre8ve",
-      },
-      children: [
-        {
-          id: "gallery-1",
-        },
-        {
-          id: "gallery-2",
-        },
-        {
-          id: "gallery-3",
-        },
-        {
-          id: "gallery-4",
-        },
-      ],
-    },
-    {
-      id: "gallery-1",
-      type: "customer-gallery-item",
-      data: {
-        caption: "Mid-Century Walnut Credenza",
-        customerName: "Sarah M., Chicago",
-      },
-    },
-    {
-      id: "gallery-2",
-      type: "customer-gallery-item",
-      data: {
-        caption: "Japandi Dining Table",
-        customerName: "Michael T., Austin",
-      },
-    },
-    {
-      id: "gallery-3",
-      type: "customer-gallery-item",
-      data: {
-        caption: "Scandinavian Bookshelf",
-        customerName: "Emily R., Portland",
-      },
-    },
-    {
-      id: "gallery-4",
-      type: "customer-gallery-item",
-      data: {
-        caption: "Modern Console Table",
-        customerName: "David L., Denver",
       },
     },
     {

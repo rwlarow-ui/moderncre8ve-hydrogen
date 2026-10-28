@@ -6,6 +6,14 @@
 
 ## Unreleased
 
+### Product pages say only what is true for the product (SEO audit 2026-10-27)
+- **Wax and imported products no longer show furniture promises.** New `productClass()` (`app/utils/product-class.ts`) sorts products into `furniture`, `housewares` (wax / "Wood Care") and `imported` (vendor Piper + Fox). `adaptProductPage()` (`app/page-builder/adapt-product-page.ts`) drops the furniture-only sections (lifetime warranty + white glove, "Handcrafted in Ohio / Made in the USA", hardwood specs + 12–16 week delivery accordion, Amish build process) for non-furniture products. Wax shows "Ships within 3–5 business days"; imported products show no lead-time line. Furniture pages are unchanged. `PRODUCT_QUERY` now selects `productType`.
+- **Product JSON-LD:** `countryOfOrigin: US` is no longer emitted for import-vendor products (Piper + Fox), in addition to the existing Seymour exception.
+- **Placeholder social proof removed:** the "In Your Home" customer gallery (the same four names and captions on every product, wax included, with no photos) and the "What Our Customers Say" heading (its review index never rendered) are out of the product template. The gallery's editor presets no longer seed sample names.
+- **Bed frames:** `PRIORITY_COLLECTION_HANDLES` used `modern-bed-frames`; the real handle is `handmade-modern-bed-frames`.
+- **`/llms.txt`:** wax is listed under wood care instead of "lead time", origin notes that some seating is imported, and a Contact section (phone, email, address, hours) is added.
+- Tests: `npm run test:product-class` (new), `npm run test:relations` (extended).
+
 ### Hydrogen 2026.4 upgrade and typed route args
 - `@shopify/hydrogen` 2025.5.0 → **2026.4.8** (via 2025.5.1), `react-router` 7.16.0, React 19.2; `remix-oxygen`, `mini-oxygen` and `workers-types` aligned to Hydrogen 2026.4 (#118).
 - Loaders and actions now take `Route.LoaderArgs` / `Route.ActionArgs` from the generated React Router route types instead of hand-written arg types (`2da3cba`). CI runs `react-router typegen` before typecheck (`714946b`). Fresh clones and worktrees need `npx react-router typegen` before `tsc`.

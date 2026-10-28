@@ -113,7 +113,7 @@ export const schema = createSchema({
           name: "customerName",
           label: "Customer name & location",
           defaultValue: "",
-          placeholder: "e.g. Sarah M., Chicago",
+          placeholder: "Customer first name and city (with permission)",
         },
         {
           type: "text",
