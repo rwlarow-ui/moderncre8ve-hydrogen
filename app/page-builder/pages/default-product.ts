@@ -70,6 +70,7 @@ export const defaultProduct: PageDefinition = {
         showLeadTime: true,
         leadTimeText:
           "Handcrafted to order. Please allow 12–16 weeks for production and delivery. Custom orders may require additional time.",
+        leadTimeSummary: "Made to order · ships in 12–16 weeks",
       },
     },
     {

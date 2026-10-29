@@ -11,7 +11,7 @@ import type {
 } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
 import type { RefObject } from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useLoaderData } from "react-router";
 import { AddToCartButton } from "~/components/product/add-to-cart-button";
 import { ProductBadges } from "~/components/product/badges";
@@ -32,6 +32,7 @@ import type { loader as productRouteLoader } from "~/routes/($locale).products.$
 import { isCombinedListing } from "~/utils/combined-listings";
 import { isDiscounted } from "~/utils/product";
 import { ProductDetails } from "./product-details";
+import { StickyAddToCart } from "./sticky-add-to-cart";
 import { ProductVariants } from "./variants";
 
 interface ProductInformationData
@@ -48,6 +49,7 @@ interface ProductInformationData
   showBadgesOnProductMedia?: boolean;
   showLeadTime: boolean;
   leadTimeText: string;
+  leadTimeSummary?: string;
   arrowsZoomColor?: "primary" | "secondary" | "outline";
   arrowsZoomShape?: "rounded-sm" | "circle" | "square";
 }
@@ -83,6 +85,7 @@ const ProductInformation = ({
     showRefundPolicy,
     showLeadTime = true,
     leadTimeText = "Handcrafted to order. Please allow 12\u201316 weeks for production and delivery. Custom orders may require additional time.",
+    leadTimeSummary = "Made to order \u00b7 ships in 12\u201316 weeks",
     mediaLayout,
     gridSize,
     imageAspectRatio,
@@ -101,6 +104,7 @@ const ProductInformation = ({
     ...rest
   } = props;
   const [quantity, setQuantity] = useState<number>(1);
+  const atcRef = useRef<HTMLDivElement>(null);
   const [selectedSellingPlanId, setSelectedSellingPlanId] = useState<
     string | null
   >(null);
@@ -118,6 +122,15 @@ const ProductInformation = ({
     } else {
       atcButtonText = soldOutText;
     }
+    const cartLines = [
+      {
+        merchandiseId: selectedVariant?.id,
+        quantity,
+        ...(selectedSellingPlanId && {
+          sellingPlanId: selectedSellingPlanId,
+        }),
+      },
+    ];
 
     return (
       <Section ref={ref} {...rest} overflow="unset">
@@ -179,10 +192,14 @@ const ProductInformation = ({
                 {showVendor && vendor && (
                   <span className="text-body-subtle">{vendor}</span>
                 )}
-                <h1 className="font-normal uppercase tracking-tight">
+                <h1 className="font-normal text-3xl leading-tight tracking-tight lg:text-4xl lg:leading-tight">
                   {title}
                 </h1>
               </div>
+
+              {showLeadTime && leadTimeSummary && (
+                <p className="text-body-subtle text-sm">{leadTimeSummary}</p>
+              )}
 
               <div className="space-y-5 divide-y divide-line-subtle [&>*:not(:last-child)]:pb-3">
                 {combinedListing ? (
@@ -217,7 +234,7 @@ const ProductInformation = ({
                         withoutTrailingZeros
                         data={selectedVariant.price}
                         as="span"
-                        className=""
+                        className="text-2xl/none"
                       />
                       {isDiscounted(
                         selectedVariant.price as MoneyV2,
@@ -265,6 +282,7 @@ const ProductInformation = ({
 
               {!combinedListing && (
                 <div
+                  ref={atcRef}
                   className="sp-button space-y-2 py-3"
                   style={
                     {
@@ -274,15 +292,7 @@ const ProductInformation = ({
                 >
                   <AddToCartButton
                     disabled={!selectedVariant?.availableForSale}
-                    lines={[
-                      {
-                        merchandiseId: selectedVariant?.id,
-                        quantity,
-                        ...(selectedSellingPlanId && {
-                          sellingPlanId: selectedSellingPlanId,
-                        }),
-                      },
-                    ]}
+                    lines={cartLines}
                     data-test="add-to-cart"
                     className="h-[54px] w-full uppercase"
                     onClick={() => {
@@ -357,6 +367,16 @@ const ProductInformation = ({
             </div>
           </div>
         </div>
+        {!combinedListing && selectedVariant && (
+          <StickyAddToCart
+            targetRef={atcRef}
+            title={title}
+            price={selectedVariant.price as MoneyV2}
+            lines={cartLines}
+            disabled={!selectedVariant.availableForSale}
+            buttonText={atcButtonText}
+          />
+        )}
       </Section>
     );
   }
@@ -646,6 +666,13 @@ export const schema = createSchema({
           name: "leadTimeText",
           defaultValue:
             "Handcrafted to order. Please allow 12\u201316 weeks for production and delivery. Custom orders may require additional time.",
+          condition: (data: ProductInformationData) => data.showLeadTime,
+        },
+        {
+          type: "text",
+          label: "Lead time summary (shown under the title)",
+          name: "leadTimeSummary",
+          defaultValue: "Made to order \u00b7 ships in 12\u201316 weeks",
           condition: (data: ProductInformationData) => data.showLeadTime,
         },
       ],
