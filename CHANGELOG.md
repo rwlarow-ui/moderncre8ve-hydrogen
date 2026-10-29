@@ -6,6 +6,18 @@
 
 ## Unreleased
 
+### Dining table listings and FoxKit cleanup (Shopify Admin, 2026-10-28/29)
+- **New dining table listing framework** (`docs/adr/0004-dining-table-listing-framework.md`). Target options for every dining table: Size 64/72/84" with seats in the label, four natural woods, and 0–3 × 18" leaves. Prices come from the pricing sheet at 33% margin plus a 3% card fee. Rolled out so far to Bossa Nova and Santa Monica (Active) and Payne (Unlisted for review); Vista still has its old 54–72" lengths and 12" leaves.
+- **Copy and SEO rewritten** on those listings: descriptions without an H1, new titles and SEO titles/meta descriptions, matching feature badges and materials panel, and image alt text.
+- **FoxKit removed:** 67 leftover product metafields deleted (`foxkit-discount`, `foxkit.preorder`, `foxecom-bs-kit`). The app was already uninstalled and no storefront code read them.
+
+### Product details are indexable; dining-table finish copy (#134)
+- `product-details.tsx` force-mounts the PDP accordion panels, so the Description and Specifications text is in the server-rendered HTML. Closed panels are `hidden`; before, they were unmounted.
+- New `useProductFinishCopy` hook: products whose type is "Dining Tables" read "catalyzed lacquer and Rev Oil"; other furniture keeps "catalyzed lacquer or hand-rubbed oil".
+
+### Browser extensions no longer crash the page (#135)
+- `entry.client.tsx` guards `removeChild` / `insertBefore` against nodes that extensions (Dashlane) have moved, instead of letting the root error boundary show "Something's wrong here."
+
 ### Product pages say only what is true for the product (SEO audit 2026-10-27)
 - **Wax and imported products no longer show furniture promises.** New `productClass()` (`app/utils/product-class.ts`) sorts products into `furniture`, `housewares` (wax / "Wood Care") and `imported` (vendor Piper + Fox). `adaptProductPage()` (`app/page-builder/adapt-product-page.ts`) drops the furniture-only sections (lifetime warranty + white glove, "Handcrafted in Ohio / Made in the USA", hardwood specs + 12–16 week delivery accordion, Amish build process) for non-furniture products. Wax shows "Ships within 3–5 business days"; imported products show no lead-time line. Furniture pages are unchanged. `PRODUCT_QUERY` now selects `productType`.
 - **Product JSON-LD:** `countryOfOrigin: US` is no longer emitted for import-vendor products (Piper + Fox), in addition to the existing Seymour exception.
