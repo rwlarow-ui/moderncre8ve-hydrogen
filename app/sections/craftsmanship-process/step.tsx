@@ -1,4 +1,5 @@
 import type { RefObject } from "react";
+import { useProductFinishCopy } from "~/hooks/use-product-finish-copy";
 import { createSchema, type SectionComponentProps } from "~/page-builder";
 
 interface CraftsmanshipStepProps extends SectionComponentProps {
@@ -23,6 +24,7 @@ const CraftsmanshipStep = ({
     textColor = "#323640",
     ...rest
   } = props;
+  const description = useProductFinishCopy(stepDescription);
 
   const renderIcon = () => {
     const iconProps = {
@@ -110,7 +112,7 @@ const CraftsmanshipStep = ({
         className="font-serif text-sm leading-relaxed"
         style={{ color: `${textColor}bb` }}
       >
-        {stepDescription}
+        {description}
       </p>
     </div>
   );

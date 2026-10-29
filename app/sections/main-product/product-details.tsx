@@ -106,7 +106,11 @@ export function ProductDetails({
             <MinusIcon className="minus hidden h-4 w-4" />
             <PlusIcon className="plus h-4 w-4" />
           </Accordion.Trigger>
+          {/* forceMount keeps closed panels in the server-rendered HTML
+              (Radix sets `hidden` on them), so search engines can read the
+              description and specs without the panel being opened. */}
           <Accordion.Content
+            forceMount
             style={
               {
                 "--expand-to": "var(--radix-accordion-content-height)",
