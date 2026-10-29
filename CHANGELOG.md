@@ -7,7 +7,7 @@
 ## Unreleased
 
 ### Dining table listings and FoxKit cleanup (Shopify Admin, 2026-10-28/29)
-- **New dining table listing framework** (`docs/adr/0004-dining-table-listing-framework.md`). Every dining table now has the same options: Size 64/72/84" with seats in the label, four natural woods, and 0–3 × 18" leaves. Prices come from the pricing sheet at 33% margin plus a 3% card fee. Bossa Nova and Santa Monica are Active, Payne is Unlisted for review, and Vista is still to do.
+- **New dining table listing framework** (`docs/adr/0004-dining-table-listing-framework.md`). Target options for every dining table: Size 64/72/84" with seats in the label, four natural woods, and 0–3 × 18" leaves. Prices come from the pricing sheet at 33% margin plus a 3% card fee. Rolled out so far to Bossa Nova and Santa Monica (Active) and Payne (Unlisted for review); Vista still has its old 54–72" lengths and 12" leaves.
 - **Copy and SEO rewritten** on those listings: descriptions without an H1, new titles and SEO titles/meta descriptions, matching feature badges and materials panel, and image alt text.
 - **FoxKit removed:** 67 leftover product metafields deleted (`foxkit-discount`, `foxkit.preorder`, `foxecom-bs-kit`). The app was already uninstalled and no storefront code read them.
 
