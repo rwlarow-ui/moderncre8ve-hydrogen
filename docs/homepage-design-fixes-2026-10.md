@@ -20,7 +20,7 @@ Fixes 1 and 2 are mostly **store data**, so their Admin steps can ship today wit
 At desktop size the carousel shows **one** product (The Santa Monica) in a row built for four. The other three slots are empty, and a "next" arrow under them does nothing.
 
 ### Root cause
-- **Data.** `home-featured-items` (`app/page-builder/pages/homepage.ts:212`) loads the `best-sellers` collection with `productsToShow: 8`, `slidesPerView: 4`. The collection has 8 products, but **7 are DRAFT** (checked through the Admin API on 2026-10-30), and the Storefront API returns only published products:
+- **Data.** `home-featured-items` (`app/page-builder/pages/homepage.ts:212`) loads the `best-sellers` collection with `productsToShow: 8`, `slidesPerView: 4`. The collection has 8 products, but **7 are DRAFT** (checked through the Admin API on 2026-10-30). The Storefront API returns only products that are active **and** published to the storefront's sales channel:
 
   | Product | Status |
   |---|---|
@@ -34,29 +34,46 @@ At desktop size the carousel shows **one** product (The Santa Monica) in a row b
   | Wookie Modern Wood Bed Frame | DRAFT |
 
   The "Shop All" button and the main menu's *Furniture → Best Sellers* both point at the same collection, so `/collections/best-sellers` has the same problem.
-- **Code.** The desktop carousel (`product-items.tsx:300–345`) always renders the prev/next buttons. Swiper sets `isBeginning` and `isEnd` to true when everything fits, so both buttons render as disabled at 50% opacity instead of being hidden. The buttons are also targeted by the global class selectors `.featured-products-next` / `.featured-products-prev`, so two featured-products sections on the same page would control each other's carousels.
+- **Code.** The homepage uses `layout: "carousel"`, which renders the same Swiper (`product-items.tsx:268–345`) at every width. Its `breakpoints` set 1 slide per view under 640px, 2 from 640px, 3 from 768px and 4 from 1024px (lines 286–298). The prev/next buttons below it are always rendered. When everything fits, Swiper sets `isBeginning` and `isEnd` to true, so both buttons show as disabled at 50% opacity instead of being hidden. (The separate mobile Swiper at line ~184 belongs to `layout: "grid"` only.) The buttons are also targeted by the global class selectors `.featured-products-next` / `.featured-products-prev`, so two featured-products sections on the same page would control each other's carousels.
 
 ### Change
 **Admin (no deploy):**
-1. Add at least 4 (ideally 8) **active** products to `best-sellers`, or publish the drafts that are ready to sell. Which products is a merchandising decision for Rob.
-2. If drafts are kept in the collection for later, that's fine. Only published products are counted.
+1. Make sure at least 4 (ideally 8) products in `best-sellers` are **both** `ACTIVE` **and published to the Hydrogen storefront's sales channel**. Do this by publishing the drafts that are ready to sell or by adding other products. Setting a product to `ACTIVE`, or adding it to the collection, does not publish it to the headless channel, and the Storefront API returns only products published there. Check *Product → Publishing* in Admin, or the product's `resourcePublications` in the Admin API. Which products to feature is a merchandising decision for Rob.
+2. If drafts are kept in the collection for later, that's fine. Only products published to the storefront channel are counted.
 
 **Code:**
-1. In the desktop branch of `product-items.tsx`, render the arrow row only when there is something to scroll:
+1. Hide the arrows based on what Swiper reports for the current viewport, not a fixed product count, so they hide only when this screen size has nothing to scroll. Swiper's `watchOverflow` is on by default and sets `swiper.isLocked` when all slides fit at the active breakpoint:
    ```tsx
-   const canScroll = displayedProducts.length > (slidesPerView || 4);
+   const [isLocked, setIsLocked] = useState(false);
+   const syncLock = (s: SwiperType) => setIsLocked(s.isLocked);
+   // <Swiper onSwiper={syncLock} onBreakpoint={syncLock} onResize={syncLock} … >
    // ...
-   {canScroll && (<div className="flex justify-center gap-2">…</div>)}
+   {!isLocked && (<div className="flex justify-center gap-2">…</div>)}
    ```
-   Do the same for the mobile branch (`slidesPerView={1.2}`, line ~184) using `displayedProducts.length > 1`.
-2. Replace the global class selectors with element refs (`useRef<HTMLButtonElement>`) passed to `navigation={{ prevEl, nextEl }}`, so each section instance controls only its own carousel.
-3. Optional: when `displayedProducts.length < slidesPerView`, center the slides (`centerInsufficientSlides` in Swiper) so a short row doesn't hug the left edge.
+   With 2–4 products on a phone or tablet, the arrows stay visible because they still scroll there. At 1440px with ≤ 4 products, they hide. Apply the same lock check to the `grid` layout's mobile Swiper (line ~184).
+2. Replace the global class selectors with per-instance element refs, so each section controls only its own carousel. The refs are `null` during the render in which Swiper initializes, so passing `prevRef.current` / `nextRef.current` straight into `navigation` leaves the buttons unbound. Bind them in `onBeforeInit` instead:
+   ```tsx
+   const prevRef = useRef<HTMLButtonElement>(null);
+   const nextRef = useRef<HTMLButtonElement>(null);
+   // <Swiper
+   //   modules={[Navigation]}
+   //   onBeforeInit={(s) => {
+   //     if (typeof s.params.navigation === "object") {
+   //       s.params.navigation.prevEl = prevRef.current;
+   //       s.params.navigation.nextEl = nextRef.current;
+   //     }
+   //   }}
+   // >
+   ```
+   Keep the buttons always in the DOM (hidden with a `hidden` class when locked, not unmounted) so the refs stay bound across breakpoint changes. If they must be conditionally mounted, use callback refs stored in state, then call `swiper.navigation.destroy(); swiper.navigation.init(); swiper.navigation.update();` when they change.
+3. Optional: set Swiper's `centerInsufficientSlides` so a row with fewer products than `slidesPerView` is centered instead of hugging the left edge.
 
 ### Acceptance criteria
 - [ ] At 1440px wide, the homepage shows ≥ 4 product cards in "Designs Worth the Wait".
-- [ ] With ≤ 4 published products (test by pointing a branch preview at a small collection), no arrows are shown and the cards are centered.
-- [ ] With > 4 products, the arrows appear, work, and disable correctly at each end.
-- [ ] Two `featured-products` sections on one page scroll independently.
+- [ ] Each featured product is `ACTIVE` and published to the Hydrogen channel (shown in the Storefront API response, not only in Admin).
+- [ ] Arrow visibility follows the viewport. Test by pointing a branch preview at a collection of 3 products: arrows hidden and cards centered at 1440px; arrows visible and working at 375px (1 per view) and 640px (2 per view).
+- [ ] With > 4 products, the arrows appear at every width, work, and disable correctly at each end, including after resizing across a breakpoint.
+- [ ] Two `featured-products` sections on one page scroll independently, and both sets of arrows work on first load (no unbound buttons).
 
 ---
 
