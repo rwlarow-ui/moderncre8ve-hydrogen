@@ -3,7 +3,7 @@ import type { PageData } from "./types";
 
 /**
  * Sections in the shared PRODUCT composition whose copy only holds for
- * Ohio-built furniture: lifetime warranty and white glove delivery
+ * Ohio-built furniture: one-year warranty and white glove delivery
  * (`product-guarantee`), "Handcrafted in Ohio / Made in the USA"
  * (`product-highlights`), solid-hardwood / zero-veneer materials and the
  * 12–16 week delivery accordion (`product-specs`), and the Amish build process

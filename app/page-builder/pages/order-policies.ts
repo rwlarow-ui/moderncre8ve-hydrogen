@@ -167,9 +167,9 @@ export const orderPolicies: PageDefinition = {
       id: "policies-q4",
       type: "accordion--item",
       data: {
-        title: "Product Guarantee",
+        title: "Product Warranty",
         content:
-          "Two-year guarantee on all furniture and products. We will repair or replace items if issues occur and proper care was maintained per our Care Instructions. Does not cover: checking from humidity changes, user damage, or improper care. Natural wood inclusions are not defects.",
+          "One-year warranty on all furniture from the date of delivery. We will repair or replace items with defects in materials or workmanship, provided proper care was maintained per our Care Instructions. To make a claim, email photos and a short description of the issue. Does not cover: checking from humidity changes, misuse, overloading, or improper handling or care. Natural wood inclusions are not defects.",
       },
     },
     {

@@ -155,9 +155,9 @@ export const schema = createSchema({
   ],
   presets: {
     iconType: "shield",
-    title: "Lifetime Structural Warranty",
+    title: "1-Year Warranty",
     description:
-      "Every joint, every frame — guaranteed for life against defects in materials and workmanship.",
+      "Every piece is covered for one year from delivery against defects in materials and workmanship. If one turns up, we’ll repair or replace it.",
     accentColor: "#2CBF96",
     textColor: "#323640",
   },
