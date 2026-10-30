@@ -183,7 +183,7 @@ function home(): SeoConfig {
             name: "What is your return policy?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Because each piece is handcrafted to order, we do not accept returns on custom furniture. We stand behind our craftsmanship with a quality guarantee. Please contact us within 48 hours of delivery if there are any issues.",
+              text: "Because each piece is handcrafted to order, we do not accept returns on custom furniture. We stand behind our craftsmanship with a one-year warranty against defects in materials and workmanship. Please report any delivery damage within 72 hours of delivery.",
             },
           },
           {

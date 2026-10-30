@@ -17,7 +17,7 @@
 export const STORE_WIDE = {
   shipping_works: `<p>All furniture is handcrafted to order in Ohio. Please allow <strong>12–16 weeks</strong> for production and delivery.</p><p>We offer <strong>complimentary white glove in-home delivery</strong> on 95%+ of orders — your piece is delivered directly into your home, placed in your desired room, assembled if needed, and all packaging is removed.</p><p>You'll receive tracking updates at each stage: order confirmation, production start, finishing, and shipping. Custom orders may require additional lead time.</p>`,
 
-  product_guarantee_text: `<p>Every ModernCre8ve piece is built to last generations. We stand behind our craftsmanship with a <strong>lifetime structural warranty</strong> covering joints, frames, and construction integrity.</p><p>If you're not completely satisfied, contact us within 30 days of delivery and we'll make it right. Our furniture is built by Amish artisans using time-tested joinery techniques — no particle board, no veneers, no shortcuts.</p>`,
+  product_guarantee_text: `<p>Every ModernCre8ve piece is handcrafted by Amish artisans using time-tested joinery. We stand behind it with a <strong>one-year warranty</strong> from the date of delivery: if your piece has a defect in materials or workmanship, we will repair or replace it.</p><p>To make a claim, email photos and a short description of the issue. The warranty does not cover checking from humidity changes, misuse, overloading, or improper handling or care. Natural wood character, such as grain variation, knots and color shifts, is not a defect.</p>`,
 };
 
 // ── Per-product content ────────────────────────────────────────────────

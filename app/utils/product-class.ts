@@ -3,7 +3,7 @@
  *
  * The PRODUCT composition (`app/page-builder/pages/default-product.ts`) is
  * shared by every product and was written for Ohio-built furniture: 12–16 week
- * lead time, lifetime structural warranty, white glove delivery, "Handcrafted
+ * lead time, one-year warranty, white glove delivery, "Handcrafted
  * in Ohio / Made in the USA", Amish joinery. Those claims are wrong on
  * Lareaux's Furniture Wax (ships in 3–5 business days) and on imported seating
  * (vendor "Piper + Fox Co."; listings say "Place of Origin: China").

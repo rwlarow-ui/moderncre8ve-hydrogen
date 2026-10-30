@@ -102,7 +102,7 @@ export const schema: ComponentSchema = {
         type: "accordion--item",
         title: "Do you offer a warranty?",
         content:
-          "Yes, all ModernCre8ve furniture comes with a 2-year warranty covering manufacturing defects. Our furniture is built to last for generations with proper care.",
+          "Yes, all ModernCre8ve furniture comes with a one-year warranty from delivery covering defects in materials and workmanship. Our furniture is built to last for generations with proper care.",
       },
       {
         type: "accordion--item",

@@ -157,7 +157,7 @@ export const faq: PageDefinition = {
       data: {
         title: "What is your guarantee/warranty?",
         content:
-          "Two-year guarantee on all furniture. We will repair or replace items if issues occur and proper care was maintained per our Care Instructions. Does not cover: checking from humidity changes, user damage, or improper care. Natural wood inclusions (tonal streaking, grain irregularity, knots, whorls, textural variances) are not defects.",
+          "One-year warranty on all furniture from the date of delivery. We will repair or replace items with defects in materials or workmanship, provided proper care was maintained per our Care Instructions. To make a claim, email photos and a short description of the issue. Does not cover: checking from humidity changes, misuse, overloading, or improper handling or care. Natural wood inclusions (tonal streaking, grain irregularity, knots, whorls, textural variances) are not defects.",
       },
     },
     {

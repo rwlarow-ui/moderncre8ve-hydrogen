@@ -103,9 +103,9 @@ export const defaultProduct: PageDefinition = {
       type: "guarantee-item",
       data: {
         iconType: "shield",
-        title: "Lifetime Structural Warranty",
+        title: "1-Year Warranty",
         description:
-          "Every joint, every frame — guaranteed for life against defects in materials and workmanship. See our full warranty policy for details.",
+          "Every piece is covered for one year from delivery against defects in materials and workmanship. If one turns up, we’ll repair or replace it. See our order policies for details.",
         accentColor: "#2CBF96",
         textColor: "#323640",
       },
@@ -114,10 +114,10 @@ export const defaultProduct: PageDefinition = {
       id: "guarantee-2",
       type: "guarantee-item",
       data: {
-        iconType: "refresh",
-        title: "30-Day Satisfaction Guarantee",
+        iconType: "check",
+        title: "Inspect on Delivery",
         description:
-          "Live with your piece for a full 30 days. If it doesn’t feel right, we offer exchanges, custom adjustments, or a full refund — your choice.",
+          "Check your piece when it arrives and note any damage with the delivery team. Spot something after they leave? Email us photos within 72 hours and we’ll coordinate a repair or replacement.",
         accentColor: "#2CBF96",
         textColor: "#323640",
       },

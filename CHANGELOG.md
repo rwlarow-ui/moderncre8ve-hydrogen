@@ -6,8 +6,14 @@
 
 ## Unreleased
 
+### Warranty copy matches the Barkman 1-year warranty
+- Our builder's dealer terms cover defects in materials and workmanship for **one year from delivery** (repair or replace; claims need photos; misuse, overloading and improper handling, storage or installation are excluded). The site promised three different things: a "Lifetime Structural Warranty" on product pages, a two-year guarantee in the FAQ and order policies, and a "30-Day Satisfaction Guarantee" offering "a full refund — your choice", which also contradicted the no-returns policy for made-to-order pieces.
+- Product guarantee section (`default-product.ts`, `quality-guarantee` presets): "1-Year Warranty", and "Inspect on Delivery" (note damage with the delivery team, or email photos within 72 hours) replaces the 30-day refund promise.
+- FAQ, order policies accordion, accordion-group default, and the FAQ JSON-LD in `seo.server.ts` say one year; the JSON-LD's 48-hour window is now 72 hours and applies to delivery damage only, matching the order policies.
+- `scripts/product-metafields-data.ts` `product_guarantee_text` matches the value now set on products in Shopify.
+
 ### Dining table listings and FoxKit cleanup (Shopify Admin, 2026-10-28/29)
-- **New dining table listing framework** (`docs/adr/0004-dining-table-listing-framework.md`). Target options for every dining table: Size 64/72/84" with seats in the label, four natural woods, and 0–3 × 18" leaves. Prices come from the pricing sheet at 33% margin plus a 3% card fee. Rolled out so far to Bossa Nova and Santa Monica (Active) and Payne (Unlisted for review); Vista still has its old 54–72" lengths and 12" leaves.
+- **New dining table listing framework** (`docs/adr/0004-dining-table-listing-framework.md`). Target options for every dining table: Size 64/72/84" with seats in the label, four natural woods, and 0–3 × 18" leaves. Prices come from the pricing sheet at 33% margin plus a 3% card fee. Rolled out to Bossa Nova, Santa Monica and Payne (Active) and Vista (Unlisted for review, rebuilt 2026-10-29 from 42"-wide 54–72" tables with 12" leaves).
 - **Copy and SEO rewritten** on those listings: descriptions without an H1, new titles and SEO titles/meta descriptions, matching feature badges and materials panel, and image alt text.
 - **FoxKit removed:** 67 leftover product metafields deleted (`foxkit-discount`, `foxkit.preorder`, `foxecom-bs-kit`). The app was already uninstalled and no storefront code read them.
 

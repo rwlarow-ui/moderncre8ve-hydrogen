@@ -110,16 +110,16 @@ export const schema = createSchema({
       {
         type: "guarantee-item",
         iconType: "shield",
-        title: "Lifetime Structural Warranty",
+        title: "1-Year Warranty",
         description:
-          "Every joint, every frame — guaranteed for life against defects in materials and workmanship.",
+          "Every piece is covered for one year from delivery against defects in materials and workmanship. If one turns up, we’ll repair or replace it.",
       },
       {
         type: "guarantee-item",
-        iconType: "refresh",
-        title: "30-Day Satisfaction Guarantee",
+        iconType: "check",
+        title: "Inspect on Delivery",
         description:
-          "Live with your piece for a full month. If it doesn't feel right, we'll work with you to make it right.",
+          "Check your piece when it arrives and note any damage with the delivery team. Spot something after they leave? Email us photos within 72 hours and we’ll coordinate a repair or replacement.",
       },
       {
         type: "guarantee-item",
