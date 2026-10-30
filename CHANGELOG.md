@@ -8,8 +8,8 @@
 
 ### Warranty copy matches the Barkman 1-year warranty
 - Our builder's dealer terms cover defects in materials and workmanship for **one year from delivery** (repair or replace; claims need photos; misuse, overloading and improper handling, storage or installation are excluded). The site promised three different things: a "Lifetime Structural Warranty" on product pages, a two-year guarantee in the FAQ and order policies, and a "30-Day Satisfaction Guarantee" offering "a full refund — your choice", which also contradicted the no-returns policy for made-to-order pieces.
-- Product guarantee section (`default-product.ts`, `quality-guarantee` presets): "1-Year Warranty", and "Inspected on Delivery" (report issues within 72 hours) replaces the 30-day refund promise.
-- FAQ, order policies accordion, accordion-group default, and the FAQ JSON-LD in `seo.server.ts` say one year; the JSON-LD's 48-hour reporting window is now 72 hours, matching the order policies.
+- Product guarantee section (`default-product.ts`, `quality-guarantee` presets): "1-Year Warranty", and "Inspect on Delivery" (note damage with the delivery team, or email photos within 72 hours) replaces the 30-day refund promise.
+- FAQ, order policies accordion, accordion-group default, and the FAQ JSON-LD in `seo.server.ts` say one year; the JSON-LD's 48-hour window is now 72 hours and applies to delivery damage only, matching the order policies.
 - `scripts/product-metafields-data.ts` `product_guarantee_text` matches the value now set on products in Shopify.
 
 ### Dining table listings and FoxKit cleanup (Shopify Admin, 2026-10-28/29)

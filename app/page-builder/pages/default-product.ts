@@ -115,9 +115,9 @@ export const defaultProduct: PageDefinition = {
       type: "guarantee-item",
       data: {
         iconType: "check",
-        title: "Inspected on Delivery",
+        title: "Inspect on Delivery",
         description:
-          "Our white glove team assembles your piece in your home. If anything isn’t right, tell us within 72 hours of delivery and we’ll arrange a repair or replacement.",
+          "Check your piece when it arrives and note any damage with the delivery team. Spot something after they leave? Email us photos within 72 hours and we’ll coordinate a repair or replacement.",
         accentColor: "#2CBF96",
         textColor: "#323640",
       },
