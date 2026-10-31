@@ -151,7 +151,7 @@ export const orderPolicies: PageDefinition = {
       data: {
         title: "Chargebacks & Disputes",
         content:
-          "Every piece is built to order, so custom orders (including standard designs in your chosen size, wood and options) cannot be cancelled or charged back once placed. If a dispute or chargeback is filed on a custom order, the buyer agrees that MODERNCRE8VE, Inc. chooses the resolution: return of the piece or refund. Please contact support@moderncre8ve.com or (216) 502-0755 first.",
+          "Our furniture is built to order, so custom orders (any furniture built to your specifications, including standard designs in your chosen size, wood and options) cannot be cancelled or charged back once placed. If a dispute or chargeback is filed on a custom order, the buyer agrees that MODERNCRE8VE, Inc. chooses the resolution: return of the piece or refund. Please contact support@moderncre8ve.com or (216) 502-0755 first.",
       },
     },
     {
@@ -187,7 +187,7 @@ export const orderPolicies: PageDefinition = {
       data: {
         title: "Order Cancellations",
         content:
-          "Items are not returnable, and custom orders cannot be cancelled once they are placed. Contact us as soon as possible if you need to change a detail; we may be able to make modifications, at our discretion, before production begins. 72-hour window after delivery for issues with custom orders.",
+          "Built-to-order furniture is not returnable, and custom orders cannot be cancelled once they are placed. Contact us as soon as possible if you need to change a detail; we may be able to make modifications, at our discretion, before production begins. 72-hour window after delivery for issues with custom orders.",
       },
     },
     {

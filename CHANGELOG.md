@@ -7,7 +7,7 @@
 ## Unreleased
 
 ### Custom orders can't be cancelled or charged back once placed
-- Matches the refund policy updated in Shopify Admin on 2026-10-31. FAQ "Can I change or cancel my order?" and the Order Policies "Chargebacks & Disputes" and "Order Cancellations" entries now say custom orders (every built-to-order piece) can't be cancelled once placed; modifications before production are at our discretion; and on a dispute or chargeback the seller chooses return or refund.
+- Matches the refund policy updated in Shopify Admin on 2026-10-31. FAQ "Can I change or cancel my order?" and the Order Policies "Chargebacks & Disputes" and "Order Cancellations" entries now say custom orders (every built-to-order furniture piece; wax and in-stock items excluded) can't be cancelled once placed; modifications before production are at our discretion; and on a dispute or chargeback the seller chooses return or refund.
 
 ### Footer: Help links and one newsletter form (design fix 2, `docs/homepage-design-fixes-2026-10.md`)
 - **Footer menu rebuilt (Shopify Admin, 2026-10-31).** The `footer` menu was a "[DRAFT]" menu with only Blog + Legal. It now has four columns: **Shop** (All Furniture, Dining, Living, Bedroom, Custom Orders), **Help** (Shipping & Lead Times, Ordering & Guarantee, Assembly & Care, FAQ, Contact), **Company** (About Us, Our Materials, Reviews, Trade, Blog) and **Legal** (Privacy Policy, Terms of Service, both under `/policies/*`). The items link to collection, page, blog and policy resources rather than typed URLs, so a handle change won't break them.
