@@ -149,9 +149,9 @@ export const orderPolicies: PageDefinition = {
       id: "policies-q2",
       type: "accordion--item",
       data: {
-        title: "Chargebacks",
+        title: "Chargebacks & Disputes",
         content:
-          "We maintain a non-tolerance policy on chargebacks. All products are made-to-order or custom-made. Rescinding payment after fabrication begins is considered non-payment. Disputes should be directed to support@moderncre8ve.com or (216) 502-0755.",
+          "Every piece is built to order, so custom orders (including standard designs in your chosen size, wood and options) cannot be cancelled or charged back once placed. If a dispute or chargeback is filed on a custom order, the buyer agrees that MODERNCRE8VE, Inc. chooses the resolution: return of the piece or refund. Please contact support@moderncre8ve.com or (216) 502-0755 first.",
       },
     },
     {
@@ -187,7 +187,7 @@ export const orderPolicies: PageDefinition = {
       data: {
         title: "Order Cancellations",
         content:
-          "Items are not returnable and cannot be cancelled once fabrication has begun. Contact us as soon as possible for cancellation or modification before production starts. 72-hour window for issues with custom orders.",
+          "Items are not returnable, and custom orders cannot be cancelled once they are placed. Contact us as soon as possible if you need to change a detail; we may be able to make modifications, at our discretion, before production begins. 72-hour window after delivery for issues with custom orders.",
       },
     },
     {
