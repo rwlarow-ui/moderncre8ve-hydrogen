@@ -1,6 +1,6 @@
 # Tech debt register — moderncre8ve.com
 
-**Date:** 2026-10-19 (catalog items #10–12 added 2026-10-28) · **Owner:** Rob LaRow
+**Date:** 2026-10-19 (catalog items #10–12 added 2026-10-28; external Ops Hub #13 added 2026-10-31) · **Owner:** Rob LaRow
 **Scope:** where the storefront's code, docs and decisions live, plus debt found while checking the collections ADR.
 **Score:** Priority = (Impact + Risk) × (6 − Effort), each scored 1–5. Max 50.
 
@@ -13,6 +13,7 @@
 | Your Mac `~/my-hydrogen-storefront` | A clone of the **archived** repo (branch `feat/remove-weaverse-runtime`), plus a `.env`, an untracked ADR and `Claude outputs/` (Santa Monica shop drawings) | 2026-10-06 code | Linked to Claude by default, so sessions that work "on your site" read and write this stale copy |
 | Your Mac `~/Desktop/my-hydrogen-storefront` | **A clone of the live repo** on `main` (2 commits behind), with untracked `TASKS.md`, `memory/`, `dashboard.html`, `.thumbs-tmp/`, `Claude outputs/`, plus 1 old stash (`WIP on 47a3b79`) | 2026-10-19 | Fine once it's the folder you link. The two folders have the **same name**, so it's easy to link the wrong one |
 | Claude Project "Moderncre8ve" docs | 152 files uploaded 2026-10-12 from that same stale folder (Weaverse-era code, `package-lock.json`, generated GraphQL types) **and** a GitHub sync of `moderncre8ve-hydrogen` | 2026-10-12 | Knowledge base is **1,999,951 / 2,000,000** bytes full. Search returns old and new code side by side, so answers can cite Weaverse code that no longer exists |
+| Prototype "Ops Hub" (ChatGPT-hosted, outside GitHub) | Production PO review, PDF/print UI, 27 tests, per-user Shopify auth (per ADR-0001) | Unknown | **Not in this repo.** Its code, its tests and any PO data it holds aren't versioned with the storefront. ADR-0001 retires it as the source of truth; it still exists. See #13 |
 
 ## Prioritized list
 
@@ -30,8 +31,26 @@
 | 10 | Old lead times in product descriptions: **50** descriptions quote something other than 12–16 weeks (4–6, 6–8, 6–12, 8–12 …), 41 of them not archived. **8 of the 16 products on the storefront** are affected (Santa Monica Large, Santa Monica Mixed, Capri set, Corcovado, Compagno, Mansfield, Santa Monica Bench, Astrid) | Data | 3 | 5 | 2 | **32** | The buy box says "12–16 weeks" and the description on the same page says "4–6 weeks". A customer can hold you to the shorter one, and it's the single most likely source of a "where's my table" complaint |
 | 11 | Duplicate H1s from description HTML: **83** descriptions contain `<h1>`, including **12 of the 16** storefront products. `main-product/index.tsx` renders the title as the page H1, then `product-details.tsx` injects `descriptionHtml` unchanged, so its H1s ship too (Santa Monica Ext has three: the title plus two copies of a boilerplate "…Amish-Made Furniture" heading) | Data | 2 | 3 | 2 | **20** | Weakens the page's main heading for search, and the same boilerplate heading is pasted twice on a page |
 | 12 | SEO title/meta on Santa Monica Ext and Lareaux's wax. Ext's title is the generic "Classic Mid Century Modern Dining Table" (no product name, no "extendable", stray double space); its meta (158 chars) and the wax meta (167 chars) both exceed the 155-char cut in `seo.server.ts` and end in "…" | Data | 2 | 2 | 1 | **20** | The Ext table is the top product in a priority category (extendable tables) and its search snippet doesn't say what it is. Both snippets are cut mid-sentence |
+| 13 | The production PO workflow still runs partly in the external, ChatGPT-hosted prototype Ops Hub. ADR-0001's replacement in `/ops` is mostly built but has never processed a real order: no automatic PO on order creation, no post-purchase logistics form, no reminders, no live send verified. ADR-0001 is still marked **Proposed** | Architecture | 4 | 4 | 3 | **24** | Every order needs a PO before Barkman can build it. While two tools can hold a PO, it can be reviewed in one, missed in the other, or sent twice. The prototype can't automate (per-user auth, no order events) and lives where nobody can review or roll back its code |
 
 **Scoping note for #10–12 (2026-10-28).** Counts come from all 146 products in Admin, worklist in `docs/catalog-cleanup-2026-10.csv` (storefront products first). The Admin API reports **0 active products**: all 16 products listed on `/collections/all` come back as `DRAFT` or `UNLISTED` with no publications, and the storefront's `/sitemap/products/1.xml` appeared to list no products. This contradicts "26 active + 3 draft" in `CLAUDE.md` and wasn't resolved. Until it is, don't scope a bulk edit with `status:active`, because it would match nothing. Use the CSV's `on_storefront` column, or treat every non-archived product as live.
+
+**Scoping note for #13 (2026-10-31).** Scan of `main` at `b1363ac` against ADR-0001's action items:
+
+| Piece | In this repo | Evidence |
+|---|---|---|
+| PO + logistics definitions (`production_po` metaobject, order metafields, `custom.finish`) | ✅ Built | `scripts/create-po-definitions.mjs`, `npm run test:po` |
+| Logistics form in the cart, required before Checkout | ✅ Built (UI-only gate) | `app/components/cart/logistics-form.tsx`, `app/utils/logistics.js`, `npm run test:logistics` |
+| PO review queue, detail, edit, approve, revoke; awaiting-logistics queue | ✅ Built | `app/routes/ops.pos._index.tsx`, `ops.pos.$poId.tsx`, `app/utils/production-po*.js`, `npm run test:pos` |
+| PDF + approved-only email send with idempotency, resend to partner | ✅ Built, ❌ never run live | `ops_.pos.$poId.pdf.ts`, `app/utils/po-pdf.server.js`, `po-send.server.js`, `npm run test:send` |
+| PO created automatically on order creation (ADR item 5) | ❌ Missing | No Flow config and no Oxygen route for a Flow HTTP step. POs are created by hand from `/ops/orders/:id` |
+| Flow built-in actions and cart attribute limits verified (item 6) | ❌ Open | Not recorded anywhere |
+| Post-purchase logistics form `/account/orders/:id/delivery` + signed guest link (item 8) | ❌ Missing | No such route under `app/routes/`; the "provide later" path in the cart has nowhere to go |
+| Customer reminders (day 3/7/14) and Rob's day-10 alert | ❌ Missing | Awaiting queue shows days waiting and contact details only |
+| Approve/send permission tests (item 11) | ⚠️ Partial | `tests/ops-utils.test.mjs` covers the login redirect only |
+| Oxygen secrets for sending (`RESEND_API_KEY`, `PO_FROM_EMAIL`, `PO_PARTNER_EMAIL`) and token scopes for POs | ❓ Unknown | Can't be read from the repo. PO storage currently needs the broad `SHOPIFY_ADMIN_API_TOKEN` on Oxygen, against the CLAUDE.md rule to keep it local |
+| Dry run with one historical order (item 12) | ❌ Not done | |
+| What the external hub does that `/ops` doesn't | ❓ Unknown | Its code isn't in GitHub, so this scan can't list its features or say whether it holds POs that aren't in Shopify |
 
 ## Remediation plan
 
@@ -57,6 +76,15 @@
 12. Move non-code documents out of the repo root: business documents to Drive or the Project, and anything still worth versioning into `docs/research/`. Delete the `.bak`. (#5)
 13. Carry out ADR-0002 (move `seo-truth-layer` into the repo's real workflows). (#8)
 14. GA4 `view_promotion` / `select_promotion` on collection tiles, then a before/after comparison of the conversion pass. (#9)
+
+**Bring the PO workflow fully into this repo and retire the external Ops Hub (#13).** Goal: every PO is created, reviewed, approved and sent from `/ops` with Shopify as the only record, and the ChatGPT-hosted hub is switched off (not kept as a viewer). In order:
+15. **Inventory the external hub (Rob, ~30 min).** List every screen and action it has, and export any POs or notes it holds that aren't already in Shopify metaobjects. Anything it does that `/ops` doesn't becomes a line in this list.
+16. **Automatic PO on order creation (ADR item 5, ~1 day).** Verify Flow's built-in actions on this plan (item 6). Preferred: Flow "Order created" → HTTP request to a new authenticated Oxygen route that calls the existing create-draft code and re-validates logistics from `order.customAttributes`, parking the PO in `awaiting_logistics` when missing (the cart gate is UI-only). Run the cart attribute worst-case payload test in the same pass.
+17. **Post-purchase logistics form (ADR item 8, ~1 day).** `/account/orders/:id/delivery` plus a signed link for guest orders, writing `moderncre8ve.logistics` / `logistics_status` server-side and moving the PO to `ready_for_review`. Link it from the order-confirmation email with `https://moderncre8ve.com/...` URLs.
+18. **Reminders (~½ day).** Day 3/7/14 customer reminders and a day-10 alert to Rob, from Flow or from the Oxygen route above, plus a "resend form link" button on the awaiting queue.
+19. **Secrets and scopes (~2 hours).** Set the three `PO_*`/`RESEND_*` Oxygen secrets. To stop POs needing the full-scope token on Oxygen, in this order: (a) change `getConfig()` in `app/utils/production-po.server.js`, which today reads only `SHOPIFY_ADMIN_API_TOKEN`, to prefer `OPS_ADMIN_API_TOKEN` the way `ops-dashboard.server.js` does; (b) re-mint the ops token with metaobject-entry and product-read scopes added (`scripts/get-admin-token.mjs --ops`, check with `scripts/verify-ops-token.mjs`); (c) only then remove `SHOPIFY_ADMIN_API_TOKEN` from Oxygen. Removing it before (a) breaks every PO page, approval, PDF and send.
+20. **Permission tests (ADR item 11, ~1 hour).** Approve, send and the new Flow route refuse requests without an ops session or a valid signature.
+21. **Dry run, then cut over (ADR item 12).** One historical order end to end with your own address as `PO_PARTNER_EMAIL`; then point it at Barkman, mark ADR-0001 **Accepted**, and shut down the external hub. Close #13 when the hub is off and no PO has been handled outside `/ops` for two weeks.
 
 ## Guardrails so the split doesn't come back
 - One rule in `CLAUDE.md`: *the source of truth is `rwlarow-ui/moderncre8ve-hydrogen` `main`; never edit an archived repo.*
