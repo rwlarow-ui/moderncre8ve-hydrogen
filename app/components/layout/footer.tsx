@@ -629,7 +629,12 @@ export function Footer() {
 function FooterMenu() {
   const { footerMenu } = useShopMenu();
   const items = footerMenu.items as unknown as SingleMenuItem[];
-  const [openItems, setOpenItems] = useState<string[]>([]);
+  // Start open so the server-rendered HTML contains the footer links
+  // (crawlers, no-JS, and no empty headings before hydration on desktop).
+  // The effect below collapses them on mobile once the client mounts.
+  const [openItems, setOpenItems] = useState<string[]>(() =>
+    items.map(({ id }) => id),
+  );
 
   // On desktop, open all items by default
   useEffect(() => {

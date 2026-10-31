@@ -8,6 +8,7 @@
 
 ### Footer: Help links and one newsletter form (design fix 2, `docs/homepage-design-fixes-2026-10.md`)
 - **Footer menu rebuilt (Shopify Admin, 2026-10-31).** The `footer` menu was a "[DRAFT]" menu with only Blog + Legal. It now has four columns: **Shop** (All Furniture, Dining, Living, Bedroom, Custom Orders), **Help** (Shipping & Lead Times, Ordering & Guarantee, Assembly & Care, FAQ, Contact), **Company** (About Us, Our Materials, Reviews, Trade, Blog) and **Legal** (Privacy Policy, Terms of Service, both under `/policies/*`). The items link to collection, page, blog and policy resources rather than typed URLs, so a handle change won't break them.
+- **Footer links are in the server-rendered HTML.** `FooterMenu` started with every accordion closed and opened them in a client-side effect. Radix unmounts closed panels, so the links were missing from the HTML, invisible to crawlers, and desktop showed empty column headings until hydration. The accordions now start open; the effect still collapses them on mobile.
 - **One signup form per page.** The homepage's "Design Notes" newsletter section is removed, so it no longer sits directly above the footer's form. The footer form's theme defaults now use the homepage copy: "Design Notes", "New designs, material deep-dives, and studio updates — no spam, just substance.", "Enter your email", "Subscribe".
 
 ### Warranty copy matches the Barkman 1-year warranty
