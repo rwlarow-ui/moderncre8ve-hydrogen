@@ -28,9 +28,6 @@ export const homepage: PageDefinition = {
         {
           id: "home-video",
         },
-        {
-          id: "home-newsletter",
-        },
       ],
     },
     {
@@ -446,46 +443,6 @@ export const homepage: PageDefinition = {
       data: {
         size: "large",
         borderRadius: 0,
-      },
-    },
-    {
-      id: "home-newsletter",
-      type: "newsletter",
-      children: [
-        {
-          id: "home-newsletter-heading",
-        },
-        {
-          id: "home-newsletter-paragraph",
-        },
-        {
-          id: "home-newsletter-form",
-        },
-      ],
-    },
-    {
-      id: "home-newsletter-heading",
-      type: "heading",
-      data: {
-        content: "Design Notes",
-        as: "h2",
-      },
-    },
-    {
-      id: "home-newsletter-paragraph",
-      type: "paragraph",
-      data: {
-        content:
-          "New designs, material deep-dives, and studio updates — no spam, just substance.",
-      },
-    },
-    {
-      id: "home-newsletter-form",
-      type: "newsletter-form",
-      data: {
-        width: 400,
-        placeholder: "Enter your email",
-        buttonText: "Subscribe",
       },
     },
   ],
