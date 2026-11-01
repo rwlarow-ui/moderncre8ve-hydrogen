@@ -148,7 +148,7 @@ export const faq: PageDefinition = {
       data: {
         title: "Can I change or cancel my order?",
         content:
-          "Standard orders: changes possible before production/shipping. Custom orders: changes allowed before production/material purchase. Contact us promptly. Items are not returnable and cannot be cancelled once fabrication has begun.",
+          "Our furniture is built to order, so furniture orders cannot be cancelled once placed and are not returnable. If you need to change a detail, contact us as soon as possible; we may be able to make modifications, at our discretion, before production begins. For wax and other in-stock items, contact us before your order ships.",
       },
     },
     {
