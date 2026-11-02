@@ -111,7 +111,7 @@ Week 1 is the existing catalog; week 2 launches wave 1 of the new Xin Yean seati
 **Day 7 · Thu Nov 5**
 
 - Create the 6 wave-1 products as drafts in Shopify: readable handles; accurate materials and "Made in China"; sizes in inches; set variants if sold in sets; descriptive alt text; SEO title and meta.
-- Specs metafields (seat height, frame material, upholstery) via `npm run sync:attributes`. Collections: `piper-fox` and `modern-dining-chairs`.
+- Specs metafields (seat height, frame material, upholstery): add the six handles and their attributes to `PRODUCT_PLAN` (`scripts/product-attributes.plan.mjs`), dry-run `npm run sync:attributes`, then `npm run sync:attributes -- --apply`. Collections: `piper-fox` and `modern-dining-chairs`.
 
 **Day 8 · Fri Nov 6**
 
@@ -125,7 +125,7 @@ Week 1 is the existing catalog; week 2 launches wave 1 of the new Xin Yean seati
 
 **Day 10 · Tue Nov 10**
 
-- Launch QA: publish; Rich Results Test on two new chairs (check that `countryOfOrigin` is CN); GSC request indexing; sitemap.
+- Launch QA: publish; Rich Results Test on two new chairs (check that `countryOfOrigin` is absent, not `US`: import-vendor products emit no origin); GSC request indexing; sitemap.
 - Baseline the assistant test with new queries: "solid walnut dining chair", "paper cord dining chair natural ash", "dining chairs for a walnut mid-century table". Waves 2 and 3 follow the same steps.
 
 **Recheck on Dec 10, 2026**, 30 days after the wave-1 seating launch. Search and AI visibility take at least that long to move, so don't judge week 1 changes before early December.
