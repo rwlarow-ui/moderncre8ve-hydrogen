@@ -115,18 +115,26 @@ function topLevelBlocks(css, prefixes) {
   let i = 0;
   while (i < css.length) {
     const at = css.indexOf("@", i);
-    if (at < 0) break;
+    if (at < 0) {
+      break;
+    }
     const head = css.slice(at, css.indexOf("{", at));
     const open = css.indexOf("{", at);
-    if (open < 0) break;
+    if (open < 0) {
+      break;
+    }
     let depth = 0;
     let j = open;
     for (; j < css.length; j++) {
-      if (css[j] === "{") depth++;
-      else if (css[j] === "}" && --depth === 0) break;
+      if (css[j] === "{") {
+        depth++;
+      } else if (css[j] === "}" && --depth === 0) {
+        break;
+      }
     }
-    if (prefixes.some((p) => head.startsWith(p)))
+    if (prefixes.some((p) => head.startsWith(p))) {
       out.push(css.slice(at, j + 1));
+    }
     i = j + 1;
   }
   return out;

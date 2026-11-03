@@ -731,7 +731,9 @@ async function scanPageDefinitions() {
   const findings = [];
 
   for (const entry of entries.sort()) {
-    if (extname(entry) !== ".ts" || entry === "index.ts") continue;
+    if (extname(entry) !== ".ts" || entry === "index.ts") {
+      continue;
+    }
 
     const absolutePath = resolve(PAGES_DIR, entry);
     const relativePath = relative(ROOT, absolutePath);
@@ -1150,9 +1152,13 @@ function loadDotEnv() {
     const envFile = readFileSync(ENV_PATH, "utf8");
     for (const line of envFile.split("\n")) {
       const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith("#")) continue;
+      if (!trimmed || trimmed.startsWith("#")) {
+        continue;
+      }
       const separatorIndex = trimmed.indexOf("=");
-      if (separatorIndex === -1) continue;
+      if (separatorIndex === -1) {
+        continue;
+      }
 
       const key = trimmed.slice(0, separatorIndex).trim();
       let value = trimmed.slice(separatorIndex + 1).trim();

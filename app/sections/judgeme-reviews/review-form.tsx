@@ -9,12 +9,6 @@ import type { JudgemeReviewsData } from "~/utils/judgeme";
 
 export function ReviewForm({ reviews }: { reviews: JudgemeReviewsData }) {
   const { product } = useLoaderData<typeof productRouteLoader>();
-
-  // Check if product exists before using
-  if (!product) {
-    return null;
-  }
-
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -22,8 +16,6 @@ export function ReviewForm({ reviews }: { reviews: JudgemeReviewsData }) {
   const fetcher = useFetcher<any>();
   const formRef = useRef<HTMLFormElement>(null);
   const [message, setMessage] = useState("");
-  const internalId = product.id.split("gid://shopify/Product/")[1];
-  const submittable = rating > 0;
 
   useEffect(() => {
     if ((fetcher.data as Response)?.ok) {
@@ -35,6 +27,14 @@ export function ReviewForm({ reviews }: { reviews: JudgemeReviewsData }) {
       (formRef as React.RefObject<HTMLFormElement>).current?.reset();
     }
   }, [fetcher.data]);
+
+  // Check if product exists before using
+  if (!product) {
+    return null;
+  }
+
+  const internalId = product.id.split("gid://shopify/Product/")[1];
+  const submittable = rating > 0;
 
   return (
     <div

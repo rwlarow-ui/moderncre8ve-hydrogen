@@ -20,7 +20,9 @@ const ctx = await browser.newContext({
 // same-origin POST (add to cart, newsletter...). Supplying x-forwarded-host makes the check pass.
 await ctx.route(`${BASE}/**`, (route) => {
   const req = route.request();
-  if (req.method() === "GET") return route.continue();
+  if (req.method() === "GET") {
+    return route.continue();
+  }
   return route.continue({
     headers: { ...req.headers(), "x-forwarded-host": new URL(BASE).host },
   });
@@ -47,7 +49,9 @@ const go = async (p) => {
     waitUntil: "networkidle",
     timeout: 90000,
   });
-  if (!r.ok()) throw new Error(`${p} -> ${r.status()}`);
+  if (!r.ok()) {
+    throw new Error(`${p} -> ${r.status()}`);
+  }
 };
 
 try {
@@ -95,9 +99,10 @@ try {
     process.exitCode = 2;
   }
 } finally {
-  if (errors.length)
+  if (errors.length) {
     console.log(
-      `browser errors (${errors.length}):\n` + errors.slice(0, 8).join("\n"),
+      `browser errors (${errors.length}):\n${errors.slice(0, 8).join("\n")}`,
     );
+  }
   await browser.close();
 }

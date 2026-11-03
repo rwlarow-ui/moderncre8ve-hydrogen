@@ -159,7 +159,9 @@ export function PredictiveSearchButtonDesktop({ setIsSearchOpen }) {
                                       "searchHistory",
                                       JSON.stringify(next),
                                     );
-                                  } catch {}
+                                  } catch {
+                                    // localStorage unavailable (private mode / quota) — history is optional
+                                  }
                                   navigate(
                                     `/search?q=${encodeURIComponent(value)}`,
                                   );

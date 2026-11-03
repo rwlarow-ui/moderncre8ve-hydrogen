@@ -27,6 +27,7 @@ export function ProductDetails({
   let product, shop;
 
   try {
+    // biome-ignore lint/correctness/useHookAtTopLevel: unconditional call; try only guards a missing route context
     const loaderData = useLoaderData<typeof productLoader>();
     product = propProduct || loaderData?.product;
     shop = propShop || loaderData?.shop;

@@ -134,17 +134,6 @@ const ProductItems = ({
     }
   }, [isSwiperInitialized]);
 
-  const productsConnection = loaderData?.products ?? [];
-
-  if (!productsConnection.length) {
-    return null;
-  }
-
-  const totalProducts = loaderData?.products?.length ?? 0;
-  const maxProductsToShow = productsToShow;
-  const displayedProducts = productsConnection.slice(0, maxProductsToShow);
-  const hasMoreProducts = totalProducts > maxProductsToShow;
-
   const arrowColorClasses = useMemo(() => {
     return arrowsColor === "secondary"
       ? [
@@ -174,6 +163,17 @@ const ProductItems = ({
     }
     return "rounded-md";
   }, [arrowsShape]);
+
+  const productsConnection = loaderData?.products ?? [];
+
+  if (!productsConnection.length) {
+    return null;
+  }
+
+  const totalProducts = loaderData?.products?.length ?? 0;
+  const maxProductsToShow = productsToShow;
+  const displayedProducts = productsConnection.slice(0, maxProductsToShow);
+  const hasMoreProducts = totalProducts > maxProductsToShow;
 
   if (layout === "grid") {
     return (

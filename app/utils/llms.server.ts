@@ -3,14 +3,17 @@
  * Facts here mirror CLAUDE.md "Store Knowledge" — update both together.
  */
 
-export type LlmsProduct = {
+export interface LlmsProduct {
   title: string;
   handle: string;
   productType?: string | null;
   priceRange: { minVariantPrice: { amount: string; currencyCode: string } };
-};
+}
 
-export type LlmsCollection = { title: string; handle: string };
+export interface LlmsCollection {
+  title: string;
+  handle: string;
+}
 
 const SUMMARY = `ModernCre8ve is a Cleveland, Ohio furniture studio. We design modern furniture (mid-century modern, Scandinavian, Japandi) and have it handcrafted to order in solid American hardwood by Ohio Amish craftsmen.`;
 

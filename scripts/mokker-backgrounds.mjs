@@ -39,13 +39,19 @@ const API_URL = "https://api.mokker.ai/v2/replace-background";
 
 // --- Parse .env ---
 function loadEnv() {
-  if (!existsSync(ENV_PATH)) return {};
+  if (!existsSync(ENV_PATH)) {
+    return {};
+  }
   const env = {};
   for (const line of readFileSync(ENV_PATH, "utf-8").split("\n")) {
     const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith("#")) continue;
+    if (!trimmed || trimmed.startsWith("#")) {
+      continue;
+    }
     const eq = trimmed.indexOf("=");
-    if (eq === -1) continue;
+    if (eq === -1) {
+      continue;
+    }
     const key = trimmed.slice(0, eq).trim();
     const val = trimmed
       .slice(eq + 1)
@@ -61,11 +67,13 @@ function parseArgs() {
   const args = process.argv.slice(2);
   const opts = { dryRun: false, startFrom: null, delay: 2000 };
   for (let i = 0; i < args.length; i++) {
-    if (args[i] === "--dry-run") opts.dryRun = true;
-    else if (args[i] === "--start-from" && args[i + 1])
+    if (args[i] === "--dry-run") {
+      opts.dryRun = true;
+    } else if (args[i] === "--start-from" && args[i + 1]) {
       opts.startFrom = args[++i];
-    else if (args[i] === "--delay" && args[i + 1])
+    } else if (args[i] === "--delay" && args[i + 1]) {
       opts.delay = parseInt(args[++i], 10);
+    }
   }
   return opts;
 }
@@ -169,7 +177,9 @@ async function main() {
   }
 
   // Create output dir
-  if (!existsSync(OUTPUT_DIR)) mkdirSync(OUTPUT_DIR, { recursive: true });
+  if (!existsSync(OUTPUT_DIR)) {
+    mkdirSync(OUTPUT_DIR, { recursive: true });
+  }
 
   // Already processed
   const existing = new Set(
@@ -197,8 +207,11 @@ async function main() {
   console.log(`Images:   ${images.length} of ${allImages.length} total`);
   console.log(`Existing: ${existing.size} already processed`);
   console.log(`Delay:    ${opts.delay}ms between requests`);
-  if (opts.dryRun) console.log(`Mode:     DRY RUN\n`);
-  else console.log("");
+  if (opts.dryRun) {
+    console.log(`Mode:     DRY RUN\n`);
+  } else {
+    console.log("");
+  }
 
   if (opts.dryRun) {
     for (let i = 0; i < images.length; i++) {

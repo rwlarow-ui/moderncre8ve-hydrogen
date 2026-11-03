@@ -4,7 +4,10 @@
  * a storefront context, so the design-system bundle formats money with
  * `Intl.NumberFormat`, returning the same fields under the same names.
  */
-type MoneyLike = { amount: string; currencyCode: string };
+interface MoneyLike {
+  amount: string;
+  currencyCode: string;
+}
 
 export function useMoney(money: MoneyLike) {
   const amount = Number.parseFloat(money?.amount ?? "0");
