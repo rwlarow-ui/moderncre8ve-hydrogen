@@ -25,6 +25,14 @@
 
 ## SEO Health (from 2026-04-07 scan)
 
+### Rechecked Against Production (2026-11-03)
+
+- [x] Crawl all 87 current sitemap URLs: all return 200. The earlier July inventory has 27 URLs now returning 404 (25 products + two collections), all absent from today's sitemap. See `reports/seo-404-recheck-2026-11-03.md` and its URL CSV.
+- [x] Repo fix: 301 `about-us-1` to `about-us` and `contact-and-inquiry` to `contact-us`; exclude both aliases and `wrong-turn` from XML/HTML sitemaps; noindex `wrong-turn`. Deployment pending.
+- [ ] Import `reports/redirects-ready-2026-11-03.csv` in Shopify Admin; overwrite the existing malformed coffee-table redirect.
+- [ ] Decide whether to restore the 19 draft products or retire them. Four Santa Monica redirects are prepared separately for confirmed retirement; do not republish products just to silence old alerts.
+- [ ] After deployment and Admin changes, recheck affected URLs and validate the July 3 Search Console issues in both properties. The alert emails contain no URL examples, so the current crawl cannot identify Google's exact July 3 sample set.
+
 ### High-Impact CTR Fixes (rewrite title tags + meta descriptions)
 
 - [ ] Product: Scandinavian Danish Modern Dining Table — 0% CTR at pos 10, 2,206 impressions
@@ -44,11 +52,11 @@
 ### Technical SEO Fixes
 
 - [ ] Add Twitter card meta tags in `app/utils/seo.server.ts`
-- [ ] Fix product slug: `capri-modern-dining-table-set_` (trailing underscore)
-- [ ] Fix product slug: `copy-of-santa-monica-bench-modern-walnut-bench` ("copy-of" prefix)
-- [ ] Fix product slug: `van-aiken-boho-bed-fram` (typo — missing "e" in "frame") + set up redirect
-- [ ] Consolidate duplicate pages: `about-us-1` → redirect to `about-us`
-- [ ] Consolidate duplicate pages: pick one contact page, redirect the other
+- [ ] If restoring Capri, rename `capri-modern-dining-table-set_` to `capri-modern-dining-table-set`, activate and publish to Hydrogen; replace the existing clean-handle redirect to `/`, then import the deferred cleanup CSV.
+- [ ] If restoring Santa Monica Bench, rename `copy-of-santa-monica-bench-modern-walnut-bench` to `santa-monica-bench-modern-walnut-bench`, activate and publish to Hydrogen, then import the deferred cleanup CSV.
+- [ ] Resolve Van Aiken: neither `van-aiken-boho-bed-fram` nor `van-aiken-boho-bed-frame` exists in the Admin handle lookup; the old variant ID also returns null. Restore the actual listing before adding a redirect, or leave the retired URL 404.
+- [x] Consolidate duplicate pages in the app: `about-us-1` → `about-us` (deployment pending)
+- [x] Consolidate contact pages in the app: `contact-and-inquiry` → `contact-us` (deployment pending)
 - [ ] Expand homepage meta description from 126 to ~155 chars
 - [ ] Audit all product images for missing alt text
 - [ ] Re-run SEO truth layer pipeline (last report: 2026-03-11, nearly a month stale)
