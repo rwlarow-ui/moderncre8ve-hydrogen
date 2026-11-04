@@ -26,8 +26,12 @@ const DINING_CHAIRS = ["the-seymour-modern-dining-chair"];
 const NON_US_ORIGIN = new Set(["the-seymour-modern-dining-chair"]);
 
 export function relatedProductHandles(handle: string): string[] {
-  if (DINING_TABLES.includes(handle)) return DINING_CHAIRS;
-  if (DINING_CHAIRS.includes(handle)) return DINING_TABLES;
+  if (DINING_TABLES.includes(handle)) {
+    return DINING_CHAIRS;
+  }
+  if (DINING_CHAIRS.includes(handle)) {
+    return DINING_TABLES;
+  }
   return [];
 }
 

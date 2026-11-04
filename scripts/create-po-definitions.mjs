@@ -237,7 +237,9 @@ async function main() {
   for (const { def, exists } of plan.metafields) {
     const label = `${def.ownerType.toLowerCase()} metafield ${def.namespace}.${def.key}`;
     console.log(`${label}: ${exists ? "exists, skip" : "create"}`);
-    if (exists || dryRun) continue;
+    if (exists || dryRun) {
+      continue;
+    }
     const data = await adminGraphql(CREATE_METAFIELD_DEFINITION, {
       definition: def,
     });

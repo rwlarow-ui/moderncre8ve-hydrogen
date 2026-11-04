@@ -23,14 +23,14 @@ export function SellingPlanSelector({
   // Use product prop if provided, otherwise get from loader
   let product = productProp;
 
-  if (!product) {
-    try {
-      const loaderData = useLoaderData<typeof productRouteLoader>();
-      product = loaderData?.product;
-    } catch {
-      // If useLoaderData fails (not in route context), use prop or null
-      product = productProp || null;
-    }
+  try {
+    // Called on every render (not only when the prop is missing) to keep hook order stable.
+    // biome-ignore lint/correctness/useHookAtTopLevel: unconditional call; try only guards a missing route context
+    const loaderData = useLoaderData<typeof productRouteLoader>();
+    product = productProp || loaderData?.product;
+  } catch {
+    // If useLoaderData fails (not in route context), use prop or null
+    product = productProp || null;
   }
 
   const sellingPlanGroups = product?.sellingPlanGroups?.edges || [];

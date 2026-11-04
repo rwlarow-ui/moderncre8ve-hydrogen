@@ -34,7 +34,9 @@ function split(o: SplitOptions): PageItem[] {
   }));
   const extra = o.extra ?? [];
   const ordered = [{ id: images }, { id: content }];
-  if (!o.imageFirst) ordered.reverse();
+  if (!o.imageFirst) {
+    ordered.reverse();
+  }
   return [
     {
       id: o.id,

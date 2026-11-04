@@ -64,18 +64,18 @@ let TestimonialHotspotsItem = ({
   );
   const productHandle = resolvedProduct?.handle ?? product?.handle ?? "";
 
-  if (!hasResolvedProduct) {
-    return null;
-  }
-
-  let Icon = ICONS[icon];
-
   // Quick shop state for mobile
   const [showQuickShop, setShowQuickShop] = useState(false);
   const { load, data: quickShopData, state } = useFetcher();
   const apiPath = usePrefixPathWithLocale(
     `/api/product?handle=${productHandle}`,
   );
+
+  if (!hasResolvedProduct) {
+    return null;
+  }
+
+  let Icon = ICONS[icon];
 
   // Handle click - open quick shop on mobile, popup on desktop
   const handleClick = () => {
@@ -186,7 +186,9 @@ let TestimonialHotspotsItem = ({
                     <QuickShop
                       data={quickShopData as any}
                       showDescription={false}
-                      setShowDescription={() => {}}
+                      setShowDescription={() => {
+                        // description toggle not used in this popup
+                      }}
                       onCloseAll={() => setShowQuickShop(false)}
                     />
                   ) : (

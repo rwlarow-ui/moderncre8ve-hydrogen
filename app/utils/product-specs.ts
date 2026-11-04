@@ -110,7 +110,7 @@ type SpecMetafield = null | {
  * de-duplicated list. Unset metafields come back as `null` and are dropped.
  */
 export function parseProductSpecs(
-  metafields: ReadonlyArray<SpecMetafield> | null | undefined,
+  metafields: readonly SpecMetafield[] | null | undefined,
 ): ProductSpec[] {
   if (!metafields?.length) {
     return [];

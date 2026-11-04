@@ -36,7 +36,9 @@ if (typeof Headers !== "undefined") {
   Headers.prototype.set = function (name, value) {
     if (name.toLowerCase() === "set-cookie") {
       // Store set-cookie values for later retrieval
-      if (!this._setCookies) this._setCookies = [];
+      if (!this._setCookies) {
+        this._setCookies = [];
+      }
       this._setCookies = [value];
     }
     return originalSet.call(this, name, value);
@@ -45,7 +47,9 @@ if (typeof Headers !== "undefined") {
   Headers.prototype.append = function (name, value) {
     if (name.toLowerCase() === "set-cookie") {
       // Store set-cookie values for later retrieval
-      if (!this._setCookies) this._setCookies = [];
+      if (!this._setCookies) {
+        this._setCookies = [];
+      }
       this._setCookies.push(value);
     }
     return originalAppend.call(this, name, value);
@@ -151,7 +155,6 @@ export default {
 
       return response;
     } catch (error) {
-      // biome-ignore lint/suspicious/noConsole: <explanation> --- IGNORE ---
       console.error(error);
       return new Response("An unexpected error occurred", { status: 500 });
     }
@@ -195,8 +198,8 @@ export async function createAppLoadContext(
 
 class AppSession implements HydrogenSession {
   isPending = false;
-  #sessionStorage: SessionStorage;
-  #session: Session;
+  readonly #sessionStorage: SessionStorage;
+  readonly #session: Session;
 
   constructor(sessionStorage: SessionStorage, session: Session) {
     this.#sessionStorage = sessionStorage;

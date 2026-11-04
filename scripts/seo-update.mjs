@@ -25,9 +25,13 @@ function loadDotEnv() {
     const raw = readFileSync(envPath, "utf8");
     for (const line of raw.split("\n")) {
       const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith("#")) continue;
+      if (!trimmed || trimmed.startsWith("#")) {
+        continue;
+      }
       const eqIndex = trimmed.indexOf("=");
-      if (eqIndex === -1) continue;
+      if (eqIndex === -1) {
+        continue;
+      }
       const key = trimmed.slice(0, eqIndex).trim();
       let value = trimmed.slice(eqIndex + 1).trim();
       if (
@@ -36,7 +40,9 @@ function loadDotEnv() {
       ) {
         value = value.slice(1, -1);
       }
-      if (!process.env[key]) process.env[key] = value;
+      if (!process.env[key]) {
+        process.env[key] = value;
+      }
     }
   } catch {
     // .env not found — rely on environment
@@ -91,7 +97,9 @@ async function gql(query, variables = {}) {
     body: JSON.stringify({ query, variables }),
   });
   const json = await res.json();
-  if (json.errors) throw new Error(JSON.stringify(json.errors));
+  if (json.errors) {
+    throw new Error(JSON.stringify(json.errors));
+  }
   return json.data;
 }
 

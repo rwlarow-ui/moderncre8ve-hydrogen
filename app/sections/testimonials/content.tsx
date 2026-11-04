@@ -74,7 +74,7 @@ let TestimonialContent = ({
 
   const renderStars = () => {
     const stars = [];
-    for (let i = 0; i < ratting; i++) {
+    for (let i = 0; i < ratting; i += 1) {
       stars.push(<Star size={24} weight="fill" fill="#918379" key={i} />);
     }
     return stars;

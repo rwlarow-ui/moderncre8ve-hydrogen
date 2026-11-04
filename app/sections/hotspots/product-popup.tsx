@@ -107,15 +107,15 @@ export function ProductPopup({
   showViewDetailsLink,
   viewDetailsLinkText,
 }: ProductPopupProps) {
-  if (!product?.handle) {
-    return null;
-  }
-
   // State for variant selection
   const [selectedVariant, setSelectedVariant] =
     useState<ProductVariantFragment | null>(
-      product.selectedOrFirstAvailableVariant,
+      product?.selectedOrFirstAvailableVariant ?? null,
     );
+
+  if (!product?.handle) {
+    return null;
+  }
 
   const featuredMedia = product.media.nodes.find(
     (node) => node.__typename === "MediaImage",

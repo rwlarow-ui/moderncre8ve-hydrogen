@@ -156,7 +156,6 @@ export function CustomAnalytics() {
       <script
         nonce={nonce}
         suppressHydrationWarning
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: required to bootstrap gtag
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];

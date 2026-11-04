@@ -64,7 +64,9 @@ export function ToolsBar({
   );
 }
 
-export let toggleCartDrawer = (_open: boolean) => {};
+export let toggleCartDrawer = (_open: boolean) => {
+  // reassigned by the drawer component when it mounts
+};
 function FiltersDrawer({
   filtersPosition,
 }: {

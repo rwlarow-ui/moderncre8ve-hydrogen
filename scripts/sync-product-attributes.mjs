@@ -63,9 +63,12 @@ async function admin(query, variables = {}) {
       },
     );
     const json = await res.json();
-    if (res.ok && !json.errors) return json.data;
-    if (attempt === 3)
+    if (res.ok && !json.errors) {
+      return json.data;
+    }
+    if (attempt === 3) {
       throw new Error(JSON.stringify(json.errors ?? res.status));
+    }
     await new Promise((r) => setTimeout(r, attempt * 1000));
   }
 }
@@ -125,7 +128,9 @@ for (const [type, { taxonomyField, taxonomyIsList, entries }] of Object.entries(
   );
   for (const [handle, { label, value, hex }] of Object.entries(entries)) {
     const exists = Boolean(entryIds[type][handle]);
-    if (exists && value === null) continue; // keep as-is
+    if (exists && value === null) {
+      continue; // keep as-is
+    }
     const fields = [{ key: "label", value: label }];
     if (value !== null) {
       const gid = `gid://shopify/TaxonomyValue/${value}`;
@@ -134,7 +139,9 @@ for (const [type, { taxonomyField, taxonomyIsList, entries }] of Object.entries(
         value: taxonomyIsList ? JSON.stringify([gid]) : gid,
       });
     }
-    if (hex) fields.push({ key: "color", value: hex });
+    if (hex) {
+      fields.push({ key: "color", value: hex });
+    }
     // shopify--color-pattern requires a base pattern; all our finishes are solid.
     if (type === "shopify--color-pattern") {
       fields.push({
@@ -178,7 +185,9 @@ for (let i = 0; i < handles.length; i += 40) {
 }
 
 const missing = handles.filter((h) => !products.some((p) => p.handle === h));
-if (missing.length) console.warn("! not found in Shopify:", missing.join(", "));
+if (missing.length) {
+  console.warn("! not found in Shopify:", missing.join(", "));
+}
 
 let changes = 0;
 for (const product of products) {
@@ -212,11 +221,15 @@ for (const product of products) {
     const type = METAFIELD_TYPES[key];
     const ids = entryHandles.map((h) => {
       const id = entryIds[type]?.[h];
-      if (!id) throw new Error(`${product.handle}: no ${type} entry "${h}"`);
+      if (!id) {
+        throw new Error(`${product.handle}: no ${type} entry "${h}"`);
+      }
       return id;
     });
     const value = JSON.stringify(ids);
-    if (current[key] === value) continue;
+    if (current[key] === value) {
+      continue;
+    }
     log(`${product.handle}: shopify.${key} = ${entryHandles.join(", ")}`);
     metafields.push({
       ownerId: product.id,
@@ -248,4 +261,6 @@ if (NEEDS_INPUT.length) {
     `Needs material/attribute input (left untouched): ${NEEDS_INPUT.join(", ")}`,
   );
 }
-if (!APPLY) console.log("Re-run with --apply to write.");
+if (!APPLY) {
+  console.log("Re-run with --apply to write.");
+}

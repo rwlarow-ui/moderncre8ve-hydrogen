@@ -57,7 +57,9 @@ async function writeState(cache, clientKey, state) {
         headers: { "Cache-Control": `public, max-age=${STATE_TTL_SECONDS}` },
       }),
     );
-  } catch {}
+  } catch {
+    // best-effort: a failed cache write only loosens throttling, never blocks login
+  }
 }
 
 export async function checkThrottle(cache, clientKey, now = Date.now()) {
@@ -85,7 +87,9 @@ export async function recordFailure(cache, clientKey, now = Date.now()) {
 export async function clearFailures(cache, clientKey) {
   try {
     await cache.delete(cacheRequest(clientKey));
-  } catch {}
+  } catch {
+    // best-effort: stale state expires via its TTL
+  }
 }
 
 /**

@@ -20,7 +20,6 @@ function guardDomAgainstExtensions() {
   const originalRemoveChild = Node.prototype.removeChild;
   Node.prototype.removeChild = function removeChild(child) {
     if (child.parentNode !== this) {
-      // biome-ignore lint/suspicious/noConsole: leave a trace when an extension forces a skip
       console.warn(
         "[storefront] Skipped removeChild: node was moved by another script (often a browser extension).",
         child,
@@ -33,7 +32,6 @@ function guardDomAgainstExtensions() {
   const originalInsertBefore = Node.prototype.insertBefore;
   Node.prototype.insertBefore = function insertBefore(newNode, referenceNode) {
     if (referenceNode && referenceNode.parentNode !== this) {
-      // biome-ignore lint/suspicious/noConsole: leave a trace when an extension forces a skip
       console.warn(
         "[storefront] Skipped insertBefore: reference node was moved by another script (often a browser extension).",
         referenceNode,

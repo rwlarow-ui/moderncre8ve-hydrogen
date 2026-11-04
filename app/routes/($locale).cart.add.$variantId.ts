@@ -37,7 +37,6 @@ export async function action({ params, context }: Route.ActionArgs) {
       { status: 303, headers },
     );
   } catch (e) {
-    // biome-ignore lint/suspicious/noConsole: <explanation> --- IGNORE ---
     console.error(e);
     return data({ error: e });
   }

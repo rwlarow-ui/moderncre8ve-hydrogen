@@ -26,7 +26,7 @@
         "useCollapsedIf": "warn",
         "useCollapsedElseIf": "warn",
         "noParameterProperties": "warn",
-        "noMagicNumbers": "warn",
+        "noMagicNumbers": "off",
         "useReadonlyClassProperties": "warn",
         "useConsistentTypeDefinitions": "warn",
         "useThrowNewError": "warn"
@@ -64,7 +64,12 @@
         "noArrayIndexKey": "off",
         "noAssignInExpressions": "warn",
         "noImplicitAnyLet": "warn",
-        "noConsole": "warn",
+        "noConsole": {
+          "level": "warn",
+          "options": {
+            "allow": ["error", "warn", "info"]
+          }
+        },
         "noEvolvingTypes": "warn",
         "noExplicitAny": "off",
         "useAwait": "off",
@@ -148,7 +153,9 @@
       "!**/.vscode",
       "!**/prisma",
       "!**/vite.config.ts",
-      "!**/app/styles/tailwind.css"
+      "!**/app/styles/tailwind.css",
+      "!**/metrics-review-2025.html",
+      "!**/moderncre8ve-behavior-dashboard.html"
     ],
     "maxSize": 512000
   },
@@ -158,5 +165,26 @@
         "useSortedAttributes": "off"
       }
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": [
+        "scripts/**",
+        "tests/**",
+        ".claude/**",
+        "seo-truth-layer/**",
+        "design-system/**"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "off"
+          },
+          "nursery": {
+            "noIncrementDecrement": "off"
+          }
+        }
+      }
+    }
+  ]
 }

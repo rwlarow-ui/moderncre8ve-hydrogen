@@ -39,7 +39,7 @@ export function getEnhancedSeoMeta(
   ...args: (SeoConfig | EnhancedSeoOptions | undefined)[]
 ): Record<string, string>[] {
   // Separate the optional options bag from the SeoConfig entries
-  const last = args[args.length - 1];
+  const last = args.at(-1);
   const options: EnhancedSeoOptions = isOptions(last) ? last : {};
   const configs = (isOptions(last) ? args.slice(0, -1) : args) as (
     | SeoConfig

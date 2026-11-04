@@ -357,7 +357,9 @@ export const PRODUCT_PLAN = {
 // Drop empty lists produced by the helpers (e.g. legColor: []).
 for (const plan of Object.values(PRODUCT_PLAN)) {
   for (const [k, v] of Object.entries(plan.attrs)) {
-    if (!v.length) delete plan.attrs[k];
+    if (!v.length) {
+      delete plan.attrs[k];
+    }
   }
 }
 

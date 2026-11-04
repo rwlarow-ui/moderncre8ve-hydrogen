@@ -11,9 +11,13 @@ interface ImageWithTextContextType {
 
 export const ImageWithTextContext = createContext<ImageWithTextContextType>({
   imageCount: 0,
-  setImageCount: () => {},
+  setImageCount: () => {
+    // default no-op until a provider supplies the setter
+  },
   imageAspectRatio: "1/1",
-  setImageAspectRatio: () => {},
+  setImageAspectRatio: () => {
+    // default no-op until a provider supplies the setter
+  },
 });
 
 export const useImageWithTextContext = () => useContext(ImageWithTextContext);

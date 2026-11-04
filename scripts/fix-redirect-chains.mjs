@@ -10,9 +10,9 @@
  * 5. Keep /collections/all-products → /collections/all for external links
  */
 
-import { readFileSync } from "fs";
-import { dirname, resolve } from "path";
-import { fileURLToPath } from "url";
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const envPath = resolve(__dirname, "..", ".env");
@@ -21,9 +21,13 @@ try {
   const envFile = readFileSync(envPath, "utf-8");
   for (const line of envFile.split("\n")) {
     const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith("#")) continue;
+    if (!trimmed || trimmed.startsWith("#")) {
+      continue;
+    }
     const eqIdx = trimmed.indexOf("=");
-    if (eqIdx === -1) continue;
+    if (eqIdx === -1) {
+      continue;
+    }
     const key = trimmed.slice(0, eqIdx).trim();
     let val = trimmed.slice(eqIdx + 1).trim();
     if (
@@ -32,7 +36,9 @@ try {
     ) {
       val = val.slice(1, -1);
     }
-    if (!process.env[key]) process.env[key] = val;
+    if (!process.env[key]) {
+      process.env[key] = val;
+    }
   }
 } catch {
   console.warn(

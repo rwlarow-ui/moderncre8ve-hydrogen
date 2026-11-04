@@ -29,7 +29,7 @@ function adjustColor(hex: string, amount: number) {
   const g = Math.min(255, Math.max(0, ((num >> 8) & 0xff) + amount));
   const b = Math.min(255, Math.max(0, (num & 0xff) + amount));
 
-  return "#" + [r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("");
+  return `#${[r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("")}`;
 }
 
 // Create a context to share the layout mode with child components
@@ -45,9 +45,13 @@ export const MapContext = createContext<{
 }>({
   layoutMap: "list",
   activeItem: null,
-  setActiveItem: () => {},
+  setActiveItem: () => {
+    // default no-op until a provider supplies the setter
+  },
   activeAddress: "",
-  setActiveAddress: () => {},
+  setActiveAddress: () => {
+    // default no-op until a provider supplies the setter
+  },
   registerAddress: () => 0,
   activeBackgroundColor: "#f3f4f6",
   addressFontColor: "#524B46",
@@ -181,7 +185,10 @@ let MapSection = ({
                   className="w-full"
                   onValueChange={(value) => {
                     if (value) {
-                      const index = Number.parseInt(value.replace("item-", ""));
+                      const index = Number.parseInt(
+                        value.replace("item-", ""),
+                        10,
+                      );
                       setActiveItem(index);
                     }
                   }}
