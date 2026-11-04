@@ -16,24 +16,34 @@ export const collectionFaqs: Record<string, FAQ[]> = {
         "Mid-century modern dining tables are defined by clean lines, organic curves, tapered legs, and natural wood materials like walnut and oak. The style originated in the 1940s–1960s and emphasizes function alongside form, with minimal ornamentation and timeless silhouettes.",
     },
     {
+      question: "What size dining table seats 8?",
+      answer:
+        "A 72-inch table seats 6–8, and an 84-inch table seats 8 comfortably with room for armchairs at the ends. Plan about 24 inches of table length per person, or 27 inches for armchairs. Our Santa Monica, Payne and Bossa Nova tables come in 64, 72 and 84 inches, and each 18-inch leaf adds about two more place settings.",
+    },
+    {
+      question: "What size dining table seats 10?",
+      answer:
+        "An 84-inch table seats 8–10. For 10–12, choose a 108-inch table (available by quote), or add 18-inch leaves to a 72- or 84-inch table so it stays smaller day to day and extends when you host.",
+    },
+    {
+      question: "How big does my dining room need to be?",
+      answer:
+        "Leave at least 36 inches between the table edge and the wall or other furniture so chairs can pull out, and 42–48 inches where people need to walk behind seated guests. As a guide, a 64 × 36-inch table needs a room about 11 × 9 feet, a 72 × 38-inch table about 12 × 9 feet, and an 84 × 40-inch table about 13 × 9.5 feet. Measure with any leaves you plan to add.",
+    },
+    {
+      question: "How do the extension leaves work?",
+      answer:
+        "Our extendable tables take up to three 18-inch leaves. Each leaf adds 18 inches of length, about two place settings, and a third leaf comes with a center support leg. Choose the number of leaves when you order.",
+    },
+    {
       question: "What wood is best for a mid-century modern dining table?",
       answer:
-        "Walnut is the most iconic wood for mid-century modern dining tables, prized for its rich chocolate tones and dramatic grain. White oak and teak are also popular choices. At ModernCre8ve, our tables are handcrafted from solid American walnut by Amish artisans in Ohio.",
+        "Walnut is the classic mid-century modern choice for its rich brown tone and strong grain. White oak suits Scandinavian and Japandi rooms, cherry deepens to a warm red-brown over time, and hard maple is the lightest and hardest. Every ModernCre8ve table is offered in solid natural walnut, white oak, cherry or hard maple, from kiln-dried, FSC-certified American hardwood.",
     },
     {
-      question: "How long does it take to receive a custom dining table?",
+      question: "How long does it take to receive a dining table?",
       answer:
-        "Our handcrafted dining tables have a lead time of 12–16 weeks because each piece is made to order by skilled Amish craftspeople. This ensures exceptional quality and allows for customization of dimensions, wood species, and finish.",
-    },
-    {
-      question: "Do mid-century modern dining tables come with extensions?",
-      answer:
-        "Many of our mid-century modern dining tables offer extension leaves, allowing you to expand the table for larger gatherings. For example, our Parsons and Mar Vista tables include built-in extension mechanisms that seat 6–10 guests comfortably.",
-    },
-    {
-      question: "What size dining table do I need?",
-      answer:
-        "Allow 24 inches of table width per person. A 60-inch rectangular table seats 6, while a 72-inch table seats 8. For round or oval tables, a 48-inch diameter seats 4 and a 60-inch diameter seats 6. Our team can help you choose the right size for your space.",
+        "Our dining tables are handcrafted to order by Amish woodworkers in Ohio, so allow 12–16 weeks. White-glove in-home delivery and assembly are included.",
     },
   ],
 
@@ -295,22 +305,23 @@ export const collectionFaqs: Record<string, FAQ[]> = {
     {
       question: "How do extendable dining tables work?",
       answer:
-        "Our extendable tables use precision-engineered leaf mechanisms. You pull the two halves of the tabletop apart to reveal the stored leaf, then lift it into position. The mechanism is smooth and can be operated by one person. The leaf stores invisibly within the table when not in use.",
+        "Our extendable tables take removable 18-inch leaves. Separate the tabletop, set a leaf in place and close the table up. You can choose up to three leaves, and a third leaf comes with a center support leg.",
     },
     {
       question: "How much extra seating does an extension leaf add?",
       answer:
-        "Each extension leaf typically adds 18–20 inches to the table length, providing room for 2 additional guests. Our tables expand from seating 6 to seating 8–10, depending on the model. The Payne oval table, for example, extends from 63 to 83 inches.",
+        "Each 18-inch leaf adds about two place settings. Our tables come in 64, 72 and 84 inches (seating 4–6, 6–8 and 8–10), so a 72-inch table with two leaves reaches 108 inches for larger gatherings.",
     },
     {
-      question: "Does the extension mechanism affect the table's appearance?",
+      question:
+        "Which stores offer extendable dining tables that seat 8 to 10?",
       answer:
-        "Not at all. When closed, our extension tables look identical to fixed-top tables — the seam is virtually invisible thanks to precision milling. The wood grain on the leaf is selected to match the main tabletop for a seamless appearance when extended.",
+        "ModernCre8ve's Santa Monica, Payne and Bossa Nova tables seat 8–10 at 84 inches, and more with leaves. Each is handcrafted to order in solid walnut, white oak, cherry or maple in Ohio, with white-glove delivery and assembly included.",
     },
     {
       question: "What shapes are available for extendable tables?",
       answer:
-        "We offer extendable dining tables in rectangular, oval, and round shapes. The Parsons and Santa Monica models are rectangular, the Payne and Mar Vista are oval, and the Corcovado is round. Each can be customized in walnut, oak, or cherry.",
+        "The Santa Monica has a curved, semi-elliptical top, the Payne is a true oval, and the Bossa Nova is rectangular with curved corners. All three come in solid natural walnut, white oak, cherry or hard maple.",
     },
     {
       question: "Can I get a custom size for an extendable dining table?",
@@ -330,7 +341,7 @@ export const collectionFaqs: Record<string, FAQ[]> = {
     {
       question: "How many people can sit at an oval dining table?",
       answer:
-        "A 60-inch oval table comfortably seats 6, while a 72-inch oval seats 8. Oval tables can actually seat more people than rectangular tables of the same length because guests can scoot closer together along the curves. Our Mar Vista oval table seats 6 in its standard form.",
+        "Our Payne oval table seats 4–6 at 64 inches, 6–8 at 72 inches and 8–10 at 84 inches. Because there are no corners, guests can sit a little closer along the curves, and it's easier to add a chair at the ends.",
     },
     {
       question: "What is the best wood for an oval dining table?",
@@ -340,12 +351,12 @@ export const collectionFaqs: Record<string, FAQ[]> = {
     {
       question: "Do you make oval extendable dining tables?",
       answer:
-        "Yes, several of our oval dining tables include built-in extension mechanisms. The Payne oval table extends from 63 to 83 inches with a butterfly leaf that stores within the table. This lets you go from comfortable daily dining to hosting large gatherings with a simple pull.",
+        "Yes. The Payne oval extendable dining table takes up to three 18-inch leaves, each adding about two place settings. It's handcrafted to order in Ohio in solid walnut, white oak, cherry or maple.",
     },
     {
       question: "How do I choose the right size oval dining table?",
       answer:
-        "Measure your dining area and allow at least 36 inches of clearance on all sides for chairs and movement. For the table itself, plan 24 inches of table edge per person. A 54-inch oval works for 4–6, and a 72-inch oval seats 8 comfortably. We build to custom dimensions if your space demands it.",
+        "Measure your dining area and allow at least 36 inches of clearance on all sides for chairs and movement. For the table itself, plan about 24 inches of table edge per person. A 64-inch oval suits 4–6, 72 inches suits 6–8 and 84 inches suits 8–10. Other sizes are available by quote.",
     },
   ],
 
