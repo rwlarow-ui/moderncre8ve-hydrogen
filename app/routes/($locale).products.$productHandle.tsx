@@ -72,7 +72,14 @@ export async function loader({ params, request, context }: Route.LoaderArgs) {
     pageData: adaptProductPage(pageData, productClass(product)),
     productReviews,
     storeDomain: shop.primaryDomain.url,
-    seo: seoPayload.product({ product, url: request.url }),
+    seo: seoPayload.product({
+      product,
+      url: request.url,
+      reviews: {
+        rating: productReviews.rating,
+        reviewCount: productReviews.reviews.length,
+      },
+    }),
     recommended,
     selectedOptions,
   };
