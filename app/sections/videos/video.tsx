@@ -117,7 +117,7 @@ let VideoItem = ({
                 {videoTitle}
               </p>
               <p className="font-open-sans text-[#29231E] text-sm leading-[1.6] tracking-[0.02em]">
-                {date} — {author}
+                {[date, author].filter(Boolean).join(" — ")}
               </p>
             </div>
           </div>
@@ -155,13 +155,13 @@ export let schema: SectionComponent["schema"] = {
           type: "text",
           name: "date",
           label: "Date",
-          defaultValue: "August 30, 2023",
+          defaultValue: "",
         },
         {
           type: "text",
           name: "author",
           label: "Author",
-          defaultValue: "Alexia Jacquot",
+          defaultValue: "",
         },
         {
           type: "color",

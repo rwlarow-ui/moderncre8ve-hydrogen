@@ -30,3 +30,7 @@ jobs:
 
       - name: Typecheck
         run: npm run typecheck
+
+      # Postmortem 2026-11-03: no invented customers or unregistered sections
+      - name: Trust content check
+        run: npm run test:trust
