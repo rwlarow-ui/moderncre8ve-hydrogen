@@ -204,15 +204,23 @@ function productJsonLd({
   product: productData,
   selectedVariant,
   url,
+  reviews,
 }: {
   product: ProductQuery["product"];
   selectedVariant: ProductQuery["product"]["selectedOrFirstAvailableVariant"];
   url: Request["url"];
+  reviews?: { rating: number; reviewCount: number };
 }): SeoConfig["jsonLd"] {
   const origin = new URL(url).origin;
   const description = truncate(
     productData?.seo?.description ?? productData?.description,
   );
+
+  // Google recommends priceValidUntil + itemCondition on every Offer. Furniture
+  // is made to order with prices stable within the year, so validity rolls to
+  // the end of next year.
+  const priceValidUntil = `${new Date().getFullYear() + 1}-12-31`;
+  const itemCondition = "https://schema.org/NewCondition";
 
   // Create offers array from adjacent variants
   const offers: Offer[] = [];
@@ -229,8 +237,10 @@ function productJsonLd({
       offers.push({
         "@type": "Offer",
         availability,
+        itemCondition,
         price: Number.parseFloat(variant.price.amount),
         priceCurrency: variant.price.currencyCode,
+        priceValidUntil,
         sku: variant?.sku ?? "",
         url: variantUrl.toString(),
       });
@@ -246,8 +256,10 @@ function productJsonLd({
     offers.push({
       "@type": "Offer",
       availability,
+      itemCondition,
       price: Number.parseFloat(selectedVariant.price.amount),
       priceCurrency: selectedVariant.price.currencyCode,
+      priceValidUntil,
       sku: selectedVariant?.sku ?? "",
       url,
     });
@@ -282,6 +294,19 @@ function productJsonLd({
       image: [selectedVariant?.image?.url ?? ""],
       name: productData.title,
       offers,
+      // Real Judge.me ratings, shown on the product page. Only emitted when
+      // there is at least one review with a non-zero average — never fabricated.
+      ...(reviews && reviews.reviewCount > 0 && reviews.rating > 0
+        ? {
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: Math.round(reviews.rating * 10) / 10,
+              reviewCount: reviews.reviewCount,
+              bestRating: 5,
+              worstRating: 1,
+            },
+          }
+        : {}),
       sku: selectedVariant?.sku ?? "",
       url,
       ...(productData.category?.name && {
@@ -305,9 +330,11 @@ function productJsonLd({
 function product({
   product: productData,
   url,
+  reviews,
 }: {
   product: ProductQuery["product"];
   url: Request["url"];
+  reviews?: { rating: number; reviewCount: number };
 }): SeoConfig {
   const description = truncate(
     productData?.seo?.description ?? productData?.description ?? "",
@@ -341,7 +368,12 @@ function product({
     handle: "@moderncre8ve",
     url,
     media: seoMedia,
-    jsonLd: productJsonLd({ product: productData, selectedVariant, url }),
+    jsonLd: productJsonLd({
+      product: productData,
+      selectedVariant,
+      url,
+      reviews,
+    }),
   };
 }
 
