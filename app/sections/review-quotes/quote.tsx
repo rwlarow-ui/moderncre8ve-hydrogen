@@ -96,15 +96,15 @@ export const schema = createSchema({
           type: "textarea",
           name: "quote",
           label: "Quote",
-          defaultValue:
-            "Exquisite design, excellent craftsmanship, quality materials!",
+          // No default: a quote must be a real customer's words.
+          defaultValue: "",
           helpText: "Use the customer's own words — don't paraphrase.",
         },
         {
           type: "text",
           name: "author",
           label: "Attribution",
-          defaultValue: "Verified Etsy buyer",
+          defaultValue: "",
           placeholder: "First name, or 'Verified Etsy buyer'",
         },
         {

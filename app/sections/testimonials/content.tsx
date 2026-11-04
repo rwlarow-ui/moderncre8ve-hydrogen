@@ -116,7 +116,7 @@ let TestimonialContent = ({
         <div className="flex justify-between">
           <div className="flex flex-col gap-4">
             <span className="flex gap-0.5">{renderStars()}</span>
-            <p className="text-base">{author}</p>
+            {author && <p className="text-base">{author}</p>}
           </div>
           <div className="flex gap-2">
             <span
@@ -160,9 +160,9 @@ export let schema: ComponentSchema = {
           type: "richtext",
           name: "description",
           label: "Description",
-          defaultValue:
-            "The craftsmanship on our dining table is incredible. You can feel the quality in every detail — this is furniture built to be passed down.",
-          placeholder: "Pair large text with an image to tell a story.",
+          // No default quote: a testimonial must be a real customer's words.
+          defaultValue: "",
+          placeholder: "Paste a real customer review, word for word.",
         },
         {
           type: "range",
@@ -179,8 +179,9 @@ export let schema: ComponentSchema = {
           type: "text",
           name: "author",
           label: "Author name",
-          defaultValue: "Sarah M.",
-          placeholder: "Name of the author",
+          defaultValue: "",
+          placeholder:
+            "Name as the customer gave it (e.g. Verified Etsy buyer)",
         },
       ],
     },

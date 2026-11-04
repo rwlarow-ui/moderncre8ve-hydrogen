@@ -6,6 +6,11 @@
 
 ## Unreleased
 
+### Trust content check (postmortem 2026-11-03)
+- New `npm run check:trust` (`scripts/check-trust-content.mjs`), run in CI via `npm run test:trust`. Offline, with no `.env`. It fails on: a section input that attributes content to a person (`author`, `customerName`, …) with a non-empty `defaultValue`; a section `presets` block that sets one (except "Verified Etsy buyer", which is used only with real Etsy reviews); a known sample name attributed in a page composition; and a composition item whose `type` no registered component declares (the cause of the empty "What Our Customers Say" heading).
+- Removed the remaining invented attribution defaults: testimonials (a sample quote by "Sarah M."), review-quotes (default quote and author), and videos (the theme's demo author "Alexia Jacquot" and the date "August 30, 2023"). Every live composition sets its own quotes and authors, so no page changes. Testimonials and video captions no longer print an empty author or a dangling "—".
+- Postmortem: `docs/postmortems/2026-11-03-placeholder-customer-names.md`.
+
 ### Custom orders can't be cancelled or charged back once placed
 - Matches the refund policy updated in Shopify Admin on 2026-10-31. FAQ "Can I change or cancel my order?" and the Order Policies "Chargebacks & Disputes" and "Order Cancellations" entries now say custom orders (every built-to-order furniture piece; wax and in-stock items excluded) can't be cancelled once placed; modifications before production are at our discretion; and on a dispute or chargeback the seller chooses return or refund.
 

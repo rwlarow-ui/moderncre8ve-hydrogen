@@ -112,8 +112,6 @@ export let schema: SectionComponent["schema"] = {
           mediaContentType: "VIDEO",
         },
         videoTitle: "Video title",
-        date: "August 30, 2023",
-        author: "Alexia Jacquot",
       },
       {
         type: "video--item",
@@ -123,8 +121,6 @@ export let schema: SectionComponent["schema"] = {
           mediaContentType: "VIDEO",
         },
         videoTitle: "Video title",
-        date: "August 30, 2023",
-        author: "Alexia Jacquot",
       },
       {
         type: "video--item",
@@ -134,8 +130,6 @@ export let schema: SectionComponent["schema"] = {
           mediaContentType: "VIDEO",
         },
         videoTitle: "Video title",
-        date: "August 30, 2023",
-        author: "Alexia Jacquot",
       },
     ],
   },

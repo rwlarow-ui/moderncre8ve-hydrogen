@@ -28,13 +28,8 @@ export const schema = createSchema({
   childTypes: ["testimonial--content", "testimonial--hotspots-item"],
   presets: {
     children: [
-      {
-        type: "testimonial--content",
-        description:
-          "The craftsmanship on our dining table is incredible. You can feel the quality in every detail — this is furniture built to be passed down.",
-        ratting: 5,
-        author: "Sarah M.",
-      },
+      // Empty on purpose: fill in a real review and its author in the composition.
+      { type: "testimonial--content" },
       { type: "testimonial--hotspots-item" },
     ],
   },
