@@ -69,7 +69,7 @@ export async function loader({ params, request, context }: Route.LoaderArgs) {
   return {
     shop,
     product,
-    pageData: adaptProductPage(pageData, productClass(product)),
+    pageData: adaptProductPage(pageData, productClass(product), handle),
     productReviews,
     storeDomain: shop.primaryDomain.url,
     seo: seoPayload.product({
