@@ -54,6 +54,21 @@ Crawl-Delay: 10
 
 User-agent: Pinterest
 Crawl-delay: 1
+
+# AI answer engines and assistants — explicitly welcomed so ModernCre8ve can be
+# cited in AI search. Same private-path rules as search engines apply; canonical
+# brand/product facts for these agents live at /llms.txt and /llms-full.txt.
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: anthropic-ai
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+${generalDisallowRules({ sitemapUrl, shopId })}
 `.trim();
 }
 
