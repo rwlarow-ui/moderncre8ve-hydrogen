@@ -9,7 +9,7 @@
 ### Wax product page: how-to, FAQ, SEO and structured data
 - **New sections on wood-care products** (`app/utils/wood-care.ts`, inserted by `adaptProductPage`): a three-step "How to Use" (apply with the grain, wait 10 minutes, buff) and a five-question "Furniture Wax FAQ". All the copy restates the product's own Shopify description and shipping metafield. Furniture pages are unchanged. The steps section now sizes its desktop grid to the number of steps (3 here, 4 on furniture).
 - **SEO:** title "Lareaux's Furniture Wax for Solid Wood, 8 oz | ModernCre8ve" (59 characters) and a 133-character meta. These take precedence over the Shopify SEO fields, whose description was 166 characters and ended "Buy now!".
-- **Structured data:** the wax's Product offers get `shippingDetails` with a 3–5 business-day handling time. Transit time and rate are left out because neither is stated anywhere. A `FAQPage` with the same questions and answers as the visible FAQ is added. `countryOfOrigin: US` stays.
+- **Structured data:** a `FAQPage` with the same questions and answers as the visible FAQ is added, and `countryOfOrigin: US` stays. No `Offer.shippingDetails` yet: Google requires a shipping rate and destination there, and neither is confirmed for the wax.
 - Tests: `npm run test:wood-care` (new).
 
 ### Trust content check (postmortem 2026-11-03)

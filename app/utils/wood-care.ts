@@ -26,7 +26,11 @@ export interface WoodCareContent {
   seoTitle: string;
   /** At most 155 characters. */
   seoDescription: string;
-  /** Business days from order to shipment (shown copy says "3–5 business days"). */
+  /**
+   * Business days from order to shipment (shown copy says "3–5 business days").
+   * Not emitted as Offer.shippingDetails: Google requires a shipping rate and
+   * destination there, and neither is stated for the wax yet.
+   */
   handlingDays: { min: number; max: number };
   howTo: { heading: string; subheading: string; steps: WoodCareStep[] };
   faqHeading: string;

@@ -13,7 +13,6 @@ import type {
   CollectionPage,
   FAQPage,
   Offer,
-  OfferShippingDetails,
   WithContext,
 } from "schema-dts";
 import type { ProductQuery, ShopFragment } from "storefront-api.generated";
@@ -217,38 +216,6 @@ function woodCareFor(
     : undefined;
 }
 
-/**
- * Offer shipping details for a wood-care product: in stock, handed to the
- * carrier within `handlingDays` business days. Transit time and rate aren't
- * stated anywhere, so they are left out rather than guessed.
- */
-function woodCareShippingDetails(
-  content: WoodCareContent,
-): OfferShippingDetails {
-  return {
-    "@type": "OfferShippingDetails",
-    deliveryTime: {
-      "@type": "ShippingDeliveryTime",
-      handlingTime: {
-        "@type": "QuantitativeValue",
-        minValue: content.handlingDays.min,
-        maxValue: content.handlingDays.max,
-        unitCode: "DAY",
-      },
-      businessDays: {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: [
-          "https://schema.org/Monday",
-          "https://schema.org/Tuesday",
-          "https://schema.org/Wednesday",
-          "https://schema.org/Thursday",
-          "https://schema.org/Friday",
-        ],
-      },
-    },
-  };
-}
-
 /** FAQPage for the wood-care FAQ, word for word as shown on the page. */
 function woodCareFaqJsonLd(content: WoodCareContent): WithContext<FAQPage> {
   return {
@@ -280,7 +247,6 @@ function productJsonLd({
       productData?.seo?.description ??
       productData?.description,
   );
-  const shippingDetails = woodCare && woodCareShippingDetails(woodCare);
 
   // Google recommends priceValidUntil + itemCondition on every Offer. Furniture
   // is made to order with prices stable within the year, so validity rolls to
@@ -309,7 +275,6 @@ function productJsonLd({
         priceValidUntil,
         sku: variant?.sku ?? "",
         url: variantUrl.toString(),
-        ...(shippingDetails && { shippingDetails }),
       });
     }
   }
@@ -329,7 +294,6 @@ function productJsonLd({
       priceValidUntil,
       sku: selectedVariant?.sku ?? "",
       url,
-      ...(shippingDetails && { shippingDetails }),
     });
   }
 
