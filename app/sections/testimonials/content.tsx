@@ -79,6 +79,12 @@ let TestimonialContent = ({
     }
     return stars;
   };
+
+  // No review text, no testimonial: never show stars or a quote mark alone.
+  if (!description) {
+    return null;
+  }
+
   return (
     <div
       ref={ref}

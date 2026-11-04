@@ -142,8 +142,12 @@ export function registeredTypes(root = ROOT) {
     "utf8",
   );
   const types = new Set();
-  for (const m of registry.matchAll(/from\s+"~\/([^"]+)"/g)) {
-    const base = join(root, "app", m[1]);
+  // `~/x` imports resolve under app/; `./x` (e.g. ./main) under app/page-builder/.
+  for (const m of registry.matchAll(/from\s+"(~\/|\.\/)([^"]+)"/g)) {
+    const base =
+      m[1] === "~/"
+        ? join(root, "app", m[2])
+        : join(root, "app/page-builder", m[2]);
     const file = [".tsx", ".ts", "/index.tsx", "/index.ts"]
       .map((ext) => base + ext)
       .find((p) => {
@@ -164,8 +168,9 @@ export function registeredTypes(root = ROOT) {
 /** Check 3: composition item types with no registered section. */
 export function findUnregisteredTypes(src, file, types) {
   const findings = [];
-  // Composition items are `{ id: "...", type: "...", ... }`.
-  const re = /\bid:\s*"([^"]+)",\s*\n\s*type:\s*"([^"]+)"/g;
+  // Composition items are `{ id: "...", type: "...", ... }`, on one line or
+  // across several.
+  const re = /\bid:\s*"([^"]+)",\s*type:\s*"([^"]+)"/g;
   for (const m of src.matchAll(re)) {
     if (!types.has(m[2])) {
       findings.push({
@@ -186,8 +191,6 @@ export function run(root = ROOT) {
 
   const sectionSrc = sectionFiles.map((f) => readFileSync(f, "utf8"));
   const types = registeredTypes(root);
-  // `main` is the page-builder root container, registered outside app/sections.
-  types.add("main");
 
   const findings = [];
   sectionFiles.forEach((f, i) => {

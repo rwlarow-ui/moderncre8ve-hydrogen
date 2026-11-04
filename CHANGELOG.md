@@ -8,7 +8,7 @@
 
 ### Trust content check (postmortem 2026-11-03)
 - New `npm run check:trust` (`scripts/check-trust-content.mjs`), run in CI via `npm run test:trust`. Offline, with no `.env`. It fails on: a section input that attributes content to a person (`author`, `customerName`, …) with a non-empty `defaultValue`; a section `presets` block that sets one (except "Verified Etsy buyer", which is used only with real Etsy reviews); a known sample name attributed in a page composition; and a composition item whose `type` no registered component declares (the cause of the empty "What Our Customers Say" heading).
-- Removed the remaining invented attribution defaults: testimonials (a sample quote by "Sarah M."), review-quotes (default quote and author), and videos (the theme's demo author "Alexia Jacquot" and the date "August 30, 2023"). Every live composition sets its own quotes and authors, so no page changes. Testimonials and video captions no longer print an empty author or a dangling "—".
+- Removed the remaining invented attribution defaults: testimonials (a sample quote by "Sarah M."), review-quotes (default quote and author), and videos (the theme's demo author "Alexia Jacquot" and the date "August 30, 2023"). Every live composition sets its own quotes and authors, so no page changes. A testimonial with no review text renders nothing (no lone stars or quote mark), and video captions no longer print a dangling "—".
 - Postmortem: `docs/postmortems/2026-11-03-placeholder-customer-names.md`.
 
 ### Custom orders can't be cancelled or charged back once placed

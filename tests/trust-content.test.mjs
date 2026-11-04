@@ -56,6 +56,7 @@ test("catches the reviews block whose type was never registered", () => {
   const types = registeredTypes();
   assert.ok(types.has("judgeme-review--index"), "registry resolves real types");
   assert.ok(types.has("slideshow"), "title-first schemas resolve too");
+  assert.ok(types.has("main"), "relative imports (./main) resolve too");
   const src = `{
       id: "reviews-index",
       type: "judgeme-review-index",
@@ -63,4 +64,17 @@ test("catches the reviews block whose type was never registered", () => {
   const findings = findUnregisteredTypes(src, "default-product.ts", types);
   assert.equal(findings.length, 1);
   assert.match(findings[0].detail, /judgeme-review-index/);
+});
+
+test("checks inline composition items too", () => {
+  const types = registeredTypes();
+  const src = `items: [
+    { id: "page-root", type: "main", children: [{ id: "page-section" }] },
+    { id: "page-section", type: "pagee" },
+  ],`;
+  const findings = findUnregisteredTypes(src, "page.ts", types);
+  assert.deepEqual(
+    findings.map((f) => f.detail.match(/type "([^"]+)"/)[1]),
+    ["pagee"],
+  );
 });
