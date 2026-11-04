@@ -1,5 +1,5 @@
 import type { SeoConfig } from "@shopify/hydrogen";
-import { type MetaFunction, useLoaderData } from "react-router";
+import { type MetaFunction, redirect, useLoaderData } from "react-router";
 import type { PageDetailsQuery } from "storefront-api.generated";
 import invariant from "tiny-invariant";
 import type { RouteLoaderArgs } from "~/page-builder";
@@ -8,6 +8,7 @@ import { hasPageComposition } from "~/page-builder/pages";
 import { PageContent } from "~/page-builder/renderer";
 import { routeHeaders } from "~/utils/cache";
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
+import { getPageRedirectUrl } from "~/utils/page-indexing";
 import { redirectIfHandleIsLocalized } from "~/utils/redirect";
 import { seoPayload } from "~/utils/seo.server";
 
@@ -15,6 +16,10 @@ export const headers = routeHeaders;
 
 export async function loader({ request, params, context }: RouteLoaderArgs) {
   invariant(params.pageHandle, "Missing page handle");
+  const redirectUrl = getPageRedirectUrl(request.url, params.pageHandle);
+  if (redirectUrl) {
+    throw redirect(redirectUrl, 301);
+  }
   const { storefront } = context;
 
   // Load page data and the page composition in parallel
@@ -53,6 +58,9 @@ export async function loader({ request, params, context }: RouteLoaderArgs) {
   });
 
   const seo = seoPayload.page({ page, url: request.url });
+  if (params.pageHandle === "wrong-turn") {
+    seo.robots = { noIndex: true, noFollow: false };
+  }
 
   return {
     page,

@@ -3,6 +3,7 @@ import type { MetaFunction } from "react-router";
 import { Link, useLoaderData } from "react-router";
 import { routeHeaders } from "~/utils/cache";
 import { getEnhancedSeoMeta } from "~/utils/enhanced-seo-meta";
+import { isIndexablePageHandle } from "~/utils/page-indexing";
 import type { Route } from "./+types/($locale).sitemap-html";
 
 export const headers = routeHeaders;
@@ -44,12 +45,12 @@ export async function loader({ request, context }: Route.LoaderArgs) {
     }),
   );
 
-  const pages: SitemapItem[] = pagesResult.pages.nodes.map(
-    (p: { title: string; handle: string }) => ({
+  const pages: SitemapItem[] = pagesResult.pages.nodes
+    .filter((p: { handle: string }) => isIndexablePageHandle(p.handle))
+    .map((p: { title: string; handle: string }) => ({
       title: p.title,
       url: `/pages/${p.handle}`,
-    }),
-  );
+    }));
 
   const articles: SitemapItem[] = articlesResult.articles.nodes.map(
     (a: { title: string; handle: string; blog: { handle: string } }) => ({

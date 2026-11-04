@@ -4,6 +4,7 @@ import {
   STOREFRONT_LOCALE_PREFIXES,
   SUPPORTED_STOREFRONT_LOCALES,
 } from "~/utils/const";
+import { storefrontForSitemap } from "~/utils/page-indexing";
 import type { Route } from "./+types/($locale).sitemap.$type.$page[.xml]";
 
 const BLOG_HANDLE = "mid-century-modern-scandi-japandi-design-blog";
@@ -14,7 +15,7 @@ export async function loader({
   context: { storefront },
 }: Route.LoaderArgs) {
   const response = await getSitemap({
-    storefront,
+    storefront: storefrontForSitemap(storefront, params.type),
     request,
     params,
     locales: SUPPORTED_STOREFRONT_LOCALES,

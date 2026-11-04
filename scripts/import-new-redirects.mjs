@@ -95,6 +95,8 @@ const REDIRECT_REPAIRS = [
 
 // --- Product handle cleanup redirects ---
 // Run this phase after the clean product handles exist in Shopify Admin.
+// 2026-11-03: both products are drafts; targets fail validation today. See
+// reports/seo-404-recheck-2026-11-03.md before restoring or retiring them.
 const PRODUCT_HANDLE_REDIRECTS = [
   {
     from: "/products/capri-modern-dining-table-set_",
