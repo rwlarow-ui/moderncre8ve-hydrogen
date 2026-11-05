@@ -1,0 +1,286 @@
+{
+  "verifiedAt": "2026-11-05T19:58:14.136Z",
+  "checks": "All 64 products: status, publication, variant IDs, prices, inventory quantities, tracking and policies unchanged",
+  "results": [
+    {
+      "id": "gid://shopify/Product/8342175023403",
+      "title": "The Vista, Solid wood dining chairs",
+      "updatedAt": "2026-11-05T19:56:39Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/1716146244",
+      "title": "Lareaux's Furniture Wax",
+      "updatedAt": "2026-11-05T19:56:40Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/8636358033707",
+      "title": "The Santa Monica Bench - Modern Walnut Bench",
+      "updatedAt": "2026-11-05T19:56:40Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/4249916100",
+      "title": "Mid-Century Tempered Glass Tabletop Dining Table",
+      "updatedAt": "2026-11-05T19:56:40Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/4799382916",
+      "title": "The Sputnik Mid-Century Modern Dining Set",
+      "updatedAt": "2026-11-05T19:56:40Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/8402750439723",
+      "title": "The Corcovado: Modern Small Dining Table for 4 to 8, Extendable",
+      "updatedAt": "2026-11-05T19:56:57Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/8402750865707",
+      "title": "The Compagno Extendable Dining Table",
+      "updatedAt": "2026-11-05T19:56:57Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/1702750404",
+      "title": "Mid-Century Modern Walnut Coffee Table",
+      "updatedAt": "2026-11-05T19:56:57Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/6658939551846",
+      "title": "The Kineko Mid Century Modern TV Stand",
+      "updatedAt": "2026-11-05T19:56:58Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/6746851049574",
+      "title": "Mid-Century Modern Walnut Nightstand",
+      "updatedAt": "2026-11-05T19:56:58Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/9755081310507",
+      "title": "The Mar Vista, Scandinavian Oval Dining Table",
+      "updatedAt": "2026-11-05T19:57:03Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/1702784452",
+      "title": "Mid-Century Modern Surfboard Coffee Table",
+      "updatedAt": "2026-11-05T19:57:04Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/3744091140",
+      "title": "Mid-Century Walnut Round Coffee Table, The Mila",
+      "updatedAt": "2026-11-05T19:57:04Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/6262652228",
+      "title": "Minimalist Luxury Solid Marble Coffee Table, The Tyro",
+      "updatedAt": "2026-11-05T19:57:04Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/1484121931878",
+      "title": "Modern Oval Walnut Surfboard Coffee Table",
+      "updatedAt": "2026-11-05T19:57:04Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/1480826191974",
+      "title": "The Elmore, Sideboard Buffet Modern",
+      "updatedAt": "2026-11-05T19:57:10Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/6717951934566",
+      "title": "The Wabi-Sabi Low Credenza",
+      "updatedAt": "2026-11-05T19:57:10Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/3906204932",
+      "title": "Minimalist Luxury Pink Steel Console Table",
+      "updatedAt": "2026-11-05T19:57:10Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/4700977860",
+      "title": "Mid-Century Luxury Pink Console Table",
+      "updatedAt": "2026-11-05T19:57:10Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/8616677507371",
+      "title": "Larchmere Tallboy: Mid Century Dresser",
+      "updatedAt": "2026-11-05T19:57:11Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/1377488404582",
+      "title": "The Carlyle",
+      "updatedAt": "2026-11-05T19:57:25Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/3532051710054",
+      "title": "Wookie Modern Wood Bed Frame - Handcrafted Walnut, Oak, Cherry, and Maple for Stylish Bedrooms",
+      "updatedAt": "2026-11-05T19:57:25Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/3926746759270",
+      "title": "Danish Modern Mid-Century Office Desk",
+      "updatedAt": "2026-11-05T19:57:26Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/8576072876331",
+      "title": "Larchmere Wideboy: Mid Century Modern Dresser In Solid Walnut",
+      "updatedAt": "2026-11-05T19:57:26Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/1712495428",
+      "title": "Modern Walnut Live Edge Dining Table",
+      "updatedAt": "2026-11-05T19:57:26Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/4344226372",
+      "title": "The Sputnik Walnut Dining Table.",
+      "updatedAt": "2026-11-05T19:57:31Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/4743435972",
+      "title": "Mid-Century Live Edge Dining Table",
+      "updatedAt": "2026-11-05T19:57:31Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/4828419972",
+      "title": "The April :: Live Edge Walnut Dining Table",
+      "updatedAt": "2026-11-05T19:57:32Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/3532484608102",
+      "title": "Mid-Century Modern Floor Lamp, The Warwick",
+      "updatedAt": "2026-11-05T19:57:32Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/4034290436",
+      "title": "Modern Mid-Century Glass Tabletop Dining Table, The Maui",
+      "updatedAt": "2026-11-05T19:57:32Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/8622649041",
+      "title": "The Prima : Claro Walnut Dining Table",
+      "updatedAt": "2026-11-05T19:57:39Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/1480874229862",
+      "title": "Modern Live Edge Solid Walnut Resin Table",
+      "updatedAt": "2026-11-05T19:57:39Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/1731943300",
+      "title": "Sputnik Hairpin",
+      "updatedAt": "2026-11-05T19:57:40Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/1811627588",
+      "title": "The Zoe",
+      "updatedAt": "2026-11-05T19:57:40Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/1981529668",
+      "title": "Santa Barbara",
+      "updatedAt": "2026-11-05T19:57:40Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/7726031560",
+      "title": "The Provo: Walnut and Brass Coffee Table",
+      "updatedAt": "2026-11-05T19:57:46Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/1702116932",
+      "title": "The Santa Monica Extension Table: Mid Century Modern Extendable Dining Table",
+      "updatedAt": "2026-11-05T19:57:46Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/1775367236",
+      "title": "Santa Monica: Cherry",
+      "updatedAt": "2026-11-05T19:57:46Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/3956268548",
+      "title": "Santa Monica: Mixed Walnut",
+      "updatedAt": "2026-11-05T19:57:47Z",
+      "status": "DRAFT",
+      "userErrors": []
+    },
+    {
+      "id": "gid://shopify/Product/9885299671339",
+      "title": "The Bossa Nova: Walnut Handcrafted Expandable Table",
+      "updatedAt": "2026-11-05T19:57:47Z",
+      "status": "DRAFT",
+      "userErrors": []
+    }
+  ]
+}

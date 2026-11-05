@@ -1,8 +1,9 @@
 /**
  * Hand-maintained schema.org relations for the Product JSON-LD.
  *
- * Handles are the ones live in Shopify today. Add the Lucia / Xin Yen chair
- * handles to DINING_CHAIRS once those products exist.
+ * Candidate relations are filtered against verified discoverable products.
+ * Update the allowlist after a catalog rollout batch passes storefront checks;
+ * a Draft or Unlisted product must not become a structured-data destination.
  */
 
 const DINING_TABLES = [
@@ -13,9 +14,18 @@ const DINING_TABLES = [
   "scandinavian-dining-table-extendable-dining-table",
   "the-vista-scandinavian-extendable-dining-table",
   "bossa-nova-modern-dining-table-small-handmade-ohio",
+  "payne-oval-extendable-dining-table-for-6-8",
 ];
 
 const DINING_CHAIRS = ["the-seymour-modern-dining-chair"];
+
+// Shopify Admin snapshot, 2026-11-05: Active AND published to MODERNCRE8VE.
+// Vista is Unlisted; Seymour and the other candidate destinations are Draft.
+const DISCOVERABLE_RELATED_HANDLES = new Set([
+  "the-santa-monica-mid-century-modern-dining-table",
+  "bossa-nova-modern-dining-table-small-handmade-ohio",
+  "payne-oval-extendable-dining-table-for-6-8",
+]);
 
 /**
  * Products NOT made in the USA — no countryOfOrigin is emitted for these.
@@ -27,10 +37,10 @@ const NON_US_ORIGIN = new Set(["the-seymour-modern-dining-chair"]);
 
 export function relatedProductHandles(handle: string): string[] {
   if (DINING_TABLES.includes(handle)) {
-    return DINING_CHAIRS;
+    return DINING_CHAIRS.filter((h) => DISCOVERABLE_RELATED_HANDLES.has(h));
   }
   if (DINING_CHAIRS.includes(handle)) {
-    return DINING_TABLES;
+    return DINING_TABLES.filter((h) => DISCOVERABLE_RELATED_HANDLES.has(h));
   }
   return [];
 }

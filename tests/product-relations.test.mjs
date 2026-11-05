@@ -4,22 +4,27 @@ import { productRelationsJsonLd } from "../app/utils/product-relations.ts";
 
 const origin = "https://moderncre8ve.com";
 
-test("tables link to chairs and claim US origin", () => {
+test("tables omit held chair destinations and keep US origin", () => {
   const ld = productRelationsJsonLd(
     "scandinavian-oval-dining-table-mar-vista",
     origin,
   );
   assert.equal(ld.countryOfOrigin.name, "US");
-  assert.deepEqual(
-    ld.isRelatedTo.map((r) => r.url),
-    [`${origin}/products/the-seymour-modern-dining-chair`],
-  );
+  assert.equal("isRelatedTo" in ld, false);
 });
 
 test("imported chair emits no countryOfOrigin", () => {
   const ld = productRelationsJsonLd("the-seymour-modern-dining-chair", origin);
   assert.equal("countryOfOrigin" in ld, false);
   assert.ok(ld.isRelatedTo.length > 1);
+  assert.deepEqual(
+    ld.isRelatedTo.map((r) => r.url),
+    [
+      `${origin}/products/the-santa-monica-mid-century-modern-dining-table`,
+      `${origin}/products/bossa-nova-modern-dining-table-small-handmade-ohio`,
+      `${origin}/products/payne-oval-extendable-dining-table-for-6-8`,
+    ],
+  );
 });
 
 test("unmapped product gets origin only", () => {
@@ -28,12 +33,12 @@ test("unmapped product gets origin only", () => {
   assert.equal("isRelatedTo" in ld, false);
 });
 
-test("imported product emits no countryOfOrigin but keeps relations", () => {
+test("imported table emits no countryOfOrigin or held relations", () => {
   const ld = productRelationsJsonLd(
     "scandinavian-oval-dining-table-mar-vista",
     origin,
     { imported: true },
   );
   assert.equal("countryOfOrigin" in ld, false);
-  assert.ok(ld.isRelatedTo.length > 0);
+  assert.equal("isRelatedTo" in ld, false);
 });

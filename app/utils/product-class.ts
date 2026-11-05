@@ -38,7 +38,12 @@ function normalizeVendor(vendor: string) {
 
 export function productClass(product: ProductClassInput): ProductClass {
   const vendor = product.vendor ? normalizeVendor(product.vendor) : "";
-  if (IMPORT_VENDORS.has(vendor)) {
+  // Legacy Seymour listings use our vendor name, so vendor alone cannot
+  // prevent the shared furniture composition from asserting Ohio/Amish origin.
+  if (
+    IMPORT_VENDORS.has(vendor) ||
+    product.handle === "the-seymour-modern-dining-chair"
+  ) {
     return "imported";
   }
   const tags = (product.tags ?? []).map((t) => t.toLowerCase());

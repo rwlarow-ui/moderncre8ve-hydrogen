@@ -6,7 +6,7 @@ This file provides guidance to Codex when working with code in this repository.
 
 Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8ve.com rebuild.
 
-- **Store:** moderncre8ve.myshopify.com (26 active + 3 draft products, 16 collections)
+- **Store:** moderncre8ve.myshopify.com. The 64-product catalog rollout scope has 4 Active, 1 Unlisted, and 59 Draft products (verified 2026-11-05); this is not the whole-store count. See `docs/catalog-rollout-2026-11/`.
 - **Template:** forked from a third-party Hydrogen furniture theme; the hosted page builder was replaced by an in-repo page builder (`app/page-builder/`)
 - **Repo:** github.com/rwlarow-ui/moderncre8ve-hydrogen
 - **Source of truth:** this repo's `main` is what's live in production. Note that the Oxygen workflow is `on: [push]`, so a push to **any** branch also builds an Oxygen deployment (non-`main` branches get preview environments). `github.com/rwlarow-ui/moderncre8ve-storefront` is an **archived** earlier fork — never edit it or review against it. On the owner's Mac the live clone is `~/Desktop/my-hydrogen-storefront`; `~/my-hydrogen-storefront` (same name, home folder) is the archived fork. ADRs live in `docs/adr/` here, numbered in sequence. The tech debt register is `docs/tech-debt-2026-10.md`

@@ -54,6 +54,17 @@ test("Piper + Fox vendor is imported, in any spelling", () => {
   }
 });
 
+test("legacy Seymour cannot inherit Ohio/Amish promises from the store vendor", () => {
+  assert.equal(
+    productClass({
+      handle: "the-seymour-modern-dining-chair",
+      vendor: "Moderncre8ve",
+      productType: "Chairs",
+    }),
+    "imported",
+  );
+});
+
 test("a 'Waxwing' style name is not mistaken for wax", () => {
   assert.equal(
     productClass({ handle: "waxwing-credenza", productType: "Credenza" }),

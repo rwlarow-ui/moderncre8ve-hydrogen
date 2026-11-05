@@ -363,7 +363,9 @@ for (const plan of Object.values(PRODUCT_PLAN)) {
   }
 }
 
-/** Live products left without material/color because nothing in Shopify says what they are. */
+/** Products needing material/color evidence; this list is not a publication inventory.
+ * In the 2026-11-05 rollout snapshot only Mansfield is Active; the other 18 are Draft.
+ */
 export const NEEDS_INPUT = [
   "the-zoe",
   "live-edge-dining-table",
