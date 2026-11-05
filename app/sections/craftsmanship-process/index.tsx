@@ -1,7 +1,14 @@
-import type { RefObject } from "react";
+import { Children, type RefObject } from "react";
 import type { SectionProps } from "~/components/section";
 import { layoutInputs, Section } from "~/components/section";
 import { createSchema } from "~/page-builder";
+
+/** Desktop columns by step count (static classes so Tailwind keeps them). */
+const MD_COLS: Record<number, string> = {
+  2: "md:grid-cols-2",
+  3: "md:grid-cols-3",
+  4: "md:grid-cols-4",
+};
 
 interface CraftsmanshipProcessProps extends SectionProps {
   heading: string;
@@ -39,7 +46,11 @@ const CraftsmanshipProcess = ({
             {subheading}
           </p>
         </div>
-        <div className="grid grid-cols-1 gap-0 md:grid-cols-4">{children}</div>
+        <div
+          className={`grid grid-cols-1 gap-0 ${MD_COLS[Children.count(children)] ?? "md:grid-cols-4"}`}
+        >
+          {children}
+        </div>
       </div>
     </Section>
   );

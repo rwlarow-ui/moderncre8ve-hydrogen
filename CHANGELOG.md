@@ -6,6 +6,12 @@
 
 ## Unreleased
 
+### Wax product page: how-to, FAQ, SEO and structured data
+- **New sections on wood-care products** (`app/utils/wood-care.ts`, inserted by `adaptProductPage`): a three-step "How to Use" (apply with the grain, wait 10 minutes, buff) and a five-question "Furniture Wax FAQ". All the copy restates the product's own Shopify description and shipping metafield. Furniture pages are unchanged. The steps section now sizes its desktop grid to the number of steps (3 here, 4 on furniture).
+- **SEO:** title "Lareaux's Furniture Wax for Solid Wood, 8 oz | ModernCre8ve" (59 characters) and a 133-character meta. These take precedence over the Shopify SEO fields, whose description was 166 characters and ended "Buy now!".
+- **Structured data:** a `FAQPage` with the same questions and answers as the visible FAQ is added, and `countryOfOrigin: US` stays. No `Offer.shippingDetails` yet: Google requires a shipping rate and destination there, and neither is confirmed for the wax.
+- Tests: `npm run test:wood-care` (new).
+
 ### Trust content check (postmortem 2026-11-03)
 - New `npm run check:trust` (`scripts/check-trust-content.mjs`), run in CI via `npm run test:trust`. Offline, with no `.env`. It fails on: a section input that attributes content to a person (`author`, `customerName`, …) with a non-empty `defaultValue`; a section `presets` block that sets one (except "Verified Etsy buyer", which is used only with real Etsy reviews); a known sample name attributed in a page composition; and a composition item whose `type` no registered component declares (the cause of the empty "What Our Customers Say" heading).
 - Removed the remaining invented attribution defaults: testimonials (a sample quote by "Sarah M."), review-quotes (default quote and author), and videos (the theme's demo author "Alexia Jacquot" and the date "August 30, 2023"). Every live composition sets its own quotes and authors, so no page changes. A testimonial with no review text renders nothing (no lone stars or quote mark), and video captions no longer print a dangling "—".

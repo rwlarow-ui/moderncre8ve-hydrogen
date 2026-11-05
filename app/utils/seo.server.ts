@@ -8,7 +8,13 @@ import type {
   Product,
   ShopPolicy,
 } from "@shopify/hydrogen/storefront-api-types";
-import type { BreadcrumbList, CollectionPage, Offer } from "schema-dts";
+import type {
+  BreadcrumbList,
+  CollectionPage,
+  FAQPage,
+  Offer,
+  WithContext,
+} from "schema-dts";
 import type { ProductQuery, ShopFragment } from "storefront-api.generated";
 import { collectionFaqs } from "~/utils/collection-faqs";
 import { collectionSeoDescriptions } from "~/utils/collection-seo-descriptions";
@@ -19,6 +25,7 @@ import {
 } from "~/utils/product-dimensions";
 import { productRelationsJsonLd } from "~/utils/product-relations";
 import { parseProductSpecs, productSpecsJsonLd } from "~/utils/product-specs";
+import { type WoodCareContent, woodCareContent } from "~/utils/wood-care";
 
 function root({
   shop,
@@ -200,6 +207,28 @@ function home(): SeoConfig {
   };
 }
 
+/** The wood-care content for a housewares product, if it has any. */
+function woodCareFor(
+  productData: ProductQuery["product"] | null | undefined,
+): WoodCareContent | undefined {
+  return productData && productClass(productData) === "housewares"
+    ? woodCareContent(productData.handle)
+    : undefined;
+}
+
+/** FAQPage for the wood-care FAQ, word for word as shown on the page. */
+function woodCareFaqJsonLd(content: WoodCareContent): WithContext<FAQPage> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: content.faq.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  };
+}
+
 function productJsonLd({
   product: productData,
   selectedVariant,
@@ -212,8 +241,11 @@ function productJsonLd({
   reviews?: { rating: number; reviewCount: number };
 }): SeoConfig["jsonLd"] {
   const origin = new URL(url).origin;
+  const woodCare = woodCareFor(productData);
   const description = truncate(
-    productData?.seo?.description ?? productData?.description,
+    woodCare?.seoDescription ??
+      productData?.seo?.description ??
+      productData?.description,
   );
 
   // Google recommends priceValidUntil + itemCondition on every Offer. Furniture
@@ -324,6 +356,8 @@ function productJsonLd({
           imported: productClass(productData) === "imported",
         })),
     },
+    // Same questions and answers as the FAQ shown on the page.
+    ...(woodCare ? [woodCareFaqJsonLd(woodCare)] : []),
   ];
 }
 
@@ -336,8 +370,14 @@ function product({
   url: Request["url"];
   reviews?: { rating: number; reviewCount: number };
 }): SeoConfig {
+  // Wood-care products carry their own title and meta (app/utils/wood-care.ts);
+  // they take precedence over the Shopify SEO fields.
+  const woodCare = woodCareFor(productData);
   const description = truncate(
-    productData?.seo?.description ?? productData?.description ?? "",
+    woodCare?.seoDescription ??
+      productData?.seo?.description ??
+      productData?.description ??
+      "",
   );
   const selectedVariant = productData?.selectedOrFirstAvailableVariant;
   // Prefer the selected variant's image (has width/height in the fragment),
@@ -362,7 +402,10 @@ function product({
       : undefined;
   return {
     title: truncateTitle(
-      stripBrandSuffix(productData?.seo?.title) || productData?.title || "",
+      woodCare?.seoTitle ||
+        stripBrandSuffix(productData?.seo?.title) ||
+        productData?.title ||
+        "",
     ),
     description,
     handle: "@moderncre8ve",
