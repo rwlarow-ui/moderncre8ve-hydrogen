@@ -15,3 +15,5 @@ export {
   VariantPrices,
 } from "../app/components/product/variant-prices";
 export { StarRating } from "../app/components/star-rating";
+export { TrustStrip } from "../app/components/trust-strip";
+export { CollectionCard } from "../app/sections/collection-list-page/collection-card";

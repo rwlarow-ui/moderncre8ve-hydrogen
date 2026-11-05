@@ -30,6 +30,8 @@ const COMPONENTS = [
   "VariantPrices",
   "CompareAtPrice",
   "StarRating",
+  "TrustStrip",
+  "CollectionCard",
 ];
 
 await mkdir(outDir, { recursive: true });
@@ -69,6 +71,9 @@ const shims = {
     }));
     build.onResolve({ filter: /^@shopify\/hydrogen$/ }, () => ({
       path: path.join(here, "shims/hydrogen.tsx"),
+    }));
+    build.onResolve({ filter: /^react-router$/ }, () => ({
+      path: path.join(here, "shims/react-router.tsx"),
     }));
     build.onResolve({ filter: /^~\// }, (a) =>
       build.resolve(`./${a.path.slice(2)}`, {
@@ -161,6 +166,21 @@ const scanner = new Scanner({
     {
       base: path.join(root, "app/components"),
       pattern: "star-rating.tsx",
+      negated: false,
+    },
+    {
+      base: path.join(root, "app/components"),
+      pattern: "trust-strip.tsx",
+      negated: false,
+    },
+    {
+      base: path.join(root, "app/components"),
+      pattern: "{image,link}.tsx",
+      negated: false,
+    },
+    {
+      base: path.join(root, "app/sections/collection-list-page"),
+      pattern: "collection-card.tsx",
       negated: false,
     },
     {

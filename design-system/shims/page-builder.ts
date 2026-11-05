@@ -9,6 +9,8 @@
 import { getThemeSettings } from "../../app/page-builder/theme.server";
 import type { ThemeSettings } from "../../app/page-builder/types";
 
+export { createSchema } from "../../app/page-builder/schema";
+
 const settings = getThemeSettings();
 
 export function useThemeSettings<T = ThemeSettings>(): T {

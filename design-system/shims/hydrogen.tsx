@@ -1,9 +1,53 @@
 /**
- * Stand-in for the two `@shopify/hydrogen` money helpers the bundled
- * components use (`useMoney`, `<Money />`). Hydrogen itself needs a router and
+ * Stand-in for the `@shopify/hydrogen` money and image helpers the bundled
+ * components use. Hydrogen itself needs a router and
  * a storefront context, so the design-system bundle formats money with
  * `Intl.NumberFormat`, returning the same fields under the same names.
  */
+import type { ImageProps } from "../../app/components/image";
+
+/** Keep the storefront Image wrapper (loading state and styles) around an img. */
+export function Image({
+  data,
+  src,
+  alt,
+  width,
+  height,
+  aspectRatio,
+  crop,
+  loader,
+  srcSetOptions,
+  style,
+  loading = "lazy",
+  decoding = "async",
+  ...props
+}: ImageProps) {
+  const imageSrc = src ?? data?.url;
+  const imageWidth = width ?? data?.width ?? undefined;
+  const imageHeight = height ?? data?.height ?? undefined;
+  return (
+    <img
+      {...props}
+      src={
+        loader
+          ? loader({
+              src: imageSrc,
+              width: Number(imageWidth) || undefined,
+              height: Number(imageHeight) || undefined,
+              crop,
+            })
+          : imageSrc
+      }
+      alt={alt ?? data?.altText ?? ""}
+      width={imageWidth}
+      height={imageHeight}
+      loading={loading}
+      decoding={decoding}
+      style={{ ...style, ...(aspectRatio ? { aspectRatio } : {}) }}
+    />
+  );
+}
+
 interface MoneyLike {
   amount: string;
   currencyCode: string;
