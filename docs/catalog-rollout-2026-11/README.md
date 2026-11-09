@@ -6,7 +6,7 @@ The supplied PDF defines the scope: 60 inactive products, plus four protected ac
 
 **Completed:** catalog reconciliation; four release waves and a consolidation track; owner-requested wax priority; content-only corrections applied to 40 drafts; independent post-write verification; local storefront fixes; readiness and batch checks.
 
-**Pending:** current price/margin and production/supplier approval, remaining item-specific content/specification work, publication, storefront acceptance checks and verified consolidation. All 60 items currently have disposition `held`, a responsible owner role, blocker and November 6 review date. No item is marked launched or consolidated. Day 1 and the 21-day clock have not started: `startDate` remains null pending the operational kickoff.
+**Pending:** current price/margin and production/supplier approval, remaining item-specific content/specification work, publication, storefront acceptance checks and verified consolidation. All 60 items currently have disposition `held`, a responsible owner role, blocker and November 6 review date. No item is marked launched or consolidated. The rollout kicked off on 2026-11-09: `startDate` is `2026-11-09` (commit 47bbd8d), and batch `2026-11-09-vista` (the Vista oval table) was published that day, ahead of its recorded approvals.
 
 Wave 1 order is **Vista table, Bosco bed, Lareaux's wax (third), Warwick bed, Haven credenza, Vista chairs, Seymour chair, Vermonter bench, Santa Monica bench**. The other wave assignments follow the approved plan.
 
