@@ -6,6 +6,11 @@
 
 ## Unreleased
 
+### "Request this piece" for request-only products
+- **A product tagged `request-only` in Shopify shows a "Request this piece" button instead of quantity, Add to Cart and Shop Pay** (`app/components/product/piece-request.tsx`, `isRequestOnly` in `app/utils/product-class.ts`). The button opens a short form (name, email, optional phone, delivery ZIP, notes) that sends the selected size/configuration and its listed price. The mobile sticky bar shows the same button and scrolls back to the form, and product cards hide Quick Shop for these products, so the piece can't be added to the cart from a collection page. First used on the Warwick bed.
+- **`/api/piece-request`** works like the trade form: honeypot, Turnstile, then a Shopify customer tagged `piece-request` with the request appended to the customer note (ops token only), plus a best-effort plain-text owner email via Resend to `PIECE_REQUEST_NOTIFY_EMAIL`, falling back to `TRADE_NOTIFY_EMAIL` and then `PO_CC_EMAIL`. Nothing is charged or reserved.
+- The customer upsert and Resend email in `trade-application.server.js` are now shared helpers (`upsertTaggedCustomer`, `sendOwnerEmail`); trade behaviour is unchanged. Tests: `npm run test:piece-request` (new), `npm run test:trade`.
+
 ### Bed pricing from Barkman's 2026 list (ADR-0007)
 - **Bosco and Warwick repriced in Shopify (2026-11-09)** with the dining-table formula (33% margin, 5% SAC, 3% card fee, delivery at 25% of wholesale with a $500 minimum, rounded up to $25). Costs are the median of Barkman's 2026 bed designs per size and wood, because production moved to Barkman. Twin is priced as Full, Cali King as King, and the Warwick's drawer versions from Barkman's side-rail storage unit, until Barkman quotes them. Both beds are still Draft. Shopify only; no code changes.
 - **Catalog rollout:** the Vista oval extendable table (`scandinavian-dining-table-extendable-dining-table`) was released 2026-11-09 (Unlisted to Active) at the owner's request, ahead of the recorded approvals. Recorded as batch `2026-11-09-vista` in `docs/catalog-rollout-2026-11/register.json`, with partial verification.

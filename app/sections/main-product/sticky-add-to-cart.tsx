@@ -4,6 +4,7 @@ import type { MoneyV2 } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
 import type { RefObject } from "react";
 import { useEffect, useState } from "react";
+import { Button } from "~/components/button";
 import { AddToCartButton } from "~/components/product/add-to-cart-button";
 
 // Mobile-only bar that keeps price + Add to Cart reachable once the main
@@ -15,6 +16,7 @@ export function StickyAddToCart({
   lines,
   disabled,
   buttonText,
+  requestOnly = false,
 }: {
   targetRef: RefObject<HTMLElement | null>;
   title: string;
@@ -22,6 +24,8 @@ export function StickyAddToCart({
   lines: OptimisticCartLineInput[];
   disabled: boolean;
   buttonText: string;
+  /** Show "Request this piece", scrolling back to the request form. */
+  requestOnly?: boolean;
 }) {
   const [visible, setVisible] = useState(false);
 
@@ -53,14 +57,29 @@ export function StickyAddToCart({
           <p className="truncate text-sm">{title}</p>
           <Money withoutTrailingZeros data={price} as="p" className="text-lg" />
         </div>
-        <AddToCartButton
-          disabled={disabled}
-          lines={lines}
-          width="auto"
-          className="h-12 shrink-0 uppercase"
-        >
-          {buttonText}
-        </AddToCartButton>
+        {requestOnly ? (
+          <Button
+            type="button"
+            className="h-12 shrink-0 px-5 py-0 uppercase"
+            onClick={() =>
+              targetRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              })
+            }
+          >
+            Request this piece
+          </Button>
+        ) : (
+          <AddToCartButton
+            disabled={disabled}
+            lines={lines}
+            width="auto"
+            className="h-12 shrink-0 uppercase"
+          >
+            {buttonText}
+          </AddToCartButton>
+        )}
       </div>
     </div>
   );
