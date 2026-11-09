@@ -6,6 +6,10 @@
 
 ## Unreleased
 
+### Bed pricing from Barkman's 2026 list (ADR-0007)
+- **Bosco and Warwick repriced in Shopify (2026-11-09)** with the dining-table formula (33% margin, 5% SAC, 3% card fee, delivery at 25% of wholesale with a $500 minimum, rounded up to $25). Costs are the median of Barkman's 2026 bed designs per size and wood, because production moved to Barkman. Twin is priced as Full, Cali King as King, and the Warwick's drawer versions from Barkman's side-rail storage unit, until Barkman quotes them. Both beds are still Draft. Shopify only; no code changes.
+- **Catalog rollout:** the Vista oval extendable table (`scandinavian-dining-table-extendable-dining-table`) was released 2026-11-09 (Unlisted to Active) at the owner's request, ahead of the recorded approvals. Recorded as batch `2026-11-09-vista` in `docs/catalog-rollout-2026-11/register.json`, with partial verification.
+
 ### Wax product page: how-to, FAQ, SEO and structured data
 - **New sections on wood-care products** (`app/utils/wood-care.ts`, inserted by `adaptProductPage`): a three-step "How to Use" (apply with the grain, wait 10 minutes, buff) and a five-question "Furniture Wax FAQ". All the copy restates the product's own Shopify description and shipping metafield. Furniture pages are unchanged. The steps section now sizes its desktop grid to the number of steps (3 here, 4 on furniture).
 - **SEO:** title "Lareaux's Furniture Wax for Solid Wood, 8 oz | ModernCre8ve" (59 characters) and a 133-character meta. These take precedence over the Shopify SEO fields, whose description was 166 characters and ended "Buy now!".
