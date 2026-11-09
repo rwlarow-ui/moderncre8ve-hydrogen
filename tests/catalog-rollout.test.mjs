@@ -28,6 +28,8 @@ const now = new Date(baseline.capturedAt);
 
 function approvedFixture() {
   const r = structuredClone(register);
+  // The fixture models the pre-release baseline, so it starts with no batches.
+  r.batches = [];
   const s = structuredClone(baseline);
   const entry = r.entries[0];
   const product = s.products.find((p) => p.id === entry.id);

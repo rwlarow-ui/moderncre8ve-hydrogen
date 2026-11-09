@@ -27,7 +27,17 @@
       "title": "The Mansfield"
     }
   ],
-  "batches": [],
+  "batches": [
+    {
+      "id": "2026-11-09-vista",
+      "handles": [
+        "scandinavian-dining-table-extendable-dining-table"
+      ],
+      "publishedAt": "2026-11-09T17:15:19Z",
+      "notes": "Owner (Rob) asked to release the Vista table now, ahead of the recorded approvals. Status UNLISTED -> ACTIVE; it was already published to MODERNCRE8VE. Prices, variants and inventory settings unchanged. Bosco and Warwick beds held by owner pending price review.",
+      "review": null
+    }
+  ],
   "entries": [
     {
       "id": "gid://shopify/Product/8342152839467",
@@ -50,8 +60,16 @@
         "imagery": null,
         "merchandising": null
       },
-      "release": null,
-      "verification": null,
+      "release": {
+        "status": "ACTIVE",
+        "publishedAt": "2026-11-09T17:15:19Z",
+        "requestedBy": "Store owner"
+      },
+      "verification": {
+        "checkedAt": "2026-11-09",
+        "partial": true,
+        "evidence": "Live PDP returns 200 with title and add-to-cart; Product JSON-LD shows InStock. Mobile, cart/checkout handoff, analytics and search discovery not yet checked."
+      },
       "priority": 1
     },
     {
