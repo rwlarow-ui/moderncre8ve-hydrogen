@@ -57,6 +57,21 @@ export function productClass(product: ProductClassInput): ProductClass {
   return "furniture";
 }
 
+/**
+ * Shopify product tag that swaps Add to Cart for a "Request this piece" form
+ * (`app/components/product/piece-request.tsx`). Use it for pieces that need
+ * confirming with the maker before an order is taken.
+ */
+export const REQUEST_ONLY_TAG = "request-only";
+
+export function isRequestOnly(product: {
+  tags?: readonly string[] | null;
+}): boolean {
+  return (product.tags ?? []).some(
+    (t) => t.trim().toLowerCase() === REQUEST_ONLY_TAG,
+  );
+}
+
 /** Shipping line shown instead of the furniture lead time on housewares. */
 export const HOUSEWARES_LEAD_TIME =
   "Ships within 3–5 business days via standard ground.";

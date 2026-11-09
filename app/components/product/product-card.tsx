@@ -12,6 +12,7 @@ import { NavLink } from "~/components/nav-link";
 import { useThemeSettings } from "~/page-builder";
 import { isCombinedListing } from "~/utils/combined-listings";
 import { calculateAspectRatio } from "~/utils/image";
+import { isRequestOnly } from "~/utils/product-class";
 import { getProductImageAlt } from "~/utils/product-image-alt";
 import { ProductCardBadges } from "./badges";
 import { ProductCardOptions } from "./product-card-options";
@@ -168,7 +169,7 @@ export function ProductCard({
               showSoldOut={pcardShowOutOfStockBadges}
             />
           </div>
-          {pcardEnableQuickShop && (
+          {pcardEnableQuickShop && !isRequestOnly(product) && (
             <QuickShopTrigger
               productHandle={product.handle}
               showOnHover={pcardShowQuickShopOnHover}

@@ -16,6 +16,7 @@ import { Link, useLoaderData } from "react-router";
 import { AddToCartButton } from "~/components/product/add-to-cart-button";
 import { ProductBadges } from "~/components/product/badges";
 import { BundledVariants } from "~/components/product/bundled-variants";
+import { PieceRequest } from "~/components/product/piece-request";
 import {
   ProductMedia,
   type ProductMediaProps,
@@ -31,6 +32,7 @@ import { createSchema } from "~/page-builder";
 import type { loader as productRouteLoader } from "~/routes/($locale).products.$productHandle";
 import { isCombinedListing } from "~/utils/combined-listings";
 import { isDiscounted } from "~/utils/product";
+import { isRequestOnly } from "~/utils/product-class";
 import { ProductDetails } from "./product-details";
 import { StickyAddToCart } from "./sticky-add-to-cart";
 import { ProductVariants } from "./variants";
@@ -112,6 +114,8 @@ const ProductInformation = ({
   const isBundle = Boolean(product?.isBundle?.requiresComponents);
   const bundledVariants = isBundle ? product?.isBundle?.components.nodes : null;
   const combinedListing = isCombinedListing(product);
+  // Tagged `request-only`: a request form replaces quantity, Add to Cart and Shop Pay.
+  const requestOnly = Boolean(product) && isRequestOnly(product);
 
   if (product) {
     const { title, handle, vendor, summary, priceRange, publishedAt, badges } =
@@ -267,11 +271,11 @@ const ProductInformation = ({
                   combinedListing={combinedListing}
                 />
 
-                {!combinedListing && (
+                {!combinedListing && !requestOnly && (
                   <Quantity value={quantity} onChange={setQuantity} />
                 )}
 
-                {!combinedListing && selectedVariant && (
+                {!combinedListing && !requestOnly && selectedVariant && (
                   <SellingPlanSelector
                     variant={selectedVariant}
                     selectedSellingPlanId={selectedSellingPlanId}
@@ -280,7 +284,19 @@ const ProductInformation = ({
                 )}
               </div>
 
-              {!combinedListing && (
+              {!combinedListing && requestOnly && (
+                <PieceRequest
+                  containerRef={atcRef}
+                  product={{ handle, title }}
+                  variant={{
+                    id: selectedVariant?.id,
+                    title: selectedVariant?.title,
+                    price: selectedVariant?.price as MoneyV2,
+                  }}
+                />
+              )}
+
+              {!combinedListing && !requestOnly && (
                 <div
                   ref={atcRef}
                   className="sp-button space-y-2 py-3"
@@ -375,6 +391,7 @@ const ProductInformation = ({
             lines={cartLines}
             disabled={!selectedVariant.availableForSale}
             buttonText={atcButtonText}
+            requestOnly={requestOnly}
           />
         )}
       </Section>

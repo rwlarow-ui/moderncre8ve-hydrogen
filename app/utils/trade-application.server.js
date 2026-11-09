@@ -2,7 +2,7 @@
 const ADMIN_API_VERSION = "2026-01";
 export const TRADE_TAG = "trade-applicant";
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const FIELD_LIMITS = {
   firstName: 80,
@@ -15,7 +15,7 @@ const FIELD_LIMITS = {
   details: 2000,
 };
 
-function clean(value, max) {
+export function clean(value, max) {
   // Drop control characters (keeping tab/newline) by char code.
   return Array.from(String(value ?? ""))
     .filter((ch) => {
@@ -60,12 +60,12 @@ export function buildApplicationNote(values, date = new Date()) {
 }
 
 function getConfig(env) {
-  // Deliberately no fallback to SHOPIFY_ADMIN_API_TOKEN: the public form must
+  // Deliberately no fallback to SHOPIFY_ADMIN_API_TOKEN: the public forms must
   // only ever run with the narrowly scoped ops token.
   const adminToken = env.OPS_ADMIN_API_TOKEN;
   const storeDomain = env.PUBLIC_STORE_DOMAIN;
   if (!adminToken || !storeDomain) {
-    throw new Error("Trade applications are not configured.");
+    throw new Error("Customer intake is not configured.");
   }
   return { adminToken, storeDomain };
 }
@@ -135,11 +135,15 @@ function assertNoUserErrors(errors) {
 }
 
 /**
- * Tag the applicant `trade-applicant`, creating the customer if needed and
- * appending the application to the note of an existing one.
+ * Tag a customer, creating them if needed and appending `note` to the note of
+ * an existing one. Shared by the public intake forms (trade, piece requests).
  */
-export async function submitTradeApplication(env, values, fetchImpl = fetch) {
-  const note = buildApplicationNote(values);
+export async function upsertTaggedCustomer(
+  env,
+  values,
+  { tag, note },
+  fetchImpl = fetch,
+) {
   const emailQuery = `email:"${values.email.replace(/["\\]/g, "")}"`;
   const found = await adminGraphql(
     env,
@@ -161,7 +165,7 @@ export async function submitTradeApplication(env, values, fetchImpl = fetch) {
     const tagged = await adminGraphql(
       env,
       TAGS_ADD,
-      { id: existing.id, tags: [TRADE_TAG] },
+      { id: existing.id, tags: [tag] },
       fetchImpl,
     );
     assertNoUserErrors(tagged.tagsAdd?.userErrors);
@@ -179,7 +183,7 @@ export async function submitTradeApplication(env, values, fetchImpl = fetch) {
         phone: /^\+[1-9]\d{6,14}$/.test(values.phone.replace(/[\s().-]/g, ""))
           ? values.phone.replace(/[\s().-]/g, "")
           : undefined,
-        tags: [TRADE_TAG],
+        tags: [tag],
         note,
       },
     },
@@ -187,6 +191,19 @@ export async function submitTradeApplication(env, values, fetchImpl = fetch) {
   );
   assertNoUserErrors(created.customerCreate?.userErrors);
   return { created: true, customerId: created.customerCreate.customer.id };
+}
+
+/**
+ * Tag the applicant `trade-applicant`, creating the customer if needed and
+ * appending the application to the note of an existing one.
+ */
+export function submitTradeApplication(env, values, fetchImpl = fetch) {
+  return upsertTaggedCustomer(
+    env,
+    values,
+    { tag: TRADE_TAG, note: buildApplicationNote(values) },
+    fetchImpl,
+  );
 }
 
 const RESEND_URL = "https://api.resend.com/emails";
@@ -218,6 +235,29 @@ export async function notifyTradeApplication(
     `https://${env.PUBLIC_STORE_DOMAIN}/admin/customers/${adminId}`,
   ].join("\n");
 
+  await sendOwnerEmail(
+    env,
+    {
+      to,
+      replyTo: values.email,
+      subject: `Trade application: ${values.business}`,
+      text,
+      label: "Trade notification",
+    },
+    fetchImpl,
+  );
+  return { sent: true };
+}
+
+/**
+ * Plain-text owner email through Resend, from the PO sender. The caller checks
+ * that mail is configured; newlines are stripped from the subject.
+ */
+export async function sendOwnerEmail(
+  env,
+  { to, replyTo, subject, text, label = "Notification" },
+  fetchImpl = fetch,
+) {
   const response = await fetchImpl(RESEND_URL, {
     method: "POST",
     signal: AbortSignal.timeout(NOTIFY_TIMEOUT_MS),
@@ -228,13 +268,12 @@ export async function notifyTradeApplication(
     body: JSON.stringify({
       from: env.PO_FROM_EMAIL,
       to: [to],
-      reply_to: values.email,
-      subject: `Trade application: ${values.business}`.replace(/[\r\n]+/g, " "),
+      reply_to: replyTo,
+      subject: subject.replace(/[\r\n]+/g, " "),
       text,
     }),
   });
   if (!response.ok) {
-    throw new Error(`Trade notification failed (${response.status}).`);
+    throw new Error(`${label} failed (${response.status}).`);
   }
-  return { sent: true };
 }
