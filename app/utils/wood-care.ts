@@ -97,7 +97,7 @@ export const WOOD_CARE_CONTENT: Record<string, WoodCareContent> = {
       {
         question: "How do I dispose of used rags?",
         answer:
-          "Rags soaked in flaxseed oil can catch fire on their own as they dry. Lay used rags flat outdoors to dry, or soak them in water and seal them in a metal container before you throw them away.",
+          "Rags soaked in flaxseed oil can catch fire on their own as they dry. Lay used rags flat outdoors to dry, away from anything that can burn, before you throw them away. Or keep them fully submerged in water in a tightly sealed metal container and take them to your local hazardous-waste drop-off.",
       },
       {
         question: "How fast does it ship?",
