@@ -22,7 +22,7 @@ function facts(origin: string) {
 
 - Materials: solid American hardwoods (walnut, white oak, cherry, hard maple).
 - Lead time: ModernCre8ve furniture is made to order and takes 12-16 weeks.
-- Wood care: Lareaux's Furniture Wax is not made to order; it ships in 3-5 business days.
+- Wood care: Lareaux's Furniture Cure All (furniture paste wax) is not made to order; it ships in 3-5 business days.
 - Delivery: white glove in-home delivery with assembly on 95%+ of furniture orders.
 - Origin: ModernCre8ve furniture is handcrafted in Ohio, USA. Some seating and stools are imported; each product page states its origin.
 - Returns, shipping and care: ${origin}/pages/faq

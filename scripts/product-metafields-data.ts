@@ -66,12 +66,12 @@ export const PRODUCTS: Record<string, ProductMetafieldContent> = {
 
   "lareauxs-furniture-wax": {
     shortDescription:
-      "A premium furniture wax handcrafted for maintaining and protecting solid wood furniture. Lareaux's Furniture Wax nourishes, protects, and enhances the natural grain of walnut, oak, cherry, and other hardwoods. Ships in 3–5 business days.",
+      "A soft paste wax made by furniture makers, for furniture. Lareaux's Furniture Cure All cleans, conditions and protects solid wood and brings out the natural warmth of walnut, oak, cherry and other hardwoods. Ships in 3–5 business days.",
     material:
-      "<p><strong>Ingredients:</strong> Natural beeswax blend with conditioning oils</p><p><strong>Use:</strong> Apply thin coat with soft cloth, buff to desired sheen</p><p><strong>Coverage:</strong> One tin covers approximately 50–75 sq ft of surface area</p><p><strong>Safe for:</strong> All solid wood furniture, cutting boards, and wooden kitchen items</p>",
+      "<p><strong>Ingredients:</strong> Beeswax, carnauba wax, mineral oil, flaxseed oil, walnut oil, d-limonene and orange oil</p><p><strong>Use:</strong> Apply liberally with the grain, wait 10 minutes, buff off the excess with a clean cloth</p><p><strong>For:</strong> Finished and unfinished wood furniture. Not for cutting boards or food-contact surfaces</p><p><strong>Safety:</strong> Contains walnut oil (tree nut). Oily rags can self-ignite: dry them flat outdoors or soak in water before disposal</p>",
     centerHeading: "Care for Your Investment",
     centerContent:
-      "Your handcrafted furniture deserves handcrafted care. Lareaux's Furniture Wax is specifically formulated for the natural oil finishes we use on ModernCre8ve pieces. A light application every 3–6 months keeps your wood nourished, protected from moisture rings, and looking its absolute best for decades to come.",
+      "Your handcrafted furniture deserves handcrafted care. Lareaux's Furniture Cure All is made by the same people who build ModernCre8ve pieces. Applied about once a month, it keeps your wood nourished, helps protect against moisture and spills, and brings out its natural warmth for years to come.",
   },
 
   "scandinavian-danish-modern-dining-table": {

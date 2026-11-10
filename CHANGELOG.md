@@ -6,6 +6,12 @@
 
 ## Unreleased
 
+### Lareaux's Furniture Cure All (successor to Lareaux's Furniture Wax)
+- **Renamed in Shopify (2026-11-10)** to "Lareaux's Furniture Cure All", Small Batch Secret Recipe No. 09, matching the new tin label. The handle stays `lareauxs-furniture-wax`, so the URL, reviews, rollout register and code keys don't change. Still Draft; 8 oz only, price unchanged at $24.97.
+- **New formula on the page:** beeswax, carnauba, mineral oil, flaxseed oil, walnut oil, d-limonene and orange oil, with a tree-nut (walnut) notice and an oily-rag self-ignition warning. Removed the "food safe", "organic", cutting-board, 50–75 sq ft and every-3–6-months claims, and the competitor comparisons. Shopify description, SEO fields and the `custom.*` / `descriptor.short_description` metafields were updated directly; the option value "8 0z" is now "8 oz".
+- **Photos:** three new photos of the tin on a white oak table replace the old jar photos and the cutout (detached from the product, kept in Files) and carry descriptive alt text.
+- **Code:** `wood-care.ts` SEO title ("Lareaux's Furniture Cure All Paste Wax, 8 oz"), meta and FAQ (new "What's in it?" and rag-disposal questions); the care and FAQ pages, `llms.txt` facts and the metafield/SEO seed scripts use the new name, and the care pages now say 10 minutes, as the product copy does.
+
 ### "Request this piece" for request-only products
 - **A product tagged `request-only` in Shopify shows a "Request this piece" button instead of quantity, Add to Cart and Shop Pay** (`app/components/product/piece-request.tsx`, `isRequestOnly` in `app/utils/product-class.ts`). The button opens a short form (name, email, optional phone, delivery ZIP, notes) that sends the selected size/configuration and its listed price. The mobile sticky bar shows the same button and scrolls back to the form, and product cards hide Quick Shop for these products, so the piece can't be added to the cart from a collection page. First used on the Warwick bed.
 - **`/api/piece-request`** works like the trade form: honeypot, Turnstile, then a Shopify customer tagged `piece-request` with the request appended to the customer note (ops token only), plus a best-effort plain-text owner email via Resend to `PIECE_REQUEST_NOTIFY_EMAIL`, falling back to `TRADE_NOTIFY_EMAIL` and then `PO_CC_EMAIL`. Nothing is charged or reserved.

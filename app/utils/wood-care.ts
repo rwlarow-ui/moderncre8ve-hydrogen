@@ -2,7 +2,7 @@
  * Product-page content for wood-care products (productClass "housewares").
  *
  * Every claim here restates the product's own Shopify description (owner
- * copy, Admin → Products → Lareaux's Furniture Wax) or its `custom.shipping_works`
+ * copy, Admin → Products → Lareaux's Furniture Cure All) or its `custom.shipping_works`
  * metafield. Add nothing that isn't stated there. The same FAQ list renders
  * on the page and in the FAQPage JSON-LD, so the two can't drift.
  *
@@ -39,9 +39,9 @@ export interface WoodCareContent {
 
 export const WOOD_CARE_CONTENT: Record<string, WoodCareContent> = {
   "lareauxs-furniture-wax": {
-    seoTitle: "Lareaux's Furniture Wax for Solid Wood, 8 oz",
+    seoTitle: "Lareaux's Furniture Cure All Paste Wax, 8 oz",
     seoDescription:
-      "Beeswax, carnauba and orange oil paste wax that cleans, conditions and protects wood furniture. 8 oz tin. Ships in 3–5 business days.",
+      "Soft paste wax of beeswax, carnauba, walnut and citrus oils that cleans, conditions and protects wood. 8 oz tin. Ships in 3–5 business days.",
     handlingDays: { min: 3, max: 5 },
     howTo: {
       heading: "How to Use",
@@ -67,12 +67,17 @@ export const WOOD_CARE_CONTENT: Record<string, WoodCareContent> = {
         },
       ],
     },
-    faqHeading: "Furniture Wax FAQ",
+    faqHeading: "Furniture Cure All FAQ",
     faq: [
       {
-        question: "What is Lareaux's Furniture Wax?",
+        question: "What is Lareaux's Furniture Cure All?",
         answer:
-          "A paste wax that cleans, conditions and protects wood furniture and adds luster and shine. It's made with beeswax, carnauba wax and orange oil, and was developed in-house at ModernCre8ve.",
+          "A soft paste wax made by furniture makers, for furniture. It cleans, conditions and protects wood and brings out its natural warmth and character. It's Small Batch Secret Recipe No. 09, the successor to Lareaux's Furniture Wax: a touch of walnut oil and a little more citrus give it a slightly warmer, richer tone than the original flax-only blend.",
+      },
+      {
+        question: "What's in it?",
+        answer:
+          "Beeswax, carnauba wax, mineral oil, flaxseed oil, walnut oil, d-limonene and orange oil. No turpentine, mineral spirits or naphtha. It contains walnut oil, a tree nut.",
       },
       {
         question: "What can I use it on?",
@@ -88,6 +93,11 @@ export const WOOD_CARE_CONTENT: Record<string, WoodCareContent> = {
         question: "How often should I apply it?",
         answer:
           "About once a month. At that rate, an 8 oz tin lasts about a year for one piece, such as a bed or a dining table.",
+      },
+      {
+        question: "How do I dispose of used rags?",
+        answer:
+          "Rags soaked in flaxseed oil can catch fire on their own as they dry. Lay used rags flat outdoors to dry, or soak them in water and seal them in a metal container before you throw them away.",
       },
       {
         question: "How fast does it ship?",

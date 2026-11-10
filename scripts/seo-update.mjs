@@ -270,9 +270,9 @@ const PRODUCTS = [
   },
   {
     handle: "lareauxs-furniture-wax",
-    seoTitle: "Lareaux's Natural Furniture Wax — Beeswax Wood Care",
+    seoTitle: "Lareaux's Furniture Cure All Paste Wax, 8 oz",
     seoDescription:
-      "Natural beeswax furniture wax for solid wood care. Nourishes and protects walnut, oak & cherry. Ships in 3–5 business days.",
+      "Soft paste wax of beeswax, carnauba, walnut and citrus oils that cleans, conditions and protects wood. 8 oz tin. Ships in 3–5 business days.",
   },
   {
     handle: "mid-century-modern-walnut-nightstand",

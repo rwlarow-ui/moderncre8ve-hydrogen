@@ -223,9 +223,9 @@ export const assemblyCare: PageDefinition = {
       id: "care-q3",
       type: "accordion--item",
       data: {
-        title: "How do I use Lareaux's Furniture Paste Wax?",
+        title: "How do I use Lareaux's Furniture Cure All?",
         content:
-          "Apply paste liberally, allow to sit and soak for at least 15 minutes, then buff off excess with a soft clean cloth. Use quarterly to monthly. Each order ships with a small tin. Full 8oz tins available for purchase on the site.",
+          "Apply the paste wax liberally with the grain, let it sit for 10 minutes, then buff off the excess with a clean cloth in the direction of the grain. Lay used rags flat outdoors to dry, or soak them in water, before throwing them away. Use quarterly to monthly. Each order ships with a small tin. Full 8oz tins available for purchase on the site.",
       },
     },
     {
