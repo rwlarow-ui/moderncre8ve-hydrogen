@@ -348,7 +348,7 @@ export const faq: PageDefinition = {
       data: {
         title: "How do I care for my furniture?",
         content:
-          "Use Lareaux's Furniture Paste Wax quarterly to monthly — apply liberally, let sit 15 minutes, buff with soft cloth. Use a plant-based wood cleaner or microfiber cloth and water for daily cleaning. Don't place hot items directly on surfaces. Don't allow liquids to pool. Be mindful of sunlight and humidity.",
+          "Use Lareaux's Furniture Cure All paste wax quarterly to monthly — apply liberally with the grain, let sit 10 minutes, buff off the excess with a clean cloth. Use a plant-based wood cleaner or microfiber cloth and water for daily cleaning. Don't place hot items directly on surfaces. Don't allow liquids to pool. Be mindful of sunlight and humidity.",
       },
     },
     {

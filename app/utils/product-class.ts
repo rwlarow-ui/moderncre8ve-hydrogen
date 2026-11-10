@@ -5,7 +5,7 @@
  * shared by every product and was written for Ohio-built furniture: 12–16 week
  * lead time, one-year warranty, white glove delivery, "Handcrafted
  * in Ohio / Made in the USA", Amish joinery. Those claims are wrong on
- * Lareaux's Furniture Wax (ships in 3–5 business days) and on imported seating
+ * Lareaux's Furniture Cure All (ships in 3–5 business days) and on imported seating
  * (vendor "Piper + Fox Co."; listings say "Place of Origin: China").
  *
  * - `furniture`  — Ohio-built pieces; the composition renders unchanged.
