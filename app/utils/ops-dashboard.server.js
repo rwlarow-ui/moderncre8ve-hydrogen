@@ -88,7 +88,6 @@ const LIST_CURRENT_ORDERS_QUERY = `
 
 const ORDER_DETAIL_QUERY = `
   ${ORDER_ROW_FRAGMENT}
-  ${MONEY_FRAGMENT}
   query OpsOrderDetail($id: ID!) {
     order(id: $id) {
       ...OpsOrderRow
