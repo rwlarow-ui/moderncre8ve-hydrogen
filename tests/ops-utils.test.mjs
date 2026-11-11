@@ -1,10 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { buildSchema, parse, UniqueFragmentNamesRule, validate } from "graphql";
 import { requireOpsAccess } from "../app/utils/ops-auth.server.js";
 import {
   buildOpsNoteMutation,
   buildOrderSearchQuery,
   diffTags,
+  getOrderDetail,
   isCurrentOrder,
   listCurrentOrders,
   normalizeOpsFilters,
@@ -156,6 +158,29 @@ const config = {
   PUBLIC_STORE_DOMAIN: "x.myshopify.com",
   SHOPIFY_ADMIN_API_TOKEN: "t",
 };
+
+test("getOrderDetail sends a query with valid fragment names", async (t) => {
+  // This rule validates document structure independently of Shopify's schema.
+  const schema = buildSchema("type Query { unused: ID }");
+  t.mock.method(globalThis, "fetch", async (_url, init) => {
+    const { query, variables } = JSON.parse(init.body);
+    const errors = validate(schema, parse(query), [UniqueFragmentNamesRule]);
+    assert.deepEqual(
+      errors.map((error) => error.message),
+      [],
+    );
+    assert.equal(variables.id, "gid://shopify/Order/123");
+    return new Response(
+      JSON.stringify({
+        data: { order: orderNode(123, { lineItems: { nodes: [] } }) },
+      }),
+    );
+  });
+
+  const order = await getOrderDetail(config, "123");
+  assert.equal(order.legacyId, "123");
+  assert.deepEqual(order.lineItems, []);
+});
 
 test("buildOrderSearchQuery pushes only the date window", () => {
   assert.match(buildOrderSearchQuery(), /^processed_at:>=\d{4}-\d{2}-\d{2}$/);
