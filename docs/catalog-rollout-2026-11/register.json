@@ -36,6 +36,19 @@
       "publishedAt": "2026-11-09T17:15:19Z",
       "notes": "Owner (Rob) asked to release the Vista table now, ahead of the recorded approvals. Status UNLISTED -> ACTIVE; it was already published to MODERNCRE8VE. Prices, variants and inventory settings unchanged. Bosco and Warwick beds held by owner pending price review.",
       "review": null
+    },
+    {
+      "id": "2026-11-12-wave1-b2",
+      "handles": [
+        "the-haven-a-mid-century-modern-credenza",
+        "the-vista-modern-dining-chair",
+        "the-seymour-modern-dining-chair",
+        "contemporary-dining-bench-vermonter",
+        "copy-of-santa-monica-bench-modern-walnut-bench"
+      ],
+      "publishedAt": "2026-11-12T15:05:00Z",
+      "notes": "Owner (Rob) asked to activate five products on 2026-11-12, ahead of recorded approvals and before the 2026-11-09-vista review was recorded. Status DRAFT -> ACTIVE; published to MODERNCRE8VE (gid://shopify/Publication/291307159851) only. Prices, variants, inventory quantities and inventory policy unchanged. Copy cleaned before release at the owner's request: removed free-shipping lines (Haven, Santa Monica bench), sustainability claims (Vermonter, Santa Monica bench), the 6-12 week lead-time block (Santa Monica bench) and description H1s (Vista chairs, Santa Monica bench); corrected listed sizes to match variants (Vermonter 52/60/72/84 in; Santa Monica bench 48/56/64/72 x 14 x 18 in); new SEO titles/metas for Haven, Vermonter, Vista chairs and Santa Monica bench. Haven and Vermonter (0 stock, inventory tracked, policy DENY) tagged request-only. Seymour released unchanged at the owner's direction; its origin conflict (Amish wording vs Piper & Fox / NON_US_ORIGIN in code) remains open. Verified 2026-11-12: all five return 200 and appear in /sitemap.xml.",
+      "review": null
     }
   ],
   "entries": [
