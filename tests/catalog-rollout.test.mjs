@@ -210,10 +210,6 @@ test("content audit identifies observed launch blockers without asserting that a
   );
   assert.match(contentFindings(provo).join(" "), /Provo title/);
   assert.match(contentFindings(provo).join(" "), /Obsolete production/);
-  const seymour = baseline.products.find(
-    (p) => p.handle === "the-seymour-modern-dining-chair",
-  );
-  assert.match(contentFindings(seymour).join(" "), /origin claims/);
 });
 
 test("mechanical draft corrections are idempotent and cannot touch price, variants or publication", () => {

@@ -117,13 +117,6 @@ export function contentFindings(product) {
     findings.push(
       "Provo title conflicts with coffee-table dimensions and type",
     );
-  if (
-    product.handle === "the-seymour-modern-dining-chair" &&
-    /Amish|Ohio|made in (?:the )?USA/i.test(html)
-  )
-    findings.push(
-      "Seymour origin claims conflict with repository non-US classification",
-    );
   if (product.handle === "mid-century-modern-floor-lamp-warwick")
     findings.push(
       "Verify lamp origin, fulfillment and delivery treatment separately",

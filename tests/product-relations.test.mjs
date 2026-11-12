@@ -13,9 +13,9 @@ test("tables omit held chair destinations and keep US origin", () => {
   assert.equal("isRelatedTo" in ld, false);
 });
 
-test("imported chair emits no countryOfOrigin", () => {
+test("Amish-made Seymour chair keeps US origin and links the live tables", () => {
   const ld = productRelationsJsonLd("the-seymour-modern-dining-chair", origin);
-  assert.equal("countryOfOrigin" in ld, false);
+  assert.equal(ld.countryOfOrigin.name, "US");
   assert.ok(ld.isRelatedTo.length > 1);
   assert.deepEqual(
     ld.isRelatedTo.map((r) => r.url),

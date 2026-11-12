@@ -38,12 +38,9 @@ function normalizeVendor(vendor: string) {
 
 export function productClass(product: ProductClassInput): ProductClass {
   const vendor = product.vendor ? normalizeVendor(product.vendor) : "";
-  // Legacy Seymour listings use our vendor name, so vendor alone cannot
-  // prevent the shared furniture composition from asserting Ohio/Amish origin.
-  if (
-    IMPORT_VENDORS.has(vendor) ||
-    product.handle === "the-seymour-modern-dining-chair"
-  ) {
+  // The Seymour chair is Amish-made (owner, 2026-11-12), so it is furniture,
+  // not imported; only an import vendor makes a product "imported".
+  if (IMPORT_VENDORS.has(vendor)) {
     return "imported";
   }
   const tags = (product.tags ?? []).map((t) => t.toLowerCase());

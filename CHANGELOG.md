@@ -6,6 +6,9 @@
 
 ## Unreleased
 
+### Seymour chair is Amish-made
+- The owner confirmed on 2026-11-12 that the Seymour dining chair is Amish-made, so its page and structured data now treat it as Ohio-built furniture: `productClass()` no longer forces it to "imported", it emits `countryOfOrigin: US`, and the rollout audit no longer flags its Amish wording as an origin conflict. Its Shopify copy (Amish-made) was already right and is unchanged.
+
 ### Ops Hub identities, Claude publisher and workspace tabs
 - Prepared Google individual logins for Rob and Haven, revocable sessions, private Rob-only Google panels, and a staged shared-password cutover. Provider configuration and real-account acceptance are still required.
 - Added an OAuth/PKCE remote MCP context publisher with the official Web Standards transport, private versioned Postgres storage, optimistic updates, withdrawal and grant revocation. Publishing requires the explicit Claude publish-to-hub step.
