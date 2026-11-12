@@ -54,14 +54,14 @@ test("Piper + Fox vendor is imported, in any spelling", () => {
   }
 });
 
-test("legacy Seymour cannot inherit Ohio/Amish promises from the store vendor", () => {
+test("the Seymour chair is Amish-made furniture, not imported", () => {
   assert.equal(
     productClass({
       handle: "the-seymour-modern-dining-chair",
       vendor: "Moderncre8ve",
       productType: "Chairs",
     }),
-    "imported",
+    "furniture",
   );
 });
 

@@ -33,7 +33,8 @@ const DISCOVERABLE_RELATED_HANDLES = new Set([
  * `productClass` in product-class.ts), so a new Piper + Fox listing never
  * claims US origin by default.
  */
-const NON_US_ORIGIN = new Set(["the-seymour-modern-dining-chair"]);
+// Empty since 2026-11-12: the Seymour chair is Amish-made (owner).
+const NON_US_ORIGIN = new Set<string>();
 
 export function relatedProductHandles(handle: string): string[] {
   if (DINING_TABLES.includes(handle)) {
