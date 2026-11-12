@@ -17,7 +17,10 @@ import type {
 } from "schema-dts";
 import type { ProductQuery, ShopFragment } from "storefront-api.generated";
 import { collectionFaqs } from "~/utils/collection-faqs";
-import { collectionSeoDescriptions } from "~/utils/collection-seo-descriptions";
+import {
+  collectionSeoDescriptions,
+  collectionSeoOverrides,
+} from "~/utils/collection-seo-descriptions";
 import { productClass } from "~/utils/product-class";
 import {
   parseProductDimensions,
@@ -470,12 +473,14 @@ function collectionJsonLd({
       "@context": "https://schema.org",
       "@type": "CollectionPage",
       name:
+        collectionSeoOverrides[collectionData.handle]?.title ||
         stripBrandSuffix(collectionData?.seo?.title) ||
         stripBrandSuffix(collectionData?.title) ||
         collectionData?.title ||
         "",
       description: truncate(
-        collectionData?.seo?.description ??
+        collectionSeoOverrides[collectionData.handle]?.description ??
+          collectionData?.seo?.description ??
           collectionData?.description ??
           stripHtmlTags(
             collectionSeoDescriptions[collectionData?.handle ?? ""]?.rich ?? "",
@@ -520,13 +525,15 @@ function collection({
 }): SeoConfig {
   return {
     title: truncateTitle(
-      stripBrandSuffix(collectionData?.seo?.title) ||
+      collectionSeoOverrides[collectionData.handle]?.title ||
+        stripBrandSuffix(collectionData?.seo?.title) ||
         stripBrandSuffix(collectionData?.title) ||
         collectionData?.title ||
         "",
     ),
     description: truncate(
-      collectionData?.seo?.description ??
+      collectionSeoOverrides[collectionData.handle]?.description ??
+        collectionData?.seo?.description ??
         collectionData?.description ??
         collectionSeoDescriptions[collectionData?.handle ?? ""]?.meta ??
         "",

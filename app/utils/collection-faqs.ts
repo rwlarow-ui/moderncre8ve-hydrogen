@@ -43,7 +43,7 @@ export const collectionFaqs: Record<string, FAQ[]> = {
     {
       question: "How long does it take to receive a dining table?",
       answer:
-        "Our dining tables are handcrafted to order by Amish woodworkers in Ohio, so allow 12–16 weeks. White-glove in-home delivery and assembly are included.",
+        "Our dining tables are handcrafted to order by Amish woodworkers in Ohio. Allow 12–16 weeks for production and delivery; custom orders may take longer. Over 95% of deliveries include in-home placement and assembly; confirm service and access requirements for your address.",
     },
   ],
 

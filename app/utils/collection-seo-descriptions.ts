@@ -15,6 +15,20 @@ export interface CollectionSeoDescription {
   rich: string;
 }
 
+/** Reviewed snippet copy takes precedence over Shopify SEO for these handles. */
+export const collectionSeoOverrides: Record<
+  string,
+  { title: string; description: string }
+> = {
+  // Nov 12 brief: 2,823 impressions, position 15.2, 0.4% CTR.
+  // Keep the brand out of the base title; seo.server.ts appends it once.
+  "mid-century-modern-dining-tables": {
+    title: "Mid-Century Modern Dining Tables",
+    description:
+      "Shop solid wood mid-century modern dining tables, handcrafted to order in Ohio. Explore walnut, white oak and extendable designs. Custom sizes by quote.",
+  },
+};
+
 export const collectionSeoDescriptions: Record<
   string,
   CollectionSeoDescription
@@ -25,8 +39,9 @@ export const collectionSeoDescriptions: Record<
   },
 
   "mid-century-modern-dining-tables": {
-    meta: "Browse handcrafted mid century modern dining tables in solid walnut and white oak. Extendable and fixed designs, custom sizing, white glove delivery.",
-    rich: `<p>Explore our collection of <strong>mid century modern dining tables</strong>, handcrafted from solid American walnut and white oak by Amish artisans in Ohio. Each table is built to order with the clean lines, tapered legs, and organic proportions that define timeless mid-century design.</p><p>Start with <a href="/products/the-santa-monica-mid-century-modern-dining-table">The Santa Monica extendable dining table</a>, our signature design for everyday seating and warm hardwood styling. For a rounded silhouette, the <a href="/products/payne-oval-extendable-dining-table-for-6-8">Payne oval extendable dining table</a> adds extra seating without sacrificing a refined Nordic profile.</p><p>Explore our broader <a href="/collections/scandinavian-design-furniture">Scandinavian furniture collection</a> for complementary designs. Every dining table is made to order, available in custom dimensions, and delivered with complimentary white glove service.</p>`,
+    meta: collectionSeoOverrides["mid-century-modern-dining-tables"]
+      .description,
+    rich: `<p>Explore our collection of <strong>mid century modern dining tables</strong>, handcrafted from solid American walnut and white oak by Amish artisans in Ohio. Each table is built to order with the clean lines, tapered legs, and organic proportions that define timeless mid-century design.</p><p>Start with <a href="/products/the-santa-monica-mid-century-modern-dining-table">The Santa Monica extendable dining table</a>, our signature design for everyday seating and warm hardwood styling. For a rounded silhouette, the <a href="/products/payne-oval-extendable-dining-table-for-6-8">Payne oval extendable dining table</a> adds extra seating without sacrificing a refined Nordic profile.</p><p>Explore our broader <a href="/collections/scandinavian-design-furniture">Scandinavian furniture collection</a> for complementary designs. Our dining tables are made to order, with custom dimensions available by quote. Allow 12–16 weeks for production and delivery.</p>`,
   },
 
   "mid-century-modern": {
