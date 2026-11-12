@@ -59,7 +59,7 @@
 | Dry run with one historical order (item 12) | ❌ Not done | |
 | What the external hub does that `/ops` doesn't | ❓ Unknown | Its code isn't in GitHub, so this scan can't list its features or say whether it holds POs that aren't in Shopify |
 
-**Scoping note for #14 (2026-11-09).** Found by a live check on 2026-11-09: 5 product pages return 200 (the 4 protected products plus Vista), and the sitemap and `/llms-full.txt` list only live products, so neither links to a dead URL. Owner decision pending on how a held URL behaves until its item comes back:
+**Scoping note for #14 (2026-11-09).** Found by a live check on 2026-11-09: 5 product pages return 200 (the 4 protected products plus Vista); 13 by 2026-11-12 after five rollout batches, plus 5 Unlisted products outside the register (Bel-Aire desk and four chairs) whose pages also load, and the sitemap and `/llms-full.txt` list only live products, so neither links to a dead URL. Owner decision pending on how a held URL behaves until its item comes back:
 
 | Option | What it does | Fit |
 |---|---|---|
