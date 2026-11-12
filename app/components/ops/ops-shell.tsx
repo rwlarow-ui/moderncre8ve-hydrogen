@@ -5,7 +5,13 @@ import {
   SignOutIcon,
   WarningCircleIcon,
 } from "@phosphor-icons/react";
-import { Form, Link, NavLink, useLocation } from "react-router";
+import {
+  Form,
+  Link,
+  NavLink,
+  useLocation,
+  useRouteLoaderData,
+} from "react-router";
 import { cn } from "~/utils/cn";
 import { LEAD_TIME_MAX_DAYS, LEAD_TIME_MIN_DAYS } from "~/utils/ops-lead-time";
 
@@ -25,6 +31,9 @@ export const opsTextLinkClass =
   "inline-flex items-center gap-1.5 text-body underline decoration-line underline-offset-4 transition-colors hover:decoration-body";
 
 export function OpsShell({ children }: { children: React.ReactNode }) {
+  const identity = useRouteLoaderData("routes/ops") as
+    | { user?: { name: string; email: string } }
+    | undefined;
   return (
     <div className="min-h-screen bg-background text-body">
       <header className="sticky top-0 z-20 border-line-subtle border-b bg-background shadow-header">
@@ -45,13 +54,13 @@ export function OpsShell({ children }: { children: React.ReactNode }) {
               Ops
             </span>
           </Link>
-          <nav aria-label="Ops" className="hidden h-full items-stretch sm:flex">
-            <OpsNavLink to="/ops" exclude="/ops/pos">
-              Current orders
-            </OpsNavLink>
-            <OpsNavLink to="/ops/pos">Production POs</OpsNavLink>
-          </nav>
           <div className="ml-auto flex items-center gap-5 text-sm">
+            <Link
+              to={identity?.user ? "/ops/settings" : "/ops/login?individual=1"}
+              className="underline underline-offset-4"
+            >
+              {identity?.user?.name || "Individual sign-in"}
+            </Link>
             <a
               href="/"
               target="_blank"
@@ -72,6 +81,19 @@ export function OpsShell({ children }: { children: React.ReactNode }) {
             </Form>
           </div>
         </div>
+        <nav
+          aria-label="Ops"
+          className="mx-auto flex max-w-(--page-width) overflow-x-auto border-line-subtle border-t px-4 text-sm md:px-8"
+        >
+          <OpsNavLink to="/ops/daily">Daily</OpsNavLink>
+          <OpsNavLink to="/ops">Current orders</OpsNavLink>
+          <OpsNavLink to="/ops/pos">Production POs</OpsNavLink>
+          <OpsNavLink to="/ops/catalog">Catalog</OpsNavLink>
+          <OpsNavLink to="/ops/marketing">Marketing</OpsNavLink>
+          <OpsNavLink to="/ops/sales">Sales</OpsNavLink>
+          <OpsNavLink to="/ops/tech">Tech</OpsNavLink>
+          <OpsNavLink to="/ops/brand">Brand</OpsNavLink>
+        </nav>
       </header>
       <div className="mx-auto w-full max-w-(--page-width) px-4 py-8 md:px-8 md:py-12">
         {children}
@@ -96,9 +118,12 @@ function OpsNavLink({
     <NavLink
       to={to}
       className={({ isActive: matched }) => {
-        const isActive = matched && !excluded;
+        const isActive =
+          (to === "/ops"
+            ? pathname === "/ops" || pathname.startsWith("/ops/orders/")
+            : matched) && !excluded;
         return cn(
-          "relative flex items-center px-3 font-sans transition-colors",
+          "relative flex shrink-0 items-center whitespace-nowrap px-3 py-4 font-sans transition-colors",
           "after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:transition-colors",
           isActive
             ? "text-body after:bg-body"

@@ -124,6 +124,13 @@ export default {
       // Security headers
       response.headers.set("X-Frame-Options", "SAMEORIGIN");
       response.headers.set("X-Content-Type-Options", "nosniff");
+      if (
+        /^\/ops(?:[/.]|$)/.test(url.pathname) ||
+        url.pathname.startsWith("/.well-known/oauth-")
+      ) {
+        response.headers.set("Cache-Control", "private, no-store");
+        response.headers.set("X-Robots-Tag", "noindex, nofollow");
+      }
       response.headers.set(
         "Referrer-Policy",
         "strict-origin-when-cross-origin",

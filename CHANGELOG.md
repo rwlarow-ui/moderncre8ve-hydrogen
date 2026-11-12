@@ -6,6 +6,12 @@
 
 ## Unreleased
 
+### Ops Hub identities, Claude publisher and workspace tabs
+- Prepared Google individual logins for Rob and Haven, revocable sessions, private Rob-only Google panels, and a staged shared-password cutover. Provider configuration and real-account acceptance are still required.
+- Added an OAuth/PKCE remote MCP context publisher with the official Web Standards transport, private versioned Postgres storage, optimistic updates, withdrawal and grant revocation. Publishing requires the explicit Claude publish-to-hub step.
+- Added Daily, Catalog, Marketing, Sales, Tech and Brand tabs, dated source context and independently tracked actions with owners, deadlines and completion evidence. Daily/Catalog have Shopify readers; private Google and GitHub integrations await setup. SEO pipeline ingestion remains separate.
+- Added `npm run test:ops-hub`, database/permissions and MCP client integration tests, and `docs/ops-hub-setup.md`. No provider accounts were provisioned or existing production credentials changed.
+
 ### Lareaux's Furniture Cure All (successor to Lareaux's Furniture Wax)
 - **Renamed in Shopify (2026-11-10)** to "Lareaux's Furniture Cure All", Small Batch Secret Recipe No. 09, matching the new tin label. The handle stays `lareauxs-furniture-wax`, so the URL, reviews, rollout register and code keys don't change. Still Draft; 8 oz only, price unchanged at $24.97.
 - **New formula on the page:** beeswax, carnauba, mineral oil, flaxseed oil, walnut oil, d-limonene and orange oil, with a tree-nut (walnut) notice and an oily-rag self-ignition warning. Removed the "food safe", "organic", cutting-board, 50–75 sq ft and every-3–6-months claims, and the competitor comparisons. Shopify description, SEO fields and the `custom.*` / `descriptor.short_description` metafields were updated directly; the option value "8 0z" is now "8 oz".

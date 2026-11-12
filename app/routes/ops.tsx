@@ -1,15 +1,16 @@
 import { Outlet } from "react-router";
 import { OpsShell } from "~/components/ops/ops-shell";
 import { requireOpsAccess } from "~/utils/ops-auth.server";
+import { privateHeaders } from "~/utils/ops-store.server";
 import type { Route } from "./+types/ops";
 
-export const headers = () => ({ "X-Robots-Tag": "noindex, nofollow" });
+export const headers = () => privateHeaders;
 
 export const meta = () => [{ name: "robots", content: "noindex, nofollow" }];
 
 export async function loader({ request, context }: Route.LoaderArgs) {
-  await requireOpsAccess(request, context);
-  return null;
+  const user = await requireOpsAccess(request, context);
+  return { user: user || null };
 }
 
 export default function OpsLayout() {
