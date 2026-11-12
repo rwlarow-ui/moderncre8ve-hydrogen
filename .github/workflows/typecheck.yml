@@ -34,3 +34,6 @@ jobs:
       # Postmortem 2026-11-03: no invented customers or unregistered sections
       - name: Trust content check
         run: npm run test:trust
+
+      - name: Ops hub regression and database tests
+        run: npm run test:ops-hub

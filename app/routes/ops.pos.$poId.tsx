@@ -84,7 +84,7 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
 }
 
 export async function action({ request, context, params }: Route.ActionArgs) {
-  await requireOpsAccess(request, context);
+  const operator = await requireOpsAccess(request, context);
   if (!params.poId) {
     throw new Response("PO not found.", { status: 404 });
   }
@@ -126,7 +126,9 @@ export async function action({ request, context, params }: Route.ActionArgs) {
     };
     if (targets[intent]) {
       const [to, message] = targets[intent];
-      await transitionPo(context.env, params.poId, to);
+      await transitionPo(context.env, params.poId, to, {
+        actor: operator?.email || "ops",
+      });
       return data({ ok: true, message });
     }
     return data({ ok: false, message: "Unsupported action." }, { status: 400 });

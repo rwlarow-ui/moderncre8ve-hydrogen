@@ -4,6 +4,7 @@ import {
   Form,
   redirect,
   useActionData,
+  useLoaderData,
   useNavigation,
   useRouteLoaderData,
   useSearchParams,
@@ -17,33 +18,61 @@ import {
   isOpsAuthenticated,
 } from "~/utils/ops-auth.server";
 import {
+  assertOpsOrigin,
+  currentOpsUser,
+  googleConfigured,
+} from "~/utils/ops-identity.server";
+import {
   checkThrottle,
   clearFailures,
   getClientKey,
   recordFailure,
   safeEqual,
 } from "~/utils/ops-login-throttle.server";
+import { privateHeaders } from "~/utils/ops-store.server";
+import { safeOpsRedirect } from "~/utils/ops-url";
 import { verifyTurnstile } from "~/utils/turnstile.server";
 import type { Route } from "./+types/ops_.login";
 
-export const headers = () => ({ "X-Robots-Tag": "noindex, nofollow" });
+export const headers = () => privateHeaders;
 
 export const meta = () => [{ name: "robots", content: "noindex, nofollow" }];
 
 export async function loader({ request, context }: Route.LoaderArgs) {
-  if (isOpsAuthenticated(context.session)) {
-    const url = new URL(request.url);
-    const redirectTo = url.searchParams.get("redirectTo") || "/ops";
-    throw redirect(redirectTo);
+  const url = new URL(request.url);
+  const user = await currentOpsUser(context);
+  const individual = url.searchParams.get("individual") === "1";
+  const legacyAllowed =
+    context.env.OPS_INDIVIDUAL_LOGIN_ENABLED !== "true" && !individual;
+  if (user || (legacyAllowed && isOpsAuthenticated(context.session))) {
+    throw redirect(
+      safeOpsRedirect(
+        url.searchParams.get("redirectTo") || (user ? "/ops/daily" : "/ops"),
+      ),
+    );
   }
-
-  return null;
+  return data(
+    {
+      googleConfigured: googleConfigured(context.env),
+      legacyAllowed,
+      googleError: url.searchParams.get("error") === "google",
+    },
+    { headers: privateHeaders },
+  );
 }
 
 export async function action({ request, context }: Route.ActionArgs) {
+  assertOpsOrigin(request, context.env);
+  if (context.env.OPS_INDIVIDUAL_LOGIN_ENABLED === "true")
+    return data(
+      { error: "Use your individual Google account to sign in." },
+      { status: 403 },
+    );
   const formData = await request.formData();
   const password = String(formData.get("password") || "");
-  const redirectTo = String(formData.get("redirectTo") || "/ops");
+  const redirectTo = safeOpsRedirect(
+    String(formData.get("redirectTo") || "/ops"),
+  );
   const configuredPassword = context.env.OPS_DASHBOARD_PASSWORD;
 
   if (!configuredPassword) {
@@ -108,6 +137,7 @@ function formatWait(seconds: number) {
 }
 
 export default function OpsLoginRoute() {
+  const setup = useLoaderData<typeof loader>();
   const actionData = useActionData<typeof action>();
   const navigation = useNavigation();
   const [searchParams] = useSearchParams();
@@ -127,7 +157,9 @@ export default function OpsLoginRoute() {
       setWidgetKey((key) => key + 1);
     }
   }, [actionData]);
-  const redirectTo = searchParams.get("redirectTo") || "/ops";
+  const redirectTo = safeOpsRedirect(
+    searchParams.get("redirectTo") || "/ops/daily",
+  );
 
   return (
     <div className="grid min-h-screen bg-background text-body lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
@@ -154,53 +186,88 @@ export default function OpsLoginRoute() {
           <div className="space-y-3">
             <h1 className="h4">Sign in to Ops</h1>
             <p className="text-body-subtle">
-              Track open orders against their lead time and keep private notes
-              and tags in step with Shopify.
+              Your team workspace for orders, production and the work ahead.
+              Individual accounts protect private information.
             </p>
           </div>
 
-          <Form method="post" className="space-y-5">
-            <input type="hidden" name="redirectTo" value={redirectTo} />
-            <input
-              type="hidden"
-              name="cf-turnstile-response"
-              value={turnstileToken}
-            />
-            <OpsField label="Team password">
-              <input
-                data-test="ops-password"
-                type="password"
-                name="password"
-                autoComplete="current-password"
-                // biome-ignore lint/a11y/noAutofocus: sole interactive field on a dedicated login page; focusing it does not disorient assistive tech
-                autoFocus
-                required
-                aria-invalid={actionData?.error ? true : undefined}
-                className={opsInputClass}
-              />
-            </OpsField>
-            {turnstileSiteKey ? (
-              <TurnstileWidget
-                key={widgetKey}
-                siteKey={turnstileSiteKey}
-                onVerify={setTurnstileToken}
-                onExpire={handleExpire}
-                appearance="interaction-only"
-              />
-            ) : null}
-            {actionData?.error ? (
-              <OpsNotice ok={false}>{actionData.error}</OpsNotice>
-            ) : null}
-            <Button
-              type="submit"
-              animate={false}
-              loading={isSubmitting}
-              disabled={isSubmitting}
-              className="w-full"
+          {setup.googleConfigured ? (
+            <a
+              href={`/ops/auth/google?redirectTo=${encodeURIComponent(redirectTo)}`}
+              className="block border border-body px-5 py-4 text-center font-sans hover:bg-(--color-topbar-bg)"
             >
-              Sign in
-            </Button>
-          </Form>
+              Continue with Google
+            </a>
+          ) : (
+            <OpsNotice ok={false}>
+              Individual sign-in is awaiting provider setup. Google login and
+              the private database must be connected before the new sections can
+              open.
+            </OpsNotice>
+          )}
+          <p className="text-body-subtle text-sm">
+            For Rob and Haven’s approved ModernCre8ve Google accounts.
+          </p>
+          {setup.googleError ? (
+            <OpsNotice ok={false}>
+              Google sign-in could not be completed. Choose the approved account
+              and try again. For a private connection, grant both requested
+              read-only permissions.
+            </OpsNotice>
+          ) : null}
+          {setup.legacyAllowed ? (
+            <details className="border-line border-t pt-5">
+              <summary className="cursor-pointer text-sm">
+                Existing order tools · team password
+              </summary>
+              <p className="my-4 text-body-subtle text-sm">
+                Temporary access to orders and POs. The new sections require an
+                individual login.
+              </p>
+              <Form method="post" className="space-y-5">
+                <input type="hidden" name="redirectTo" value={redirectTo} />
+                <input
+                  type="hidden"
+                  name="cf-turnstile-response"
+                  value={turnstileToken}
+                />
+                <OpsField label="Team password">
+                  <input
+                    data-test="ops-password"
+                    type="password"
+                    name="password"
+                    autoComplete="current-password"
+                    // biome-ignore lint/a11y/noAutofocus: sole interactive field on a dedicated login page; focusing it does not disorient assistive tech
+                    autoFocus
+                    required
+                    aria-invalid={actionData?.error ? true : undefined}
+                    className={opsInputClass}
+                  />
+                </OpsField>
+                {turnstileSiteKey ? (
+                  <TurnstileWidget
+                    key={widgetKey}
+                    siteKey={turnstileSiteKey}
+                    onVerify={setTurnstileToken}
+                    onExpire={handleExpire}
+                    appearance="interaction-only"
+                  />
+                ) : null}
+                {actionData?.error ? (
+                  <OpsNotice ok={false}>{actionData.error}</OpsNotice>
+                ) : null}
+                <Button
+                  type="submit"
+                  animate={false}
+                  loading={isSubmitting}
+                  disabled={isSubmitting}
+                  className="w-full"
+                >
+                  Sign in
+                </Button>
+              </Form>
+            </details>
+          ) : null}
         </div>
 
         <p className="text-body-subtle text-sm">

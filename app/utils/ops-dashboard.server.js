@@ -400,7 +400,7 @@ function getOwnerId(ownerType, ownerId) {
   return `gid://shopify/${resource}/${legacyId}`;
 }
 
-async function adminGraphql(config, query, variables = {}) {
+export async function adminGraphql(config, query, variables = {}) {
   const { adminToken, storeDomain } = getConfig(config);
   const endpoint = `https://${storeDomain}/admin/api/${ADMIN_API_VERSION}/graphql.json`;
   const response = await fetch(endpoint, {

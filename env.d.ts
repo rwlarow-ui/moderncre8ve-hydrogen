@@ -35,6 +35,17 @@ declare global {
     METAOBJECT_COLOR_NAME_KEY: string;
     METAOBJECT_COLOR_VALUE_KEY: string;
     OPS_DASHBOARD_PASSWORD?: string;
+    /** New Ops hub: Google OIDC + private Supabase database. */
+    OPS_APP_URL?: string;
+    OPS_GOOGLE_CLIENT_ID?: string;
+    OPS_GOOGLE_CLIENT_SECRET?: string;
+    OPS_SUPABASE_URL?: string;
+    OPS_SUPABASE_SECRET_KEY?: string;
+    /** Enable only after both individual Google logins have been tested. */
+    OPS_INDIVIDUAL_LOGIN_ENABLED?: string;
+    /** 32-byte hex key for encrypted Google refresh tokens. */
+    OPS_CONNECTION_ENCRYPTION_KEY?: string;
+    OPS_GITHUB_READ_TOKEN?: string;
     PUBLIC_SHOPIFY_INBOX_SHOP_ID: string;
     PUBLIC_TURNSTILE_SITE_KEY?: string;
     TURNSTILE_SECRET_KEY?: string;
@@ -50,6 +61,27 @@ declare module "react-router" {
   interface SessionData extends HydrogenSessionData {
     // declare local additions to the Remix session data here
     opsAuthenticated?: boolean;
+    opsSession?: string;
+    opsGoogleState?: {
+      state: string;
+      verifier: string;
+      nonce: string;
+      personal: boolean;
+      email?: string;
+      returnTo: string;
+      expires: number;
+    };
+    opsBridgeConsent?: {
+      client: { id: string; name: string };
+      redirectUri: string;
+      challenge: string;
+      scopes: string[];
+      state: string;
+      resource: string;
+      nonce: string;
+      email: string;
+      expires: number;
+    };
   }
 }
 
