@@ -29,7 +29,7 @@ A prototype "Ops Hub" was built outside this repo (ChatGPT-hosted). Its limits: 
 2. **Partner receives POs by email with PDF**, sent after approval.
 3. **Production partner:** Barkman (Barkman Furniture), contact `albert@barkmanfurniture.com`. PO field layout still to be confirmed with them.
 4. **Finish is a product metafield** `custom.finish` (single-line text), not a variant option. Needs a one-time catalog pass to fill it in.
-5. **Netlify is to be removed.** The site that posts PR checks is not configured in this repo (no `netlify.toml`); disconnect it in the Netlify dashboard / GitHub app settings.
+5. **Netlify is to be removed.** The site that posts PR checks is not configured in this repo (no `netlify.toml`); disconnect it in the Netlify dashboard / GitHub app settings. **Done 2026-11-12:** the `mc8v` Netlify project (which served only a 404) was deleted and its GitHub access removed by the owner.
 
 ## Decision
 
@@ -138,7 +138,7 @@ For the form: a full form *inside* Shopify checkout needs Plus, but the Hydrogen
 - **Thank-you/Order-status extension requires a deployed app**, and `shopify.app.toml` currently has a placeholder `application_url`. This is now optional (action item 13), since the required cart form is the primary path.
 - **Guest orders** need a signed link since there is no account session.
 - **Secrets**: five live Shopify tokens sit in plaintext in `.claude/settings.local.json` (rotation outstanding); do not add the email key there.
-- **Netlify** site posting PR checks is undocumented; unrelated but should not host any PO endpoints.
+- ~~**Netlify** site posting PR checks is undocumented; unrelated but should not host any PO endpoints.~~ Removed 2026-11-12 (see owner decision 5).
 - **Partner PO field layout** still needed from Barkman (name and email are recorded above).
 
 ## Action Items
