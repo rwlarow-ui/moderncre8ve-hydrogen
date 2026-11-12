@@ -8,7 +8,6 @@ const requiredPaths = [
   "/collections/scandinavian-design-furniture",
   "/collections/best-sellers",
   "/products/minimalist-bed-frame-ohio",
-  "/products/scandinavian-oval-dining-table-mar-vista",
   "/products/the-seymour-modern-dining-chair",
   "/pages/about-us",
   "/blogs/mid-century-modern-scandi-japandi-design-blog",
