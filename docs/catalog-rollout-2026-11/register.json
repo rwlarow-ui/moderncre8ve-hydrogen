@@ -30,28 +30,36 @@
   "batches": [
     {
       "id": "2026-11-09-vista",
-      "handles": ["scandinavian-dining-table-extendable-dining-table"],
+      "handles": [
+        "scandinavian-dining-table-extendable-dining-table"
+      ],
       "publishedAt": "2026-11-09T17:15:19Z",
       "notes": "Owner (Rob) asked to release the Vista table now, ahead of the recorded approvals. Status UNLISTED -> ACTIVE; it was already published to MODERNCRE8VE. Prices, variants and inventory settings unchanged. Bosco and Warwick beds were held at the time for price review; both were released later on 2026-11-09 (batches 2026-11-09-bosco, 2026-11-09-warwick).",
       "review": null
     },
     {
       "id": "2026-11-09-bosco",
-      "handles": ["bosco-walnut-mid-century-modern-bed-handmade"],
+      "handles": [
+        "bosco-walnut-mid-century-modern-bed-handmade"
+      ],
       "publishedAt": "2026-11-09T20:59:17Z",
       "notes": "Released by the owner ahead of the recorded approvals, after repricing under ADR-0007. Status DRAFT -> ACTIVE. Published to MODERNCRE8VE and also to other sales channels (Shop, Google AI Mode and Gemini, Meta AI, Microsoft Copilot, Embedded JS Buy SDK), not MODERNCRE8VE only as the rollout rule asks. Inventory tracking turned off 2026-11-09 (made to order).",
       "review": null
     },
     {
       "id": "2026-11-09-warwick",
-      "handles": ["scandinavian-solid-hardwood-bed-frame"],
+      "handles": [
+        "scandinavian-solid-hardwood-bed-frame"
+      ],
       "publishedAt": "2026-11-09T22:35:31Z",
       "notes": "Released by the owner ahead of the recorded approvals, after repricing under ADR-0007. Status DRAFT -> ACTIVE. Published to MODERNCRE8VE and also to other sales channels (Shop, Google AI Mode and Gemini, Meta AI, Microsoft Copilot, Embedded JS Buy SDK), not MODERNCRE8VE only as the rollout rule asks. Inventory tracking turned off 2026-11-09 (made to order). Tagged request-only (PR #156): the page shows \"Request this piece\" instead of the cart. Excluded from Google & YouTube on 2026-11-10. Now 12 variants (Queen, King, Cali King x walnut, maple, oak, cherry; no drawer versions). The request form failed on 2026-11-12 (no OPS_ADMIN_API_TOKEN on Oxygen production).",
       "review": null
     },
     {
       "id": "2026-11-10-wax",
-      "handles": ["lareauxs-furniture-wax"],
+      "handles": [
+        "lareauxs-furniture-wax"
+      ],
       "publishedAt": "2026-11-10T21:48:02Z",
       "notes": "Released by the owner ahead of the recorded approvals, as Lareaux's Furniture Cure All (renamed in PR #158). Status DRAFT -> ACTIVE. $24.97, 8 oz, inventory tracked (6 on hand; held stock, the exception to the made-to-order rule). Published to MODERNCRE8VE and also to other sales channels (Shop, Google AI Mode and Gemini, Meta AI, Microsoft Copilot, Embedded JS Buy SDK), not MODERNCRE8VE only as the rollout rule asks. Tech debt #18 facts (shipping rate, coverage, application frequency, food-contact claim) not yet confirmed.",
       "review": null
@@ -65,8 +73,8 @@
         "contemporary-dining-bench-vermonter",
         "copy-of-santa-monica-bench-modern-walnut-bench"
       ],
-      "publishedAt": "2026-11-12T15:05:00Z",
-      "notes": "Owner (Rob) asked to activate five products on 2026-11-12, ahead of recorded approvals and before the 2026-11-09-vista review was recorded. Status DRAFT -> ACTIVE; published to MODERNCRE8VE (gid://shopify/Publication/291307159851) only. Prices, variants, inventory quantities and inventory policy unchanged. Copy cleaned before release at the owner's request: removed free-shipping lines (Haven, Santa Monica bench), sustainability claims (Vermonter, Santa Monica bench), the 6-12 week lead-time block (Santa Monica bench) and description H1s (Vista chairs, Santa Monica bench); corrected listed sizes to match variants (Vermonter 52/60/72/84 in; Santa Monica bench 48/56/64/72 x 14 x 18 in); new SEO titles/metas for Haven, Vermonter, Vista chairs and Santa Monica bench. Haven and Vermonter (0 stock, inventory tracked, policy DENY) tagged request-only. Seymour released unchanged at the owner's direction; its origin conflict (Amish wording vs Piper & Fox / NON_US_ORIGIN in code) remains open. Verified 2026-11-12: all five return 200 and appear in /sitemap.xml.",
+      "publishedAt": "2026-11-12T14:47:01Z",
+      "notes": "Owner (Rob) asked to activate five products on 2026-11-12, ahead of recorded approvals and before the 2026-11-09-vista review was recorded. Status DRAFT -> ACTIVE; published to MODERNCRE8VE (gid://shopify/Publication/291307159851). Setting ACTIVE through the Admin API also published Haven, Vista chairs, Seymour and Vermonter to the other sales channels (Shop, Google, Meta, TikTok, Microsoft Copilot, Buy Button and others), contrary to the plan; the owner trimmed the Santa Monica bench back to Online Store + MODERNCRE8VE at 2026-11-12T17:57Z, the other four were still on those channels at 2026-11-12T21:50Z. Prices, variants, inventory quantities and inventory policy unchanged. Copy cleaned before release at the owner's request: removed free-shipping lines (Haven, Santa Monica bench), sustainability claims (Vermonter, Santa Monica bench), the 6-12 week lead-time block (Santa Monica bench) and description H1s (Vista chairs, Santa Monica bench); corrected listed sizes to match variants (Vermonter 52/60/72/84 in; Santa Monica bench 48/56/64/72 x 14 x 18 in); new SEO titles/metas for Haven, Vermonter, Vista chairs and Santa Monica bench. Haven and Vermonter (0 stock, inventory tracked, policy DENY) tagged request-only. Seymour released unchanged at the owner's direction; the owner confirmed it is Ohio/Amish-made on 2026-11-12 and the code was updated in #164 (live page now emits countryOfOrigin US). Its cut-off SEO description was replaced the same day. Verified 2026-11-12: all five return 200 and appear in /sitemap.xml. publishedAt corrected 2026-11-12 from 15:05Z to the last status change in Shopify product events (14:46:58Z-14:47:01Z). Owner asked to trim the other four to the same two channels as the bench; the Shopify connector blocks unpublishing, so that is left to the owner in Admin.",
       "review": null
     }
   ],
@@ -224,8 +232,17 @@
         "imagery": null,
         "merchandising": null
       },
-      "release": null,
-      "verification": null,
+      "release": {
+        "status": "ACTIVE",
+        "publishedAt": "2026-11-12T14:46:58Z",
+        "requestedBy": "Store owner",
+        "batch": "2026-11-12-wave1-b2"
+      },
+      "verification": {
+        "checkedAt": "2026-11-12",
+        "partial": true,
+        "evidence": "Live PDP returns 200 with new title; tagged request-only, shows the Request this piece form; Product JSON-LD shows OutOfStock (0 stock, policy DENY); in /sitemap.xml and /llms-full.txt. Mobile, cart/checkout handoff, request-form submission, analytics and search discovery not yet checked."
+      },
       "priority": 5
     },
     {
@@ -249,8 +266,17 @@
         "imagery": null,
         "merchandising": null
       },
-      "release": null,
-      "verification": null,
+      "release": {
+        "status": "ACTIVE",
+        "publishedAt": "2026-11-12T14:46:59Z",
+        "requestedBy": "Store owner",
+        "batch": "2026-11-12-wave1-b2"
+      },
+      "verification": {
+        "checkedAt": "2026-11-12",
+        "partial": true,
+        "evidence": "Live PDP returns 200 with new title and add-to-cart; Product JSON-LD shows InStock for 4 variants; in /sitemap.xml and /llms-full.txt. Mobile, cart/checkout handoff, request-form submission, analytics and search discovery not yet checked."
+      },
       "priority": 6
     },
     {
@@ -274,8 +300,17 @@
         "imagery": null,
         "merchandising": null
       },
-      "release": null,
-      "verification": null,
+      "release": {
+        "status": "ACTIVE",
+        "publishedAt": "2026-11-12T14:47:00Z",
+        "requestedBy": "Store owner",
+        "batch": "2026-11-12-wave1-b2"
+      },
+      "verification": {
+        "checkedAt": "2026-11-12",
+        "partial": true,
+        "evidence": "Live PDP returns 200 with add-to-cart; Product JSON-LD shows InStock; countryOfOrigin US after #164; in /sitemap.xml and /llms-full.txt. Mobile, cart/checkout handoff, request-form submission, analytics and search discovery not yet checked."
+      },
       "priority": 7
     },
     {
@@ -299,8 +334,17 @@
         "imagery": null,
         "merchandising": null
       },
-      "release": null,
-      "verification": null,
+      "release": {
+        "status": "ACTIVE",
+        "publishedAt": "2026-11-12T14:47:01Z",
+        "requestedBy": "Store owner",
+        "batch": "2026-11-12-wave1-b2"
+      },
+      "verification": {
+        "checkedAt": "2026-11-12",
+        "partial": true,
+        "evidence": "Live PDP returns 200 with new title; tagged request-only, shows the Request this piece form; in /sitemap.xml and /llms-full.txt. Mobile, cart/checkout handoff, request-form submission, analytics and search discovery not yet checked."
+      },
       "priority": 8
     },
     {
@@ -324,8 +368,17 @@
         "imagery": null,
         "merchandising": null
       },
-      "release": null,
-      "verification": null,
+      "release": {
+        "status": "ACTIVE",
+        "publishedAt": "2026-11-12T14:47:01Z",
+        "requestedBy": "Store owner",
+        "batch": "2026-11-12-wave1-b2"
+      },
+      "verification": {
+        "checkedAt": "2026-11-12",
+        "partial": true,
+        "evidence": "Live PDP returns 200 with add-to-cart; Product JSON-LD shows InStock; in /sitemap.xml and /llms-full.txt. Mobile, cart/checkout handoff, request-form submission, analytics and search discovery not yet checked."
+      },
       "priority": 9
     },
     {
