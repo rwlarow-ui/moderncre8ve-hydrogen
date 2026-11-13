@@ -22,7 +22,7 @@ import { readOpsJson } from "../app/utils/ops-store.server.js";
 const rob = allowedIdentity("rob@moderncre8ve.com");
 const haven = allowedIdentity("havenmb@moderncre8ve.com");
 test("individual identity is restricted to the two exact approved accounts", () => {
-  assert.equal(allowedIdentity("HAVENMB@MODERNCRE8VE.COM").role, "operator");
+  assert.equal(allowedIdentity("HAVENMB@MODERNCRE8VE.COM").role, rob.role);
   for (const value of [
     "__proto__",
     "constructor",
@@ -67,14 +67,27 @@ test("legacy password sessions cannot open Ops after the cutover", async () => {
     null,
   );
 });
-test("Haven receives neither private source metadata nor personal Google fetches", async (t) => {
+test("both owners see the same sources and Google connections stay account scoped", async (t) => {
   assert.equal(visibleSources(rob).length, 12);
-  assert.equal(visibleSources(haven).length, 8);
-  assert.equal(visibleSources(haven, "daily").length, 0);
-  t.mock.method(globalThis, "fetch", () => {
-    throw new Error("Must not fetch private data");
+  assert.deepEqual(visibleSources(haven), visibleSources(rob));
+  assert.equal(visibleSources(haven, "daily").length, 4);
+  t.mock.method(globalThis, "fetch", (input) => {
+    assert.equal(
+      new URL(input).searchParams.get("user_email"),
+      `eq.${haven.email}`,
+    );
+    return Promise.resolve(Response.json([]));
   });
-  assert.equal(await loadPersonalDay({}, haven), null);
+  assert.deepEqual(
+    await loadPersonalDay(
+      {
+        OPS_SUPABASE_URL: "https://database.example.test",
+        OPS_SUPABASE_SECRET_KEY: "test",
+      },
+      haven,
+    ),
+    { connected: false },
+  );
 });
 test("publishing enforces source ownership, revisions, content size and timestamps", () => {
   const valid = {
@@ -84,9 +97,9 @@ test("publishing enforces source ownership, revisions, content size and timestam
     sourceUpdatedAt: "2026-11-12T12:00:00Z",
   };
   assert.equal(validatePublication(valid, haven).sourceId, "catalog-todos");
-  assert.throws(
-    () => validatePublication({ ...valid, sourceId: "daybook" }, haven),
-    (r) => r.status === 404,
+  assert.equal(
+    validatePublication({ ...valid, sourceId: "daybook" }, haven).sourceId,
+    "daybook",
   );
   for (const change of [
     { expectedRevision: -1 },

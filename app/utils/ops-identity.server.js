@@ -8,7 +8,7 @@ import { hasOpsStore, opsStore } from "./ops-store.server.js";
 
 export const OPS_USERS = {
   "rob@moderncre8ve.com": { name: "Rob", role: "owner" },
-  "havenmb@moderncre8ve.com": { name: "Haven", role: "operator" },
+  "havenmb@moderncre8ve.com": { name: "Haven", role: "owner" },
 };
 const googleKeys = createRemoteJWKSet(
   new URL("https://www.googleapis.com/oauth2/v3/certs"),

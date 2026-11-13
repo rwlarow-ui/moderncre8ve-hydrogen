@@ -1,6 +1,6 @@
 # Ops Hub: provider setup and activation
 
-The code supports individual Google logins for **rob@moderncre8ve.com** and **havenmb@moderncre8ve.com**, a private Claude publishing connector, and Daily / Catalog / Marketing / Sales / Tech / Brand tabs. Google and Supabase must be configured before individual access can be tested. Do not paste credentials into chat or commit them.
+The code supports individual Google logins for **rob@moderncre8ve.com** and **havenmb@moderncre8ve.com**, a private Claude publishing connector, and Daily / Catalog / Marketing / Sales / Tech / Brand tabs. Both accounts have the same owner permissions across all Ops tabs and context sources. Google and Supabase must be configured before individual access can be tested. Do not paste credentials into chat or commit them.
 
 ## 1. Create the private database
 
@@ -45,7 +45,7 @@ In separate clean browser sessions:
 
 1. Rob signs in through **Continue with Google**, then opens `/ops/daily` and `/ops/settings`.
 2. Haven signs in, opens all shared sections and an order, and verifies her existing order-edit and PO approval controls.
-3. Verify Haven cannot view or connect Rob's mail/calendar or read his four private artifact sources through the publishing connector.
+3. Verify both accounts can open Tech and Daily, read/publish all context sources, and edit Daily tasks. Google mail/calendar connections stay scoped to the signed-in account; neither account uses the other’s OAuth token.
 4. Verify private responses, including React Router `.data` requests, use `Cache-Control: private, no-store`.
 
 After **both** logins are verified, set `OPS_INDIVIDUAL_LOGIN_ENABLED=true` and redeploy. This disables shared-password sign-in and rejects old shared-password sessions throughout Ops. Twelve-hour individual sessions are stored server-side and can be revoked in Account & connections. PO approvals record the named operator's email.
@@ -76,7 +76,7 @@ Publishing occurs only when this tool is called. Direct canvas edits, source del
 
 Open workspace tabs revalidate every minute while visible. Refresh pauses while an action form is open or focused, preserving editing state. Source age is based on its actual update timestamp, not merely the time it was copied into the hub.
 
-The connector has **no** tools for Gmail, Calendar, Shopify writes, PO actions, social publication or sending messages. Haven's grant cannot read/publish Rob's private sources. Text is rendered as escaped React text; imported HTML or JavaScript does not execute.
+The connector has **no** tools for Gmail, Calendar, Shopify writes, PO actions, social publication or sending messages. Both owners' grants can read/publish all registered context sources. Text is rendered as escaped React text; imported HTML or JavaScript does not execute.
 
 ### Initial content import
 
@@ -84,11 +84,11 @@ All 12 supplied artifact URLs are registered. Current panels contain dated suppl
 
 ## 5. Optional live connections
 
-### Rob's mail and calendar
+### Each owner's mail and calendar
 
 Enable the Gmail API and Google Calendar API in the OAuth client's project. Configure the consent scopes for `gmail.readonly` and `calendar.events.readonly` in addition to basic identity scopes, following Google's audience/verification requirements. Generate 32 random bytes as a 64-character hex string with a secure generator and store it as the secret `OPS_CONNECTION_ENCRYPTION_KEY` in Oxygen. Redeploy.
 
-Rob selects **Connect Google** on Daily or Account & connections. Both requested read-only grants and a refresh token are required. That token is encrypted with A256GCM before storage. It is never placed in a session cookie or returned to the browser. Haven cannot initiate this connection or request these data. An unavailable source is shown as unavailable, not as an empty inbox/calendar.
+Rob or Haven selects **Connect Google** on Daily or Account & connections. Both requested read-only grants and a refresh token are required. That token is encrypted with A256GCM before storage. It is never placed in a session cookie or returned to the browser. Each account connects and reads its own Google mail/calendar. Tokens are selected by the signed-in email. An unavailable source is shown as unavailable, not as an empty inbox/calendar.
 
 The daybook reads up to 10 unread Primary messages and up to 50 primary-calendar events in the next seven days. No email is sent or marked read. Disconnecting removes the hub's token; the grant can additionally be revoked in Google Account security. Rotating the encryption key requires reconnecting Google.
 
@@ -112,3 +112,11 @@ SEO context can be published from Claude immediately after connector setup. Sche
 - Review connector grants in Account & connections. Expired database rows can be periodically deleted by an administrator; they are rejected by expiry checks even before cleanup. Retain artifact/task history according to the business's retention policy.
 
 Provider references: [Google OpenID Connect](https://developers.google.com/identity/openid-connect/openid-connect), [Supabase server secret keys](https://supabase.com/docs/guides/api/api-keys), [Claude custom remote MCP connectors](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp).
+
+## Existing deployments: equal owner access
+
+Run `scripts/sql/ops-hub-owner-parity.sql` in the existing Supabase SQL editor **before** deploying the app role change. This repeatable transaction updates only the existing access-checking functions; it preserves sessions, publications, tasks, connection tokens, and server-only grants. Fresh projects use the updated `ops-hub.sql`.
+
+Haven (`havenmb@moderncre8ve.com`) now has the same `owner` role as Rob. This includes all four formerly Rob-only context sources and Daily task read/write access. It does not share Rob’s live Gmail/Calendar token: each owner still connects their own Google account.
+
+After deployment, refresh an existing individual session to pick up the role; the role is resolved from the approved account registry on every request. If Tech redirects to individual sign-in, sign in with the approved ModernCre8ve Google account. Legacy shared-password sessions only cover the transitional order/PO tools. Verify Tech with Haven’s actual account before treating her reported access failure as resolved.
