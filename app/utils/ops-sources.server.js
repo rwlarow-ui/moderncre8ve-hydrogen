@@ -94,7 +94,7 @@ export const OPS_SOURCES = [
     "Rob’s Daybook",
     "UwSzDKxSjcMDSN94bFnvgd",
     "2026-11-12",
-    "Next seven days of Google Calendar and unread Primary Gmail. Private to Rob.",
+    "Next seven days of Google Calendar and unread Primary Gmail. Available to both Ops owners.",
     "owner",
   ),
   source(

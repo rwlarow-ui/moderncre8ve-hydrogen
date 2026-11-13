@@ -26,6 +26,7 @@ import {
   requireOpsUser,
   revokeIndividualSession,
 } from "../app/utils/ops-identity.server.js";
+import { loadWorkspace } from "../app/utils/ops-workspace.server.js";
 
 test("private Postgres storage and OAuth publishing work end to end", async (t) => {
   const db = new PGlite();
@@ -39,6 +40,12 @@ test("private Postgres storage and OAuth publishing work end to end", async (t) 
   );
   await db.exec(migration);
   await db.exec(migration); // Reapplying setup must preserve records and permissions.
+  const parityMigration = readFileSync(
+    new URL("../scripts/sql/ops-hub-owner-parity.sql", import.meta.url),
+    "utf8",
+  );
+  await db.exec(parityMigration);
+  await db.exec(parityMigration);
   const rob = allowedIdentity("rob@moderncre8ve.com");
   const haven = allowedIdentity("havenmb@moderncre8ve.com");
   const env = {
@@ -153,29 +160,74 @@ test("private Postgres storage and OAuth publishing work end to end", async (t) 
     },
   );
   await t.test(
-    "private documents are excluded in application and database reads",
+    "both owners can read owner documents in application and database reads",
     async () => {
       await publishContext(env, rob, {
         ...publication,
         sourceId: "daybook",
-        content: "ROB_ONLY_PRIVATE_CANARY",
+        content: "OWNER_CONTEXT_CANARY",
       });
       assert.ok(
         JSON.stringify(await listContext(env, rob)).includes(
-          "ROB_ONLY_PRIVATE_CANARY",
+          "OWNER_CONTEXT_CANARY",
         ),
       );
       assert.ok(
-        !JSON.stringify(await listContext(env, haven)).includes(
-          "ROB_ONLY_PRIVATE_CANARY",
+        JSON.stringify(await listContext(env, haven)).includes(
+          "OWNER_CONTEXT_CANARY",
         ),
       );
-      await assert.rejects(() =>
-        call("ops_read_artifacts", [haven.email, ["daybook"]]),
+      assert.equal(
+        (
+          await db.query("select * from ops_read_artifacts($1,$2)", [
+            haven.email,
+            ["daybook"],
+          ])
+        ).rows.length,
+        1,
       );
       await assert.rejects(() =>
         call("ops_read_artifacts", [null, ["daybook"]]),
       );
+    },
+  );
+  await t.test(
+    "both owners can manage Daily tasks and their own Google connection",
+    async () => {
+      for (const user of [rob, haven]) {
+        const task = await saveOpsTask(env, user, {
+          section: "daily",
+          title: `${user.name} daily task`,
+          status: "todo",
+        });
+        assert.equal(task.updated_by, user.email);
+        assert.ok(
+          (
+            await db.query("select * from ops_read_tasks($1,$2)", [
+              user.email,
+              "daily",
+            ])
+          ).rows.length,
+        );
+        await call("ops_save_connection", [
+          user.email,
+          `encrypted-${user.name}`,
+        ]);
+      }
+      assert.deepEqual(
+        (
+          await db.query(
+            "select user_email from ops_connections order by user_email",
+          )
+        ).rows.map((row) => row.user_email),
+        [haven.email, rob.email],
+      );
+      for (const email of [null, "outsider@example.com"]) {
+        await assert.rejects(() =>
+          call("ops_save_connection", [email, "invalid"]),
+        );
+        await assert.rejects(() => call("ops_read_tasks", [email, "daily"]));
+      }
     },
   );
   await t.test(
@@ -192,7 +244,7 @@ test("private Postgres storage and OAuth publishing work end to end", async (t) 
     },
   );
   await t.test(
-    "server role can call RPCs but cannot bypass source ownership through them",
+    "server role admits both owners and rejects unapproved identities",
     async () => {
       await db.exec("set role service_role");
       try {
@@ -206,7 +258,7 @@ test("private Postgres storage and OAuth publishing work end to end", async (t) 
           1,
         );
         await assert.rejects(() =>
-          call("ops_read_artifacts", [haven.email, ["daybook"]]),
+          call("ops_read_artifacts", ["outsider@example.com", ["daybook"]]),
         );
       } finally {
         await db.exec("reset role");
@@ -299,14 +351,24 @@ test("private Postgres storage and OAuth publishing work end to end", async (t) 
       await revokeIndividualSession(context);
       assert.equal(await currentOpsUser(context), null);
       await createIndividualSession(context, haven.email);
-      await assert.rejects(
-        () =>
-          requireOpsUser(
+      const tech = await loadWorkspace(
+        new Request("https://moderncre8ve.com/ops/tech"),
+        context,
+        "tech",
+      );
+      assert.equal(tech.user.role, rob.role);
+      assert.equal(tech.sources.length, 2);
+      assert.equal(tech.sourceError, false);
+      assert.equal(tech.taskError, false);
+      assert.equal(
+        (
+          await requireOpsUser(
             new Request("https://moderncre8ve.com/ops/daily"),
             context,
             { owner: true },
-          ),
-        (r) => r.status === 403,
+          )
+        ).email,
+        haven.email,
       );
       await db.exec(
         "update ops_sessions set expires_at=now()-interval '1 hour'",
@@ -413,7 +475,7 @@ test("private Postgres storage and OAuth publishing work end to end", async (t) 
       const context = await (
         await rpc(tokens.access_token, "list_context")
       ).json();
-      assert.ok(!JSON.stringify(context).includes("daybook"));
+      assert.ok(JSON.stringify(context).includes("daybook"));
       const denied = await (
         await rpc(tokens.access_token, "publish_context", publication)
       ).json();
@@ -463,7 +525,7 @@ test("private Postgres storage and OAuth publishing work end to end", async (t) 
         name: "list_context",
         arguments: {},
       });
-      assert.ok(!JSON.stringify(viewed).includes("daybook"));
+      assert.ok(JSON.stringify(viewed).includes("daybook"));
       await sdkClient.close();
       assert.equal((await refresh()).status, 400);
       await assert.rejects(
