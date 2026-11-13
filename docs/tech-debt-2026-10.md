@@ -57,7 +57,7 @@
 | Approve/send permission tests (item 11) | ⚠️ Partial | `tests/ops-utils.test.mjs` covers the login redirect only |
 | Oxygen secrets for sending (`RESEND_API_KEY`, `PO_FROM_EMAIL`, `PO_PARTNER_EMAIL`) and token scopes for POs | ❓ Unknown | Can't be read from the repo. PO storage currently needs the broad `SHOPIFY_ADMIN_API_TOKEN` on Oxygen, against the CLAUDE.md rule to keep it local |
 | Dry run with one historical order (item 12) | ❌ Not done | |
-| What the external hub does that `/ops` doesn't | ❓ Unknown | Its code isn't in GitHub, so this scan can't list its features or say whether it holds POs that aren't in Shopify |
+| What the external hub does that `/ops` doesn't | 🟡 Partly known | Version 14 features (from the 2026-10-12 Architecture Handoff) are compared with `/ops` in `docs/ops-hub-prototype-retirement.md`. Gaps: geographic production-only routing, carrier brief, two-stage intake. Whether it holds POs not in Shopify is still unknown until Rob exports them |
 
 **Scoping note for #14 (2026-11-09).** Found by a live check on 2026-11-09: 5 product pages return 200 (the 4 protected products plus Vista); 13 by 2026-11-12 after five rollout batches, plus 5 Unlisted products outside the register (Bel-Aire desk and four chairs) whose pages also load, and the sitemap and `/llms-full.txt` list only live products, so neither links to a dead URL. Owner decision pending on how a held URL behaves until its item comes back:
 
@@ -94,7 +94,7 @@
 14. GA4 `view_promotion` / `select_promotion` on collection tiles, then a before/after comparison of the conversion pass. (#9)
 
 **Bring the PO workflow fully into this repo and retire the external Ops Hub (#13).** Goal: every PO is created, reviewed, approved and sent from `/ops` with Shopify as the only record, and the ChatGPT-hosted hub is switched off (not kept as a viewer). In order:
-15. **Inventory the external hub (Rob, ~30 min).** List every screen and action it has, and export any POs or notes it holds that aren't already in Shopify metaobjects. Anything it does that `/ops` doesn't becomes a line in this list.
+15. **Inventory the external hub (Rob, ~30 min).** List every screen and action it has, and export any POs or notes it holds that aren't already in Shopify metaobjects. Anything it does that `/ops` doesn't becomes a line in this list. **Partly pre-filled 2026-11-13:** the v14 feature comparison, owner decisions, cutover gate and switch-off steps are in `docs/ops-hub-prototype-retirement.md`. Still needed from Rob: the current version's screens and the PO export.
 16. **Automatic PO on order creation (ADR item 5, ~1 day).** Verify Flow's built-in actions on this plan (item 6). Preferred: Flow "Order created" → HTTP request to a new authenticated Oxygen route that calls the existing create-draft code and re-validates logistics from `order.customAttributes`, parking the PO in `awaiting_logistics` when missing (the cart gate is UI-only). Run the cart attribute worst-case payload test in the same pass.
 17. **Post-purchase logistics form (ADR item 8, ~1 day).** `/account/orders/:id/delivery` plus a signed link for guest orders, writing `moderncre8ve.logistics` / `logistics_status` server-side and moving the PO to `ready_for_review`. Link it from the order-confirmation email with `https://moderncre8ve.com/...` URLs.
 18. **Reminders (~½ day).** Day 3/7/14 customer reminders and a day-10 alert to Rob, from Flow or from the Oxygen route above, plus a "resend form link" button on the awaiting queue.
