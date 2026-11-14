@@ -269,3 +269,36 @@ test("MCP server lists tools and saves, revises and exports a concept", async ()
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test("concurrent saves from the same revision never both land", async () => {
+  const dir = mkdtempSync(join(tmpdir(), "furniture-studio-race-"));
+  const a = startServer(dir);
+  const b = startServer(dir);
+  try {
+    const created = await a.call("save_concept", { name: "Race vanity" });
+    const id = created.structuredContent.id;
+    for (let round = 1; round <= 20; round++) {
+      const [ra, rb] = await Promise.all([
+        a.call("save_concept", {
+          id,
+          expectedRevision: round,
+          parameters: { width: 1700 + round },
+        }),
+        b.call("save_concept", {
+          id,
+          expectedRevision: round,
+          parameters: { depth: 600 + round },
+        }),
+      ]);
+      const wins = [ra, rb].filter((r) => !r.isError);
+      assert.equal(wins.length, 1, `round ${round}: exactly one save lands`);
+      assert.equal(wins[0].structuredContent.revision, round + 1);
+    }
+    const latest = await a.call("get_concept", { id });
+    assert.equal(latest.structuredContent.revision, 21);
+  } finally {
+    a.child.kill();
+    b.child.kill();
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

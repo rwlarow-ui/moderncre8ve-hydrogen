@@ -270,10 +270,15 @@ function readRevision(id, revision) {
   return { ...record, latestRevision: revisions.at(-1) };
 }
 
-function writeRevision(id, document, note) {
+/**
+ * Writes revision `baseRevision + 1`, the one after the revision the caller
+ * read. The exclusive "wx" create is the compare-and-swap: if another save
+ * already took that number, this one fails instead of landing on top of it.
+ */
+function writeRevision(id, baseRevision, document, note) {
   const dir = conceptDir(id);
   mkdirSync(dir, { recursive: true });
-  const revision = (revisionsOf(id).at(-1) || 0) + 1;
+  const revision = baseRevision + 1;
   const record = {
     id,
     revision,
@@ -281,14 +286,19 @@ function writeRevision(id, document, note) {
     note: note || "",
     document,
   };
-  // "wx" fails if a concurrent save already took this revision number.
-  writeFileSync(
-    join(dir, `r${revision}.json`),
-    JSON.stringify(record, null, 2),
-    {
-      flag: "wx",
-    },
-  );
+  try {
+    writeFileSync(
+      join(dir, `r${revision}.json`),
+      JSON.stringify(record, null, 2),
+      { flag: "wx" },
+    );
+  } catch (error) {
+    if (error?.code === "EEXIST")
+      throw new ToolError(
+        `Concept ${id} was saved by someone else as revision ${revision} while you edited revision ${baseRevision}. Read it again before saving.`,
+      );
+    throw error;
+  }
   return record;
 }
 
@@ -405,6 +415,7 @@ async function callTool(name, args) {
     case "save_concept": {
       let id = args.id;
       let base;
+      let baseRevision = 0;
       if (id) {
         const latest = readRevision(id);
         if (
@@ -415,6 +426,7 @@ async function callTool(name, args) {
             `Concept ${id} is at revision ${latest.revision}, not ${args.expectedRevision}. Read it again before saving.`,
           );
         base = latest.document;
+        baseRevision = latest.revision;
       } else {
         base = args.fromId ? readRevision(args.fromId).document : cloneSeed();
         id = `${exportStem({ name: args.name || base.name })
@@ -429,7 +441,7 @@ async function callTool(name, args) {
         throw new ToolError(
           `Not saved: geometry collides. ${s.warnings.join(" ")}`,
         );
-      const record = writeRevision(id, document);
+      const record = writeRevision(id, baseRevision, document);
       return { ...record, ...s };
     }
 
@@ -523,7 +535,7 @@ async function callTool(name, args) {
       if (errors.length)
         throw new ToolError(`Not a valid concept export. ${errors.join(" ")}`);
       const id = `${exportStem(document).replace(/-r0$/, "").slice(0, 60)}-${randomUUID().slice(0, 8)}`;
-      const record = writeRevision(id, document, `Imported from ${path}`);
+      const record = writeRevision(id, 0, document, `Imported from ${path}`);
       return { ...record, ...summary(document) };
     }
 
