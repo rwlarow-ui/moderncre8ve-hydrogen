@@ -36,8 +36,9 @@ The prototype column comes from Haven's **"Architecture Handoff"** email (2026-1
 | **Geographic routing:** Louisiana, Mississippi and outside the contiguous 48 → Barkman *production-only* PO + MODERNCRE8VE carrier network | ❌ Missing | No routing code anywhere in `app/` or `scripts/`. **Owner decision A** |
 | **Separate shipping/delivery brief** for network carriers | ❌ Missing | Same as above |
 | **Two-stage intake** (short questionnaire, targeted measurement follow-up) with separate manufacturing vs delivery holds | ❌ Different model | `/ops` uses one full cart form and blocks the PO until logistics are complete (ADR-0001 owner decision 1). **Owner decision B** |
+| **Furniture Studio** `/design` tab (added by Codex 2026-11-13, after v14): parametric concept, materials/cost, CAD study exports, saved revisions, Adobe render jobs | 🟡 Ported | Model + UI at `/ops/design` (`app/utils/furniture-studio.js`), plus the `furniture-studio` MCP server. Not ported: server-saved revisions (drafts are per-browser + JSON export), Adobe generation from the page, print plan sheet, live read of the design Page |
 
-Anything else the prototype gained after version 14 is unknown. Step 2 below closes that.
+Apart from the Furniture Studio (seen in the Codex session that built it), anything else the prototype gained after version 14 is unknown. Step 2 below closes that.
 
 ## 2. Inventory and export (Rob, about 30 minutes, in ChatGPT)
 
@@ -45,6 +46,7 @@ Only Rob can do this, because the prototype lives in Rob's ChatGPT account.
 
 1. Open the prototype and note its current version. Walk every tab (at least `/production` and Orders) and list any screen or action **not** in the table above. Add each one to this file.
 2. **Export its PO table.** For every PO it holds, record the PO number, order number, state/revision, approval (who/when), whether it was sent, and the pieces + logistics. A CSV or a screenshot per PO is enough.
+   Also open **Design** and use **Export JSON** for every saved Furniture Studio concept you want to keep (its D1 tables hold concepts and render jobs that switch-off destroys). Import them at `/ops/design` or with the `import_concept` MCP tool, and save any Adobe render images you want to Drive.
 3. Compare that list with `/ops/pos`. The `/ops` queue was **empty on 2026-11-11**, so any PO the prototype holds for an open order is **not** in Shopify yet.
 4. For each such PO on an open order: open the order in `/ops`, click **Create PO draft**, then re-enter the specs and logistics. Do **not** carry over an old approval. Re-approve in `/ops` after checking the order snapshot (handoff § Migration). POs for orders that are closed or already built need only the export kept as an archive (e.g. in Drive), not re-entry.
 5. Download or copy the prototype's source if ChatGPT allows it, and keep it next to the export. This is reference only; do not commit it here.

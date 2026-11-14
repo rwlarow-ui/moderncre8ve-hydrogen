@@ -37,3 +37,6 @@ jobs:
 
       - name: Ops hub regression and database tests
         run: npm run test:ops-hub
+
+      - name: Furniture Studio model and MCP server tests
+        run: npm run test:furniture

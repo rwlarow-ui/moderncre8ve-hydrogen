@@ -4,6 +4,11 @@
       "type": "stdio",
       "command": "node",
       "args": ["scripts/ops-dashboard-mcp.mjs"]
+    },
+    "furniture-studio": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["scripts/furniture-studio-mcp.mjs"]
     }
   }
 }
