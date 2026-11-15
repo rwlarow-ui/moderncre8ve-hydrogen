@@ -11,6 +11,9 @@ export const contact: PageDefinition = {
           id: "contact-hero",
         },
         {
+          id: "contact-form",
+        },
+        {
           id: "contact-map",
         },
         {
@@ -58,6 +61,10 @@ export const contact: PageDefinition = {
         color: "#ffffff",
         size: "default",
       },
+    },
+    {
+      id: "contact-form",
+      type: "contact-form",
     },
     {
       id: "contact-map",
