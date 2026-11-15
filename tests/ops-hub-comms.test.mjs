@@ -542,3 +542,53 @@ test("server adapter: actions reach Postgres; validation and conflicts read clea
   assert.equal(last.last_incoming, null);
   assert.equal(last.undated_incoming, true);
 });
+
+test("a resubmitted form clears the old handoff and, with a link, the evidence task", () => {
+  const handedOff = {
+    ...emptyCommsRecord(),
+    logistics_status: "ready_for_carrier",
+    form_version: 1,
+    carrier_shared_on: "2026-11-10",
+  };
+  const withLink = applyLogisticsAction(
+    handedOff,
+    "form_received",
+    { evidenceUrl: "https://mail.google.com/mail/u/0/#inbox/abc" },
+    meta,
+  );
+  assert.equal(withLink.record.form_version, 2);
+  assert.equal(withLink.record.carrier_shared_on, null);
+  assert.ok(withLink.closeTaskKinds.includes("missing_evidence"));
+  assert.deepEqual(kinds(withLink.openTasks), ["logistics_review"]);
+
+  const noLink = applyLogisticsAction(handedOff, "form_received", {}, meta);
+  assert.ok(!noLink.closeTaskKinds.includes("missing_evidence"));
+  assert.deepEqual(kinds(noLink.openTasks), [
+    "logistics_review",
+    "missing_evidence",
+  ]);
+});
+
+test("an incomplete current list does not treat missing orders as closed", () => {
+  const overview = {
+    records: [
+      {
+        order_id: "301",
+        order_name: "#9301",
+        logistics_status: "awaiting_return",
+        reminders_enabled: true,
+        reminder_next_due_on: "2026-11-01",
+      },
+    ],
+    production: [],
+    tasks: [],
+    last: [],
+  };
+  const [row] = buildQueue({
+    currentOrders: [],
+    overview,
+    today: "2026-11-15",
+    currentListComplete: false,
+  });
+  assert.equal(row.flags.reminder_due, true);
+});

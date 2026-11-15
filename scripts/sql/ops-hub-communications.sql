@@ -200,6 +200,8 @@ create or replace function public.ops_save_production(
 declare v_old ops_production_records%rowtype; v_new ops_production_records%rowtype;
 begin
   perform ops_check_user(p_email);
+  -- Serialise per order so two first saves can't both pass the "no row yet" check.
+  perform pg_advisory_xact_lock(hashtext('ops_production:' || p_order_id));
   select * into v_old from ops_production_records where order_id = p_order_id for update;
   if (v_old.order_id is null) <> (p_expected_updated_at is null)
      or (v_old.order_id is not null and v_old.updated_at is distinct from p_expected_updated_at) then

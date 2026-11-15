@@ -256,6 +256,9 @@ export function applyLogisticsAction(current, action, input = {}, meta) {
       record.logistics_reviewed_by = null;
       record.logistics_reviewed_at = null;
       record.reminder_next_due_on = null;
+      // The previous version's carrier handoff stays in the timeline, but it
+      // no longer describes the form now on file.
+      record.carrier_shared_on = null;
       events.push({
         kind: "form_received",
         direction: "incoming",
@@ -271,7 +274,9 @@ export function applyLogisticsAction(current, action, input = {}, meta) {
         title: `Review returned logistics form (version ${record.form_version})`,
       });
       closeTaskKinds.push("logistics_clarification");
-      if (!evidence) {
+      if (evidence) {
+        closeTaskKinds.push("missing_evidence");
+      } else {
         openTasks.push({
           kind: "missing_evidence",
           title: "Attach the returned form or link its email",
@@ -587,9 +592,15 @@ const isOpenTask = (task, today) =>
  * communications record or task, so post-delivery work stays visible after
  * an order leaves the 140-day window or is fulfilled.
  *
- * @param {{ currentOrders: any[], overview: { records: any[], production: any[], tasks: any[], last: any[] }, today: string, viewer?: string }} input
+ * @param {{ currentOrders: any[], overview: { records: any[], production: any[], tasks: any[], last: any[] }, today: string, viewer?: string, currentListComplete?: boolean }} input
  */
-export function buildQueue({ currentOrders, overview, today, viewer }) {
+export function buildQueue({
+  currentOrders,
+  overview,
+  today,
+  viewer,
+  currentListComplete = true,
+}) {
   const byId = new Map();
   const ensure = (orderId, orderName) => {
     if (!byId.has(orderId)) {
@@ -626,8 +637,9 @@ export function buildQueue({ currentOrders, overview, today, viewer }) {
       const reminder = reminderEligibility(record, {
         today,
         // Orders outside the current list (fulfilled, cancelled, closed or
-        // older than the window) never show a form reminder as due.
-        orderClosed: !item.shopify,
+        // older than the window) never show a form reminder as due. If the
+        // current list was cut short, absence proves nothing, so don't hide it.
+        orderClosed: currentListComplete && !item.shopify,
       });
       const due =
         tasks

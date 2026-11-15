@@ -41,7 +41,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
   const today = todayIso();
 
   const [orders, overview] = await Promise.allSettled([
-    listCurrentOrders(context.env, { limit: 100 }),
+    listCurrentOrders(context.env, { all: true }),
     loadCommsOverview(context.env, user),
   ]);
   const rows = buildQueue({
@@ -52,6 +52,8 @@ export async function loader({ request, context }: Route.LoaderArgs) {
         : { records: [], production: [], tasks: [], last: [] },
     today,
     viewer: user.email,
+    currentListComplete:
+      orders.status === "fulfilled" && !orders.value.scanCapped,
   });
   return {
     filter,
@@ -65,7 +67,9 @@ export async function loader({ request, context }: Route.LoaderArgs) {
     shopifyError:
       orders.status === "rejected"
         ? "Shopify orders couldn't be loaded; only orders with saved communications are shown."
-        : null,
+        : orders.value.scanCapped
+          ? "Shopify returned more orders than the hub scans, so the current list may be incomplete. Reminders are still shown for orders not in it."
+          : null,
     storeError:
       overview.status === "rejected"
         ? commsUnavailableReason(overview.reason)
