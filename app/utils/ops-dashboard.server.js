@@ -587,7 +587,9 @@ export async function listCurrentOrders(config, filters = {}) {
 
   return {
     filters: normalizedFilters,
-    orders: matched.slice(0, normalizedFilters.limit),
+    // `all: true` returns every matched order (used by Communications, which
+    // must see the complete current list); the dashboard keeps its page limit.
+    orders: filters.all ? matched : matched.slice(0, normalizedFilters.limit),
     total: matched.length,
     scanned: scanned.length,
     scanCapped,

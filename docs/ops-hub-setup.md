@@ -10,6 +10,8 @@ The code supports individual Google logins for **rob@moderncre8ve.com** and **ha
 
 This project stores revocable sign-in sessions, encrypted Google refresh tokens, context revisions, tasks, task history and Claude OAuth grants. Access is checked by the app and again by the document/task RPC functions. The key remains on the Oxygen server.
 
+For the Customer Communications tab, also run [`scripts/sql/ops-hub-communications.sql`](../scripts/sql/ops-hub-communications.sql). See [ops-customer-communications.md](ops-customer-communications.md).
+
 ## 2. Create the Google web client
 
 Use Google Cloud project `mindful-quasar-486518-r9`, or a dedicated project under the same business ownership.
