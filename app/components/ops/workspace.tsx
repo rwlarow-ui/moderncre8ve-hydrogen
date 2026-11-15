@@ -360,7 +360,7 @@ function TaskForm({ task, email }: { task?: any; email: string }) {
             className={opsInputClass}
           >
             <option value="rob@moderncre8ve.com">Rob</option>
-            <option value="havenmb@moderncre8ve.com">Haven</option>
+            <option value="haven@moderncre8ve.com">Haven</option>
           </select>
         </OpsField>
         <OpsField label="Due date">

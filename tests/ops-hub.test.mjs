@@ -20,9 +20,13 @@ import { visibleSources } from "../app/utils/ops-sources.server.js";
 import { readOpsJson } from "../app/utils/ops-store.server.js";
 
 const rob = allowedIdentity("rob@moderncre8ve.com");
-const haven = allowedIdentity("havenmb@moderncre8ve.com");
+const haven = allowedIdentity("haven@moderncre8ve.com");
 test("individual identity is restricted to the two exact approved accounts", () => {
-  assert.equal(allowedIdentity("HAVENMB@MODERNCRE8VE.COM").role, rob.role);
+  assert.equal(allowedIdentity("HAVEN@MODERNCRE8VE.COM").role, rob.role);
+  // Google returns Haven's primary address (haven@); havenmb@ is the address
+  // the hub first listed. Both resolve to one identity.
+  assert.equal(haven.email, "haven@moderncre8ve.com");
+  assert.deepEqual(allowedIdentity(" HavenMB@ModernCre8ve.com "), haven);
   for (const value of [
     "__proto__",
     "constructor",

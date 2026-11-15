@@ -8,8 +8,23 @@ import { hasOpsStore, opsStore } from "./ops-store.server.js";
 
 export const OPS_USERS = {
   "rob@moderncre8ve.com": { name: "Rob", role: "owner" },
-  "havenmb@moderncre8ve.com": { name: "Haven", role: "owner" },
+  "haven@moderncre8ve.com": { name: "Haven", role: "owner" },
 };
+/**
+ * Other addresses for an approved person, mapped to their primary one.
+ * Google's ID token carries the account's primary address, never an alias:
+ * Haven's is haven@ (confirmed 2026-11-15), and the hub originally listed
+ * havenmb@, so her sign-in was refused as "not allowed".
+ */
+const OPS_EMAIL_ALIASES = {
+  "havenmb@moderncre8ve.com": "haven@moderncre8ve.com",
+};
+export function canonicalOpsEmail(email) {
+  const normalized = String(email || "")
+    .trim()
+    .toLowerCase();
+  return OPS_EMAIL_ALIASES[normalized] || normalized;
+}
 const googleKeys = createRemoteJWKSet(
   new URL("https://www.googleapis.com/oauth2/v3/certs"),
 );
@@ -52,7 +67,7 @@ export function googleConfigured(env) {
   );
 }
 export function allowedIdentity(email) {
-  const normalized = String(email || "").toLowerCase();
+  const normalized = canonicalOpsEmail(email);
   return Object.hasOwn(OPS_USERS, normalized)
     ? { email: normalized, ...OPS_USERS[normalized] }
     : null;

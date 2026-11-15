@@ -1,4 +1,8 @@
-import { hashSecret } from "./ops-identity.server.js";
+import {
+  canonicalOpsEmail,
+  hashSecret,
+  OPS_USERS,
+} from "./ops-identity.server.js";
 import { requireSource, visibleSources } from "./ops-sources.server.js";
 import { opsRpc } from "./ops-store.server.js";
 
@@ -108,8 +112,8 @@ export async function saveOpsTask(env, user, input) {
     throw new Error("Check the task title, status and evidence.");
   if (input.status === "done" && !evidence)
     throw new Error("Record evidence before marking a task done.");
-  const owner = input.ownerEmail || user.email;
-  if (!["rob@moderncre8ve.com", "havenmb@moderncre8ve.com"].includes(owner))
+  const owner = canonicalOpsEmail(input.ownerEmail || user.email);
+  if (!Object.hasOwn(OPS_USERS, owner))
     throw new Error("Choose Rob or Haven as the task owner.");
   const due = input.dueDate || null;
   if (

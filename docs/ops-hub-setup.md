@@ -1,6 +1,6 @@
 # Ops Hub: provider setup and activation
 
-The code supports individual Google logins for **rob@moderncre8ve.com** and **havenmb@moderncre8ve.com**, a private Claude publishing connector, and Daily / Catalog / Marketing / Sales / Tech / Brand tabs. Both accounts have the same owner permissions across all Ops tabs and context sources. Google and Supabase must be configured before individual access can be tested. Do not paste credentials into chat or commit them.
+The code supports individual Google logins for **rob@moderncre8ve.com** and **haven@moderncre8ve.com**, a private Claude publishing connector, and Daily / Catalog / Marketing / Sales / Tech / Brand tabs. Both accounts have the same owner permissions across all Ops tabs and context sources. Google and Supabase must be configured before individual access can be tested. Do not paste credentials into chat or commit them.
 
 ## 1. Create the private database
 
@@ -117,6 +117,16 @@ Provider references: [Google OpenID Connect](https://developers.google.com/ident
 
 Run `scripts/sql/ops-hub-owner-parity.sql` in the existing Supabase SQL editor **before** deploying the app role change. This repeatable transaction updates only the existing access-checking functions; it preserves sessions, publications, tasks, connection tokens, and server-only grants. Fresh projects use the updated `ops-hub.sql`.
 
-Haven (`havenmb@moderncre8ve.com`) now has the same `owner` role as Rob. This includes all four formerly Rob-only context sources and Daily task read/write access. It does not share Rob’s live Gmail/Calendar token: each owner still connects their own Google account.
+Haven (`haven@moderncre8ve.com`) now has the same `owner` role as Rob. This includes all four formerly Rob-only context sources and Daily task read/write access. It does not share Rob’s live Gmail/Calendar token: each owner still connects their own Google account.
 
 After deployment, refresh an existing individual session to pick up the role; the role is resolved from the approved account registry on every request. If Tech redirects to individual sign-in, sign in with the approved ModernCre8ve Google account. Legacy shared-password sessions only cover the transitional order/PO tools. Verify Tech with Haven’s actual account before treating her reported access failure as resolved.
+
+## Existing deployments: Haven's sign-in address
+
+Haven's Google account is `haven@moderncre8ve.com`. The hub first listed `havenmb@moderncre8ve.com`, and Google sign-in always reports an account's **primary** address, never an alias, so her sign-in was refused with "This Google account is not allowed to access Ops." (found 2026-11-15).
+
+1. Run `scripts/sql/ops-hub-haven-email.sql` in the existing Supabase SQL editor **before** deploying the app change. It is one transaction and safe to reapply. It moves her sessions, Google connection, Claude connector grants and task ownership to `haven@`, and updates the database's own access check. Audit fields keep the address recorded at the time.
+2. Deploy the app. It treats `havenmb@` as an alias of `haven@`, so either address signs in as the same person.
+3. Haven signs in with **Continue with Google** and picks `haven@moderncre8ve.com`.
+
+If the app is deployed first, Google sign-in succeeds but her tabs fail to load their data until the SQL runs. Fresh projects use the updated `ops-hub.sql`.

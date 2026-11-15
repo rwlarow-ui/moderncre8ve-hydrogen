@@ -46,8 +46,14 @@ test("private Postgres storage and OAuth publishing work end to end", async (t) 
   );
   await db.exec(parityMigration);
   await db.exec(parityMigration);
+  const havenEmailMigration = readFileSync(
+    new URL("../scripts/sql/ops-hub-haven-email.sql", import.meta.url),
+    "utf8",
+  );
+  await db.exec(havenEmailMigration);
+  await db.exec(havenEmailMigration);
   const rob = allowedIdentity("rob@moderncre8ve.com");
-  const haven = allowedIdentity("havenmb@moderncre8ve.com");
+  const haven = allowedIdentity("haven@moderncre8ve.com");
   const env = {
     OPS_SUPABASE_URL: "https://database.example.test",
     OPS_SUPABASE_SECRET_KEY: "sb_secret_test",
@@ -534,4 +540,81 @@ test("private Postgres storage and OAuth publishing work end to end", async (t) 
       );
     },
   );
+});
+
+test("Haven email migration moves a production-state database to haven@", async (t) => {
+  const db = new PGlite();
+  t.after(() => db.close());
+  await db.exec(
+    "create role anon; create role authenticated; create role service_role bypassrls;",
+  );
+  // Recreate the schema as deployed before this fix: havenmb@ everywhere.
+  const current = readFileSync(
+    new URL("../scripts/sql/ops-hub.sql", import.meta.url),
+    "utf8",
+  );
+  await db.exec(
+    current.replaceAll("haven@moderncre8ve.com", "havenmb@moderncre8ve.com"),
+  );
+  const old = "havenmb@moderncre8ve.com";
+  const rob = "rob@moderncre8ve.com";
+  await db.query(
+    "insert into ops_sessions values ('s1', $1, now() + interval '1 hour')",
+    [old],
+  );
+  await db.query("insert into ops_connections values ($1, 'enc-token')", [old]);
+  await db.query(
+    "insert into ops_tasks(section,title,status,owner_email,updated_by) values ('daily','Haven task','todo',$1,$2), ('daily','Rob task','todo',$2,$2)",
+    [old, rob],
+  );
+  const client = await db.query(
+    "insert into ops_bridge_clients(name, redirect_uris) values ('c', '[]') returning id",
+  );
+  await db.query(
+    "insert into ops_bridge_tokens(access_hash,refresh_hash,client_id,user_email,resource,scope,access_expires_at,refresh_expires_at) values ('a','r',$1,$2,'res','context',now(),now())",
+    [client.rows[0].id, old],
+  );
+  await assert.rejects(
+    db.query("select ops_check_user('haven@moderncre8ve.com')"),
+    /Forbidden/,
+  );
+
+  const migration = readFileSync(
+    new URL("../scripts/sql/ops-hub-haven-email.sql", import.meta.url),
+    "utf8",
+  );
+  await db.exec(migration);
+  await db.exec(migration); // Safe to reapply.
+
+  const emails = async (sql) => (await db.query(sql)).rows.map((r) => r.e);
+  assert.deepEqual(await emails("select user_email e from ops_sessions"), [
+    "haven@moderncre8ve.com",
+  ]);
+  assert.deepEqual(await emails("select user_email e from ops_connections"), [
+    "haven@moderncre8ve.com",
+  ]);
+  assert.deepEqual(await emails("select user_email e from ops_bridge_tokens"), [
+    "haven@moderncre8ve.com",
+  ]);
+  assert.deepEqual(
+    await emails("select owner_email e from ops_tasks order by title"),
+    ["haven@moderncre8ve.com", rob],
+  );
+  await db.query("select ops_check_user('haven@moderncre8ve.com')");
+  await db.query("select ops_check_user($1)", [rob]);
+  await assert.rejects(
+    db.query("select ops_check_user($1)", [old]),
+    /Forbidden/,
+  );
+  await assert.rejects(
+    db.query(
+      "insert into ops_tasks(section,title,status,owner_email,updated_by) values ('daily','x','todo',$1,$1)",
+      [old],
+    ),
+    /check constraint/,
+  );
+  const constraints = await db.query(
+    "select count(*)::int n from pg_constraint where conrelid = 'public.ops_tasks'::regclass and contype = 'c' and pg_get_constraintdef(oid) like '%owner_email%'",
+  );
+  assert.equal(constraints.rows[0].n, 1);
 });
