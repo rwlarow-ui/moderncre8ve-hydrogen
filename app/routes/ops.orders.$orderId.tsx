@@ -25,6 +25,8 @@ import {
 } from "~/components/ops/ops-shell";
 import { cn } from "~/utils/cn";
 import { requireOpsAccess } from "~/utils/ops-auth.server";
+import { stageLabel } from "~/utils/ops-comms";
+import { loadCommsDetail } from "~/utils/ops-comms.server";
 import {
   diffTags,
   getOrderDetail,
@@ -43,7 +45,7 @@ import {
 import type { Route } from "./+types/ops.orders.$orderId";
 
 export async function loader({ request, context, params }: Route.LoaderArgs) {
-  await requireOpsAccess(request, context);
+  const user = await requireOpsAccess(request, context);
 
   if (!params.orderId) {
     throw new Response("Order not found.", { status: 404 });
@@ -51,14 +53,27 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
 
   // A PO lookup failure (e.g. definitions not created yet) must not take the
   // order page down.
-  const [order, po] = await Promise.all([
+  // The shared production stage needs a named session; like the PO lookup,
+  // a failure (e.g. tables not created yet) must not take the page down.
+  const [order, po, production] = await Promise.all([
     getOrderDetail(context.env, params.orderId),
     findProductionPoForOrder(context.env, params.orderId).catch(() => null),
+    user && /^\d{1,20}$/.test(params.orderId)
+      ? loadCommsDetail(context.env, user, params.orderId)
+          .then((detail) => detail.production)
+          .catch(() => null)
+      : null,
   ]);
 
   return {
     order,
     po: po ? { param: po.param, state: po.state } : null,
+    production: production
+      ? {
+          stage: stageLabel(production.stage),
+          confirmedOn: production.stage_confirmed_on as string | null,
+        }
+      : null,
   };
 }
 
@@ -145,7 +160,7 @@ export async function action({ request, context, params }: Route.ActionArgs) {
 type OrderDetail = Awaited<ReturnType<typeof loader>>["order"];
 
 export default function OpsOrderDetailRoute() {
-  const { order, po } = useLoaderData<typeof loader>();
+  const { order, po, production } = useLoaderData<typeof loader>();
   const actionData = useActionData<typeof action>();
   const result = actionData?.mutationResult as OpsMutationResult | undefined;
 
@@ -318,6 +333,24 @@ export default function OpsOrderDetailRoute() {
 
         <aside className="space-y-8 lg:sticky lg:top-28 lg:self-start">
           <div className="flex flex-col gap-3">
+            <Link
+              to={`/ops/communications/${order.legacyId}`}
+              className={buttonVariants({
+                variant: "outline",
+                className: "gap-2 py-4",
+              })}
+            >
+              Customer communications
+            </Link>
+            <p className="text-body-subtle text-sm">
+              Production stage:{" "}
+              <span className="text-body">
+                {production ? production.stage : "Not recorded"}
+              </span>
+              {production?.confirmedOn
+                ? ` · confirmed ${formatDate(`${production.confirmedOn}T12:00:00Z`)}`
+                : ""}
+            </p>
             <a
               href={order.adminUrl}
               target="_blank"
