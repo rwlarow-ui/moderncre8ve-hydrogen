@@ -17,7 +17,7 @@ if (!hasOpsStore(env)) {
 } else {
   try {
     await opsRpc(env, "ops_read_artifacts", {
-      p_email: "havenmb@moderncre8ve.com",
+      p_email: "haven@moderncre8ve.com",
       p_ids: ["catalog-todos"],
     });
     await opsRpc(env, "ops_read_tasks", {

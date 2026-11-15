@@ -24,7 +24,7 @@ create table if not exists public.ops_tasks (
   title text not null check (length(title) between 1 and 500),
   status text not null check (status in ('todo','in_progress','blocked','done')),
   evidence text not null default '' check (length(evidence) <= 2000),
-  owner_email text not null check (owner_email in ('rob@moderncre8ve.com','havenmb@moderncre8ve.com')),
+  owner_email text not null check (owner_email in ('rob@moderncre8ve.com','haven@moderncre8ve.com')),
   due_date date,
   updated_by text not null, updated_at timestamptz not null default now()
 );
@@ -57,7 +57,7 @@ create table if not exists public.ops_bridge_refresh_history (
 create or replace function public.ops_check_user(p_email text) returns void
 language plpgsql set search_path = public as $$
 begin
-  if p_email is null or p_email not in ('rob@moderncre8ve.com','havenmb@moderncre8ve.com') then
+  if p_email is null or p_email not in ('rob@moderncre8ve.com','haven@moderncre8ve.com') then
     raise exception 'Forbidden' using errcode = '42501';
   end if;
 end $$;
