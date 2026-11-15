@@ -44,6 +44,11 @@ export function TurnstileWidget({
 }: TurnstileWidgetProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
+  // Callers pass inline callbacks, whose identity changes on every render.
+  // Keep the latest in a ref so a re-render (e.g. the caller storing the
+  // token) doesn't tear down and re-run a completed challenge.
+  const callbacksRef = useRef({ onVerify, onExpire, onError });
+  callbacksRef.current = { onVerify, onExpire, onError };
 
   useEffect(() => {
     if (!containerRef.current || !siteKey) {
@@ -64,9 +69,9 @@ export function TurnstileWidget({
       }
       widgetIdRef.current = window.turnstile.render(containerRef.current, {
         sitekey: siteKey,
-        callback: onVerify,
-        "expired-callback": onExpire,
-        "error-callback": onError,
+        callback: (token) => callbacksRef.current.onVerify(token),
+        "expired-callback": () => callbacksRef.current.onExpire?.(),
+        "error-callback": () => callbacksRef.current.onError?.(),
         theme,
         size,
         appearance,
@@ -96,7 +101,7 @@ export function TurnstileWidget({
         }
       }
     };
-  }, [siteKey, theme, size, appearance, onError, onExpire, onVerify]);
+  }, [siteKey, theme, size, appearance]);
 
   if (!siteKey) {
     return null;

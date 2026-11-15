@@ -158,7 +158,7 @@ const ContactForm = ({
               type="submit"
               className="h-[54px] sm:col-span-2"
               loading={fetcher.state === "submitting"}
-              disabled={awaitingVerification}
+              disabled={awaitingVerification || fetcher.state !== "idle"}
             >
               {buttonText}
             </Button>

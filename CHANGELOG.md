@@ -9,6 +9,7 @@
 ### Contact form on /pages/contact
 - **The contact page now has a "Send Us a Message" form** under the hero (`app/sections/contact-form/`, section type `contact-form`): first and last name, email, optional phone, a topic menu and a message, with visible labels. The Cloudflare Turnstile challenge is always shown and the Send button stays disabled until it passes (when `PUBLIC_TURNSTILE_SITE_KEY` is set).
 - **`/api/contact`** works like the trade and piece-request forms: honeypot, server-side Turnstile check, then a Shopify customer tagged `contact-inquiry` with the message appended to the customer note (ops token only), plus a best-effort plain-text owner email via Resend to `CONTACT_NOTIFY_EMAIL`, falling back to `TRADE_NOTIFY_EMAIL` and then `PO_CC_EMAIL`. Tests: `npm run test:contact`.
+- `TurnstileWidget` now keeps its callbacks in a ref, so a parent re-render (storing the token) no longer removes and re-runs a completed challenge. This also applies to the trade form and newsletter popup.
 
 ### Seymour chair is Amish-made
 - The owner confirmed on 2026-11-12 that the Seymour dining chair is Amish-made, so its page and structured data now treat it as Ohio-built furniture: `productClass()` no longer forces it to "imported", it emits `countryOfOrigin: US`, and the rollout audit no longer flags its Amish wording as an origin conflict. Its Shopify copy (Amish-made) was already right and is unchanged.
