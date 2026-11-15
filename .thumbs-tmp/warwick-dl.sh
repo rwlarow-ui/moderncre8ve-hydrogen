@@ -1,0 +1,18 @@
+mkdir -p .thumbs-tmp/warwick && cd .thumbs-tmp/warwick
+curl -s -o 00_34142706630955.img "https://cdn.shopify.com/s/files/1/1015/2577/files/WarwickCutout_300x.png?v=1688770791"
+curl -s -o 01_20468902723686.img "https://cdn.shopify.com/s/files/1/1015/2577/products/img_0386-sw_300x.jpg?v=1694617990"
+curl -s -o 02_34142711021867.img "https://cdn.shopify.com/s/files/1/1015/2577/files/IMG_0420_aacf94ad-0ebc-4d8a-a8c8-c4c5b5c01e8e_300x.jpg?v=1694617990"
+curl -s -o 03_20468903477350.img "https://cdn.shopify.com/s/files/1/1015/2577/products/img_0413-sw_300x.jpg?v=1694617990"
+curl -s -o 04_34142710890795.img "https://cdn.shopify.com/s/files/1/1015/2577/files/IMG_0415-Edit_272852e5-1a10-4e73-8e57-09ab686d7364_300x.jpg?v=1694617990"
+curl -s -o 05_34142710923563.img "https://cdn.shopify.com/s/files/1/1015/2577/files/IMG_0429-Edit_3c407422-7adf-4a59-9852-f61169acef5c_300x.jpg?v=1694617990"
+curl -s -o 06_34142710956331.img "https://cdn.shopify.com/s/files/1/1015/2577/files/IMG_0431-Edit_68dd9517-1676-4d7f-8eca-ff45e36a8aa1_300x.jpg?v=1694617990"
+curl -s -o 07_34142710989099.img "https://cdn.shopify.com/s/files/1/1015/2577/files/IMG_0433-Edit_10b0655a-5a6f-4741-8a35-0087cc527d9c_300x.jpg?v=1694617990"
+curl -s -o 08_34142711054635.img "https://cdn.shopify.com/s/files/1/1015/2577/files/IMG_0418_304406da-8663-4c85-ad74-5728c7ce6568_300x.jpg?v=1694617990"
+curl -s -o 09_34142711087403.img "https://cdn.shopify.com/s/files/1/1015/2577/files/IMG_0419_5eded040-bc3c-4702-b4f4-de834f548dac_300x.jpg?v=1694617990"
+curl -s -o 10_34142711120171.img "https://cdn.shopify.com/s/files/1/1015/2577/files/IMG_0413_09582dde-6552-494b-8a5e-2a9cc49d052f_300x.jpg?v=1694617990"
+curl -s -o 11_34142711152939.img "https://cdn.shopify.com/s/files/1/1015/2577/files/IMG_0458_abe63bad-9838-426f-960c-41e4f6d09c1a_300x.jpg?v=1694617990"
+curl -s -o 12_34142711185707.img "https://cdn.shopify.com/s/files/1/1015/2577/files/IMG_0447_ba915dd8-cf63-474d-aff5-cfe1a9ce45c8_300x.jpg?v=1694617990"
+curl -s -o 13_34142711218475.img "https://cdn.shopify.com/s/files/1/1015/2577/files/IMG_0456_d3e58763-ea6a-4e15-83ec-ba88ef835fc5_300x.jpg?v=1694617990"
+curl -s -o 14_34142711251243.img "https://cdn.shopify.com/s/files/1/1015/2577/files/IMG_0441-Edit_62197e5a-f0b1-4082-9957-d417357df010_300x.jpg?v=1694617990"
+curl -s -o 15_34142711284011.img "https://cdn.shopify.com/s/files/1/1015/2577/files/IMG_0421_99cb0b62-eb8b-46cb-be54-46aef71868ec_300x.jpg?v=1694617990"
+ls | wc -l
