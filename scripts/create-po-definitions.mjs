@@ -39,7 +39,10 @@ export const METAOBJECT_DEFINITION = {
   type: PO_TYPE,
   name: "Production PO",
   displayNameKey: "order_name",
-  access: { admin: "MERCHANT_READ_WRITE", storefront: "NONE" },
+  // Merchant-owned type: admin access is implied (merchant read/write) and
+  // Shopify rejects an explicit `admin` value (ADMIN_ACCESS_INPUT_NOT_ALLOWED);
+  // only `$app:` types may set it.
+  access: { storefront: "NONE" },
   fieldDefinitions: [
     {
       key: "order_id",
@@ -86,7 +89,8 @@ export const METAFIELD_DEFINITIONS = [
     key: "po",
     name: "Production PO",
     type: "metaobject_reference",
-    validations: [{ name: "metaobject_definition_type", value: PO_TYPE }],
+    // Shopify needs the definition's GID (metaobject_definition_id); it is
+    // filled in at run time by withMetaobjectId() once the definition exists.
   },
   {
     ownerType: "ORDER",
@@ -188,6 +192,17 @@ function assertNoUserErrors(label, userErrors) {
   }
 }
 
+/** Points a metaobject_reference definition at the given metaobject definition GID. */
+export function withMetaobjectId(def, metaobjectId) {
+  if (def.type !== "metaobject_reference") {
+    return def;
+  }
+  return {
+    ...def,
+    validations: [{ name: "metaobject_definition_id", value: metaobjectId }],
+  };
+}
+
 export function planDefinitions(existing) {
   const have = new Set([
     ...existing.orderDefs.nodes.map((d) => `ORDER:${d.namespace}.${d.key}`),
@@ -196,6 +211,7 @@ export function planDefinitions(existing) {
 
   return {
     createMetaobject: !existing.metaobjectDefinitionByType,
+    metaobjectId: existing.metaobjectDefinitionByType?.id ?? null,
     metafields: METAFIELD_DEFINITIONS.map((def) => ({
       def,
       id: `${def.ownerType}:${def.namespace}.${def.key}`,
@@ -224,6 +240,7 @@ async function main() {
   console.log(
     `metaobject ${PO_TYPE}: ${plan.createMetaobject ? "create" : "exists, skip"}`,
   );
+  let metaobjectId = plan.metaobjectId;
   if (plan.createMetaobject && !dryRun) {
     const data = await adminGraphql(CREATE_METAOBJECT_DEFINITION, {
       definition: METAOBJECT_DEFINITION,
@@ -232,6 +249,7 @@ async function main() {
       "metaobjectDefinitionCreate",
       data.metaobjectDefinitionCreate.userErrors,
     );
+    metaobjectId = data.metaobjectDefinitionCreate.metaobjectDefinition.id;
   }
 
   for (const { def, exists } of plan.metafields) {
@@ -241,7 +259,7 @@ async function main() {
       continue;
     }
     const data = await adminGraphql(CREATE_METAFIELD_DEFINITION, {
-      definition: def,
+      definition: withMetaobjectId(def, metaobjectId),
     });
     assertNoUserErrors(
       `metafieldDefinitionCreate ${label}`,
