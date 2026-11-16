@@ -41,9 +41,9 @@ export const OPS_SOURCES = [
     "catalog-todos",
     "catalog",
     "Catalog to-dos",
-    "R2RV5rj8Q4KRNrkFg49sKx",
-    "2026-11-12",
-    "Verify release records for beds and Cure All; test the Warwick request; decide Bel-Aire desk reachability; reconcile shipping language; review first releases; verify the November 16 held-URL decision.",
+    "R2RV5rj8Q4KRH28HXPgsFx",
+    "2026-11-15",
+    "Decide what held product links do (due November 16); test the Warwick request form; trim extra sales channels on six live products; record the five batch reviews; decide the five Unlisted products with live pages; update ADR-0007 for the Mansfield and Warwick.",
   ),
   source(
     "catalog-cleanup",
