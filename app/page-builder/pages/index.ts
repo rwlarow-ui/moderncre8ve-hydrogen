@@ -11,6 +11,7 @@ import { defaultCollection } from "./default-collection";
 import { defaultProduct } from "./default-product";
 import { faq } from "./faq";
 import { homepage } from "./homepage";
+import { legal } from "./legal";
 import { orderPolicies } from "./order-policies";
 import { ourMaterials } from "./our-materials";
 import { defaultPage } from "./page";
@@ -33,6 +34,7 @@ const PAGES: Record<string, PageDefinition> = {
   "custom-furniture-crafted-to-perfection": customOrders,
   "custom-orders": customOrders,
   faq,
+  legal,
   "mid-century-modern-press-coverage": press,
   "ordering-policies": orderPolicies,
   "our-materials": ourMaterials,
