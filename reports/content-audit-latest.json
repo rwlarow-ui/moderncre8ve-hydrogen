@@ -591,9 +591,7 @@
           "issue_type": "suspicious_handle_or_slug",
           "severity": "low",
           "visible_live": true,
-          "evidence": [
-            "Handle `trade-1` looks like a duplicate page slug."
-          ],
+          "evidence": ["Handle `trade-1` looks like a duplicate page slug."],
           "content_source": "Mapped page definition: app/page-builder/pages/trade; published page route",
           "recommended_fix": "Confirm the published handle is intentional. If not, create a clean canonical handle and redirect the old URL.",
           "owner": "Content / Page builder"
@@ -1655,9 +1653,7 @@
       "issue_type": "suspicious_handle_or_slug",
       "severity": "low",
       "visible_live": true,
-      "evidence": [
-        "Handle `trade-1` looks like a duplicate page slug."
-      ],
+      "evidence": ["Handle `trade-1` looks like a duplicate page slug."],
       "content_source": "Mapped page definition: app/page-builder/pages/trade; published page route",
       "recommended_fix": "Confirm the published handle is intentional. If not, create a clean canonical handle and redirect the old URL.",
       "owner": "Content / Page builder"
