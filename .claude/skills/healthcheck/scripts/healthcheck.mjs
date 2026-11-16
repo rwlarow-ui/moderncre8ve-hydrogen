@@ -14,6 +14,29 @@ import { existsSync, readFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join, resolve } from "node:path";
 
+// Behind an HTTP(S) proxy (e.g. claude.ai cloud sessions), Node's built-in
+// fetch ignores HTTPS_PROXY unless NODE_USE_ENV_PROXY=1 is set at startup, so
+// live checks fail with ENOTFOUND. Re-exec once with it set; the repo scripts
+// spawned below inherit it too. No-op when no proxy is configured.
+const proxyUrl =
+  process.env.HTTPS_PROXY ||
+  process.env.https_proxy ||
+  process.env.HTTP_PROXY ||
+  process.env.http_proxy;
+if (proxyUrl && !process.env.NODE_USE_ENV_PROXY) {
+  const r = spawnSync(
+    process.execPath,
+    [
+      "--disable-warning=UNDICI-EHPA",
+      ...process.execArgv,
+      process.argv[1],
+      ...process.argv.slice(2),
+    ],
+    { stdio: "inherit", env: { ...process.env, NODE_USE_ENV_PROXY: "1" } },
+  );
+  process.exit(r.status ?? 1);
+}
+
 const args = process.argv.slice(2);
 const flag = (n) => args.includes(`--${n}`);
 const opt = (n) => {
