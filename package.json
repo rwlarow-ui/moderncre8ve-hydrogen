@@ -35,6 +35,7 @@
     "test:send": "node --test tests/po-send.test.mjs",
     "test:trade": "node --test tests/trade-application.test.mjs",
     "test:piece-request": "node --test tests/piece-request.test.mjs",
+    "test:contact": "node --test tests/contact-message.test.mjs",
     "codegen": "shopify hydrogen codegen",
     "hydrogen": "shopify hydrogen",
     "clean": "rm -rf dist node_modules package-lock.json pnpm-lock.yaml .shopify .react-router",

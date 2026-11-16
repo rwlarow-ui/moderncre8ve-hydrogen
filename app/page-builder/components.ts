@@ -25,6 +25,7 @@ import * as CollectionSeoBlock from "~/sections/collection-seo-block";
 import * as ColumnsWithImages from "~/sections/columns-with-images";
 import * as ColumnWithImageItem from "~/sections/columns-with-images/column";
 import * as ColumnsWithImagesItems from "~/sections/columns-with-images/items";
+import * as ContactForm from "~/sections/contact-form";
 import * as Countdown from "~/sections/countdown";
 import * as ButtonCountDown from "~/sections/countdown/button";
 import * as CountdownSubHeading from "~/sections/countdown/subheading";
@@ -171,6 +172,7 @@ export const components: SectionComponent[] = [
   CollectionContentDynamic,
   CollectionListDynamicItems,
   CollectionSeoBlock,
+  ContactForm,
   SingleProduct,
   Judgeme,
   JudgemeReview,

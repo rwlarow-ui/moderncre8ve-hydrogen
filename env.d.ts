@@ -29,6 +29,8 @@ declare global {
     PO_CC_EMAIL?: string;
     /** Trade-application alert recipient; falls back to PO_CC_EMAIL. */
     TRADE_NOTIFY_EMAIL?: string;
+    /** Contact form alerts; falls back to TRADE_NOTIFY_EMAIL, then PO_CC_EMAIL. */
+    CONTACT_NOTIFY_EMAIL?: string;
     JUDGEME_PRIVATE_API_TOKEN: string;
     CUSTOM_COLLECTION_BANNER_METAFIELD: string;
     METAOBJECT_COLORS_TYPE: string;
