@@ -104,6 +104,25 @@ const ORDER_FOR_PO_QUERY = `
   }
 `;
 
+const PO_LINE_IMAGES_QUERY = `
+  query OpsPoLineImages($ids: [ID!]!) {
+    nodes(ids: $ids) {
+      ... on Order {
+        id
+        lineItems(first: 20) {
+          nodes {
+            id
+            image {
+              url(transform: { maxWidth: 600, maxHeight: 600 })
+              altText
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
 const METAOBJECT_CREATE_MUTATION = `
   mutation OpsPoCreate($metaobject: MetaobjectCreateInput!) {
     metaobjectCreate(metaobject: $metaobject) {
@@ -242,6 +261,42 @@ export async function listProductionPos(config, { limit = 100 } = {}) {
     first: Math.min(Math.max(Number(limit) || 100, 1), 250),
   });
   return data.metaobjects.nodes.map(mapPo);
+}
+
+/**
+ * Product thumbnails for PO lines, keyed by order line item id. Line specs
+ * don't store images, so the queue reads them from the orders: one batched
+ * request per 20 orders. Orders that no longer resolve are simply absent.
+ *
+ * @returns {Promise<Record<string, { url: string, alt: string }>>}
+ */
+export async function listPoLineImages(config, orderIds = []) {
+  const ids = [...new Set(orderIds.filter(Boolean).map(orderGid))];
+  const chunks = [];
+  for (let index = 0; index < ids.length; index += 20) {
+    chunks.push(ids.slice(index, index + 20));
+  }
+  const results = await Promise.all(
+    chunks.map((chunk) =>
+      adminGraphql(config, PO_LINE_IMAGES_QUERY, { ids: chunk }),
+    ),
+  );
+
+  /** @type {Record<string, { url: string, alt: string }>} */
+  const images = {};
+  for (const data of results) {
+    for (const order of data.nodes ?? []) {
+      for (const lineItem of order?.lineItems?.nodes ?? []) {
+        if (lineItem.image?.url) {
+          images[lineItem.id] = {
+            url: lineItem.image.url,
+            alt: lineItem.image.altText || "",
+          };
+        }
+      }
+    }
+  }
+  return images;
 }
 
 export async function getProductionPo(config, param) {
