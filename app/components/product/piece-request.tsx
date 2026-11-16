@@ -3,7 +3,11 @@ import clsx from "clsx";
 import { type RefObject, useId, useState } from "react";
 import { useFetcher, useRouteLoaderData } from "react-router";
 import { Button } from "~/components/button";
-import { HoneypotField, TurnstileWidget } from "~/components/turnstile-widget";
+import {
+  HoneypotField,
+  TurnstileWidget,
+  useTurnstileToken,
+} from "~/components/turnstile-widget";
 import type { RootLoader } from "~/root";
 import type { PieceRequestApiPayload } from "~/routes/($locale).api.piece-request";
 
@@ -46,7 +50,11 @@ export function PieceRequest({
   const data = fetcher.data as PieceRequestApiPayload | undefined;
   const rootData = useRouteLoaderData<RootLoader>("root");
   const turnstileSiteKey = rootData?.turnstileSiteKey || "";
-  const [turnstileToken, setTurnstileToken] = useState("");
+  const {
+    token: turnstileToken,
+    setToken: setTurnstileToken,
+    widgetKey,
+  } = useTurnstileToken(fetcher.data);
   const [open, setOpen] = useState(false);
   const formId = useId();
   const submitted = fetcher.state === "idle" && data?.ok;
@@ -156,6 +164,7 @@ export function PieceRequest({
               />
               {turnstileSiteKey && (
                 <TurnstileWidget
+                  key={widgetKey}
                   siteKey={turnstileSiteKey}
                   onVerify={setTurnstileToken}
                   onExpire={() => setTurnstileToken("")}

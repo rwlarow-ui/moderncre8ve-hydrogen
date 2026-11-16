@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 
 declare global {
   interface Window {
@@ -48,7 +48,9 @@ export function TurnstileWidget({
   // Keep the latest in a ref so a re-render (e.g. the caller storing the
   // token) doesn't tear down and re-run a completed challenge.
   const callbacksRef = useRef({ onVerify, onExpire, onError });
-  callbacksRef.current = { onVerify, onExpire, onError };
+  useLayoutEffect(() => {
+    callbacksRef.current = { onVerify, onExpire, onError };
+  });
 
   useEffect(() => {
     if (!containerRef.current || !siteKey) {
@@ -78,21 +80,23 @@ export function TurnstileWidget({
       });
     };
 
-    // If Turnstile is already loaded, render immediately
+    // Render now if the script is loaded, otherwise poll until it is.
+    let checkInterval: ReturnType<typeof setInterval> | undefined;
     if (window.turnstile) {
       renderWidget();
     } else {
-      // Wait for script to load
-      const checkInterval = setInterval(() => {
+      checkInterval = setInterval(() => {
         if (window.turnstile) {
           clearInterval(checkInterval);
           renderWidget();
         }
       }, 100);
-      return () => clearInterval(checkInterval);
     }
 
+    // One cleanup for both paths, so a widget rendered after a late script
+    // load is still removed on unmount.
     return () => {
+      clearInterval(checkInterval);
       if (widgetIdRef.current && window.turnstile) {
         try {
           window.turnstile.remove(widgetIdRef.current);
@@ -100,6 +104,7 @@ export function TurnstileWidget({
           // ignore
         }
       }
+      widgetIdRef.current = null;
     };
   }, [siteKey, theme, size, appearance]);
 
@@ -108,6 +113,27 @@ export function TurnstileWidget({
   }
 
   return <div ref={containerRef} className={className} />;
+}
+
+/**
+ * Token state for a form protected by TurnstileWidget.
+ *
+ * Turnstile tokens are single-use and the server redeems one on every
+ * submission, so after each response (success or error) the stored token is
+ * cleared and `widgetKey` changes. Pass it as the widget's `key` to remount it
+ * and run a fresh challenge. `response` is the fetcher/action data, a new
+ * object for every completed submission.
+ */
+export function useTurnstileToken(response: unknown) {
+  const [token, setToken] = useState("");
+  const [widgetKey, setWidgetKey] = useState(0);
+  useEffect(() => {
+    if (response) {
+      setToken("");
+      setWidgetKey((key) => key + 1);
+    }
+  }, [response]);
+  return { token, setToken, widgetKey };
 }
 
 /**

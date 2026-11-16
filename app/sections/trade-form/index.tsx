@@ -1,10 +1,14 @@
 import clsx from "clsx";
-import { type RefObject, useState } from "react";
+import type { RefObject } from "react";
 import { useFetcher, useRouteLoaderData } from "react-router";
 import { Button } from "~/components/button";
 import type { SectionProps } from "~/components/section";
 import { Section, sectionSettings } from "~/components/section";
-import { HoneypotField, TurnstileWidget } from "~/components/turnstile-widget";
+import {
+  HoneypotField,
+  TurnstileWidget,
+  useTurnstileToken,
+} from "~/components/turnstile-widget";
 import { createSchema } from "~/page-builder";
 import type { RootLoader } from "~/root";
 import type { TradeApiPayload } from "~/routes/($locale).api.trade";
@@ -31,7 +35,11 @@ const TradeForm = ({
   const data = fetcher.data as TradeApiPayload | undefined;
   const rootData = useRouteLoaderData<RootLoader>("root");
   const turnstileSiteKey = rootData?.turnstileSiteKey || "";
-  const [turnstileToken, setTurnstileToken] = useState("");
+  const {
+    token: turnstileToken,
+    setToken: setTurnstileToken,
+    widgetKey,
+  } = useTurnstileToken(fetcher.data);
   const submitted = fetcher.state === "idle" && data?.ok;
 
   return (
@@ -110,6 +118,7 @@ const TradeForm = ({
             />
             {turnstileSiteKey && (
               <TurnstileWidget
+                key={widgetKey}
                 siteKey={turnstileSiteKey}
                 onVerify={setTurnstileToken}
                 onExpire={() => setTurnstileToken("")}
