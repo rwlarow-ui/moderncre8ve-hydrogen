@@ -41,7 +41,7 @@ export const OPS_SOURCES = [
     "catalog-todos",
     "catalog",
     "Catalog to-dos",
-    "c28e2918-ddba-4121-82c6-7bacd2dfa723",
+    "R2RV5rj8Q4KRH28HXPgsFx",
     "2026-11-15",
     "Decide what held product links do (due November 16); test the Warwick request form; trim extra sales channels on six live products; record the five batch reviews; decide the five Unlisted products with live pages; update ADR-0007 for the Mansfield and Warwick.",
   ),
