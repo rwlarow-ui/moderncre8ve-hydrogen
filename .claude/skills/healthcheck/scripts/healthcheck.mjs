@@ -101,7 +101,12 @@ const pick = (s, re, n = 8) => {
     .map((l) => l.slice(0, 160));
   return redact(hits.length ? hits.slice(0, n).join("\n") : tail(s));
 };
-const npmRun = (name, env) => run(pm, ["run", name, "--silent"], env);
+const npmRun = (name, env, extra = []) =>
+  run(
+    pm,
+    ["run", name, "--silent", ...(extra.length ? ["--", ...extra] : [])],
+    env,
+  );
 
 // ================= static tier =================
 if (wants("static")) {
@@ -349,19 +354,26 @@ if (wants("env")) {
   // Read-only against Shopify. debug:admin-auth is excluded on purpose: it prints a token prefix.
   // audit:content writes a local report under reports/.
   const allow = ["check:collections", "audit:content"];
+  // Extra args per script. piper-fox / piper-fox-co are deliberately unpublished
+  // (all-draft products; CHANGELOG 2026-10-08, ADR-0003 item 7). Drop this once
+  // they are published or deleted.
+  const envArgs = {
+    "check:collections": ["--ignore=piper-fox,piper-fox-co"],
+  };
   for (const name of allow) {
+    const extra = envArgs[name] || [];
     if (!scripts[name]) {
       add("SKIP", T, name, "script not present");
     } else if (!shape.envFile) {
       add("SKIP", T, name, "needs .env");
     } else {
-      const r = npmRun(name);
+      const r = npmRun(name, undefined, extra);
       add(
         r.code === 0 ? "PASS" : "FAIL",
         T,
         name,
         r.code === 0 ? "ok" : tail(r.out),
-        `npm run ${name}`,
+        `npm run ${name}${extra.length ? ` -- ${extra.join(" ")}` : ""}`,
       );
     }
   }
