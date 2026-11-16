@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import { useFetcher, useLocation, useRouteLoaderData } from "react-router";
 import { Button } from "~/components/button";
 import { Image } from "~/components/image";
-import { HoneypotField, TurnstileWidget } from "~/components/turnstile-widget";
+import {
+  HoneypotField,
+  TurnstileWidget,
+  useTurnstileToken,
+} from "~/components/turnstile-widget";
 import { useThemeSettings } from "~/page-builder";
 import type { RootLoader } from "~/root";
 import { cn } from "~/utils/cn";
@@ -44,7 +48,11 @@ export function NewsletterPopup() {
   const fetcher = useFetcher<{ ok: boolean; errorMessage?: string }>();
   const rootData = useRouteLoaderData<RootLoader>("root");
   const turnstileSiteKey = rootData?.turnstileSiteKey || "";
-  const [turnstileToken, setTurnstileToken] = useState("");
+  const {
+    token: turnstileToken,
+    setToken: setTurnstileToken,
+    widgetKey,
+  } = useTurnstileToken(fetcher.data);
 
   // Compute message and error from fetcher data
   const message = fetcher.data?.ok ? "Thank you for signing up!" : "";
@@ -184,6 +192,7 @@ export function NewsletterPopup() {
                   />
                   {turnstileSiteKey && (
                     <TurnstileWidget
+                      key={widgetKey}
                       siteKey={turnstileSiteKey}
                       onVerify={setTurnstileToken}
                       onExpire={() => setTurnstileToken("")}

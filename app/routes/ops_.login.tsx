@@ -145,8 +145,8 @@ export default function OpsLoginRoute() {
   const rootData = useRouteLoaderData<RootLoader>("root");
   const turnstileSiteKey = rootData?.turnstileSiteKey || "";
   const [turnstileToken, setTurnstileToken] = useState("");
-  // Stable identities: TurnstileWidget re-creates itself when its callbacks
-  // change, so an inline closure would re-challenge after every verification.
+  // TurnstileWidget reads its callbacks through a ref, so their identity no
+  // longer matters; a fresh challenge comes only from the key change below.
   const handleExpire = useCallback(() => setTurnstileToken(""), []);
   // Turnstile tokens are single-use: the server redeems one on every
   // submission, so each response needs a fresh challenge.
