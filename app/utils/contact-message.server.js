@@ -1,4 +1,5 @@
 import { CONTACT_TOPICS } from "./contact-topics.js";
+import { pipelineNotificationLine } from "./ops-pipeline-inbound.server.js";
 import {
   clean,
   EMAIL_PATTERN,
@@ -55,6 +56,29 @@ export function buildContactNote(values, date = new Date()) {
   return lines.filter(Boolean).join("\n");
 }
 
+/** Contact topics that are about an existing order, not a sale: no deal. */
+const NOT_A_LEAD_TOPICS = new Set(["Existing order"]);
+const TOPIC_DEAL_TYPES = {
+  "Custom furniture quote": "custom",
+  "Showroom visit": "retail",
+};
+
+/**
+ * The pipeline deal for a contact message, or null when the topic isn't a
+ * sales lead (questions about an existing order belong to Communications).
+ */
+export function contactPipelineDeal(values, date = new Date()) {
+  if (NOT_A_LEAD_TOPICS.has(values.topic)) {
+    return null;
+  }
+  return {
+    title: `Contact form: ${values.topic}`,
+    dealType: TOPIC_DEAL_TYPES[values.topic] ?? "other",
+    source: "contact_form",
+    summary: buildContactNote(values, date),
+  };
+}
+
 export function submitContactMessage(env, values, fetchImpl = fetch) {
   return upsertTaggedCustomer(
     env,
@@ -72,7 +96,7 @@ export function submitContactMessage(env, values, fetchImpl = fetch) {
 export async function notifyContactMessage(
   env,
   values,
-  { created, customerId },
+  { created, customerId, deal = null },
   fetchImpl = fetch,
 ) {
   const to =
@@ -88,7 +112,10 @@ export async function notifyContactMessage(
     "",
     `${created ? "New customer" : "Existing customer"}, tagged ${CONTACT_TAG}.`,
     `https://${env.PUBLIC_STORE_DOMAIN}/admin/customers/${adminId}`,
-  ].join("\n");
+    pipelineNotificationLine(env, deal),
+  ]
+    .filter((line) => line !== null)
+    .join("\n");
   await sendOwnerEmail(
     env,
     {

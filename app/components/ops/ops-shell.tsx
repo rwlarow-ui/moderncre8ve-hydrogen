@@ -87,6 +87,7 @@ export function OpsShell({ children }: { children: React.ReactNode }) {
         >
           <OpsNavLink to="/ops/daily">Daily</OpsNavLink>
           <OpsNavLink to="/ops">Current orders</OpsNavLink>
+          <OpsNavLink to="/ops/pipeline">Pipeline</OpsNavLink>
           <OpsNavLink to="/ops/communications">Communications</OpsNavLink>
           <OpsNavLink to="/ops/pos">Production POs</OpsNavLink>
           <OpsNavLink to="/ops/catalog">Catalog</OpsNavLink>

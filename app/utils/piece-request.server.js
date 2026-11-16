@@ -1,4 +1,8 @@
 import {
+  pipelineNotificationLine,
+  priceValue,
+} from "./ops-pipeline-inbound.server.js";
+import {
   clean,
   EMAIL_PATTERN,
   sendOwnerEmail,
@@ -58,6 +62,18 @@ export function buildPieceRequestNote(values, date = new Date()) {
   return lines.filter(Boolean).join("\n");
 }
 
+/** The pipeline deal for a piece request: a catalog piece at its listed price. */
+export function piecePipelineDeal(values, date = new Date()) {
+  const piece = values.productTitle || values.productHandle;
+  return {
+    title: values.variantTitle ? `${piece} (${values.variantTitle})` : piece,
+    dealType: "retail",
+    source: "piece_request",
+    estimatedValue: priceValue(values.variantPrice),
+    summary: buildPieceRequestNote(values, date),
+  };
+}
+
 export function submitPieceRequest(env, values, fetchImpl = fetch) {
   return upsertTaggedCustomer(
     env,
@@ -75,7 +91,7 @@ export function submitPieceRequest(env, values, fetchImpl = fetch) {
 export async function notifyPieceRequest(
   env,
   values,
-  { created, customerId },
+  { created, customerId, deal = null },
   fetchImpl = fetch,
 ) {
   const to =
@@ -91,7 +107,10 @@ export async function notifyPieceRequest(
     "",
     `${created ? "New customer" : "Existing customer"}, tagged ${PIECE_REQUEST_TAG}.`,
     `https://${env.PUBLIC_STORE_DOMAIN}/admin/customers/${adminId}`,
-  ].join("\n");
+    pipelineNotificationLine(env, deal),
+  ]
+    .filter((line) => line !== null)
+    .join("\n");
   await sendOwnerEmail(
     env,
     {

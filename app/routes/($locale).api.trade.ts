@@ -1,9 +1,11 @@
 import type { ActionFunction, ActionFunctionArgs } from "react-router";
 import { data } from "react-router";
+import { afterIntake } from "~/utils/ops-pipeline-inbound.server";
 import {
   notifyTradeApplication,
   parseTradeApplication,
   submitTradeApplication,
+  tradePipelineDeal,
 } from "~/utils/trade-application.server";
 import { verifyTurnstile } from "~/utils/turnstile.server";
 
@@ -41,16 +43,17 @@ export const action: ActionFunction = async ({
 
   try {
     const result = await submitTradeApplication(context.env, values);
-    // Best-effort and off the response path: the applicant is already tagged,
-    // so a slow or failing alert must not delay or fail the submission.
-    const notification = notifyTradeApplication(
-      context.env,
-      values,
-      result,
-    ).catch((notifyErr) => {
-      console.error("Trade notification failed:", notifyErr);
-    });
-    context.waitUntil?.(notification);
+    // Best-effort and off the response path: the customer is already saved,
+    // so a slow or failing pipeline or alert must not delay or fail the form.
+    context.waitUntil?.(
+      afterIntake(
+        context.env,
+        result,
+        tradePipelineDeal(values),
+        (saved) => notifyTradeApplication(context.env, values, saved),
+        "Trade",
+      ),
+    );
   } catch (err) {
     console.error("Trade application failed:", err);
     return data(

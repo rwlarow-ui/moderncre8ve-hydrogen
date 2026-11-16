@@ -1,8 +1,10 @@
 import type { ActionFunction, ActionFunctionArgs } from "react-router";
 import { data } from "react-router";
+import { afterIntake } from "~/utils/ops-pipeline-inbound.server";
 import {
   notifyPieceRequest,
   parsePieceRequest,
+  piecePipelineDeal,
   submitPieceRequest,
 } from "~/utils/piece-request.server";
 import { verifyTurnstile } from "~/utils/turnstile.server";
@@ -41,13 +43,17 @@ export const action: ActionFunction = async ({
 
   try {
     const result = await submitPieceRequest(context.env, values);
-    // Best-effort and off the response path, as for trade applications.
-    const notification = notifyPieceRequest(context.env, values, result).catch(
-      (notifyErr) => {
-        console.error("Piece request notification failed:", notifyErr);
-      },
+    // Best-effort and off the response path: the customer is already saved,
+    // so a slow or failing pipeline or alert must not delay or fail the form.
+    context.waitUntil?.(
+      afterIntake(
+        context.env,
+        result,
+        piecePipelineDeal(values),
+        (saved) => notifyPieceRequest(context.env, values, saved),
+        "Piece request",
+      ),
     );
-    context.waitUntil?.(notification);
   } catch (err) {
     console.error("Piece request failed:", err);
     return data(

@@ -6,6 +6,13 @@
 
 ## Unreleased
 
+### Sales pipeline in the Ops Hub (ADR-0009, phases 1 and 2)
+- **New `/ops/pipeline` tab** replacing Asana as the CRM. A board shows every deal with its stage, estimated value, next step, last contact and tasks, plus a count and value per open stage. Filters: Needs my attention, All open, Next step overdue or missing, Reply needed, Won, Lost, On hold, All.
+- **Each deal has its own page** with stage moves (Lost needs a reason), details and next-step edits, tasks (one open per type, resolution note to close), a "record what happened" form and a dated timeline with Gmail or Drive links.
+- **Contacts stay in Shopify.** "Add a deal" uses the existing customer with that email, or creates one tagged `pipeline-lead` with no marketing consent. Names and emails are read live, never copied.
+- **Website forms feed the pipeline (phase 2).** After the contact, piece-request or trade form saves the customer, the submission is added to their open deal or opens a new one, with one "Reply needed" task. The owner email links to the deal. This runs off the response path, so a missing or failing Ops database never affects the form. Contact messages about an existing order are skipped.
+- **Setup:** run `scripts/sql/ops-hub-pipeline.sql` in the Ops Supabase project before deploying. See `docs/ops-pipeline.md`. Nothing in the pipeline emails anyone. Tests: `tests/ops-hub-pipeline.test.mjs` (in `npm run test:ops-hub`).
+
 ### Contact form on /pages/contact
 - **The contact page now has a "Send Us a Message" form** under the hero (`app/sections/contact-form/`, section type `contact-form`): first and last name, email, optional phone, a topic menu and a message, with visible labels. The Cloudflare Turnstile challenge is always shown and the Send button stays disabled until it passes (when `PUBLIC_TURNSTILE_SITE_KEY` is set).
 - **`/api/contact`** works like the trade and piece-request forms: honeypot, server-side Turnstile check, then a Shopify customer tagged `contact-inquiry` with the message appended to the customer note (ops token only), plus a best-effort plain-text owner email via Resend to `CONTACT_NOTIFY_EMAIL`, falling back to `TRADE_NOTIFY_EMAIL` and then `PO_CC_EMAIL`. Tests: `npm run test:contact`.

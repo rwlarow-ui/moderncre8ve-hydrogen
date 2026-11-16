@@ -1,9 +1,11 @@
 import { data } from "react-router";
 import {
+  contactPipelineDeal,
   notifyContactMessage,
   parseContactMessage,
   submitContactMessage,
 } from "~/utils/contact-message.server";
+import { afterIntake } from "~/utils/ops-pipeline-inbound.server";
 import { verifyTurnstile } from "~/utils/turnstile.server";
 import type { Route } from "./+types/($locale).api.contact";
 
@@ -38,15 +40,17 @@ export async function action({ request, context }: Route.ActionArgs) {
 
   try {
     const result = await submitContactMessage(context.env, values);
-    // Best-effort and off the response path, as for trade applications.
-    const notification = notifyContactMessage(
-      context.env,
-      values,
-      result,
-    ).catch((notifyErr) => {
-      console.error("Contact notification failed:", notifyErr);
-    });
-    context.waitUntil?.(notification);
+    // Best-effort and off the response path: the customer is already saved,
+    // so a slow or failing pipeline or alert must not delay or fail the form.
+    context.waitUntil?.(
+      afterIntake(
+        context.env,
+        result,
+        contactPipelineDeal(values),
+        (saved) => notifyContactMessage(context.env, values, saved),
+        "Contact",
+      ),
+    );
   } catch (err) {
     console.error("Contact message failed:", err);
     return data(
