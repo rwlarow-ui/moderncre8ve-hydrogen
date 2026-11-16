@@ -8,6 +8,7 @@ import {
   applyDealEvent,
   applyStageChange,
   buildBoard,
+  DEAL_STAGES,
   dealForStorage,
   filterBoard,
   NEW_DEAL_NEXT_STEP,
@@ -665,6 +666,36 @@ test("intake: forms map to deals; existing-order questions aren't leads", () => 
   assert.equal(pipelineNotificationLine({}, null), null);
 });
 
+test("SQL stage lists match DEAL_STAGES in ops-pipeline.js", () => {
+  const sql = readFileSync(
+    new URL("../scripts/sql/ops-hub-pipeline.sql", import.meta.url),
+    "utf8",
+  );
+  const ids = (list) => [...list.matchAll(/'([a-z_]+)'/g)].map((m) => m[1]);
+
+  // The ops_deals.stage check constraint allows exactly the known stages.
+  const constraint = sql.match(
+    /stage text not null[^;]*?check \(stage in\s*\(([^)]*)\)/,
+  );
+  assert.ok(constraint, "ops_deals.stage check constraint not found");
+  assert.deepEqual(
+    ids(constraint[1]),
+    DEAL_STAGES.map((s) => s.id),
+  );
+
+  // ops_pipeline_inbound treats exactly the open stages as "open", or a
+  // new JS stage would make website inquiries open duplicate deals.
+  const inbound = sql.slice(
+    sql.indexOf("function public.ops_pipeline_inbound"),
+  );
+  const open = inbound.match(/and stage in \(([^)]*)\)/);
+  assert.ok(open, "open-stage list in ops_pipeline_inbound not found");
+  assert.deepEqual(
+    ids(open[1]),
+    DEAL_STAGES.filter((s) => s.open).map((s) => s.id),
+  );
+});
+
 test("intake database: one open deal per customer, one reply task, a closed deal starts a new one", async (t) => {
   const db = await freshDb(t);
   const inbound = (customer, title, summary) =>
@@ -735,6 +766,23 @@ test("intake database: one open deal per customer, one reply task, a closed deal
   );
   assert.equal(third.created, true);
   assert.notEqual(third.deal_id, first.deal_id);
+
+  // On hold is parked like Won/Lost: the next inquiry opens a fresh deal and
+  // leaves the parked one untouched.
+  await db.query("update ops_deals set stage = 'on_hold' where id = $1", [
+    third.deal_id,
+  ]);
+  const parked = await detail(third.deal_id);
+  const fourth = await inbound(
+    "9001",
+    "Contact form: Custom furniture quote",
+    "While on hold",
+  );
+  assert.equal(fourth.created, true);
+  assert.notEqual(fourth.deal_id, third.deal_id);
+  const parkedAfter = await detail(third.deal_id);
+  assert.equal(parkedAfter.deal.stage, "on_hold");
+  assert.equal(parkedAfter.events.length, parked.events.length);
 
   await assert.rejects(inbound("not-a-number", "x", "y"), /Invalid customer/);
   for (const role of ["anon", "authenticated"]) {
