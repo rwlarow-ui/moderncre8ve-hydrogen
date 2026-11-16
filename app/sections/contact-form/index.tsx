@@ -1,10 +1,14 @@
 import clsx from "clsx";
-import { type RefObject, useId, useState } from "react";
+import { type RefObject, useId } from "react";
 import { useFetcher, useRouteLoaderData } from "react-router";
 import { Button } from "~/components/button";
 import type { SectionProps } from "~/components/section";
 import { Section, sectionSettings } from "~/components/section";
-import { HoneypotField, TurnstileWidget } from "~/components/turnstile-widget";
+import {
+  HoneypotField,
+  TurnstileWidget,
+  useTurnstileToken,
+} from "~/components/turnstile-widget";
 import { createSchema } from "~/page-builder";
 import type { RootLoader } from "~/root";
 import type { ContactApiPayload } from "~/routes/($locale).api.contact";
@@ -33,7 +37,11 @@ const ContactForm = ({
   const data = fetcher.data as ContactApiPayload | undefined;
   const rootData = useRouteLoaderData<RootLoader>("root");
   const turnstileSiteKey = rootData?.turnstileSiteKey || "";
-  const [turnstileToken, setTurnstileToken] = useState("");
+  const {
+    token: turnstileToken,
+    setToken: setTurnstileToken,
+    widgetKey,
+  } = useTurnstileToken(fetcher.data);
   const id = useId();
   const submitted = fetcher.state === "idle" && data?.ok;
   // With a site key configured, hold the submit until the challenge has passed.
@@ -146,6 +154,7 @@ const ContactForm = ({
             </div>
             {turnstileSiteKey && (
               <TurnstileWidget
+                key={widgetKey}
                 siteKey={turnstileSiteKey}
                 onVerify={setTurnstileToken}
                 onExpire={() => setTurnstileToken("")}
@@ -162,6 +171,16 @@ const ContactForm = ({
             >
               {buttonText}
             </Button>
+            {awaitingVerification && fetcher.state === "idle" && (
+              <p className="text-center text-body-subtle text-sm sm:col-span-2">
+                Sending unlocks once the verification check above completes. If
+                it doesn't appear, email us at{" "}
+                <a href="mailto:info@moderncre8ve.com" className="underline">
+                  info@moderncre8ve.com
+                </a>
+                .
+              </p>
+            )}
             {fetcher.state === "idle" && data && !data.ok && (
               <div
                 role="alert"

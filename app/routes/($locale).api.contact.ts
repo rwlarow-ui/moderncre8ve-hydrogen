@@ -1,4 +1,3 @@
-import type { ActionFunction, ActionFunctionArgs } from "react-router";
 import { data } from "react-router";
 import {
   notifyContactMessage,
@@ -6,11 +5,9 @@ import {
   submitContactMessage,
 } from "~/utils/contact-message.server";
 import { verifyTurnstile } from "~/utils/turnstile.server";
+import type { Route } from "./+types/($locale).api.contact";
 
-export const action: ActionFunction = async ({
-  request,
-  context,
-}: ActionFunctionArgs) => {
+export async function action({ request, context }: Route.ActionArgs) {
   const formData = await request.formData();
 
   // Hidden "website" honeypot: pretend success to bots.
@@ -62,7 +59,7 @@ export const action: ActionFunction = async ({
     );
   }
   return data({ ok: true }, { status: 201 });
-};
+}
 
 export interface ContactApiPayload {
   ok: boolean;

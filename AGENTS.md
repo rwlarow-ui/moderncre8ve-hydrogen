@@ -64,7 +64,7 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 - **SEO Truth Layer:** source is vendored at `seo-truth-layer/`, but the pipeline **runs daily at 14:00 UTC from the separate `github.com/rwlarow-ui/moderncre8ve-seo-truth-layer` repo**. GitHub only executes workflows under the root `.github/workflows/`, so `seo-truth-layer/.github/workflows/seo-pipeline.yml` in this repo never runs. Its secrets (`GA4_PROPERTY_ID`, `GOOGLE_SA_JSON`, `RESEND_API_KEY`, `SITE_URL`) live on that other repo.
 
 ### MCP Servers
-Configured in `.mcp.json`: **ops-dashboard** (local stdio server, `scripts/ops-dashboard-mcp.mjs` — Shopify Admin order/customer tooling).
+Configured in `.mcp.json`: **ops-dashboard** (local stdio server, `scripts/ops-dashboard-mcp.mjs` — Shopify Admin order/customer tooling) and **furniture-studio** (local stdio server, `scripts/furniture-studio-mcp.mjs` — parametric furniture concepts: template, revisions, design checks, cut list / cost, CSV/DXF/OpenSCAD/CadQuery study exports, render prompts; no network access, files under `~/.moderncre8ve/furniture-studio` or `$FURNITURE_STUDIO_DIR`). Its model, `app/utils/furniture-studio.js`, also drives the `/ops/design` tab; tests: `npm run test:furniture`.
 Figma, Shopify (Storefront API), Shopify Dev and Ahrefs were all removed from `.mcp.json`; the claude.ai Shopify connector covers Admin API access.
 Composer and Crypto.com servers visible in sessions are from another project — irrelevant here.
 
@@ -164,4 +164,4 @@ Required: `PUBLIC_STORE_DOMAIN`, `PUBLIC_CHECKOUT_DOMAIN` (`checkout.moderncre8v
 - **New section**: Create in `app/sections/`, export `schema` via `createSchema()`, register in `app/page-builder/components.ts`
 - **Debug**: GraphiQL at `localhost:3456/graphiql`
 - **Health check**: `/healthcheck` skill (`.claude/skills/healthcheck/`) or `npm run healthcheck` — tiers `static` / `env` / `live`
-- **Deploy**: Use `~/.claude/scripts/deploy.sh` (see global AGENTS.md for flags)
+- **Deploy**: merge to `main`. `.github/workflows/oxygen-deployment-1000097972.yml` runs `npx shopify hydrogen deploy` on every push: `main` goes to production, other branches get Oxygen preview environments. There is no separate deploy script

@@ -1,9 +1,13 @@
 import { EnvelopeSimpleIcon } from "@phosphor-icons/react";
 import clsx from "clsx";
-import { type RefObject, useState } from "react";
+import type { RefObject } from "react";
 import { useFetcher, useRouteLoaderData } from "react-router";
 import { Button } from "~/components/button";
-import { HoneypotField, TurnstileWidget } from "~/components/turnstile-widget";
+import {
+  HoneypotField,
+  TurnstileWidget,
+  useTurnstileToken,
+} from "~/components/turnstile-widget";
 import { createSchema, type SectionComponentProps } from "~/page-builder";
 import type { RootLoader } from "~/root";
 import type { CustomerApiPlayLoad } from "~/routes/($locale).api.customer";
@@ -28,7 +32,11 @@ const NewsLetterForm = ({
   const { ok, errorMessage } = data || {};
   const rootData = useRouteLoaderData<RootLoader>("root");
   const turnstileSiteKey = rootData?.turnstileSiteKey || "";
-  const [turnstileToken, setTurnstileToken] = useState("");
+  const {
+    token: turnstileToken,
+    setToken: setTurnstileToken,
+    widgetKey,
+  } = useTurnstileToken(fetcher.data);
 
   return (
     <div ref={ref} {...rest} className="mx-auto max-w-full" style={{ width }}>
@@ -64,6 +72,7 @@ const NewsLetterForm = ({
       </Form>
       {turnstileSiteKey && (
         <TurnstileWidget
+          key={widgetKey}
           siteKey={turnstileSiteKey}
           onVerify={setTurnstileToken}
           onExpire={() => setTurnstileToken("")}

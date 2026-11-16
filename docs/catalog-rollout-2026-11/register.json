@@ -30,36 +30,28 @@
   "batches": [
     {
       "id": "2026-11-09-vista",
-      "handles": [
-        "scandinavian-dining-table-extendable-dining-table"
-      ],
+      "handles": ["scandinavian-dining-table-extendable-dining-table"],
       "publishedAt": "2026-11-09T17:15:19Z",
       "notes": "Owner (Rob) asked to release the Vista table now, ahead of the recorded approvals. Status UNLISTED -> ACTIVE; it was already published to MODERNCRE8VE. Prices, variants and inventory settings unchanged. Bosco and Warwick beds were held at the time for price review; both were released later on 2026-11-09 (batches 2026-11-09-bosco, 2026-11-09-warwick).",
       "review": null
     },
     {
       "id": "2026-11-09-bosco",
-      "handles": [
-        "bosco-walnut-mid-century-modern-bed-handmade"
-      ],
+      "handles": ["bosco-walnut-mid-century-modern-bed-handmade"],
       "publishedAt": "2026-11-09T20:59:17Z",
       "notes": "Released by the owner ahead of the recorded approvals, after repricing under ADR-0007. Status DRAFT -> ACTIVE. Published to MODERNCRE8VE and also to other sales channels (Shop, Google AI Mode and Gemini, Meta AI, Microsoft Copilot, Embedded JS Buy SDK), not MODERNCRE8VE only as the rollout rule asks. Inventory tracking turned off 2026-11-09 (made to order).",
       "review": null
     },
     {
       "id": "2026-11-09-warwick",
-      "handles": [
-        "scandinavian-solid-hardwood-bed-frame"
-      ],
+      "handles": ["scandinavian-solid-hardwood-bed-frame"],
       "publishedAt": "2026-11-09T22:35:31Z",
       "notes": "Released by the owner ahead of the recorded approvals, after repricing under ADR-0007. Status DRAFT -> ACTIVE. Published to MODERNCRE8VE and also to other sales channels (Shop, Google AI Mode and Gemini, Meta AI, Microsoft Copilot, Embedded JS Buy SDK), not MODERNCRE8VE only as the rollout rule asks. Inventory tracking turned off 2026-11-09 (made to order). Tagged request-only (PR #156): the page shows \"Request this piece\" instead of the cart. Excluded from Google & YouTube on 2026-11-10. Now 12 variants (Queen, King, Cali King x walnut, maple, oak, cherry; no drawer versions). The request form failed on 2026-11-12 (no OPS_ADMIN_API_TOKEN on Oxygen production).",
       "review": null
     },
     {
       "id": "2026-11-10-wax",
-      "handles": [
-        "lareauxs-furniture-wax"
-      ],
+      "handles": ["lareauxs-furniture-wax"],
       "publishedAt": "2026-11-10T21:48:02Z",
       "notes": "Released by the owner ahead of the recorded approvals, as Lareaux's Furniture Cure All (renamed in PR #158). Status DRAFT -> ACTIVE. $24.97, 8 oz, inventory tracked (6 on hand; held stock, the exception to the made-to-order rule). Published to MODERNCRE8VE and also to other sales channels (Shop, Google AI Mode and Gemini, Meta AI, Microsoft Copilot, Embedded JS Buy SDK), not MODERNCRE8VE only as the rollout rule asks. Tech debt #18 facts (shipping rate, coverage, application frequency, food-contact claim) not yet confirmed.",
       "review": null

@@ -165,4 +165,4 @@ Required: `PUBLIC_STORE_DOMAIN`, `PUBLIC_CHECKOUT_DOMAIN` (`checkout.moderncre8v
 - **Debug**: GraphiQL at `localhost:3456/graphiql`
 - **Health check**: `/healthcheck` skill (`.claude/skills/healthcheck/`) or `npm run healthcheck` — tiers `static` / `env` / `live`
 - **Cloud sessions** (claude.ai/code): see `docs/cloud-environment.md` — env vars, network allowlist, and what doesn't carry over; `scripts/cloud-session-start.sh` rebuilds `.env` in the VM
-- **Deploy**: Use `~/.claude/scripts/deploy.sh` (see global CLAUDE.md for flags)
+- **Deploy**: merge to `main`. `.github/workflows/oxygen-deployment-1000097972.yml` runs `npx shopify hydrogen deploy` on every push: `main` goes to production, other branches get Oxygen preview environments. There is no separate deploy script

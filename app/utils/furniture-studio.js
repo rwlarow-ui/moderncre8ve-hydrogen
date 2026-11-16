@@ -145,53 +145,85 @@ export function cloneSeed() {
  * @returns {string[]}
  */
 export function conceptErrors(value) {
-  if (!value || typeof value !== "object")
+  if (!value || typeof value !== "object") {
     return ["Concept must be an object."];
+  }
   const d = /** @type {Concept} */ (value);
   const errors = [];
-  for (const key of TEXT_KEYS) {
-    if (typeof d[key] !== "string") errors.push(`${key} must be text.`);
-    else if (d[key].length > MAX_TEXT)
-      errors.push(`${key} is over ${MAX_TEXT} characters.`);
-  }
-  if (typeof d.name === "string" && !d.name.trim())
-    errors.push("name is required.");
-  if (!d.parameters || typeof d.parameters !== "object") {
-    errors.push("parameters are required.");
-  } else {
-    for (const [key, label, min, max] of FIELDS) {
-      const v = d.parameters[key];
-      if (!Number.isFinite(v) || v < min || v > max)
-        errors.push(`${label} (${key}) must be ${min}–${max}.`);
-      else if (INTEGER_FIELDS.includes(key) && !Number.isInteger(v))
-        errors.push(`${label} (${key}) must be a whole number.`);
-    }
-    for (const key of Object.keys(d.parameters))
-      if (!FIELDS.some(([f]) => f === key))
-        errors.push(`Unknown parameter ${key}.`);
-  }
-  if (!d.costs || typeof d.costs !== "object") {
-    errors.push("costs are required.");
-  } else {
-    for (const [key, label] of COST_FIELDS) {
-      const v = d.costs[key];
-      if (!Number.isFinite(v) || v < 0 || v > MAX_COST)
-        errors.push(`${label} (${key}) must be 0–${MAX_COST}.`);
-    }
-    for (const key of Object.keys(d.costs))
-      if (!COST_FIELDS.some(([f]) => f === key))
-        errors.push(`Unknown cost ${key}.`);
-  }
-  if (!d.checks || typeof d.checks !== "object") {
-    errors.push("checks are required.");
-  } else {
-    for (const [key, v] of Object.entries(d.checks)) {
-      if (!GATES.some(([g]) => g === key)) errors.push(`Unknown check ${key}.`);
-      else if (typeof v !== "boolean")
-        errors.push(`Check ${key} must be true/false.`);
-    }
-  }
+  textErrors(d, errors);
+  parameterErrors(d.parameters, errors);
+  costErrors(d.costs, errors);
+  checkErrors(d.checks, errors);
   return errors;
+}
+
+/** @param {Concept} d @param {string[]} errors */
+function textErrors(d, errors) {
+  for (const key of TEXT_KEYS) {
+    if (typeof d[key] !== "string") {
+      errors.push(`${key} must be text.`);
+    } else if (d[key].length > MAX_TEXT) {
+      errors.push(`${key} is over ${MAX_TEXT} characters.`);
+    }
+  }
+  if (typeof d.name === "string" && !d.name.trim()) {
+    errors.push("name is required.");
+  }
+}
+
+/** @param {unknown} parameters @param {string[]} errors */
+function parameterErrors(parameters, errors) {
+  if (!parameters || typeof parameters !== "object") {
+    errors.push("parameters are required.");
+    return;
+  }
+  for (const [key, label, min, max] of FIELDS) {
+    const v = parameters[key];
+    if (!Number.isFinite(v) || v < min || v > max) {
+      errors.push(`${label} (${key}) must be ${min}–${max}.`);
+    } else if (INTEGER_FIELDS.includes(key) && !Number.isInteger(v)) {
+      errors.push(`${label} (${key}) must be a whole number.`);
+    }
+  }
+  for (const key of Object.keys(parameters)) {
+    if (!FIELDS.some(([f]) => f === key)) {
+      errors.push(`Unknown parameter ${key}.`);
+    }
+  }
+}
+
+/** @param {unknown} costs @param {string[]} errors */
+function costErrors(costs, errors) {
+  if (!costs || typeof costs !== "object") {
+    errors.push("costs are required.");
+    return;
+  }
+  for (const [key, label] of COST_FIELDS) {
+    const v = costs[key];
+    if (!Number.isFinite(v) || v < 0 || v > MAX_COST) {
+      errors.push(`${label} (${key}) must be 0–${MAX_COST}.`);
+    }
+  }
+  for (const key of Object.keys(costs)) {
+    if (!COST_FIELDS.some(([f]) => f === key)) {
+      errors.push(`Unknown cost ${key}.`);
+    }
+  }
+}
+
+/** @param {unknown} checks @param {string[]} errors */
+function checkErrors(checks, errors) {
+  if (!checks || typeof checks !== "object") {
+    errors.push("checks are required.");
+    return;
+  }
+  for (const [key, v] of Object.entries(checks)) {
+    if (!GATES.some(([g]) => g === key)) {
+      errors.push(`Unknown check ${key}.`);
+    } else if (typeof v !== "boolean") {
+      errors.push(`Check ${key} must be true/false.`);
+    }
+  }
 }
 
 /**
