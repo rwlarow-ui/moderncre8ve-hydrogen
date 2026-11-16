@@ -6,10 +6,11 @@
 
 ## Unreleased
 
-### Sales pipeline in the Ops Hub (ADR-0009, phase 1)
+### Sales pipeline in the Ops Hub (ADR-0009, phases 1 and 2)
 - **New `/ops/pipeline` tab** replacing Asana as the CRM. A board shows every deal with its stage, estimated value, next step, last contact and tasks, plus a count and value per open stage. Filters: Needs my attention, All open, Next step overdue or missing, Reply needed, Won, Lost, On hold, All.
 - **Each deal has its own page** with stage moves (Lost needs a reason), details and next-step edits, tasks (one open per type, resolution note to close), a "record what happened" form and a dated timeline with Gmail or Drive links.
 - **Contacts stay in Shopify.** "Add a deal" uses the existing customer with that email, or creates one tagged `pipeline-lead` with no marketing consent. Names and emails are read live, never copied.
+- **Website forms feed the pipeline (phase 2).** After the contact, piece-request or trade form saves the customer, the submission is added to their open deal or opens a new one, with one "Reply needed" task. The owner email links to the deal. This runs off the response path, so a missing or failing Ops database never affects the form. Contact messages about an existing order are skipped.
 - **Setup:** run `scripts/sql/ops-hub-pipeline.sql` in the Ops Supabase project before deploying. See `docs/ops-pipeline.md`. Nothing in the pipeline emails anyone. Tests: `tests/ops-hub-pipeline.test.mjs` (in `npm run test:ops-hub`).
 
 ### Contact form on /pages/contact

@@ -1,4 +1,5 @@
--- Sales pipeline (ADR-0009, phase 1: manual tracking; nothing is sent).
+-- Sales pipeline (ADR-0009, phases 1 and 2: manual tracking plus website
+-- form intake; nothing is sent).
 -- Run in the Ops Supabase SQL editor AFTER ops-hub.sql, BEFORE deploying the
 -- matching app change. One transaction; safe to reapply.
 --
@@ -182,6 +183,55 @@ begin
     left(format('Task "%s" → %s%s', v_new.title, v_new.status, case when v_new.note <> '' then ': ' || v_new.note else '' end), 2000),
     jsonb_build_object('task_id', v_new.id), p_email);
   return to_jsonb(v_new);
+end $$;
+
+-- Phase 2: website form intake. Called by the storefront server after a form
+-- has created or tagged the Shopify customer, never by a person, so it records
+-- the actor as 'website' instead of checking an Ops user. Per customer, and
+-- serialised so two quick submissions can't open two deals: add the inquiry to
+-- their most recently updated open deal, or open a new one. Either way one
+-- "Reply needed" task is open afterwards. Open stages mirror DEAL_STAGES in
+-- app/utils/ops-pipeline.js.
+create or replace function public.ops_pipeline_inbound(
+  p_customer_id text, p_deal jsonb, p_event jsonb
+) returns jsonb language plpgsql set search_path = public as $$
+declare v_deal ops_deals%rowtype; v_in ops_deals%rowtype; v_created boolean := false;
+  v_on date := coalesce((p_event->>'occurred_on')::date, current_date);
+begin
+  if p_customer_id is null or p_customer_id !~ '^[0-9]{1,20}$' then
+    raise exception 'Invalid customer.';
+  end if;
+  perform pg_advisory_xact_lock(hashtext('ops_pipeline_inbound:' || p_customer_id));
+  select * into v_deal from ops_deals
+  where customer_id = p_customer_id
+    and stage in ('new','contacted','discovery','measured','design_sent','maker_quote','quote_sent')
+  order by updated_at desc limit 1 for update;
+  if v_deal.id is null then
+    v_in := jsonb_populate_record(null::ops_deals, p_deal);
+    insert into ops_deals (
+      customer_id, title, deal_type, stage, owner_email, source, estimated_value,
+      next_step, next_step_due, created_by, updated_by
+    ) values (
+      p_customer_id, v_in.title, coalesce(v_in.deal_type, 'other'), 'new',
+      coalesce(v_in.owner_email, 'haven@moderncre8ve.com'), coalesce(v_in.source, 'other'), v_in.estimated_value,
+      coalesce(v_in.next_step, ''), coalesce(v_in.next_step_due, v_on), 'website', 'website'
+    ) returning * into v_deal;
+    v_created := true;
+  else
+    -- Touching the deal makes an open, stale deal page reload before saving.
+    update ops_deals set
+      next_step = case when next_step = '' then coalesce(p_deal->>'next_step', '') else next_step end,
+      next_step_due = coalesce(next_step_due, v_on),
+      updated_by = 'website', updated_at = clock_timestamp()
+    where id = v_deal.id returning * into v_deal;
+  end if;
+  insert into ops_deal_events(deal_id, kind, direction, occurred_on, summary, details, actor)
+  values (v_deal.id, 'inquiry', 'incoming', v_on, left(p_event->>'summary', 2000),
+    coalesce(p_event->'details', '{}'::jsonb), 'website');
+  insert into ops_deal_tasks(deal_id, kind, title, owner_email, due_on, created_by, updated_by)
+  values (v_deal.id, 'reply', 'Reply to the customer', v_deal.owner_email, v_on, 'website', 'website')
+  on conflict (deal_id, kind) where status in ('open','snoozed') and kind <> 'other' do nothing;
+  return jsonb_build_object('deal_id', v_deal.id, 'created', v_created);
 end $$;
 
 -- Only the server-side secret/service role may use these tables and functions.

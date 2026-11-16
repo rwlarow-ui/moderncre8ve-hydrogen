@@ -1,3 +1,5 @@
+import { pipelineNotificationLine } from "./ops-pipeline-inbound.server.js";
+
 // Admin API queries: deliberately not tagged `#graphql` (codegen validates that tag against the Storefront schema).
 const ADMIN_API_VERSION = "2026-01";
 export const TRADE_TAG = "trade-applicant";
@@ -193,6 +195,16 @@ export async function upsertTaggedCustomer(
   return { created: true, customerId: created.customerCreate.customer.id };
 }
 
+/** The pipeline deal for a trade application. */
+export function tradePipelineDeal(values, date = new Date()) {
+  return {
+    title: `Trade application: ${values.business}`,
+    dealType: "trade",
+    source: "trade_form",
+    summary: buildApplicationNote(values, date),
+  };
+}
+
 /**
  * Tag the applicant `trade-applicant`, creating the customer if needed and
  * appending the application to the note of an existing one.
@@ -218,7 +230,7 @@ const NOTIFY_TIMEOUT_MS = 8000;
 export async function notifyTradeApplication(
   env,
   values,
-  { created, customerId },
+  { created, customerId, deal = null },
   fetchImpl = fetch,
 ) {
   const to = env.TRADE_NOTIFY_EMAIL || env.PO_CC_EMAIL;
@@ -233,7 +245,10 @@ export async function notifyTradeApplication(
     "",
     `${created ? "New customer" : "Existing customer"}, tagged ${TRADE_TAG}.`,
     `https://${env.PUBLIC_STORE_DOMAIN}/admin/customers/${adminId}`,
-  ].join("\n");
+    pipelineNotificationLine(env, deal),
+  ]
+    .filter((line) => line !== null)
+    .join("\n");
 
   await sendOwnerEmail(
     env,

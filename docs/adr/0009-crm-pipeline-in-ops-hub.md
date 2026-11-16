@@ -1,6 +1,6 @@
 # ADR-0009: A sales pipeline (CRM) inside the Ops Hub, replacing Asana
 
-**Status:** Accepted. Phase 1 implemented 2026-11-16 ([`docs/ops-pipeline.md`](../ops-pipeline.md)); later phases pending.
+**Status:** Accepted. Phases 1 and 2 implemented 2026-11-16 ([`docs/ops-pipeline.md`](../ops-pipeline.md)); later phases pending.
 **Date:** 2026-11-16
 **Decider:** Rob LaRow
 
@@ -26,7 +26,7 @@ The custom-work flow, seen in recent threads, runs: inquiry → call or site vis
 
 Build the CRM as a **Pipeline module in the existing Ops Hub**, the order-less front half of the Communications tab.
 
-1. **Shopify stays the contact of record.** A pipeline record ("deal") is keyed by the immutable Shopify customer ID. Name, email and phone are read live from Shopify and never copied, the same rule Communications uses. Email-only inquiries go through the same `upsertTaggedCustomer` path with a new `lead-email` tag and no marketing consent.
+1. **Shopify stays the contact of record.** A pipeline record ("deal") is keyed by the immutable Shopify customer ID. Name, email and phone are read live from Shopify and never copied, the same rule Communications uses. Email-only inquiries go in through **Add a deal**, which uses the existing customer or creates one tagged `pipeline-lead` with no marketing consent. (This replaced the `lead-email` tag first proposed here.)
 2. **Supabase holds pipeline state.** These tables are additive and server-only, following `ops-hub-communications.sql`:
    - `ops_deals`: customer ID, type (retail, custom, trade, wholesale/manufacturing, other), stage, owner, estimated value, source, next step and its due date, lost reason, linked Shopify draft order and order IDs
    - `ops_deal_events`: dated timeline (inquiry, reply, call, visit, design sent, quote sent, note, stage change), each with who entered it and an optional Gmail or Drive link

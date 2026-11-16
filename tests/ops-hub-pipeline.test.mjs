@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { PGlite } from "@electric-sql/pglite";
+import { contactPipelineDeal } from "../app/utils/contact-message.server.js";
 import {
   applyDealEdit,
   applyDealEvent,
@@ -16,6 +17,14 @@ import {
   validateNewDeal,
 } from "../app/utils/ops-pipeline.js";
 import { createDeal, dealAction } from "../app/utils/ops-pipeline.server.js";
+import {
+  afterIntake,
+  legacyCustomerId,
+  pipelineNotificationLine,
+  recordInboundDeal,
+} from "../app/utils/ops-pipeline-inbound.server.js";
+import { piecePipelineDeal } from "../app/utils/piece-request.server.js";
+import { tradePipelineDeal } from "../app/utils/trade-application.server.js";
 
 const today = "2026-11-16";
 const kinds = (tasks) => tasks.map((t) => t.kind).sort();
@@ -595,5 +604,199 @@ test("server adapter: Add deal finds or creates the Shopify customer, actions re
       { now },
     ),
     (error) => error instanceof Response && error.status === 404,
+  );
+});
+
+/* ------------------------------------------------- phase 2: website intake */
+
+test("intake: forms map to deals; existing-order questions aren't leads", () => {
+  const contact = {
+    firstName: "Pat",
+    lastName: "Example",
+    email: "pat@example.com",
+    phone: "",
+    topic: "Custom furniture quote",
+    message: "Can you make a 10 ft walnut table?",
+  };
+  const deal = contactPipelineDeal(contact, new Date(`${today}T12:00:00Z`));
+  assert.equal(deal.dealType, "custom");
+  assert.equal(deal.source, "contact_form");
+  assert.match(deal.summary, /10 ft walnut table/);
+  assert.equal(
+    contactPipelineDeal({ ...contact, topic: "Existing order" }),
+    null,
+  );
+  assert.equal(
+    contactPipelineDeal({ ...contact, topic: "General question" }).dealType,
+    "other",
+  );
+
+  const piece = piecePipelineDeal({
+    productTitle: "Warwick Bed",
+    productHandle: "warwick-bed",
+    variantTitle: "Queen / Walnut",
+    variantPrice: "$4,500.00",
+  });
+  assert.equal(piece.title, "Warwick Bed (Queen / Walnut)");
+  assert.equal(piece.estimatedValue, 4500);
+  assert.equal(
+    piecePipelineDeal({ productHandle: "x", variantPrice: "From $9" })
+      .estimatedValue,
+    null,
+  );
+  assert.equal(
+    tradePipelineDeal({ business: "Studio North" }).dealType,
+    "trade",
+  );
+
+  assert.equal(legacyCustomerId("gid://shopify/Customer/123"), "123");
+  assert.equal(legacyCustomerId("gid://shopify/Customer/abc"), null);
+  assert.equal(
+    pipelineNotificationLine(
+      { OPS_APP_URL: "https://moderncre8ve.com/" },
+      { dealId: "d1", created: true },
+    ),
+    "New deal in the pipeline: https://moderncre8ve.com/ops/pipeline/d1",
+  );
+  assert.equal(
+    pipelineNotificationLine({}, { dealId: "d1", created: false }),
+    "Added to their open deal in the pipeline.",
+  );
+  assert.equal(pipelineNotificationLine({}, null), null);
+});
+
+test("intake database: one open deal per customer, one reply task, a closed deal starts a new one", async (t) => {
+  const db = await freshDb(t);
+  const inbound = (customer, title, summary) =>
+    callRpc(db, "ops_pipeline_inbound", {
+      p_customer_id: customer,
+      p_deal: {
+        title,
+        deal_type: "custom",
+        source: "contact_form",
+        owner_email: "haven@moderncre8ve.com",
+        next_step: NEW_DEAL_NEXT_STEP,
+        next_step_due: today,
+      },
+      p_event: { occurred_on: today, summary },
+    });
+  const detail = async (id) =>
+    callRpc(db, "ops_pipeline_detail", {
+      p_email: "rob@moderncre8ve.com",
+      p_deal_id: id,
+    });
+
+  const first = await inbound(
+    "9001",
+    "Contact form: Custom furniture quote",
+    "First message",
+  );
+  assert.equal(first.created, true);
+  const second = await inbound("9001", "Something else", "Second message");
+  assert.equal(second.created, false);
+  assert.equal(second.deal_id, first.deal_id);
+
+  let d = await detail(first.deal_id);
+  assert.equal(
+    d.deal.title,
+    "Contact form: Custom furniture quote",
+    "the open deal keeps its title",
+  );
+  assert.equal(d.deal.created_by, "website");
+  assert.equal(d.deal.next_step, NEW_DEAL_NEXT_STEP);
+  assert.deepEqual(
+    d.events.map((e) => e.summary),
+    ["Second message", "First message"],
+  );
+  assert.equal(
+    d.tasks.filter((x) => x.kind === "reply" && x.status === "open").length,
+    1,
+  );
+
+  // A blank next step on an open deal is filled; a set one is kept.
+  await db.query(
+    "update ops_deals set next_step = '', next_step_due = null where id = $1",
+    [first.deal_id],
+  );
+  await inbound("9001", "x", "Third message");
+  d = await detail(first.deal_id);
+  assert.equal(d.deal.next_step, NEW_DEAL_NEXT_STEP);
+  assert.equal(d.deal.next_step_due, today);
+
+  // Once the deal is closed, the next inquiry opens a new one.
+  await db.query(
+    "update ops_deals set stage = 'lost', lost_reason = 'test' where id = $1",
+    [first.deal_id],
+  );
+  const third = await inbound(
+    "9001",
+    "Contact form: Showroom visit",
+    "Back again",
+  );
+  assert.equal(third.created, true);
+  assert.notEqual(third.deal_id, first.deal_id);
+
+  await assert.rejects(inbound("not-a-number", "x", "y"), /Invalid customer/);
+  for (const role of ["anon", "authenticated"]) {
+    await db.exec(`set role ${role}`);
+    await assert.rejects(inbound("9002", "x", "y"), /permission denied/);
+    await db.exec("reset role");
+  }
+});
+
+test("intake adapter: skips without a database, never blocks the owner alert", async (t) => {
+  const deal = {
+    title: "Trade application: Studio",
+    dealType: "trade",
+    source: "trade_form",
+    summary: "Hi",
+  };
+  assert.equal(
+    await recordInboundDeal({}, "gid://shopify/Customer/5", deal),
+    null,
+    "no Ops database: skip",
+  );
+
+  const env = {
+    OPS_SUPABASE_URL: "https://database.example.test",
+    OPS_SUPABASE_SECRET_KEY: "sb_secret_test",
+  };
+  const calls = [];
+  t.mock.method(globalThis, "fetch", async (input, init) => {
+    calls.push({ fn: new URL(input).pathname, body: JSON.parse(init.body) });
+    return Response.json({ message: "boom" }, { status: 500 });
+  });
+  t.mock.method(console, "error", () => undefined);
+  assert.equal(
+    await recordInboundDeal(env, "gid://shopify/Customer/5", null),
+    null,
+    "not a lead: skip",
+  );
+  assert.equal(calls.length, 0);
+
+  const notified = [];
+  await afterIntake(
+    env,
+    { customerId: "gid://shopify/Customer/5", created: true },
+    deal,
+    async (r) => notified.push(r),
+    "Trade",
+  );
+  assert.equal(calls[0].fn, "/rest/v1/rpc/ops_pipeline_inbound");
+  assert.equal(calls[0].body.p_customer_id, "5");
+  assert.equal(calls[0].body.p_deal.owner_email, "haven@moderncre8ve.com");
+  assert.deepEqual(notified, [
+    { customerId: "gid://shopify/Customer/5", created: true, deal: null },
+  ]);
+
+  // A failing alert doesn't reject either.
+  await afterIntake(
+    {},
+    { customerId: "x", created: false },
+    deal,
+    async () => {
+      throw new Error("mail down");
+    },
+    "Trade",
   );
 });
