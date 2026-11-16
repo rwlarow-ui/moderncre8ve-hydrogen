@@ -12,6 +12,8 @@ This project stores revocable sign-in sessions, encrypted Google refresh tokens,
 
 For the Customer Communications tab, also run [`scripts/sql/ops-hub-communications.sql`](../scripts/sql/ops-hub-communications.sql). See [ops-customer-communications.md](ops-customer-communications.md).
 
+For the Sales pipeline tab, also run [`scripts/sql/ops-hub-pipeline.sql`](../scripts/sql/ops-hub-pipeline.sql). See [ops-pipeline.md](ops-pipeline.md).
+
 ## 2. Create the Google web client
 
 Use Google Cloud project `mindful-quasar-486518-r9`, or a dedicated project under the same business ownership.

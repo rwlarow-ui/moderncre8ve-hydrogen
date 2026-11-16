@@ -1,6 +1,6 @@
 # ADR-0009: A sales pipeline (CRM) inside the Ops Hub, replacing Asana
 
-**Status:** Proposed
+**Status:** Accepted. Phase 1 implemented 2026-11-16 ([`docs/ops-pipeline.md`](../ops-pipeline.md)); later phases pending.
 **Date:** 2026-11-16
 **Decider:** Rob LaRow
 
@@ -35,7 +35,7 @@ Build the CRM as a **Pipeline module in the existing Ops Hub**, the order-less f
 4. **Quotes are Shopify draft orders.** "Send quote" creates a draft order and links it. Paying the draft-order invoice (the deposit) creates a real order. The next page load sees that order, marks the deal Won, and opens it in Communications. No new payment path.
 5. **Claude and Codex use the existing bridge.** Add a separately consented `crm` permission to `/ops/bridge/mcp` with tools `list_deals`, `get_deal`, `create_deal`, `log_event`, `set_stage`, `add_task` and `save_draft_reply` (stored text only). There is **no send tool**: replies go out from Gmail and are logged back. Context-only grants keep their current reach. The speed-to-lead routine then logs here instead of to a local file. Codex reaches the same tools if its MCP client supports remote servers with OAuth. Otherwise it builds against this ADR and `AGENTS.md` and uses the stdio `ops-dashboard` server.
 
-### Stages (proposed, confirm before Phase 1)
+### Stages (accepted by the owner 2026-11-16)
 
 New → Contacted → Discovery (call or visit) → Measured / spec'd → Design sent → Maker quote → Quote sent → Won (order) · Lost (reason) · On hold
 
@@ -76,7 +76,7 @@ Each phase is one PR, with tests alongside `tests/ops-hub-comms.test.mjs`.
 
 ## Open decisions
 
-1. Confirm the stage list and deal types. Is wholesale or contract manufacturing for other brands a type you take on?
+1. ~~Confirm the stage list~~ Accepted as proposed. Deal types ship as proposed, including wholesale / manufacturing; drop it if that work isn't taken on.
 2. Should email-only inquiries create a Shopify customer at first contact (proposed), or only once a quote is sent?
-3. Who owns new deals by default: Haven, Rob, or round-robin by type?
+3. Who owns new deals by default? Phase 1 defaults to Haven, changeable per deal.
 4. Provide the Asana CSV export for the field and stage mapping.
