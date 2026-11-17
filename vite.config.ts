@@ -31,6 +31,12 @@ export default defineConfig({
   ssr: {
     optimizeDeps: {
       include: [
+        // CommonJS deps of @modelcontextprotocol/sdk (imported by
+        // app/utils/ops-bridge.server.js); without pre-bundling, MiniOxygen
+        // fails to load the SSR entry with "exports is not defined" (503).
+        "content-type",
+        "ajv-formats",
+        "ajv",
         "pako",
         "deepmerge",
         "@radix-ui/react-primitive",
