@@ -39,3 +39,6 @@ jobs:
         run: npx shopify hydrogen deploy
         env:
           SHOPIFY_HYDROGEN_DEPLOYMENT_TOKEN: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000097972 }}
+          # The Vite build OOMs at Node's ~2 GB default heap while rendering chunks
+          # (seen in a cloud session 2026-11-18); runners have 16 GB.
+          NODE_OPTIONS: --max-old-space-size=4096
