@@ -2312,7 +2312,11 @@ export type LlmsCatalogQueryVariables = StorefrontAPI.Exact<{
 
 export type LlmsCatalogQuery = {
   collections: {
-    nodes: Array<Pick<StorefrontAPI.Collection, 'title' | 'handle'>>;
+    nodes: Array<
+      Pick<StorefrontAPI.Collection, 'title' | 'handle'> & {
+        products: {nodes: Array<Pick<StorefrontAPI.Product, 'id'>>};
+      }
+    >;
   };
   products: {
     nodes: Array<
@@ -3257,7 +3261,7 @@ interface GeneratedQueryTypes {
     return: ProductsByCollectionQuery;
     variables: ProductsByCollectionQueryVariables;
   };
-  '#graphql\n  query LlmsCatalog($country: CountryCode, $language: LanguageCode)\n  @inContext(country: $country, language: $language) {\n    collections(first: 50) {\n      nodes {\n        title\n        handle\n      }\n    }\n    products(first: 100) {\n      nodes {\n        title\n        handle\n        productType\n        priceRange {\n          minVariantPrice {\n            amount\n            currencyCode\n          }\n        }\n      }\n    }\n  }\n': {
+  '#graphql\n  query LlmsCatalog($country: CountryCode, $language: LanguageCode)\n  @inContext(country: $country, language: $language) {\n    collections(first: 50) {\n      nodes {\n        title\n        handle\n        products(first: 1) {\n          nodes {\n            id\n          }\n        }\n      }\n    }\n    products(first: 100) {\n      nodes {\n        title\n        handle\n        productType\n        priceRange {\n          minVariantPrice {\n            amount\n            currencyCode\n          }\n        }\n      }\n    }\n  }\n': {
     return: LlmsCatalogQuery;
     variables: LlmsCatalogQueryVariables;
   };
