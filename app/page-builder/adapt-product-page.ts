@@ -1,4 +1,8 @@
-import { HOUSEWARES_LEAD_TIME, type ProductClass } from "~/utils/product-class";
+import {
+  HOUSEWARES_LEAD_SUMMARY,
+  HOUSEWARES_LEAD_TIME,
+  type ProductClass,
+} from "~/utils/product-class";
 import { type WoodCareContent, woodCareContent } from "~/utils/wood-care";
 import type { LoadedPageItem, PageData } from "./types";
 
@@ -19,8 +23,8 @@ export const FURNITURE_ONLY_SECTIONS = [
 
 /**
  * Tailors the shared PRODUCT composition to what is true for this product.
- * Furniture renders unchanged. Housewares get their 3–5 day shipping line in
- * place of the furniture lead time; imported products get no lead-time line
+ * Furniture renders unchanged. Housewares get their 3–5 day shipping line (and
+ * the matching summary under the title) in place of the furniture lead time; imported products get no lead-time line
  * (it is not known here). Both drop the furniture-only sections.
  */
 export function adaptProductPage(
@@ -48,7 +52,11 @@ export function adaptProductPage(
           data: {
             ...item.data,
             ...(cls === "housewares"
-              ? { showLeadTime: true, leadTimeText: HOUSEWARES_LEAD_TIME }
+              ? {
+                  showLeadTime: true,
+                  leadTimeText: HOUSEWARES_LEAD_TIME,
+                  leadTimeSummary: HOUSEWARES_LEAD_SUMMARY,
+                }
               : { showLeadTime: false }),
           },
         };

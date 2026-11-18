@@ -72,3 +72,6 @@ export function isRequestOnly(product: {
 /** Shipping line shown instead of the furniture lead time on housewares. */
 export const HOUSEWARES_LEAD_TIME =
   "Ships within 3–5 business days via standard ground.";
+
+/** One-line summary under the product title on housewares (furniture says "Made to order · ships in 12–16 weeks"). */
+export const HOUSEWARES_LEAD_SUMMARY = "Ships in 3–5 business days";

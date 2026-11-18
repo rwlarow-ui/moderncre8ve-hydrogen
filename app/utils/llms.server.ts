@@ -13,6 +13,18 @@ export interface LlmsProduct {
 export interface LlmsCollection {
   title: string;
   handle: string;
+  /** First product only: enough to tell an empty collection from a stocked one. */
+  products?: { nodes: unknown[] };
+}
+
+/**
+ * Collections an agent should be pointed at. An empty collection renders
+ * "No products matched your filters", so listing it sends crawlers to a dead
+ * end; collections whose products are all in Draft are dropped until they
+ * have something to show.
+ */
+function stocked(collections: LlmsCollection[]) {
+  return collections.filter((c) => !c.products || c.products.nodes.length > 0);
 }
 
 const SUMMARY = `ModernCre8ve is a Cleveland, Ohio furniture studio. We design modern furniture (mid-century modern, Scandinavian, Japandi) and have it handcrafted to order in solid American hardwood by Ohio Amish craftsmen.`;
@@ -34,7 +46,7 @@ function facts(origin: string) {
 - Email: info@moderncre8ve.com
 - Address: 1400 E 36th Street, Suite 2802A, Cleveland, OH 44114
 - Hours: Monday-Friday, 9am-5pm Eastern
-- Trade and showroom: ${origin}/pages/trade`;
+- Trade and showroom: ${origin}/pages/trade-1`;
 }
 
 export function buildLlmsTxt(origin: string, collections: LlmsCollection[]) {
@@ -46,7 +58,9 @@ ${facts(origin)}
 
 ## Collections
 
-${collections.map((c) => `- [${c.title}](${origin}/collections/${c.handle})`).join("\n")}
+${stocked(collections)
+  .map((c) => `- [${c.title}](${origin}/collections/${c.handle})`)
+  .join("\n")}
 
 ## Full catalog
 
@@ -87,6 +101,11 @@ export const LLMS_QUERY = `#graphql
       nodes {
         title
         handle
+        products(first: 1) {
+          nodes {
+            id
+          }
+        }
       }
     }
     products(first: 100) {
