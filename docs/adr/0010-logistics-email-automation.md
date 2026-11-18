@@ -102,7 +102,8 @@ Only the **send gate** (`sendCareMessage` in a new `app/utils/ops-care-send.serv
 | `test_recipients` | `{}` | Lower-cased addresses Haven controls |
 | `test_order_ids` | `{}` | Shopify order IDs approved for testing |
 | `sender_email`, `from_name`, `reply_to` | `haven@…`, Haven's approved name, `care@moderncre8ve.com` | |
-| `last_tick_at`, `last_tick_result` | | Heartbeat for the stale-worker banner |
+| `intake_cursor` | `null` | Highest Shopify `created_at` fully processed by intake. Advanced only by `ops_care_advance_cursor(expected, new)` (compare-and-set) **after** every order in the scan was scheduled or ruled out, so a failed or partial scan is simply repeated on the next tick |
+| `last_tick_at`, `last_tick_result` | | Heartbeat for the stale-worker banner only; never used as an intake position |
 | `updated_by`, `updated_at` | | Optimistic concurrency like the other ops tables |
 
 **`ops_care_templates`** (immutable rows; one `active` per key)
@@ -129,7 +130,7 @@ Only the **send gate** (`sendCareMessage` in a new `app/utils/ops-care-send.serv
 | `created_at`, `updated_at` | |
 
 **Changes to existing tables** (additive):
-- `ops_comms_records`: `logistics_requested_at timestamptz`, `reminder_last_sent_at timestamptz` (keep the `date` columns for the existing UI), `care_enrolment` (`none` / `auto` / `manual`), `care_paused_until date`, `care_excluded boolean`.
+- `ops_comms_records`: `logistics_requested_at timestamptz`, `reminder_last_sent_at timestamptz` (keep the `date` columns for the existing UI), `care_enrolment` (`none` / `auto` / `manual`), `care_paused_until date`, `care_excluded boolean`, `care_test_recipient text` (per-order test recipient override; written only by `ops_care_set_test_recipient`, which requires the order to be in `test_order_ids` and the address to be in `test_recipients`).
 - `ops_comms_tasks.kind`: add `care_exception` (missing data, attachment failure, uncertain send, sender disconnected). One open per order, like the other kinds.
 - `ops_comms_events`: no schema change; new kinds `care_email_sent`, `care_email_failed`, `care_email_uncertain`, `care_email_suppressed`, with `details.message_id` linking to the outbox row.
 
@@ -157,7 +158,7 @@ All new tables follow the existing pattern: RLS on, `anon`/`authenticated` revok
 
 1. **Auth.** `Authorization: Bearer` compared in constant time against the SHA-256 of `OPS_JOB_SECRET`; or a signed-in owner session. The request body is ignored. Returns counts only, no customer data.
 2. **Heartbeat** into `ops_care_settings`.
-3. **Intake** (only if `mode = live` and CARE-01 live rule on, or `mode = test` for `test_order_ids`). Query Shopify for orders `created_at >= max(intake_started_at, cursor - 1h overlap)`. For each order, eligibility (pure function in `ops-comms.js`):
+3. **Intake** (only if `mode = live` and CARE-01 live rule on, or `mode = test` for `test_order_ids`). Query Shopify for orders `created_at >= max(intake_started_at, intake_cursor - 1h overlap)` (the overlap absorbs Shopify indexing lag; re-seeing an order is harmless because scheduling is idempotent). If every order in the scan is scheduled or ruled out, advance `intake_cursor` to the highest `created_at` seen; if any step fails, leave the cursor where it was and record the error in `last_tick_result`. For each order, eligibility (pure function in `ops-comms.js`):
    - not cancelled, not tagged `ops-no-care` / `test-excluded`, record not `care_excluded`;
    - contains at least one furniture line item (**rule to confirm with Haven**; proposed: any line item whose product is not in the wax/care product types);
    - has a customer email;
@@ -170,7 +171,10 @@ All new tables follow the existing pattern: RLS on, `anon`/`authenticated` revok
    2. **Send gate** checks again: global pause, mode, live rule, and in test mode `to ∈ test_recipients` and `order_id ∈ test_order_ids`. Fails closed.
    3. `ops_care_confirm(job_id)` one last cheap re-read (receipt recorded in the last seconds ⇒ `suppressed`).
    4. Gmail `users.messages.send` (multipart/mixed, `From: "<name>" <care@…>`, `Reply-To: care@…`, fixed `Message-ID`).
-   5. `ops_care_record_outcome` in one transaction: job ⇒ `accepted` with IDs; record ⇒ `awaiting_return`, `logistics_requested_at`/`reminder_last_sent_at = accepted_at`, `reminder_next_due_on`; append timeline event; schedule the next reminder.
+   5. `ops_care_record_outcome` in one transaction, under the `ops_comms:<order_id>` advisory lock, **re-reading the record first**. The job always becomes `accepted` with its IDs and a timeline event is always appended (the email did go out). The record is changed only if it is still in the state the send assumed:
+      - CARE-01 and the record is still `not_requested` (or `awaiting_return` from a manual request): set `awaiting_return`, `logistics_requested_at = accepted_at`, plan the first reminder.
+      - CARE-02 and the record is still `awaiting_return` and not paused: set `reminder_last_sent_at = accepted_at`, plan the next reminder.
+      - Otherwise (receipt, clarification, ready for carrier, pause or exclusion was recorded while Gmail was sending): leave the status and reminder fields untouched, schedule nothing, and label the event "Accepted by Gmail after the form receipt was recorded". A receipt is never undone by a send outcome.
 
 At most 5 sends per tick keeps each request well inside Oxygen subrequest and CPU limits; volume never needs more.
 
@@ -182,7 +186,7 @@ At most 5 sends per tick keeps each request well inside Oxygen subrequest and CP
 | Two workers claim the same job | `for update skip locked` + `status = 'sending'` lease |
 | Worker dies mid-send | Lease expires ⇒ job goes to `uncertain`, **not** back to `scheduled`, so reconciliation runs before anything is resent |
 | Receipt recorded while job is queued | `form_received` in `ops_comms_apply` also sets all `scheduled`/`held` CARE-02 jobs for the order to `suppressed` (`receipt recorded`) in the same transaction |
-| Receipt and claim race | Both take the `ops_comms:<order_id>` advisory lock, so one fully precedes the other. If the claim wins, the job is `sending`; receipt cannot recall it. The narrow remaining window (milliseconds between `ops_care_confirm` and Gmail acceptance) is accepted and reported honestly: history shows "Reminder accepted by Gmail at 10:00:03, form receipt recorded at 10:00:04" |
+| Receipt and claim race | Both take the `ops_comms:<order_id>` advisory lock, so one fully precedes the other. If the claim wins, the job is `sending`; receipt cannot recall it. The narrow remaining window (milliseconds between `ops_care_confirm` and Gmail acceptance) is accepted and reported honestly: history shows "Reminder accepted by Gmail at 10:00:03, form receipt recorded at 10:00:04". Because `ops_care_record_outcome` re-reads the record under the lock and only applies its transition from the expected state, the receipt stays recorded and no further reminder is planned |
 | Manual reminder recorded in an update | Existing `includes_reminder` path additionally suppresses that interval's scheduled job and plans the next from the update date |
 | Gmail timeout after possible acceptance | `uncertain` ⇒ search Haven's mailbox `in:sent rfc822msgid:<care-{id}@moderncre8ve.com>` (needs `gmail.readonly`, already granted for the daybook) at +2 and +10 minutes. Found ⇒ `accepted` with real IDs. Not found ⇒ `failed`, `care_exception` task, and a **Retry** button for Haven. No automatic resend, ever |
 
@@ -227,10 +231,10 @@ At most 5 sends per tick keeps each request well inside Oxygen subrequest and CP
 
 ### Test mode (F9)
 
-- `mode = test`: sends only for `order_id ∈ test_order_ids` **and** to an address in `test_recipients`. For a test order whose Shopify email is not controlled by Haven, a per-order **test recipient override** (must be in the allowlist) replaces `to`; the preview labels it "TEST: sending to … instead of the customer address".
+- `mode = test`: sends only for `order_id ∈ test_order_ids` **and** to an address in `test_recipients`. For a test order whose Shopify email is not controlled by Haven, a per-order **test recipient override**, persisted in `ops_comms_records.care_test_recipient` so the hourly tick can use it after the request that set it has ended, replaces `to`. It is validated against the allowlist when set and again by the send gate at send time; the preview labels it "TEST: sending to … instead of the customer address".
 - Order-scoped **"Make due now"** sets `override_due_at` on that order's next job (RPC rejects non-test orders). No global clock change.
 - **"Run due now"** runs the tick for the signed-in owner.
-- **Restore:** a "Leave test mode" action clears overrides, sets `mode = off`, and leaves the history.
+- **Restore:** a "Leave test mode" action clears every `override_due_at` and `care_test_recipient`, sets `mode = off`, and leaves the history.
 - Order #1839 is the proposed test order, subject to Haven re-verifying it and the controlled address. #1834 and #1835 are never test records; the migration seeds nothing and changes no existing record.
 
 ### UI locations
@@ -257,7 +261,7 @@ Phase B design: poll Gmail `users.history.list` from a stored `historyId` on the
 ## Testing
 
 - Pure-function unit tests (extend `tests/ops-hub-comms.test.mjs`): next-business-day across Friday/weekend/holiday, DST transitions, UTC/ET date boundary; eligibility matrix; template lint; personalisation (missing first name, `##1839`, unresolved token); reminder planning; suppression on receipt; manual reminder resets interval.
-- Postgres tests (existing harness in `npm run test:ops-hub`): dedupe-key conflicts, concurrent claim with `skip locked`, receipt vs claim ordering under the shared advisory lock, lease expiry ⇒ `uncertain`, test-order-only override.
+- Postgres tests (existing harness in `npm run test:ops-hub`): dedupe-key conflicts, concurrent claim with `skip locked`, receipt vs claim ordering under the shared advisory lock, lease expiry ⇒ `uncertain`, test-order-only due and recipient overrides, receipt committed between `ops_care_confirm` and `ops_care_record_outcome` (status stays received, no reminder planned), intake cursor not advanced after a failed scan.
 - Send-gate tests with a fake Gmail: 2xx, 4xx, timeout ⇒ reconcile found / not found, pause and mode refusals, allowlist refusal.
 - Live controlled pilot: Haven's 12-step sequence from the handoff, run against the deployed hub in `test` mode.
 
