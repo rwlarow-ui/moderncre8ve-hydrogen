@@ -109,7 +109,7 @@ const PO_LINE_IMAGES_QUERY = `
     nodes(ids: $ids) {
       ... on Order {
         id
-        lineItems(first: 20) {
+        lineItems(first: 50) {
           nodes {
             id
             image {
@@ -266,15 +266,15 @@ export async function listProductionPos(config, { limit = 100 } = {}) {
 /**
  * Product thumbnails for PO lines, keyed by order line item id. Line specs
  * don't store images, so the queue reads them from the orders: one batched
- * request per 20 orders. Orders that no longer resolve are simply absent.
+ * request per 8 orders (50 lines each, matching what a PO can store). Orders that no longer resolve are simply absent.
  *
  * @returns {Promise<Record<string, { url: string, alt: string }>>}
  */
 export async function listPoLineImages(config, orderIds = []) {
   const ids = [...new Set(orderIds.filter(Boolean).map(orderGid))];
   const chunks = [];
-  for (let index = 0; index < ids.length; index += 20) {
-    chunks.push(ids.slice(index, index + 20));
+  for (let index = 0; index < ids.length; index += 8) {
+    chunks.push(ids.slice(index, index + 8));
   }
   const results = await Promise.all(
     chunks.map((chunk) =>

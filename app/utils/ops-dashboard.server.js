@@ -608,6 +608,67 @@ export async function listCurrentOrders(config, filters = {}) {
   };
 }
 
+const ORDER_LINE_ITEMS_QUERY = `
+  query OpsOrderLineItems($ids: [ID!]!) {
+    nodes(ids: $ids) {
+      ... on Order {
+        id
+        lineItems(first: 10) {
+          nodes {
+            id
+            name
+            quantity
+            image {
+              url(transform: { maxWidth: 600, maxHeight: 600 })
+              altText
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * Line items (name, quantity, thumbnail) for a page of orders, keyed by order
+ * GID. Kept out of the order scan so scanning up to 1,000 orders stays cheap:
+ * only the orders actually shown are read, 20 per request, first 10 lines each.
+ *
+ * @returns {Promise<Record<string, Array<{ id: string, name: string, quantity: number, imageUrl: string | null, imageAlt: string }>>>}
+ */
+export async function listOrderLineItems(config, orderIds = []) {
+  const ids = [...new Set(orderIds.filter(Boolean))].map((id) =>
+    getOwnerId("order", id),
+  );
+  const chunks = [];
+  for (let index = 0; index < ids.length; index += 20) {
+    chunks.push(ids.slice(index, index + 20));
+  }
+  const results = await Promise.all(
+    chunks.map((chunk) =>
+      adminGraphql(config, ORDER_LINE_ITEMS_QUERY, { ids: chunk }),
+    ),
+  );
+
+  /** @type {Record<string, Array<{ id: string, name: string, quantity: number, imageUrl: string | null, imageAlt: string }>>} */
+  const byOrder = {};
+  for (const data of results) {
+    for (const order of data.nodes ?? []) {
+      if (!order?.id) {
+        continue;
+      }
+      byOrder[order.id] = (order.lineItems?.nodes ?? []).map((lineItem) => ({
+        id: lineItem.id,
+        name: lineItem.name,
+        quantity: lineItem.quantity,
+        imageUrl: lineItem.image?.url || null,
+        imageAlt: lineItem.image?.altText || lineItem.name,
+      }));
+    }
+  }
+  return byOrder;
+}
+
 export async function getOrderDetail(config, orderId) {
   const data = await adminGraphql(config, ORDER_DETAIL_QUERY, {
     id: getOwnerId("order", orderId),

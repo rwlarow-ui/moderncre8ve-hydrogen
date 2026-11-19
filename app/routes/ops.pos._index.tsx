@@ -3,8 +3,10 @@ import {
   formatDate,
   OpsCard,
   OpsEmptyState,
+  OpsLayoutToggle,
   OpsNotice,
   OpsPageHeader,
+  OpsThumb,
   opsTextLinkClass,
 } from "~/components/ops/ops-shell";
 import { cn } from "~/utils/cn";
@@ -45,12 +47,7 @@ const VIEWS = [
 
 type ViewKey = (typeof VIEWS)[number]["key"];
 
-const LAYOUTS = [
-  { key: "list", label: "List" },
-  { key: "gallery", label: "Gallery" },
-] as const;
-
-type LayoutKey = (typeof LAYOUTS)[number]["key"];
+type LayoutKey = "list" | "gallery";
 
 type PoLine = {
   key: string;
@@ -156,40 +153,6 @@ export async function loader({ request, context }: Route.LoaderArgs) {
   };
 }
 
-function PoThumb({
-  line,
-  className,
-  size,
-}: {
-  line: PoLine;
-  className?: string;
-  size: number;
-}) {
-  return (
-    <div
-      className={cn(
-        "grid shrink-0 place-items-center overflow-hidden bg-(--color-topbar-bg)",
-        className,
-      )}
-    >
-      {line.imageUrl ? (
-        <img
-          src={line.imageUrl}
-          alt={line.imageAlt}
-          loading="lazy"
-          width={size}
-          height={size}
-          className="size-full object-cover"
-        />
-      ) : (
-        <span className="px-1 text-center text-[10px] text-body-subtle leading-tight">
-          No image
-        </span>
-      )}
-    </div>
-  );
-}
-
 function PoState({
   state,
   approvedAt,
@@ -252,24 +215,13 @@ export default function OpsPoQueue() {
           ))}
         </nav>
 
-        <nav aria-label="Layout" className="flex" data-test="ops-po-layout">
-          {LAYOUTS.map((option) => (
-            <Link
-              key={option.key}
-              to={`/ops/pos?view=${view}${option.key === "gallery" ? "&layout=gallery" : ""}`}
-              preventScrollReset
-              aria-current={option.key === layout ? "page" : undefined}
-              className={cn(
-                "-ml-px border px-4 py-2 text-sm transition-colors first:ml-0",
-                option.key === layout
-                  ? "relative border-body bg-body text-background"
-                  : "border-line hover:border-body",
-              )}
-            >
-              {option.label}
-            </Link>
-          ))}
-        </nav>
+        <OpsLayoutToggle
+          layout={layout}
+          hrefs={{
+            list: `/ops/pos?view=${view}`,
+            gallery: `/ops/pos?view=${view}&layout=gallery`,
+          }}
+        />
       </div>
 
       {imagesFailed ? (
@@ -293,8 +245,9 @@ export default function OpsPoQueue() {
                   className="group flex h-full flex-col border border-line-subtle bg-background transition-colors hover:border-body"
                 >
                   {lead ? (
-                    <PoThumb
-                      line={lead}
+                    <OpsThumb
+                      src={lead.imageUrl}
+                      alt={lead.imageAlt}
                       size={600}
                       className="aspect-square w-full"
                     />
@@ -306,9 +259,10 @@ export default function OpsPoQueue() {
                   {rest.length ? (
                     <div className="flex gap-1 border-line-subtle border-t p-1">
                       {rest.slice(0, 4).map((line) => (
-                        <PoThumb
+                        <OpsThumb
                           key={line.key}
-                          line={line}
+                          src={line.imageUrl}
+                          alt={line.imageAlt}
                           size={112}
                           className="size-14"
                         />
@@ -424,8 +378,9 @@ export default function OpsPoQueue() {
                                 key={line.key}
                                 className="flex items-center gap-3"
                               >
-                                <PoThumb
-                                  line={line}
+                                <OpsThumb
+                                  src={line.imageUrl}
+                                  alt={line.imageAlt}
                                   size={112}
                                   className="size-14"
                                 />
