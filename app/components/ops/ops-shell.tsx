@@ -165,6 +165,73 @@ export function OpsPageHeader({
   );
 }
 
+/** Square product thumbnail with a "No image" placeholder. */
+export function OpsThumb({
+  src,
+  alt,
+  size,
+  className,
+}: {
+  src: string | null | undefined;
+  alt: string;
+  size: number;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        "grid shrink-0 place-items-center overflow-hidden bg-(--color-topbar-bg)",
+        className,
+      )}
+    >
+      {src ? (
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          width={size}
+          height={size}
+          className="size-full object-cover"
+        />
+      ) : (
+        <span className="px-1 text-center text-[10px] text-body-subtle leading-tight">
+          No image
+        </span>
+      )}
+    </div>
+  );
+}
+
+/** List / Gallery switch. `hrefs` maps each layout to its URL. */
+export function OpsLayoutToggle({
+  layout,
+  hrefs,
+}: {
+  layout: "list" | "gallery";
+  hrefs: { list: string; gallery: string };
+}) {
+  return (
+    <nav aria-label="Layout" className="flex" data-test="ops-layout">
+      {(["list", "gallery"] as const).map((key) => (
+        <Link
+          key={key}
+          to={hrefs[key]}
+          preventScrollReset
+          aria-current={key === layout ? "page" : undefined}
+          className={cn(
+            "-ml-px border px-4 py-2 text-sm transition-colors first:ml-0",
+            key === layout
+              ? "relative border-body bg-body text-background"
+              : "border-line hover:border-body",
+          )}
+        >
+          {key === "list" ? "List" : "Gallery"}
+        </Link>
+      ))}
+    </nav>
+  );
+}
+
 /** Square, bordered panel. Separation by line, never by shadow. */
 export function OpsCard({
   children,

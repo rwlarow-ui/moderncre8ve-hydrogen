@@ -9,15 +9,20 @@ import {
   OpsCard,
   OpsEmptyState,
   OpsField,
+  OpsLayoutToggle,
   OpsNotice,
   OpsPageHeader,
   OpsTag,
+  OpsThumb,
   opsInputClass,
   opsTextLinkClass,
   StatusBadge,
 } from "~/components/ops/ops-shell";
 import { requireOpsAccess } from "~/utils/ops-auth.server";
-import { listCurrentOrders } from "~/utils/ops-dashboard.server";
+import {
+  listCurrentOrders,
+  listOrderLineItems,
+} from "~/utils/ops-dashboard.server";
 import type { OpsDashboardFilters } from "~/utils/ops-dashboard.types";
 import type { Route } from "./+types/ops._index";
 
@@ -32,7 +37,30 @@ export async function loader({ request, context }: Route.LoaderArgs) {
     tag: url.searchParams.get("tag") || "",
     limit: Number(url.searchParams.get("limit") || 50),
   };
+  const layout: "list" | "gallery" =
+    url.searchParams.get("layout") === "gallery" ? "gallery" : "list";
   const dashboard = await listCurrentOrders(context.env, filters);
+
+  // Thumbnails are a nicety: if they can't be read the orders still load.
+  let lineItems: Awaited<ReturnType<typeof listOrderLineItems>> = {};
+  let lineItemsFailed = false;
+  if (dashboard.orders.length) {
+    try {
+      lineItems = await listOrderLineItems(
+        context.env,
+        dashboard.orders.map((order) => order.id),
+      );
+    } catch {
+      lineItemsFailed = true;
+    }
+  }
+
+  // Layout links keep the active filters.
+  const listParams = new URLSearchParams(url.searchParams);
+  listParams.delete("layout");
+  const galleryParams = new URLSearchParams(listParams);
+  galleryParams.set("layout", "gallery");
+  const listQuery = listParams.toString();
   const {
     fulfillmentStatuses,
     financialStatuses,
@@ -41,6 +69,13 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 
   return {
     dashboard,
+    layout,
+    lineItems,
+    lineItemsFailed,
+    layoutHrefs: {
+      list: listQuery ? `/ops?${listQuery}` : "/ops",
+      gallery: `/ops?${galleryParams.toString()}`,
+    },
     fulfillmentStatuses,
     financialStatuses,
     availableTags,
@@ -48,8 +83,17 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 }
 
 export default function OpsOrdersIndex() {
-  const { dashboard, fulfillmentStatuses, financialStatuses, availableTags } =
-    useLoaderData<typeof loader>();
+  const {
+    dashboard,
+    layout,
+    lineItems,
+    lineItemsFailed,
+    layoutHrefs,
+    fulfillmentStatuses,
+    financialStatuses,
+    availableTags,
+  } = useLoaderData<typeof loader>();
+  const clearHref = layout === "gallery" ? "/ops?layout=gallery" : "/ops";
   const navigation = useNavigation();
   const isLoading =
     navigation.state === "loading" && navigation.location?.pathname === "/ops";
@@ -85,11 +129,23 @@ export default function OpsOrdersIndex() {
         </div>
       ) : null}
 
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <p className="text-body-subtle text-sm">
+          {lineItemsFailed
+            ? "Product thumbnails couldn't be loaded from Shopify just now."
+            : ""}
+        </p>
+        <OpsLayoutToggle layout={layout} hrefs={layoutHrefs} />
+      </div>
+
       <OpsCard>
         <Form
           method="get"
           className="grid gap-4 border-line-subtle border-b p-5 md:grid-cols-2 md:p-6 lg:grid-cols-[minmax(0,2fr)_repeat(3,minmax(0,1fr))_6rem_auto] lg:items-end"
         >
+          {layout === "gallery" ? (
+            <input type="hidden" name="layout" value="gallery" />
+          ) : null}
           <OpsField label="Search">
             <span className="relative block">
               <MagnifyingGlassIcon
@@ -170,7 +226,7 @@ export default function OpsOrdersIndex() {
             </Button>
             {hasFilters ? (
               <Link
-                to="/ops"
+                to={clearHref}
                 className={`${opsTextLinkClass} shrink-0 text-sm`}
               >
                 Clear
@@ -179,11 +235,87 @@ export default function OpsOrdersIndex() {
           </div>
         </Form>
 
-        {orders.length ? (
+        {orders.length && layout === "gallery" ? (
+          <ul
+            data-test="ops-orders-gallery"
+            className={`grid gap-4 p-5 transition-opacity sm:grid-cols-2 md:p-6 lg:grid-cols-3 xl:grid-cols-4 ${isLoading ? "opacity-50" : ""}`}
+          >
+            {orders.map((order) => {
+              const [lead, ...rest] = lineItems[order.id]?.lines ?? [];
+              const more = lineItems[order.id]?.more;
+              return (
+                <li key={order.id}>
+                  <Link
+                    to={`/ops/orders/${order.legacyId}`}
+                    prefetch="intent"
+                    className="group flex h-full flex-col border border-line-subtle bg-background transition-colors hover:border-body"
+                  >
+                    <OpsThumb
+                      src={lead?.imageUrl}
+                      alt={lead?.imageAlt || order.name}
+                      size={600}
+                      className="aspect-square w-full"
+                    />
+                    {rest.length ? (
+                      <div className="flex gap-1 border-line-subtle border-t p-1">
+                        {rest.slice(0, 4).map((line) => (
+                          <OpsThumb
+                            key={line.id}
+                            src={line.imageUrl}
+                            alt={line.imageAlt}
+                            size={112}
+                            className="size-14"
+                          />
+                        ))}
+                        {rest.length > 4 ? (
+                          <span className="grid size-14 place-items-center text-body-subtle text-sm">
+                            +{rest.length - 4}
+                          </span>
+                        ) : null}
+                      </div>
+                    ) : null}
+                    <div className="flex flex-1 flex-col gap-3 border-line-subtle border-t p-4 text-sm">
+                      <div className="flex items-baseline justify-between gap-3">
+                        <span className="font-sans text-lg tracking-wide underline decoration-transparent underline-offset-4 group-hover:decoration-body">
+                          {order.name}
+                        </span>
+                        <span className="whitespace-nowrap text-body-subtle tabular-nums">
+                          {formatDate(order.processedAt)}
+                        </span>
+                      </div>
+                      <p className="truncate">
+                        {order.customer?.name || "Guest checkout"}
+                      </p>
+                      {lead ? (
+                        <ul className="space-y-0.5 text-body-subtle">
+                          {[lead, ...rest].map((line) => (
+                            <li key={line.id} className="truncate">
+                              {line.quantity} × {line.name}
+                            </li>
+                          ))}
+                          {more ? <li>More items in the order</li> : null}
+                        </ul>
+                      ) : null}
+                      <LeadTimeMeter days={order.ageInDays} />
+                      <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-1">
+                        <StatusBadge label="Fulfillment">
+                          {order.displayFulfillmentStatus}
+                        </StatusBadge>
+                        <span className="tabular-nums">
+                          {formatMoney(order.totalPrice)}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        ) : orders.length ? (
           <div
             className={`overflow-x-auto transition-opacity ${isLoading ? "opacity-50" : ""}`}
           >
-            <table className="w-full min-w-[960px] text-left text-sm">
+            <table className="w-full min-w-[1160px] text-left text-sm">
               <caption className="sr-only">Current orders</caption>
               <thead className="border-line border-b text-body-subtle">
                 <tr>
@@ -192,6 +324,9 @@ export default function OpsOrdersIndex() {
                   </th>
                   <th scope="col" className="px-4 py-3 font-normal">
                     Customer
+                  </th>
+                  <th scope="col" className="px-4 py-3 font-normal">
+                    Pieces
                   </th>
                   <th scope="col" className="px-4 py-3 font-normal">
                     Lead time
@@ -241,6 +376,35 @@ export default function OpsOrdersIndex() {
                         </>
                       ) : (
                         <p className="text-body-subtle">Guest checkout</p>
+                      )}
+                    </td>
+                    <td className="max-w-72 px-4 py-5">
+                      {lineItems[order.id]?.lines.length ? (
+                        <ul className="space-y-2">
+                          {lineItems[order.id].lines.map((line) => (
+                            <li
+                              key={line.id}
+                              className="flex items-center gap-3"
+                            >
+                              <OpsThumb
+                                src={line.imageUrl}
+                                alt={line.imageAlt}
+                                size={112}
+                                className="size-14"
+                              />
+                              <span className="min-w-0 truncate">
+                                {line.quantity} × {line.name}
+                              </span>
+                            </li>
+                          ))}
+                          {lineItems[order.id].more ? (
+                            <li className="text-body-subtle">
+                              More items in the order
+                            </li>
+                          ) : null}
+                        </ul>
+                      ) : (
+                        <span className="text-body-subtle">—</span>
                       )}
                     </td>
                     <td className="px-4 py-5">
@@ -317,7 +481,7 @@ export default function OpsOrdersIndex() {
             }
             action={
               hasFilters ? (
-                <Link to="/ops" className={`${opsTextLinkClass} text-sm`}>
+                <Link to={clearHref} className={`${opsTextLinkClass} text-sm`}>
                   Clear filters
                 </Link>
               ) : null
