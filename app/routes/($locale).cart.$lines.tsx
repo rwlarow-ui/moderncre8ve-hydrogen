@@ -1,4 +1,5 @@
 import { redirect } from "@shopify/remix-oxygen";
+import { checkRequestOnlyLines } from "~/utils/request-only-cart.server";
 import type { Route } from "./+types/($locale).cart.$lines";
 
 /**
@@ -21,7 +22,7 @@ import type { Route } from "./+types/($locale).cart.$lines";
  * @preserve
  */
 export async function loader({ request, context, params }: Route.LoaderArgs) {
-  const { cart, session } = context;
+  const { cart, session, storefront } = context;
   const { lines } = params;
   const linesMap = lines?.split(",").map((line) => {
     const lineDetails = line.split(":");
@@ -39,6 +40,13 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
 
   const discount = searchParams.get("discount");
   const discountArray = discount ? [discount] : [];
+
+  // Cart permalinks go straight to checkout, so request-only pieces are
+  // refused here too.
+  const rejection = await checkRequestOnlyLines(storefront, linesMap);
+  if (rejection) {
+    throw new Response(rejection.message, { status: rejection.status });
+  }
 
   //! create a cart
   const result = await cart.create({

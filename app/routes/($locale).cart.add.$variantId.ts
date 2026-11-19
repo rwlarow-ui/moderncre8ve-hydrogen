@@ -1,9 +1,13 @@
 import type { CartLineInput } from "@shopify/hydrogen/storefront-api-types";
 import { data } from "react-router";
+import {
+  checkRequestOnlyLines,
+  requestOnlyCartErrorPayload,
+} from "~/utils/request-only-cart.server";
 import type { Route } from "./+types/($locale).cart.add.$variantId";
 
 export async function action({ params, context }: Route.ActionArgs) {
-  const { cart, session } = context;
+  const { cart, session, storefront } = context;
 
   try {
     const variantId = params.variantId;
@@ -14,6 +18,12 @@ export async function action({ params, context }: Route.ActionArgs) {
         quantity: 1,
       },
     ];
+    const rejection = await checkRequestOnlyLines(storefront, inputLines);
+    if (rejection) {
+      return data(requestOnlyCartErrorPayload(rejection), {
+        status: rejection.status,
+      });
+    }
     const result = await cart.addLines(inputLines);
 
     /**

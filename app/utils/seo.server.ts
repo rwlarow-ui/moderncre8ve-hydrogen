@@ -21,7 +21,7 @@ import {
   collectionSeoDescriptions,
   collectionSeoOverrides,
 } from "~/utils/collection-seo-descriptions";
-import { productClass } from "~/utils/product-class";
+import { isRequestOnly, productClass } from "~/utils/product-class";
 import {
   parseProductDimensions,
   productDimensionsJsonLd,
@@ -256,6 +256,17 @@ function productJsonLd({
   // the end of next year.
   const priceValidUntil = `${new Date().getFullYear() + 1}-12-31`;
   const itemCondition = "https://schema.org/NewCondition";
+  // Request-only pieces cannot be bought online (the cart refuses them), so
+  // their offers carry no availability rather than claiming InStock.
+  const requestOnly = isRequestOnly(productData ?? {});
+  const offerAvailability = (availableForSale: boolean) =>
+    requestOnly
+      ? {}
+      : {
+          availability: availableForSale
+            ? ("https://schema.org/InStock" as const)
+            : ("https://schema.org/OutOfStock" as const),
+        };
 
   // Create offers array from adjacent variants
   const offers: Offer[] = [];
@@ -265,13 +276,9 @@ function productJsonLd({
       for (const option of variant.selectedOptions) {
         variantUrl.searchParams.set(option.name, option.value);
       }
-      const availability = variant.availableForSale
-        ? "https://schema.org/InStock"
-        : "https://schema.org/OutOfStock";
-
       offers.push({
         "@type": "Offer",
-        availability,
+        ...offerAvailability(variant.availableForSale),
         itemCondition,
         price: Number.parseFloat(variant.price.amount),
         priceCurrency: variant.price.currencyCode,
@@ -284,13 +291,9 @@ function productJsonLd({
 
   // If no adjacent variants, add the selected variant
   if (offers.length === 0 && selectedVariant) {
-    const availability = selectedVariant.availableForSale
-      ? "https://schema.org/InStock"
-      : "https://schema.org/OutOfStock";
-
     offers.push({
       "@type": "Offer",
-      availability,
+      ...offerAvailability(selectedVariant.availableForSale),
       itemCondition,
       price: Number.parseFloat(selectedVariant.price.amount),
       priceCurrency: selectedVariant.price.currencyCode,

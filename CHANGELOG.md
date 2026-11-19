@@ -6,6 +6,13 @@
 
 ## Unreleased
 
+### Request-only pieces can no longer be bought by a direct cart request
+- **The server now refuses to put a `request-only` product in the cart** (currently the Warwick bed, Haven credenza and Vermonter bench). Before, the product page hid Add to Cart, but a direct POST to `/cart` (CartForm `LinesAdd`), `/cart/add/<variantId>` or a `/cart/<variant>:<qty>` permalink still added them and checkout worked.
+- Every route that adds lines or changes a line's merchandise (`/cart` `LinesAdd` / `LinesUpdate`, `/cart/add/$variantId`, the `/cart/$lines` permalink) first looks up each merchandise ID's product tags in one uncached Storefront API `nodes(ids)` query (`app/utils/request-only-cart.server.ts`). If any line is request-only, **the whole request is refused** with status 422 and the cart's usual `{ cart, userErrors, errors }` shape, message "This piece is available by request only. Please use the Request this piece form." No partial add, so a mixed request never half-succeeds silently. If the lookup fails the request is refused with 503 (fail closed). Quantity-only updates and removals are not checked.
+- **Product JSON-LD** for request-only products omits `availability` on its offers instead of claiming `InStock` (`app/utils/seo.server.ts`).
+- Not covered: the Storefront API itself (and the `/api/<version>/graphql.json` proxy that forwards to it) still accepts `cartCreate` / `cartLinesAdd` with the public token. Blocking that needs a Shopify-side control (e.g. a cart/checkout validation function or taking the pieces off the sales channel).
+- Tests: `npm run test:request-only-cart` (`tests/request-only-cart.test.mjs`).
+
 ### Friendly 404 for held product URLs
 - **`/products/<handle>` (and locale-prefixed) for a piece on hold in the catalog rollout now shows "This piece is being refreshed"** instead of the generic "We've lost this product". It names the piece, says it is handcrafted to order and back soon, links to its collection and shows up to four live pieces from that collection (best sellers if none). The status stays **404**, with `<meta name="robots" content="noindex">` and `X-Robots-Tag: noindex`. Unknown handles keep the normal 404 (`app/components/product/held-product-notice.tsx`, product route `ErrorBoundary`).
 - Held handles come from `app/data/held-products.js`, generated from `docs/catalog-rollout-2026-11/register.json` by `node scripts/build-held-products.mjs` (handle → name and collection only; the register itself never ships). Re-run it after changing a disposition; `npm run test:held-products` fails while it is stale.

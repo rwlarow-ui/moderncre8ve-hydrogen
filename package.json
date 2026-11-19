@@ -36,6 +36,7 @@
     "test:send": "node --test tests/po-send.test.mjs",
     "test:trade": "node --test tests/trade-application.test.mjs",
     "test:piece-request": "node --test tests/piece-request.test.mjs",
+    "test:request-only-cart": "node --test tests/request-only-cart.test.mjs",
     "test:contact": "node --test tests/contact-message.test.mjs",
     "codegen": "shopify hydrogen codegen",
     "hydrogen": "shopify hydrogen",
