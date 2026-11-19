@@ -26,6 +26,7 @@
     "test:relations": "node --test tests/product-relations.test.mjs",
     "catalog:rollout": "node scripts/catalog-rollout.mjs",
     "test:catalog-rollout": "node --test tests/catalog-rollout.test.mjs",
+    "test:held-products": "node --test tests/held-products.test.mjs",
     "test:product-class": "node --test tests/product-class.test.mjs",
     "test:trust": "node --test tests/trust-content.test.mjs",
     "test:wood-care": "node --test tests/wood-care.test.mjs",

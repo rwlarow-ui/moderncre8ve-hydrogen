@@ -7,14 +7,30 @@ import {
 import type { MetaArgs } from "@shopify/remix-oxygen";
 import { data } from "@shopify/remix-oxygen";
 import { useEffect } from "react";
-import { useLoaderData } from "react-router";
-import type { ProductQuery } from "storefront-api.generated";
+import {
+  isRouteErrorResponse,
+  useLoaderData,
+  useRouteError,
+} from "react-router";
+import type {
+  HeldProductPiecesQuery,
+  ProductCardFragment,
+  ProductQuery,
+} from "storefront-api.generated";
 import invariant from "tiny-invariant";
+import {
+  type HeldProductNotFound,
+  HeldProductNotice,
+  isHeldProductNotFound,
+} from "~/components/product/held-product-notice";
+import { GenericError } from "~/components/root/generic-error";
+import { NotFound } from "~/components/root/not-found";
+import { getHeldProduct, HELD_PRODUCTS } from "~/data/held-products";
+import { PRODUCT_CARD_FRAGMENT } from "~/graphql/fragments";
 import { PRODUCT_QUERY } from "~/graphql/queries";
 import { adaptProductPage } from "~/page-builder/adapt-product-page";
 import { loadPage } from "~/page-builder/page.server";
 import { PageContent } from "~/page-builder/renderer";
-import { routeHeaders } from "~/utils/cache";
 import {
   COMBINED_LISTINGS_CONFIGS,
   isCombinedListing,
@@ -31,7 +47,18 @@ import { seoPayload } from "~/utils/seo.server";
 import { verifyTurnstile } from "~/utils/turnstile.server";
 import type { Route } from "./+types/($locale).products.$productHandle";
 
-export const headers = routeHeaders;
+export function headers({
+  loaderHeaders,
+  errorHeaders,
+}: Route.HeadersArgs): Record<string, string> {
+  // Keep the loader's cache policy; a held-product 404 also carries noindex.
+  const robots = errorHeaders?.get("X-Robots-Tag");
+  const cacheControl = loaderHeaders.get("Cache-Control");
+  return {
+    ...(cacheControl ? { "Cache-Control": cacheControl } : {}),
+    ...(robots ? { "X-Robots-Tag": robots } : {}),
+  };
+}
 
 export async function loader({ params, request, context }: Route.LoaderArgs) {
   const { productHandle: handle } = params;
@@ -55,6 +82,22 @@ export async function loader({ params, request, context }: Route.LoaderArgs) {
   ]);
 
   if (!product?.id) {
+    const held = getHeldProduct(handle);
+    if (held) {
+      // A piece on hold in the catalog rollout: still a 404, but a friendly one.
+      const notFound: HeldProductNotFound = {
+        type: "product",
+        held: { handle, ...held },
+        livePieces: await getHeldProductPieces(
+          storefront,
+          held.collection.handle,
+        ),
+      };
+      throw data(notFound, {
+        status: 404,
+        headers: { "X-Robots-Tag": "noindex" },
+      });
+    }
     throw new Response("product", { status: 404 });
   }
   redirectIfHandleIsLocalized(request, { handle, data: product });
@@ -124,13 +167,72 @@ export async function action({ request, context: { env } }: Route.ActionArgs) {
   }
 }
 
-export const meta = ({ matches, location }: MetaArgs<typeof loader>) => {
+export const meta = ({ matches, location, error }: MetaArgs<typeof loader>) => {
   const canonical = `https://moderncre8ve.com${location.pathname.replace(/\/+$/, "") || "/"}`;
-  return getEnhancedSeoMeta(
+  const tags = getEnhancedSeoMeta(
     ...matches.map((match) => (match.data as any)?.seo).filter(Boolean),
     { canonicalUrl: canonical },
   );
+  if (isRouteErrorResponse(error) && isHeldProductNotFound(error.data)) {
+    return [
+      ...tags.filter((tag) => tag.name !== "robots" && !("title" in tag)),
+      { title: `${error.data.held.name} | ModernCre8ve` },
+      { name: "robots", content: "noindex" },
+    ];
+  }
+  return tags;
 };
+
+/**
+ * Up to four purchasable pieces from a held product's collection, falling
+ * back to best sellers. Held handles are skipped. Never throws: the notice
+ * still renders without them.
+ */
+async function getHeldProductPieces(
+  storefront: Route.LoaderArgs["context"]["storefront"],
+  collectionHandle: string,
+): Promise<ProductCardFragment[]> {
+  try {
+    const { collection, fallback } =
+      await storefront.query<HeldProductPiecesQuery>(
+        HELD_PRODUCT_PIECES_QUERY,
+        {
+          variables: {
+            collectionHandle,
+            country: storefront.i18n.country,
+            language: storefront.i18n.language,
+          },
+        },
+      );
+    const isLive = (p: ProductCardFragment) =>
+      !Object.hasOwn(HELD_PRODUCTS, p.handle) &&
+      Boolean(p.selectedOrFirstAvailableVariant?.availableForSale);
+    const fromCollection = (collection?.products.nodes ?? []).filter(isLive);
+    const pieces = fromCollection.length
+      ? fromCollection
+      : fallback.nodes.filter(isLive);
+    return pieces.slice(0, 4);
+  } catch (error) {
+    console.error("Held product pieces failed:", error);
+    return [];
+  }
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  if (isRouteErrorResponse(error)) {
+    if (isHeldProductNotFound(error.data)) {
+      return <HeldProductNotice {...error.data} />;
+    }
+    if (error.status === 404) {
+      return <NotFound type="product" />;
+    }
+    return (
+      <GenericError error={{ message: `${error.status} ${error.data}` }} />
+    );
+  }
+  return <GenericError error={error instanceof Error ? error : undefined} />;
+}
 
 export default function Product() {
   const { product, pageData } = useLoaderData<typeof loader>();
@@ -212,3 +314,25 @@ export default function Product() {
     </>
   );
 }
+
+const HELD_PRODUCT_PIECES_QUERY = `#graphql
+  query HeldProductPieces(
+    $collectionHandle: String!
+    $country: CountryCode
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language) {
+    collection(handle: $collectionHandle) {
+      products(first: 12, sortKey: BEST_SELLING) {
+        nodes {
+          ...ProductCard
+        }
+      }
+    }
+    fallback: products(first: 12, sortKey: BEST_SELLING) {
+      nodes {
+        ...ProductCard
+      }
+    }
+  }
+  ${PRODUCT_CARD_FRAGMENT}
+` as const;
