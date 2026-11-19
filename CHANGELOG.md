@@ -6,6 +6,13 @@
 
 ## Unreleased
 
+### Logistics email automation (ADR-0010)
+- **CARE-01 and CARE-02 can now be sent by the Ops Hub** from Haven's Gmail as care@, with the approved copy, the signature once and the blank logistics PDF. CARE-01 goes the next business day after an order; CARE-02 weekly while the form is outstanding. Recording a receipt cancels queued reminders in the same transaction.
+- **Off after deployment.** Modes off / test / live, a global pause, separate live switches per template, per-order pause / exclude / enrol, and a test mode limited to approved test orders and allowlisted recipients. Turning CARE-01 live starts intake from that moment; existing orders are never enrolled automatically.
+- **No duplicates or blind resends.** One queued row per email with a unique key, a re-check just before Gmail, and timeouts reconciled from Gmail Sent by a fixed Message-ID. History records Gmail IDs and links, template, signature and PDF versions.
+- New `/ops/communications/automation` page, an **Automated emails** card on each order's Communications page, `POST /ops/jobs/care-tick` (bearer `OPS_JOB_SECRET`) and the hourly `.github/workflows/care-tick.yml`. Reply sync is not built.
+- **Setup:** run `scripts/sql/ops-hub-care-automation.sql` before deploying, then follow `docs/ops-care-automation.md`. Tests: `tests/ops-hub-care.test.mjs` (in `npm run test:ops-hub`).
+
 ### Sales pipeline in the Ops Hub (ADR-0009, phases 1 and 2)
 - **New `/ops/pipeline` tab** replacing Asana as the CRM. A board shows every deal with its stage, estimated value, next step, last contact and tasks, plus a count and value per open stage. Filters: Needs my attention, All open, Next step overdue or missing, Reply needed, Won, Lost, On hold, All.
 - **Each deal has its own page** with stage moves (Lost needs a reason), details and next-step edits, tasks (one open per type, resolution note to close), a "record what happened" form and a dated timeline with Gmail or Drive links.

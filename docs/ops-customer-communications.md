@@ -2,7 +2,7 @@
 
 `/ops/communications` is one work queue for customer updates, replies, delivery logistics and follow-up, linked to Current orders. It implements **phase A (manual foundation)** of Haven's 2026-11-15 handoff (Tech action "Add Customer Communications tab linked to Current Orders"; the handoff itself is kept out of this public repo).
 
-**Nothing in this feature emails a customer.** Send from Gmail (care@), then record it here.
+**Only the logistics request and reminder can be emailed by the hub**, through the separate automation in [ops-care-automation.md](ops-care-automation.md), which is off until Haven turns it on. Everything else here is a record: send from Gmail (care@), then record it.
 
 ## Setup (once)
 
@@ -31,7 +31,7 @@ Evidence is stored as **links only** (Gmail message, Drive file). Customer PDFs 
 ## Not built yet
 
 - **Phase B, Gmail sync:** reading care@ correspondence, the unmatched-mail queue and automatic Reply needed tasks. Today's Google connection is read-only and per user, and the matching scope has not been designed.
-- **Phase C, sending:** reviewed drafts from care@, a global send pause, timed rules, and settling who sends what with Shopify notifications.
+- **Phase C, sending:** built for CARE-01 and CARE-02 only (ADR-0010, [ops-care-automation.md](ops-care-automation.md)). Other templates and settling the rest of Shopify's notifications are not.
 - **Phase D:** an online logistics form.
 - Badges on the Current orders list.
 

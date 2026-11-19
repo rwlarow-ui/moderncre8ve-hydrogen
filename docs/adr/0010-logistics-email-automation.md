@@ -1,6 +1,6 @@
 # ADR-0010: Logistics email automation (CARE-01 / CARE-02) in the Ops Hub
 
-**Status:** Proposed. Design only; nothing in this document is built yet.
+**Status:** Accepted. Pilot implementation built 2026-11-19 ([`docs/ops-care-automation.md`](../ops-care-automation.md)); awaiting setup, the controlled pilot and Haven's live decisions. Reply sync (phase B) not built.
 **Date:** 2026-11-18
 **Decider:** Rob LaRow (owner), Haven (business owner and pilot tester)
 **Builds on:** [`docs/ops-customer-communications.md`](../ops-customer-communications.md) (phase A manual tracking), ADR-0001 (production PO and delivery logistics), ADR-0008 (Ops identities)
@@ -303,3 +303,15 @@ Phase B design: poll Gmail `users.history.list` from a stored `historyId` on the
 - Shopify webhooks if intake latency ever matters.
 - Phase B reply sync, then the online logistics form writing the same `form_received` action (no parallel tracking).
 - Moving the tick to Supabase `pg_cron` if GitHub schedule jitter becomes a problem.
+
+## Implementation notes (2026-11-19)
+
+Where the build differs from the design above:
+
+- **PDF storage.** The blank PDF is stored base64 in `ops_care_assets.content_base64` (capped at about 5 MB), not in a Supabase Storage bucket, so it needs no second API or bucket policy. Page loads never read the bytes; only the send step does, and it re-checks the SHA-256 before attaching.
+- **Rules live in one place.** Eligibility is decided in `app/utils/ops-care.js`. The database enforces the invariants: the unique `dedupe_key`, claims that are refused if the order record or settings changed since the decision (optimistic `updated_at` check under the per-order lock), a trigger on `ops_comms_records` that suppresses queued emails in the same transaction as a receipt or other change, and the guarded outcome step.
+- **CARE-02 dedupe key** is the reminder's due date (`anchor`), so there is one reminder per interval. A test reminder sent early through the override plans its successor at least 7 days after its own due date, so the two never collide.
+- **Enrolment.** Live intake marks new orders `auto`. Haven can enrol an order by hand (`manual`): CARE-01 goes at the next sending slot, never immediately, and an order already Awaiting return is enrolled for reminders only. Records that existed before the migration stay `none`, so no existing order is ever reminded because automation was deployed.
+- **Furniture rule.** Without `read_products` on the ops token, "furniture" is judged from line-item names and SKUs against a configurable exclusion list (default wax, oil, gift card, sample), plus the `ops-no-care` order tag.
+- **Test send.** "Make due and send now" sets the order-scoped override and runs the worker for that order only.
+

@@ -21,6 +21,17 @@ import {
   StatusBadge,
 } from "~/components/ops/ops-shell";
 import {
+  careTemplateLabel,
+  gmailThreadUrl,
+  messageStatusLabel,
+} from "~/utils/ops-care";
+import {
+  careOrderAction,
+  getCareOrder,
+  loadCareOrder,
+  previewCareEmails,
+} from "~/utils/ops-care.server";
+import {
   EVENT_KINDS,
   eventKindLabel,
   formStatusLabel,
@@ -54,12 +65,28 @@ function requireOrderId(value: string | undefined) {
 export async function loader({ request, context, params }: Route.LoaderArgs) {
   const user = await requireOpsUser(request, context);
   const orderId = requireOrderId(params.orderId);
-  const [order, detail] = await Promise.allSettled([
+  const [order, detail, care, careOrder] = await Promise.allSettled([
     getOrderDetail(context.env, orderId),
     loadCommsDetail(context.env, user, orderId),
+    loadCareOrder(context.env, user, orderId),
+    getCareOrder(context.env, orderId),
   ]);
   if (order.status === "rejected") {
     throw new Response("Order not found.", { status: 404 });
+  }
+  // Automated emails: shown only once the automation tables exist.
+  let automation = null;
+  if (care.status === "fulfilled" && careOrder.status === "fulfilled") {
+    const record = detail.status === "fulfilled" ? detail.value.record : null;
+    automation = {
+      ...care.value,
+      preview: await previewCareEmails(
+        context.env,
+        user,
+        careOrder.value,
+        record,
+      ).catch(() => []),
+    };
   }
   return data(
     {
@@ -67,6 +94,7 @@ export async function loader({ request, context, params }: Route.LoaderArgs) {
       today: todayIso(),
       order: order.value,
       detail: detail.status === "fulfilled" ? detail.value : null,
+      automation,
       storeError:
         detail.status === "rejected"
           ? commsUnavailableReason(detail.reason)
@@ -83,7 +111,9 @@ export async function action({ request, context, params }: Route.ActionArgs) {
   try {
     // Identity and order number come from Shopify, never from the form.
     const order = await getOrderDetail(context.env, orderId);
-    const message = await commsAction(context.env, user, order, form);
+    const message = String(form.get("intent") || "").startsWith("care-")
+      ? await careOrderAction(context.env, user, order, form)
+      : await commsAction(context.env, user, order, form);
     return data({ ok: true, message }, { headers: privateHeaders });
   } catch (error) {
     if (error instanceof Response) {
@@ -407,8 +437,9 @@ function LogisticsCard({
           submit="Save reminders"
         >
           <p className="text-body-subtle">
-            Reminders only show as due here; the hub sends nothing. Weekly while
-            the form is outstanding.
+            Weekly while the form is outstanding. For orders enrolled in
+            Automated emails, CARE-02 is sent from these settings (pause stops
+            it); otherwise reminders only show as due here.
           </p>
           <label className="flex items-center gap-2">
             <input
@@ -437,8 +468,268 @@ function LogisticsCard({
   );
 }
 
+type Automation = NonNullable<
+  ReturnType<typeof useLoaderData<typeof loader>>["automation"]
+>;
+
+function AutomatedEmailsCard({
+  automation,
+  record,
+  orderId,
+}: {
+  automation: Automation;
+  record: Record<string, any> | null | undefined;
+  orderId: string;
+}) {
+  const { settings, messages, preview } = automation;
+  const isTestOrder =
+    settings.mode === "test" && settings.test_order_ids.includes(orderId);
+  const enrolment = record?.care_enrolment ?? "none";
+  const canEnrol =
+    settings.mode !== "off" &&
+    !record?.care_excluded &&
+    (settings.mode === "live" || isTestOrder) &&
+    (enrolment === "none" ||
+      (record?.logistics_status === "not_requested" &&
+        !messages.some((m) => m.template_key === "CARE-01")));
+  return (
+    <OpsCard className="lg:col-span-2">
+      <OpsSectionHeading
+        title="Automated emails"
+        description={`CARE-01 request and CARE-02 weekly reminder from care@. Mode: ${settings.mode}${settings.global_pause ? " (globally paused)" : ""}.`}
+      />
+      <div className="space-y-4 p-5 text-sm">
+        <p>
+          Enrolment: <strong>{enrolment}</strong>
+          {record?.care_excluded ? " · excluded" : ""}
+          {record?.care_paused_until
+            ? ` · paused until ${record.care_paused_until}`
+            : ""}
+          {isTestOrder ? " · approved test order" : ""}
+          {record?.care_test_recipient
+            ? ` · test emails go to ${record.care_test_recipient}`
+            : ""}{" "}
+          ·{" "}
+          <Link
+            to="/ops/communications/automation"
+            className={opsTextLinkClass}
+          >
+            Automation settings
+          </Link>
+        </p>
+        {canEnrol ? (
+          <Form method="post">
+            <Hidden values={{ intent: "care-enrol" }} />
+            <Button type="submit" variant="primary">
+              {record?.logistics_status === "awaiting_return"
+                ? "Enrol for automated reminders"
+                : "Enrol: queue the logistics request"}
+            </Button>
+          </Form>
+        ) : null}
+
+        {messages.length ? (
+          <ul className="divide-y divide-line-subtle border border-line-subtle">
+            {messages.map((m) => (
+              <li key={m.id} className="space-y-1 px-4 py-3">
+                <p>
+                  <strong>
+                    {m.template_key} {careTemplateLabel(m.template_key)}
+                  </strong>{" "}
+                  · {messageStatusLabel(m.status)}
+                </p>
+                <p className="text-body-subtle text-xs">
+                  {m.accepted_at
+                    ? `Accepted by Gmail ${formatDate(m.accepted_at, true)}`
+                    : `Due ${formatDate(m.override_due_at ?? m.due_at, true)}`}
+                  {m.snapshot?.to ? ` · to ${m.snapshot.to}` : ""}
+                  {m.snapshot?.template_version
+                    ? ` · template v${m.snapshot.template_version}, PDF v${m.snapshot.attachment_version}`
+                    : ""}
+                  {m.provider_message_id
+                    ? ` · Gmail ID ${m.provider_message_id}`
+                    : ""}
+                  {m.outcome_note ? ` · ${m.outcome_note}` : ""}{" "}
+                  {gmailThreadUrl(m.provider_thread_id) ? (
+                    <a
+                      href={gmailThreadUrl(m.provider_thread_id)!}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={opsTextLinkClass}
+                    >
+                      open in Gmail
+                    </a>
+                  ) : null}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {isTestOrder && m.status === "scheduled" ? (
+                    <Form method="post">
+                      <Hidden
+                        values={{ intent: "care-send-due", jobId: m.id }}
+                      />
+                      <Button type="submit" variant="primary">
+                        Test: make due and send now
+                      </Button>
+                    </Form>
+                  ) : null}
+                  {m.status === "held" ? (
+                    <Form method="post">
+                      <Hidden
+                        values={{
+                          intent: "care-job",
+                          jobId: m.id,
+                          action: "release",
+                        }}
+                      />
+                      <Button type="submit" variant="outline">
+                        Release (after fixing)
+                      </Button>
+                    </Form>
+                  ) : null}
+                  {m.status === "failed" ? (
+                    <Form method="post">
+                      <Hidden
+                        values={{
+                          intent: "care-job",
+                          jobId: m.id,
+                          action: "retry",
+                        }}
+                      />
+                      <Button type="submit" variant="outline">
+                        Retry (check Gmail Sent first)
+                      </Button>
+                    </Form>
+                  ) : null}
+                  {["scheduled", "held", "failed"].includes(m.status) ? (
+                    <Form method="post">
+                      <Hidden
+                        values={{
+                          intent: "care-job",
+                          jobId: m.id,
+                          action: "cancel",
+                        }}
+                      />
+                      <Button type="submit" variant="outline">
+                        Cancel
+                      </Button>
+                    </Form>
+                  ) : null}
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-body-subtle">
+            No automated emails for this order.
+          </p>
+        )}
+
+        {isTestOrder ? (
+          <Form method="post">
+            <Hidden values={{ intent: "care-send-due", jobId: "" }} />
+            <Button type="submit" variant="outline">
+              Test: run the worker for this order
+            </Button>
+          </Form>
+        ) : null}
+
+        {preview.map((p) => (
+          <details key={p.key} className="border border-line-subtle">
+            <summary className="cursor-pointer px-4 py-2">
+              Preview {p.key} {careTemplateLabel(p.key)}
+              {p.ok ? "" : ": cannot send"}
+            </summary>
+            <div className="space-y-2 border-line-subtle border-t p-4">
+              {p.ok ? (
+                <>
+                  <p>
+                    <strong>To:</strong> {p.to}
+                    {p.snapshot.test_recipient_override
+                      ? " (TEST: instead of the customer's address)"
+                      : ""}
+                  </p>
+                  <p>
+                    <strong>From:</strong> {p.fromName} &lt;{p.from}&gt; ·{" "}
+                    <strong>Reply-To:</strong> {p.replyTo}
+                  </p>
+                  <p>
+                    <strong>Subject:</strong> {p.subject}
+                  </p>
+                  <pre className="whitespace-pre-wrap border border-line-subtle p-3 font-serif">
+                    {p.text}
+                  </pre>
+                  <p className="text-body-subtle text-xs">
+                    Attachment: {p.attachment.filename} (v{p.attachment.version}
+                    , {p.attachment.pages} pages) · template v
+                    {p.snapshot.template_version} · signature v
+                    {p.snapshot.signature_version}
+                  </p>
+                </>
+              ) : (
+                <OpsNotice ok={false}>{p.problem}</OpsNotice>
+              )}
+            </div>
+          </details>
+        ))}
+
+        <div className="grid gap-3 md:grid-cols-3">
+          <Form method="post" className="space-y-2">
+            <Hidden values={{ intent: "care-pause" }} />
+            <OpsField
+              label="Pause this order's emails until"
+              hint="Blank and save to lift."
+            >
+              <input
+                type="date"
+                name="until"
+                defaultValue={record?.care_paused_until ?? ""}
+                className={opsInputClass}
+              />
+            </OpsField>
+            <Button type="submit" variant="outline">
+              Save pause
+            </Button>
+          </Form>
+          <Form method="post" className="space-y-2">
+            <Hidden values={{ intent: "care-exclude" }} />
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                name="excluded"
+                defaultChecked={Boolean(record?.care_excluded)}
+              />
+              Exclude this order from automated emails
+            </label>
+            <Button type="submit" variant="outline">
+              Save
+            </Button>
+          </Form>
+          {isTestOrder ? (
+            <Form method="post" className="space-y-2">
+              <Hidden values={{ intent: "care-test-recipient" }} />
+              <OpsField
+                label="Test recipient"
+                hint="Must be on the allowlist. Blank to use the order's own address (only if allowlisted)."
+              >
+                <input
+                  name="to"
+                  defaultValue={record?.care_test_recipient ?? ""}
+                  className={opsInputClass}
+                />
+              </OpsField>
+              <Button type="submit" variant="outline">
+                Save test recipient
+              </Button>
+            </Form>
+          ) : null}
+        </div>
+      </div>
+    </OpsCard>
+  );
+}
+
 export default function CommunicationsDetail() {
-  const { order, detail, storeError, viewer, today } =
+  const { order, detail, storeError, viewer, today, automation } =
     useLoaderData<typeof loader>();
   const result = useActionData<typeof action>();
   const record = detail?.record;
@@ -502,8 +793,9 @@ export default function CommunicationsDetail() {
         {storeError ? <OpsNotice ok={false}>{storeError}</OpsNotice> : null}
         {result ? <OpsNotice ok={result.ok}>{result.message}</OpsNotice> : null}
         <OpsNotice ok>
-          Nothing on this page emails the customer. Send from Gmail (care@),
-          then record it here.
+          {automation && automation.settings.mode !== "off"
+            ? "Only the Automated emails card sends email, under the rules on the Automation page. Everything else here is a record: send other emails from Gmail (care@), then record them."
+            : "Nothing on this page emails the customer. Send from Gmail (care@), then record it here."}
         </OpsNotice>
       </div>
 
@@ -708,6 +1000,14 @@ export default function CommunicationsDetail() {
               </ActionForm>
             </div>
           </OpsCard>
+
+          {automation ? (
+            <AutomatedEmailsCard
+              automation={automation}
+              record={record}
+              orderId={order.legacyId}
+            />
+          ) : null}
 
           <LogisticsCard
             record={record}

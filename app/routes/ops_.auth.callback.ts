@@ -1,4 +1,5 @@
 import { redirect } from "react-router";
+import { saveCareSender } from "~/utils/ops-care.server";
 import {
   createIndividualSession,
   currentOpsUser,
@@ -62,7 +63,11 @@ export async function loader({ request, context }: Route.LoaderArgs) {
         pending.email !== user.email
       )
         return fail();
-      await savePersonalConnection(context.env, user, tokens);
+      if (pending.careSender) {
+        await saveCareSender(context.env, user, tokens);
+      } else {
+        await savePersonalConnection(context.env, user, tokens);
+      }
     } else {
       await createIndividualSession(context, user.email);
     }
