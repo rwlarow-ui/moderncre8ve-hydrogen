@@ -40,3 +40,6 @@ jobs:
 
       - name: Furniture Studio model and MCP server tests
         run: npm run test:furniture
+
+      - name: Held products module is up to date with the register
+        run: npm run test:held-products
