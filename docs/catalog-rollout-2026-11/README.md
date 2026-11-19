@@ -54,6 +54,8 @@ npm run catalog:rollout -- --batch=scandinavian-dining-table-extendable-dining-t
 
 The command rejects missing/stale evidence, snapshots older than 24 hours, protected products, consolidation candidates, batches over five, mixed waves, duplicate products and missing next-business-day reviews. It writes a local proposal containing each product's entire pre-release state for rollback. **It never publishes or modifies Shopify, and has no `--apply` mode.** A Shopify operator must perform the reviewed changes and record the outcome; the local checker cannot prevent independent manual changes in Admin.
 
+Held URLs: the storefront shows a noindex "This piece is being refreshed" 404 for every `held` handle that is not live. After changing a disposition (or refreshing `currentSnapshot`), run `node scripts/build-held-products.mjs` to regenerate `app/data/held-products.js`; `npm run test:held-products` fails while it is stale.
+
 ## Release and acceptance checklist
 
 For each proposed batch, the catalog operator re-reads current Shopify state immediately before writing and checks it against the proposal. Abort on drift. Reuse product and variant IDs; set Active and publish only to publication `gid://shopify/Publication/291307159851`, verified as **MODERNCRE8VE**. Preserve other channel settings and do not add feed destinations by default. Do not change stock quantities to enable purchasing. An approved made-to-order inventory policy requires explicit buildability confirmation.

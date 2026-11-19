@@ -6,6 +6,10 @@
 
 ## Unreleased
 
+### Friendly 404 for held product URLs
+- **`/products/<handle>` (and locale-prefixed) for a piece on hold in the catalog rollout now shows "This piece is being refreshed"** instead of the generic "We've lost this product". It names the piece, says it is handcrafted to order and back soon, links to its collection and shows up to four live pieces from that collection (best sellers if none). The status stays **404**, with `<meta name="robots" content="noindex">` and `X-Robots-Tag: noindex`. Unknown handles keep the normal 404 (`app/components/product/held-product-notice.tsx`, product route `ErrorBoundary`).
+- Held handles come from `app/data/held-products.js`, generated from `docs/catalog-rollout-2026-11/register.json` by `node scripts/build-held-products.mjs` (handle → name and collection only; the register itself never ships). Re-run it after changing a disposition; `npm run test:held-products` fails while it is stale.
+
 ### Logistics email automation (ADR-0010)
 - **CARE-01 and CARE-02 can now be sent by the Ops Hub** from Haven's Gmail as care@, with the approved copy, the signature once and the blank logistics PDF. CARE-01 goes the next business day after an order; CARE-02 weekly while the form is outstanding. Recording a receipt cancels queued reminders in the same transaction.
 - **Off after deployment.** Modes off / test / live, a global pause, separate live switches per template, per-order pause / exclude / enrol, and a test mode limited to approved test orders and allowlisted recipients. Turning CARE-01 live starts intake from that moment; existing orders are never enrolled automatically.
