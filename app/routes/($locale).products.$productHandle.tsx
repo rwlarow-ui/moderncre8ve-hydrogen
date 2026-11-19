@@ -168,15 +168,31 @@ export async function action({ request, context: { env } }: Route.ActionArgs) {
 }
 
 export const meta = ({ matches, location, error }: MetaArgs<typeof loader>) => {
+  const isHeld =
+    isRouteErrorResponse(error) && isHeldProductNotFound(error.data);
+  if (error && !isHeld) {
+    // Plain 404s and other errors keep the root's tags (normalized canonical).
+    return matches.find((match) => match.id === "root")?.meta ?? [];
+  }
   const canonical = `https://moderncre8ve.com${location.pathname.replace(/\/+$/, "") || "/"}`;
   const tags = getEnhancedSeoMeta(
     ...matches.map((match) => (match.data as any)?.seo).filter(Boolean),
     { canonicalUrl: canonical },
   );
-  if (isRouteErrorResponse(error) && isHeldProductNotFound(error.data)) {
+  if (isHeld) {
+    const title = `${(error.data as HeldProductNotFound).held.name} | ModernCre8ve`;
     return [
-      ...tags.filter((tag) => tag.name !== "robots" && !("title" in tag)),
-      { title: `${error.data.held.name} | ModernCre8ve` },
+      ...tags.filter(
+        (tag) =>
+          tag.name !== "robots" &&
+          !("title" in tag) &&
+          tag.property !== "og:title" &&
+          tag.property !== "twitter:title" &&
+          !(tag.tagName === "link" && tag.rel === "canonical"),
+      ),
+      { title },
+      { property: "og:title", content: title },
+      { property: "twitter:title", content: title },
       { name: "robots", content: "noindex" },
     ];
   }
@@ -208,10 +224,11 @@ async function getHeldProductPieces(
       !Object.hasOwn(HELD_PRODUCTS, p.handle) &&
       Boolean(p.selectedOrFirstAvailableVariant?.availableForSale);
     const fromCollection = (collection?.products.nodes ?? []).filter(isLive);
-    const pieces = fromCollection.length
-      ? fromCollection
-      : fallback.nodes.filter(isLive);
-    return pieces.slice(0, 4);
+    const seen = new Set(fromCollection.map((p) => p.id));
+    const bestSellers = fallback.nodes.filter(
+      (p) => isLive(p) && !seen.has(p.id),
+    );
+    return [...fromCollection, ...bestSellers].slice(0, 4);
   } catch (error) {
     console.error("Held product pieces failed:", error);
     return [];
@@ -228,7 +245,14 @@ export function ErrorBoundary() {
       return <NotFound type="product" />;
     }
     return (
-      <GenericError error={{ message: `${error.status} ${error.data}` }} />
+      <GenericError
+        error={{
+          message:
+            typeof error.data === "string"
+              ? `${error.status} ${error.data}`
+              : `${error.status} ${error.statusText}`.trim(),
+        }}
+      />
     );
   }
   return <GenericError error={error instanceof Error ? error : undefined} />;
