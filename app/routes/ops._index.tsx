@@ -241,7 +241,8 @@ export default function OpsOrdersIndex() {
             className={`grid gap-4 p-5 transition-opacity sm:grid-cols-2 md:p-6 lg:grid-cols-3 xl:grid-cols-4 ${isLoading ? "opacity-50" : ""}`}
           >
             {orders.map((order) => {
-              const [lead, ...rest] = lineItems[order.id] ?? [];
+              const [lead, ...rest] = lineItems[order.id]?.lines ?? [];
+              const more = lineItems[order.id]?.more;
               return (
                 <li key={order.id}>
                   <Link
@@ -292,6 +293,7 @@ export default function OpsOrdersIndex() {
                               {line.quantity} × {line.name}
                             </li>
                           ))}
+                          {more ? <li>More items in the order</li> : null}
                         </ul>
                       ) : null}
                       <LeadTimeMeter days={order.ageInDays} />
@@ -377,9 +379,9 @@ export default function OpsOrdersIndex() {
                       )}
                     </td>
                     <td className="max-w-72 px-4 py-5">
-                      {lineItems[order.id]?.length ? (
+                      {lineItems[order.id]?.lines.length ? (
                         <ul className="space-y-2">
-                          {lineItems[order.id].map((line) => (
+                          {lineItems[order.id].lines.map((line) => (
                             <li
                               key={line.id}
                               className="flex items-center gap-3"
@@ -395,6 +397,11 @@ export default function OpsOrdersIndex() {
                               </span>
                             </li>
                           ))}
+                          {lineItems[order.id].more ? (
+                            <li className="text-body-subtle">
+                              More items in the order
+                            </li>
+                          ) : null}
                         </ul>
                       ) : (
                         <span className="text-body-subtle">—</span>
