@@ -16,19 +16,39 @@ import { Cart } from "~/components/cart/cart";
 import { Section } from "~/components/section";
 import type { RootLoader } from "~/root";
 import { mergeCartAttributes, validateLogistics } from "~/utils/logistics";
+import {
+  checkRequestOnlyLines,
+  requestOnlyCartErrorPayload,
+} from "~/utils/request-only-cart.server";
 import type { Route } from "./+types/($locale).cart";
 
 /** Custom cart action: saves the delivery-logistics form (ADR-0001). */
 export const LOGISTICS_UPDATE_ACTION = "CustomLogisticsUpdate";
 
 export async function action({ request, context }: Route.ActionArgs) {
-  const { cart } = context;
+  const { cart, storefront } = context;
   const formData = await request.formData();
   const { action: cartFormAction, inputs } = CartForm.getFormInput(formData);
   invariant(cartFormAction, "No cartAction defined");
 
   const status = 200;
   let result: CartQueryDataReturn;
+
+  // Request-only pieces can never enter the cart, whatever the client sends.
+  // The whole request is refused (no partial add), with the same
+  // `{ cart, userErrors, errors }` shape as a Shopify cart error, so the
+  // add-to-cart button sees userErrors and does not open the drawer.
+  if (
+    cartFormAction === CartForm.ACTIONS.LinesAdd ||
+    cartFormAction === CartForm.ACTIONS.LinesUpdate
+  ) {
+    const rejection = await checkRequestOnlyLines(storefront, inputs.lines);
+    if (rejection) {
+      return data(requestOnlyCartErrorPayload(rejection), {
+        status: rejection.status,
+      });
+    }
+  }
 
   switch (cartFormAction) {
     case CartForm.ACTIONS.LinesAdd:
