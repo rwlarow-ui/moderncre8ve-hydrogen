@@ -12,6 +12,8 @@ This project stores revocable sign-in sessions, encrypted Google refresh tokens,
 
 For the Customer Communications tab, also run [`scripts/sql/ops-hub-communications.sql`](../scripts/sql/ops-hub-communications.sql). See [ops-customer-communications.md](ops-customer-communications.md).
 
+For the logistics email automation (CARE-01 / CARE-02), also run [`scripts/sql/ops-hub-care-automation.sql`](../scripts/sql/ops-hub-care-automation.sql) and follow [ops-care-automation.md](ops-care-automation.md).
+
 For the Sales pipeline tab, also run [`scripts/sql/ops-hub-pipeline.sql`](../scripts/sql/ops-hub-pipeline.sql). See [ops-pipeline.md](ops-pipeline.md).
 
 ## 2. Create the Google web client

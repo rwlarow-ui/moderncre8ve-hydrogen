@@ -101,7 +101,15 @@ export default function CommunicationsQueue() {
     <>
       <OpsPageHeader
         title="Customer communications"
-        description="One queue for customer updates, replies, delivery logistics and follow-up. Phase A: everything is recorded by hand. Nothing is emailed from the hub; send from Gmail (care@) and record it here."
+        description="One queue for customer updates, replies, delivery logistics and follow-up. The logistics request and reminder can be sent automatically from care@ (see Automation); everything else is sent from Gmail and recorded here."
+        aside={
+          <Link
+            to="/ops/communications/automation"
+            className={opsTextLinkClass}
+          >
+            Logistics email automation
+          </Link>
+        }
       />
 
       <div className="mb-6 space-y-3">

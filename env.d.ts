@@ -48,6 +48,8 @@ declare global {
     /** 32-byte hex key for encrypted Google refresh tokens. */
     OPS_CONNECTION_ENCRYPTION_KEY?: string;
     OPS_GITHUB_READ_TOKEN?: string;
+    /** Bearer secret (32+ chars) for the hourly logistics email worker, ADR-0010. */
+    OPS_JOB_SECRET?: string;
     PUBLIC_SHOPIFY_INBOX_SHOP_ID: string;
     PUBLIC_TURNSTILE_SITE_KEY?: string;
     TURNSTILE_SECRET_KEY?: string;
@@ -69,6 +71,8 @@ declare module "react-router" {
       verifier: string;
       nonce: string;
       personal: boolean;
+      /** Haven's care@ sending grant (gmail.send + gmail.readonly). */
+      careSender?: boolean;
       email?: string;
       returnTo: string;
       expires: number;

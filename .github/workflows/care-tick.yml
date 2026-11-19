@@ -1,0 +1,41 @@
+# Hourly due worker for the logistics email automation (ADR-0010).
+#
+# Calls the production hub's /ops/jobs/care-tick with the OPS_JOB_SECRET
+# repository secret. The endpoint only processes emails the hub itself has
+# queued; whether anything is actually sent is decided by the hub's own
+# settings (mode off/test/live, global pause, live rules), not by this file.
+#
+# Until the secret is added the job exits quietly, so merging this sends
+# nothing. To stop the worker: disable this workflow in GitHub Actions, or
+# use the hub's global pause (instant, keeps history).
+name: Logistics email worker
+
+on:
+  schedule:
+    # Minute 7 avoids the top-of-hour rush; GitHub may still delay runs.
+    - cron: "7 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: care-tick
+  cancel-in-progress: false
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Run the due worker
+        env:
+          OPS_JOB_SECRET: ${{ secrets.OPS_JOB_SECRET }}
+        run: |
+          if [ -z "$OPS_JOB_SECRET" ]; then
+            echo "OPS_JOB_SECRET is not set; the logistics email worker is not configured yet."
+            exit 0
+          fi
+          curl --fail-with-body --silent --show-error --max-time 120 \
+            -X POST \
+            -H "Authorization: Bearer $OPS_JOB_SECRET" \
+            https://moderncre8ve.com/ops/jobs/care-tick
