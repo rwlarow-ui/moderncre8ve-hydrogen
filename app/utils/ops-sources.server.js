@@ -46,6 +46,16 @@ export const OPS_SOURCES = [
     "Decide what held product links do (due November 16); test the Warwick request form; trim extra sales channels on six live products; record the five batch reviews; decide the five Unlisted products with live pages; update ADR-0007 for the Mansfield and Warwick.",
   ),
   source(
+    "wave-2-push-plan",
+    "catalog",
+    "Wave 2 single-push plan",
+    "DkRj6CT3n7XpCWrQNxAW6o",
+    "2026-11-20",
+    "Plan to release the 10 Wave 2 products in one push: what still blocks each, the pricing and FSC decisions needed first, the push-day sequence and the Shopify Admin checklist. No date set; the request-only rule is a recommendation.",
+    "team",
+    "draft",
+  ),
+  source(
     "catalog-cleanup",
     "catalog",
     "Product Catalog Cleanup",
