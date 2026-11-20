@@ -118,6 +118,14 @@ export const OPS_SOURCES = [
     "historical",
   ),
   source(
+    "ops-hub-status",
+    "tech",
+    "Ops Hub status",
+    "QtaKShGoQY4N2WyiCtxZ92",
+    "2026-11-20",
+    "Rollout status of each hub area, Haven's four steps (sign in, connect care@, approve the email content, run the test pilot), the email go-live decisions, what waits on Rob and what isn't built yet.",
+  ),
+  source(
     "debt-register",
     "tech",
     "Debt Register",

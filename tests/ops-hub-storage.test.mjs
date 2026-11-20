@@ -363,7 +363,7 @@ test("private Postgres storage and OAuth publishing work end to end", async (t) 
         "tech",
       );
       assert.equal(tech.user.role, rob.role);
-      assert.equal(tech.sources.length, 2);
+      assert.equal(tech.sources.length, 3);
       assert.equal(tech.sourceError, false);
       assert.equal(tech.taskError, false);
       assert.equal(

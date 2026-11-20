@@ -136,3 +136,11 @@ Haven's Google account is `haven@moderncre8ve.com`. The hub first listed `havenm
 3. Haven signs in with **Continue with Google** and picks `haven@moderncre8ve.com`.
 
 If the app is deployed first, Google sign-in succeeds but her tabs fail to load their data until the SQL runs. Fresh projects use the updated `ops-hub.sql`.
+
+## Existing deployments: Ops Hub status source
+
+The Tech tab has an **Ops Hub status** source (`ops-hub-status`), the rollout page written for Haven (artifact `QtaKShGoQY4N2WyiCtxZ92`).
+
+1. Run `scripts/sql/ops-hub-status-source.sql` in the existing Supabase SQL editor **before** deploying. It only adds the ID to the database's source allowlist and is safe to reapply.
+2. Deploy. If the app is deployed first, reading context fails with "Unknown source" until the SQL runs, because every visible source is checked when a tab or `list_context` loads.
+3. Publish the page's text to `ops-hub-status` with the connector. The artifact itself is private to Rob until he shares it with Haven from its page on claude.ai.
