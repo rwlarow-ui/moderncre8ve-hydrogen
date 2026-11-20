@@ -540,32 +540,31 @@ function DrawerCheckoutButton({
   checkoutUrl: string;
   onCheckout: () => void;
 }) {
-  const fetcher = useFetcher<{ fieldErrors?: Record<string, string> }>();
-  const submitted = useRef(false);
-  const busy = fetcher.state !== "idle";
+  const fetcher = useFetcher();
+  const [leaving, setLeaving] = useState(false);
+  const busy = leaving || fetcher.state !== "idle";
 
-  useEffect(() => {
-    if (!submitted.current || fetcher.state !== "idle" || !fetcher.data) {
-      return;
-    }
-    submitted.current = false;
-    // Go to checkout even if the save failed: checkout must never be
-    // blocked, and the ops follow-up still asks for the details.
-    window.location.href = checkoutUrl;
-  }, [fetcher.state, fetcher.data, checkoutUrl]);
-
-  function handleClick() {
+  async function handleClick() {
     onCheckout();
-    submitted.current = true;
-    fetcher.submit(
-      {
-        [CartForm.INPUT_NAME]: JSON.stringify({
-          action: "CustomLogisticsUpdate",
-          inputs: { logistics: { later: true } },
-        }),
-      },
-      { method: "POST", action: "/cart" },
-    );
+    setLeaving(true);
+    try {
+      // Await the save here rather than in an effect: saving revalidates the
+      // cart, which swaps this button for the plain checkout link and would
+      // unmount an effect before it could navigate.
+      await fetcher.submit(
+        {
+          [CartForm.INPUT_NAME]: JSON.stringify({
+            action: "CustomLogisticsUpdate",
+            inputs: { logistics: { later: true } },
+          }),
+        },
+        { method: "POST", action: "/cart" },
+      );
+    } catch {
+      // Go to checkout even if the save failed: checkout must never be
+      // blocked, and the ops follow-up still asks for the details.
+    }
+    window.location.href = checkoutUrl;
   }
 
   return (
