@@ -13,6 +13,7 @@ import {
 import type { Cart as CartType } from "@shopify/hydrogen/storefront-api-types";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
+import { useFetcher } from "react-router";
 import useScroll from "react-use/esm/useScroll";
 import type { CartApiQueryFragment } from "storefront-api.generated";
 import { Button } from "~/components/button";
@@ -494,13 +495,20 @@ function CartCheckoutActions({
           <Button className="!px-6 !py-5 h-[54px] w-full">CHECKOUT</Button>
         </a>
       ) : layout === "drawer" ? (
-        <Link
-          variant="primary"
-          to="/cart"
-          className="flex h-[54px] w-full items-center justify-center uppercase"
-        >
-          Add delivery details
-        </Link>
+        <>
+          <DrawerCheckoutButton
+            checkoutUrl={checkoutUrl}
+            onCheckout={handleCheckoutClick}
+          />
+          <p className="text-center text-sm">
+            We'll follow up for delivery details (stairs, doorways) after you
+            order, or{" "}
+            <Link to="/cart" className="underline">
+              add them now
+            </Link>
+            .
+          </p>
+        </>
       ) : (
         <>
           <Button
@@ -516,6 +524,60 @@ function CartCheckoutActions({
         </>
       )}
     </div>
+  );
+}
+
+/**
+ * Drawer checkout for a cart without delivery details. Saves the "I'll
+ * provide this after I order" choice on the cart (the same attribute the cart
+ * page form writes, ADR-0001), then goes to checkout, so the drawer is never a
+ * dead end. Delivery details are collected afterwards (ADR-0010).
+ */
+function DrawerCheckoutButton({
+  checkoutUrl,
+  onCheckout,
+}: {
+  checkoutUrl: string;
+  onCheckout: () => void;
+}) {
+  const fetcher = useFetcher<{ fieldErrors?: Record<string, string> }>();
+  const submitted = useRef(false);
+  const busy = fetcher.state !== "idle";
+
+  useEffect(() => {
+    if (!submitted.current || fetcher.state !== "idle" || !fetcher.data) {
+      return;
+    }
+    submitted.current = false;
+    // Go to checkout even if the save failed: checkout must never be
+    // blocked, and the ops follow-up still asks for the details.
+    window.location.href = checkoutUrl;
+  }, [fetcher.state, fetcher.data, checkoutUrl]);
+
+  function handleClick() {
+    onCheckout();
+    submitted.current = true;
+    fetcher.submit(
+      {
+        [CartForm.INPUT_NAME]: JSON.stringify({
+          action: "CustomLogisticsUpdate",
+          inputs: { logistics: { later: true } },
+        }),
+      },
+      { method: "POST", action: "/cart" },
+    );
+  }
+
+  return (
+    <Button
+      className="!px-6 !py-5 h-[54px] w-full"
+      onClick={handleClick}
+      loading={busy}
+      disabled={busy}
+      data-test="drawer-checkout"
+    >
+      CHECKOUT
+    </Button>
   );
 }
 
