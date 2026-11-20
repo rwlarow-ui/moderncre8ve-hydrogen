@@ -11,7 +11,6 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 - **Repo:** github.com/rwlarow-ui/moderncre8ve-hydrogen
 - **Source of truth:** this repo's `main` is what's live in production. Note that the Oxygen workflow is `on: [push]`, so a push to **any** branch also builds an Oxygen deployment (non-`main` branches get preview environments). `github.com/rwlarow-ui/moderncre8ve-storefront` is an **archived** earlier fork — never edit it or review against it. On the owner's Mac the live clone is `~/Desktop/my-hydrogen-storefront`; `~/my-hydrogen-storefront` (same name, home folder) is the archived fork. ADRs live in `docs/adr/` here, numbered in sequence. The tech debt register is `docs/tech-debt-2026-10.md`
 - **Deploy target:** Shopify Oxygen
-- **Current version:** 1.5.0 — single source of truth is `package.json`; `CHANGELOG.md` has the full history
 - **Status:** Phases 1–5 complete. **Live in production** — `moderncre8ve.com` resolves to the Hydrogen storefront on Oxygen (`powered-by: Shopify, Oxygen, Hydrogen`).
 
 ### Links
@@ -26,18 +25,7 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 - **Delivery:** White glove in-home delivery with assembly for 95%+ of orders.
 
 ### Branding
-- **Fonts:** Jost (headings, `--font-sans`) / Spectral (body, `--font-serif`)
-- **Logo:** `public/logo.png` (grey wordmark, for light backgrounds), `public/logo-alt.png` (white, for the transparent header over imagery)
-
-#### Color Palette
-| Swatch | Hex | Usage |
-|--------|-----|-------|
-| Dark Charcoal | `#323640` | Primary dark / text |
-| Emerald Green | `#2CBF96` | Accent / CTA |
-| Warm Cream | `#F2EBD5` | Background / neutral |
-| Amber Gold | `#F2AC29` | Highlight / secondary accent |
-| Coral Red | `#D35055` | Alert / accent |
-| Cool Gray | `#9DA0A7` | Muted / borders |
+Fonts, logo files and the color palette live in the `brand` skill (`.claude/skills/brand/`).
 
 ### Key Files
 | File | Purpose |
@@ -56,12 +44,8 @@ Handcrafted modern furniture (mid-century, Scandinavian, Japandi) — moderncre8
 - **App:** "Claude2" in Shopify Dev Dashboard (Client ID: `fd5964839bc3fb47703bafb47d25d3fc`)
 
 ### Google Analytics / GTM
-- **GA4 Measurement ID (live):** `G-G4Q4Z6MM4B` — the only data stream ("Moderncre8ve", stream 2149185054) of property `251836602`, the property reports and the SEO Truth Layer read. Set via the `PUBLIC_GOOGLE_GTM_ID` env var (the name says GTM, the value is a GA4 measurement ID; there is no GTM container). The **live** value is whatever Oxygen holds, rendered by `app/components/root/custom-analytics.tsx` — there is no ID in the repo. Set on 2026-10-08; confirmed loading on the live site 2026-10-13. `npx shopify hydrogen env list` needs interactive auth. Keep local `.env` in step with Oxygen.
-- **GA4 Property:** `251836602`
-- **Other IDs** — do not set `PUBLIC_GOOGLE_GTM_ID` to these: `G-R1KFYYKE48` is the Weaverse demo ID (remove everywhere); `G-08LS6GEXG3` is "g4 new", a connected site tag on the stream above and the ID Shopify's Google & YouTube app shows — not the storefront's measurement ID. (Earlier versions of this file had `G-08LS6GEXG3` as live and `G-G4Q4Z6MM4B` as superseded; that was wrong.)
-- **Google Cloud Project:** `mindful-quasar-486518-r9`
-- **Service Account:** `moderncre8ve-829@mindful-quasar-486518-r9.iam.gserviceaccount.com`
-- **SEO Truth Layer:** source is vendored at `seo-truth-layer/`, but the pipeline **runs daily at 14:00 UTC from the separate `github.com/rwlarow-ui/moderncre8ve-seo-truth-layer` repo**. GitHub only executes workflows under the root `.github/workflows/`, so `seo-truth-layer/.github/workflows/seo-pipeline.yml` in this repo never runs. Its secrets (`GA4_PROPERTY_ID`, `GOOGLE_SA_JSON`, `RESEND_API_KEY`, `SITE_URL`) live on that other repo.
+- **Live GA4 Measurement ID:** `G-G4Q4Z6MM4B` (property `251836602`), set via Oxygen's `PUBLIC_GOOGLE_GTM_ID`. **Never** set it to `G-R1KFYYKE48` (Weaverse demo) or `G-08LS6GEXG3` (connected site tag, not the storefront ID).
+- Stream, Google Cloud project, service account and the SEO Truth Layer (runs from a separate repo) are in the `analytics-ga4` skill (`.claude/skills/analytics-ga4/`).
 
 ### MCP Servers
 Configured in `.mcp.json`: **ops-dashboard** (local stdio server, `scripts/ops-dashboard-mcp.mjs` — Shopify Admin order/customer tooling) and **furniture-studio** (local stdio server, `scripts/furniture-studio-mcp.mjs` — parametric furniture concepts: template, revisions, design checks, cut list / cost, CSV/DXF/OpenSCAD/CadQuery study exports, render prompts; no network access, files under `~/.moderncre8ve/furniture-studio` or `$FURNITURE_STUDIO_DIR`). Its model, `app/utils/furniture-studio.js`, also drives the `/ops/design` tab; tests: `npm run test:furniture`.
@@ -70,33 +54,9 @@ Composer and Crypto.com servers visible in sessions are from another project —
 
 > **Ahrefs (informational):** The Ahrefs MCP connection was removed (was a stdio server in `.mcp.json`). Historical Ahrefs keyword data (March 2026) still informs SEO copy — see the comment in `app/utils/collection-seo-descriptions.ts` — and `AhrefsBot`/`AhrefsSiteAudit` crawl directives remain in `app/routes/[robots.txt].tsx`. Neither depends on the live MCP connection.
 
-## Development Commands
-
-- `npm run dev` — Dev server on port 3456 with codegen
-- `npm run build` — Production build
-- `npm run typecheck` — TypeScript type checking
-- `npm run codegen` — Regenerate GraphQL types after schema changes
-- `npm run biome:fix` — Lint and auto-fix with Biome
-
 ## Architecture
 
 **Shopify Hydrogen** storefront with **React Router v7** (not Remix) and an in-repo page builder — page compositions are TypeScript modules, not hosted data.
-
-### Stack
-Hydrogen 2026.4.8, React Router 7.16 (React 19.2), Vite, Biome, TailwindCSS v4. Loaders and actions are typed with `Route.LoaderArgs` / `Route.ActionArgs` from the generated `./+types/*` route types
-
-### Directory Structure
-```
-app/
-├── components/     # Reusable UI (layout, product, cart)
-├── sections/       # Page-building sections
-├── routes/         # File-based routing (React Router v7)
-├── page-builder/   # Page builder: renderer, schema, theme, page compositions
-├── hooks/          # Custom React hooks
-├── utils/          # Utility functions
-├── graphql/        # GraphQL fragments and queries
-└── styles/         # Global styles
-```
 
 ### Critical: React Router, Not Remix
 ```js
@@ -120,29 +80,7 @@ import { useLoaderData, Link, Form } from '@remix-run/react';
 - **Typecheck:** `npm run typecheck` and `npm run build` both pass (the 2 `MoneyV2`/`CurrencyCode` errors in `app/sections/single-product/index.tsx` were fixed in `fa826f6`). Treat any typecheck error as a regression. In a fresh worktree run `npx react-router typegen` first, or `server.ts` reports a missing `virtual:react-router/server-build`.
 
 ### Component Schema
-```tsx
-export let schema = createSchema({
-  type: 'my-section',
-  title: 'My Section',
-  settings: [  // Use "settings", NOT "inspector"
-    {
-      group: 'Content',
-      inputs: [{ type: 'text', name: 'heading', label: 'Heading', defaultValue: 'Default' }],
-    },
-  ],
-});
-```
-
-### Routing
-- Routes in `app/routes/` follow React Router v7 conventions
-- Locale-aware: `($locale).page-name.tsx`
-- Dynamic: `($locale).products.$productHandle.tsx`
-- API: `($locale).api.endpoint.ts`
-
-### Code Standards
-- **TypeScript**: Strict mode disabled; use types where beneficial
-- **Biome**: Double quotes, semicolons required. Config is self-contained in `biome.json`
-- **Imports**: Use `~/*` alias for app directory
+Section schemas use `createSchema({ type, title, settings })` — `settings`, NOT `inspector`.
 
 ### Domains (Shopify Admin → Settings → Domains)
 | Host | Serves | Notes |
