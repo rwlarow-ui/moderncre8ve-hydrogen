@@ -145,6 +145,16 @@ The Tech tab has an **Ops Hub status** source (`ops-hub-status`), the rollout pa
 2. Deploy. If the app is deployed first, reading context fails with "Unknown source" until the SQL runs, because every visible source is checked when a tab or `list_context` loads.
 3. Publish the page's text to `ops-hub-status` with the connector. The artifact itself is private to Rob until he shares it with Haven from its page on claude.ai.
 
+## Existing deployments: Wave 2 push plan source
+
+The Catalog tab has a **Wave 2 single-push plan** source (`wave-2-push-plan`, status draft), the plan for releasing the 10 Wave 2 products in one push (artifact `DkRj6CT3n7XpCWrQNxAW6o`).
+
+1. Run `scripts/sql/ops-wave-2-push-plan-source.sql` in the existing Supabase SQL editor **before** deploying. It only adds the ID to the database's source allowlist and is safe to reapply.
+2. Deploy. If the app is deployed first, reading context fails with "Unknown source" until the SQL runs, because every visible source is checked when a tab or `list_context` loads.
+3. Publish the plan's text to `wave-2-push-plan` with the connector. The artifact itself is private to Rob until he shares it with Haven from its page on claude.ai.
+
+**Production status (2026-11-20):** the app change shipped first, in #208, so Ops reads failed with "Unknown source" until the SQL was run. The SQL was then run in the production Ops Supabase project, and `ops_check_source` now includes `wave-2-push-plan` (verified with `pg_get_functiondef`). Steps 1–2 are done for production; step 3 is still to do.
+
 ## Status tab
 
 `/ops/status` is the live rollout checklist, split into **Haven's to-dos** and **Rob's to-dos**. Each step ticks itself off from the hub's own data every time the page loads: sign-ins, Google connections, the care@ sender, approved templates, PDF and signature, emails sent, the worker secret, the sign-in cutover flag, the PO and request-form email settings, the last saved "Request this piece", pipeline Reply needed tasks and document freshness. Steps the hub can't see (the old ChatGPT hub, Google scopes) show as "can't be checked". Below the lists are the email settings Haven decides and an area-by-area view.
