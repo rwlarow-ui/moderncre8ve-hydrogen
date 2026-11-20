@@ -72,7 +72,7 @@ test("legacy password sessions cannot open Ops after the cutover", async () => {
   );
 });
 test("both owners see the same sources and Google connections stay account scoped", async (t) => {
-  assert.equal(visibleSources(rob).length, 12);
+  assert.equal(visibleSources(rob).length, 13);
   assert.deepEqual(visibleSources(haven), visibleSources(rob));
   assert.equal(visibleSources(haven, "daily").length, 4);
   t.mock.method(globalThis, "fetch", (input) => {
