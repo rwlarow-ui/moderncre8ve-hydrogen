@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { generateKeyPair, SignJWT } from "jose";
 import { requireOpsAccess } from "../app/utils/ops-auth.server.js";
@@ -16,7 +17,10 @@ import {
   verifyGoogleIdentity,
 } from "../app/utils/ops-identity.server.js";
 import { loadPersonalDay } from "../app/utils/ops-personal.server.js";
-import { visibleSources } from "../app/utils/ops-sources.server.js";
+import {
+  OPS_SOURCES,
+  visibleSources,
+} from "../app/utils/ops-sources.server.js";
 import { readOpsJson } from "../app/utils/ops-store.server.js";
 
 const rob = allowedIdentity("rob@moderncre8ve.com");
@@ -72,7 +76,7 @@ test("legacy password sessions cannot open Ops after the cutover", async () => {
   );
 });
 test("both owners see the same sources and Google connections stay account scoped", async (t) => {
-  assert.equal(visibleSources(rob).length, 14);
+  assert.equal(visibleSources(rob).length, 13);
   assert.deepEqual(visibleSources(haven), visibleSources(rob));
   assert.equal(visibleSources(haven, "daily").length, 4);
   t.mock.method(globalThis, "fetch", (input) => {
@@ -193,5 +197,25 @@ test("Google identities require a valid signature, issuer, audience, nonce, expi
         verifyGoogleIdentity(token, env, nonce, publicKey),
       ),
     );
+  }
+});
+
+test("every app source is in the database allowlist", () => {
+  // One unknown ID fails every context read with "Unknown source" (400),
+  // which took list_context and the Catalog tab down on 2026-11-20.
+  for (const file of [
+    "ops-hub.sql",
+    "ops-hub-sources.sql",
+    "ops-hub-owner-parity.sql",
+  ]) {
+    const sql = readFileSync(
+      new URL(`../scripts/sql/${file}`, import.meta.url),
+      "utf8",
+    );
+    const list = sql.match(/p_source_id not in \(([^)]*)\)/)?.[1] ?? "";
+    const allowed = new Set([...list.matchAll(/'([^']+)'/g)].map((m) => m[1]));
+    for (const { id } of OPS_SOURCES) {
+      assert.ok(allowed.has(id), `${id} is missing from scripts/sql/${file}`);
+    }
   }
 });
