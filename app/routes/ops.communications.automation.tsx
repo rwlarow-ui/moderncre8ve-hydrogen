@@ -32,6 +32,7 @@ import {
   careUnavailableReason,
   loadCareOverview,
 } from "~/utils/ops-care.server";
+import { googleConnectErrorMessage } from "~/utils/ops-google-errors";
 import { requireOpsUser } from "~/utils/ops-identity.server";
 import { privateHeaders } from "~/utils/ops-store.server";
 import type { Route } from "./+types/ops.communications.automation";
@@ -40,11 +41,15 @@ export const headers = () => privateHeaders;
 
 export async function loader({ request, context }: Route.LoaderArgs) {
   const user = await requireOpsUser(request, context, { owner: true });
+  const googleError = googleConnectErrorMessage(
+    new URL(request.url).searchParams.get("googleError"),
+  );
   try {
     const overview = await loadCareOverview(context.env, user);
     return data(
       {
         viewer: user.email,
+        googleError,
         overview,
         jobSecretSet: String(context.env.OPS_JOB_SECRET || "").length >= 32,
         storeError: null,
@@ -55,6 +60,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
     return data(
       {
         viewer: user.email,
+        googleError,
         overview: null,
         jobSecretSet: false,
         storeError: careUnavailableReason(error),
@@ -227,7 +233,7 @@ function TemplatePreview({ t }: { t: Overview["templates"][number] }) {
 }
 
 export default function CareAutomation() {
-  const { overview, storeError, viewer, jobSecretSet } =
+  const { overview, storeError, viewer, jobSecretSet, googleError } =
     useLoaderData<typeof loader>();
   const result = useActionData<typeof action>();
   const navigation = useNavigation();
@@ -235,6 +241,7 @@ export default function CareAutomation() {
     return (
       <>
         <OpsPageHeader title="Logistics email automation" />
+        {googleError ? <OpsNotice ok={false}>{googleError}</OpsNotice> : null}
         <OpsNotice ok={false}>{storeError}</OpsNotice>
       </>
     );
@@ -268,6 +275,7 @@ export default function CareAutomation() {
       />
 
       <div className="mb-6 space-y-3">
+        {googleError ? <OpsNotice ok={false}>{googleError}</OpsNotice> : null}
         {result ? <OpsNotice ok={result.ok}>{result.message}</OpsNotice> : null}
         {settings.mode === "off" ? (
           <OpsNotice ok>

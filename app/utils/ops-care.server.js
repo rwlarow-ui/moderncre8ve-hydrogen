@@ -40,6 +40,7 @@ import {
   validateSettingsChange,
 } from "./ops-care.js";
 import { adminGraphql } from "./ops-dashboard.server.js";
+import { googleConnectError } from "./ops-google-errors.js";
 import { hasOpsStore, opsRpc } from "./ops-store.server.js";
 
 export const CARE_SETUP_SQL = "scripts/sql/ops-hub-care-automation.sql";
@@ -186,7 +187,10 @@ export async function listOrdersCreatedSince(
 
 function encryptionKey(env) {
   if (!/^[a-f0-9]{64}$/i.test(env.OPS_CONNECTION_ENCRYPTION_KEY || "")) {
-    throw new Error("Private connection encryption is not configured.");
+    throw googleConnectError(
+      "no_key",
+      "Private connection encryption is not configured.",
+    );
   }
   return Uint8Array.from(env.OPS_CONNECTION_ENCRYPTION_KEY.match(/../g), (s) =>
     Number.parseInt(s, 16),
@@ -196,15 +200,23 @@ function encryptionKey(env) {
 /** Store Haven's sending grant. Only her own mailbox, only with both scopes. */
 export async function saveCareSender(env, user, tokens, deps = {}) {
   if (user.email !== CARE_SENDER_EMAIL) {
-    throw new Error("Only Haven's mailbox can send as care@.");
+    throw googleConnectError(
+      "care_account",
+      "Only Haven's mailbox can send as care@.",
+    );
   }
   const scopes = new Set(String(tokens.scope || "").split(" "));
-  if (
-    !tokens.refresh_token ||
-    !scopes.has(GMAIL_SEND_SCOPE) ||
-    !scopes.has(GMAIL_READ_SCOPE)
-  ) {
-    throw new Error("Please grant both the send and read mail permissions.");
+  if (!scopes.has(GMAIL_SEND_SCOPE) || !scopes.has(GMAIL_READ_SCOPE)) {
+    throw googleConnectError(
+      "care_missing_scopes",
+      "Please grant both the send and read mail permissions.",
+    );
+  }
+  if (!tokens.refresh_token) {
+    throw googleConnectError(
+      "no_refresh_token",
+      "Google did not return a refresh token.",
+    );
   }
   const encrypted = await new CompactEncrypt(
     new TextEncoder().encode(tokens.refresh_token),
