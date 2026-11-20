@@ -68,8 +68,8 @@ export const OPS_SOURCES = [
     "marketing",
     "SEO & AI visibility",
     "Uw37XcUaVNPaSGdfHq9xzn",
-    "2026-11-12",
-    "November 10–21 plan. Verify held-page behavior, the empty Coffee Tables collection, FSC claims and the old Houzz address. November 16 decision needs current verification.",
+    "2026-11-18",
+    "Snapshot refreshed November 18: 13 live product pages, Wave 2 not started, Wave 1 reviews unrecorded, extra sales channels on live products and FSC claims on eight live pages. Not rechecked since; held pages got a friendly 404 on November 19.",
   ),
   source(
     "trade-pipeline",
