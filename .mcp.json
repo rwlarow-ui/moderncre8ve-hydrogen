@@ -9,6 +9,10 @@
       "type": "stdio",
       "command": "node",
       "args": ["scripts/furniture-studio-mcp.mjs"]
+    },
+    "fal": {
+      "type": "http",
+      "url": "https://mcp.fal.ai/mcp"
     }
   }
 }
