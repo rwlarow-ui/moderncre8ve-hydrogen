@@ -137,13 +137,17 @@ Haven's Google account is `haven@moderncre8ve.com`. The hub first listed `havenm
 
 If the app is deployed first, Google sign-in succeeds but her tabs fail to load their data until the SQL runs. Fresh projects use the updated `ops-hub.sql`.
 
-## Existing deployments: Ops Hub status source
+## Retired: Ops Hub status source
 
-The Tech tab has an **Ops Hub status** source (`ops-hub-status`), the rollout page written for Haven (artifact `QtaKShGoQY4N2WyiCtxZ92`).
+The `ops-hub-status` document (a snapshot of the rollout, published 2026-11-20) was withdrawn the same day and removed from the Tech tab once the live [Status tab](#status-tab) replaced it. Its ID stays in the database allowlist so its revision history remains valid; no SQL is needed to retire it.
 
-1. Run `scripts/sql/ops-hub-status-source.sql` in the existing Supabase SQL editor **before** deploying. It only adds the ID to the database's source allowlist and is safe to reapply.
-2. Deploy. If the app is deployed first, reading context fails with "Unknown source" until the SQL runs, because every visible source is checked when a tab or `list_context` loads.
-3. Publish the page's text to `ops-hub-status` with the connector. The artifact itself is private to Rob until he shares it with Haven from its page on claude.ai.
+## Adding a context source
+
+Every ID in `OPS_SOURCES` (`app/utils/ops-sources.server.js`) must also be in the database allowlist. Each tab and `list_context` checks every visible source, so one unknown ID fails the whole read with "Unknown source" (400). This happened on 2026-11-20 when `wave-2-push-plan` shipped without its SQL.
+
+1. Add the ID to the list in `scripts/sql/ops-hub-sources.sql`, `ops-hub.sql` and `ops-hub-owner-parity.sql`. `npm run test:ops-hub` fails if any of the three is missing an app source.
+2. Run `scripts/sql/ops-hub-sources.sql` in the Ops Supabase SQL editor.
+3. Deploy the app change.
 
 ## Status tab
 
