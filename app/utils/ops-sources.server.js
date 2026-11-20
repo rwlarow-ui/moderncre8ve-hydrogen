@@ -46,6 +46,16 @@ export const OPS_SOURCES = [
     "Decide what held product links do (due November 16); test the Warwick request form; trim extra sales channels on six live products; record the five batch reviews; decide the five Unlisted products with live pages; update ADR-0007 for the Mansfield and Warwick.",
   ),
   source(
+    "wave-2-push-plan",
+    "catalog",
+    "Wave 2 single-push plan",
+    "DkRj6CT3n7XpCWrQNxAW6o",
+    "2026-11-20",
+    "Plan to release the 10 Wave 2 products in one push: what still blocks each, the pricing and FSC decisions needed first, the push-day sequence and the Shopify Admin checklist. No date set; the request-only rule is a recommendation.",
+    "team",
+    "draft",
+  ),
+  source(
     "catalog-cleanup",
     "catalog",
     "Product Catalog Cleanup",
@@ -68,8 +78,8 @@ export const OPS_SOURCES = [
     "marketing",
     "SEO & AI visibility",
     "Uw37XcUaVNPaSGdfHq9xzn",
-    "2026-11-12",
-    "November 10–21 plan. Verify held-page behavior, the empty Coffee Tables collection, FSC claims and the old Houzz address. November 16 decision needs current verification.",
+    "2026-11-18",
+    "Snapshot refreshed November 18: 13 live product pages, Wave 2 not started, Wave 1 reviews unrecorded, extra sales channels on live products and FSC claims on eight live pages. Not rechecked since; held pages got a friendly 404 on November 19.",
   ),
   source(
     "trade-pipeline",
