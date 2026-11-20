@@ -1,638 +1,596 @@
 {
- "standardSentence": "Free white glove delivery in the contiguous US: we bring your piece into your home and assemble it. Where access makes in-home delivery impossible (fewer than 5% of orders), we deliver to your threshold instead.",
- "decidedBy": "owner, 2026-11-19 (option B; remove tax wording, curbside, 'varies by location' and the pasted two-year-warranty block; all furniture lead times 12-16 weeks)",
- "receipts": [
-  {
-   "id": "gid://shopify/Product/1732057796",
-   "handle": "round-walnut-dining-table",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "dea50f9c106b419423797e675324544d3eba2b03d82fe73116e29163873f50fa",
-   "updatedAt": "2026-11-19T15:24:31Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/4249916100",
-   "handle": "mid-century-glass-dining-table",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "ddc86fbf9dfb7ebbc0ab24a91b7740434d29cb3989fb0dd8c726dfbd8b15a251",
-   "updatedAt": "2026-11-19T15:35:58Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/4799382916",
-   "handle": "sputnik-mid-century-dining-set",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "6e91fbab57c1d4946dbbc2d4edef804dd759e052bc1f11749a94475c12c246d0",
-   "updatedAt": "2026-11-19T15:51:22Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/8343305847083",
-   "handle": "capri-modern-dining-table-set_",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "1e2161598a396baedfeec09e08ae9c83e79fc423968f1dfc670ee08bf00ac9f7",
-   "updatedAt": "2026-11-19T16:35:36Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/8402750439723",
-   "handle": "modern-round-extendable-dining-table-ohio",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "8b97f6d1c31f6dda667ecbcdd0bb912bb4ca38459c0a631b4b728d7ed7b8de69",
-   "updatedAt": "2026-11-19T16:36:58Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/8402750865707",
-   "handle": "extendable-dining-table-compagno",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "31c2540e7439abfcbb34402b3f369ae67473a5f4afcc84711e11d6c3cb799b4a",
-   "updatedAt": "2026-11-19T16:39:56Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/9755081310507",
-   "handle": "scandinavian-oval-dining-table-mar-vista",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "8ceef1cb8ca894eb8dd8ec634290a9df7aed4efccc968186f6523c4e6b87a205",
-   "updatedAt": "2026-11-19T16:42:49Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/6658939551846",
-   "handle": "kineko-mid-century-modern-tv-stand",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "821b2b97a9ef72b9c1b3a2af3182fad31d6f8a04c738e182a515038ed9f6819d",
-   "updatedAt": "2026-11-19T16:45:18Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/8734589518123",
-   "handle": "the-astrid-mid-century-modern-sideboard-buffet",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "ccb4a609ec74303388679d3124246b4d0fc44a83b484851c8c11d7a6a546aa89",
-   "updatedAt": "2026-11-19T16:51:45Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/6746851049574",
-   "handle": "mid-century-modern-walnut-nightstand",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "605b0e05fac12d3eb6778a7d84f47e021c9da8f17a69e52586de7c3bcca7e634",
-   "updatedAt": "2026-11-19T16:59:08Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/1702750404",
-   "handle": "mid-century-walnut-coffee-table",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "af1356c5c1d58f55fa7ee65398ee450d0aa165e63a04fae95fee08f9a60380cf",
-   "updatedAt": "2026-11-19T16:59:50Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/1702784452",
-   "handle": "modern-surfboard-coffee-table",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "9c4907a9f84be3768f2d6c2f149a8300f979eff93d5613788952a0649226f71d",
-   "updatedAt": "2026-11-19T17:03:14Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/1484121931878",
-   "handle": "modern-oval-surfboard-coffee-table",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "33ce1f48480ade228d7359cb78dd88e74f572575ba9e4cdf1b7bf1683c174d2b",
-   "updatedAt": "2026-11-19T17:05:10Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/3744091140",
-   "handle": "mid-century-walnut-round-coffee-table",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "404e14d1784ab0d98e8b9645f439f01449456ab107e93cfec1826b2a4bf2005f",
-   "updatedAt": "2026-11-19T17:22:01Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/1710953732",
-   "handle": "mid-century-modern-coffee-table-the-clevelander",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "a8e1effc54ae299021199b0772a64ead2f1a660f44b39a8829645c628ba24b65",
-   "updatedAt": "2026-11-19T17:22:34Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/6262652228",
-   "handle": "luxury-marble-coffee-table",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "f1ea527cb7b6f13e875a57dc8c6c05f4820dbc478bd65f03cea637907b39522e",
-   "updatedAt": "2026-11-19T17:23:06Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/6658981134438",
-   "handle": "kineko-japandi-coffee-table",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "53248415cb1bb96b0f571a3dbf13a3c3b5f2170c3e3b618df68f49d72e3ce0cf",
-   "updatedAt": "2026-11-19T17:23:40Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/6778398507110",
-   "handle": "modern-side-table-nightstand-pair",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "e47dba599b63fb8b770f2605d0b17c3d4b6707fac82c264ec597a5f83a8401e7",
-   "updatedAt": "2026-11-19T17:28:36Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/1480826191974",
-   "handle": "the-elmore-modern-credenza",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "b44cf0c7c8e02573a6ea233629b66075aee8709730032ec22bcd8678abc6b353",
-   "updatedAt": "2026-11-19T17:29:04Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/6717951934566",
-   "handle": "the-wabi-sabi-low-credenza",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "9da35756c3ced0e61a717c81fa5fc89a583c39f08907fb768259f2967451f7b9",
-   "updatedAt": "2026-11-19T17:30:14Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/6823326253158",
-   "handle": "jaco-modern-sideboard-solid-oak-3d-texture-handmade-ohio",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "40905f1c7be96d20ed281d174a7d091501ab3ec5aa5fb491c7ab8a7aed46fe93",
-   "updatedAt": "2026-11-19T18:16:57Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/8758404612395",
-   "handle": "caipirinha-modern-bar-cabinet-solid-walnut",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "3c65edd555ddda7bfe495083a86fc1440ea10802895aadbd5efa6ff80b68033e",
-   "updatedAt": "2026-11-19T18:17:35Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/3906204932",
-   "handle": "luxury-pink-steel-console-table",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "57f0782b9a28a8658cc4401271532e927fe57a6f8b3fa56fdf2257dbb820c835",
-   "updatedAt": "2026-11-19T18:36:05Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/4700977860",
-   "handle": "luxury-pink-console-table",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "e1ad948664cf1c7678e3fa7f9f9a15589e413773acefb65f98cadb07315d7344",
-   "updatedAt": "2026-11-19T18:43:25Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/8616677507371",
-   "handle": "mid-century-dresser-larchmere-tallboy",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "e16ff817280eab9667000ec91441c0ce87ddb54678d7f84aa129909273f72327",
-   "updatedAt": "2026-11-19T18:45:15Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/4870979844",
-   "handle": "the-stowe",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "049f95e69d5c4b3ede729e7c2f7c95ef88a0b82bde3a76012423d92ec769818e",
-   "updatedAt": "2026-11-19T18:45:48Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/3532051710054",
-   "handle": "the-wookie",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "bf0f8a611b66cfdf47ebdefdd77ad744e355bc4881ef43d49a39b72d60bb5601",
-   "updatedAt": "2026-11-19T18:47:02Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/1377488404582",
-   "handle": "the-carlyle_walnut-dresser",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "e80fe77c91c4ec95da939a2f20510ef089e398deb1a4a52f1b532227e1f105a8",
-   "updatedAt": "2026-11-19T18:56:01Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/8576072876331",
-   "handle": "larchmere-wideboy-mid-century-modern-dresser",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "82f9c6175ca535fe5eda8760b1dbee934e30f93dea0de4580e39c0be92e36e26",
-   "updatedAt": "2026-11-19T18:59:03Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/6125433284",
-   "handle": "mid-century-modern-bench_continental",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "44524809a4776baeadc2e8b78a707b03b77bf912dc2c74c2335286f3ae15694e",
-   "updatedAt": "2026-11-19T19:01:58Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/3926746759270",
-   "handle": "danish-mid-century-office-desk",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "017b6e72131fe0de12aae3367c233addf9f818c23c61dae8f313fa172db11ce1",
-   "updatedAt": "2026-11-19T19:04:58Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/3532484608102",
-   "handle": "mid-century-modern-floor-lamp-warwick",
-   "result": "updated",
-   "session": "earlier 2026-11-19 cloud session via Shopify connector",
-   "afterHash": "6b0be933a2673567b3e6e2e8ffd4da0cb0a60882d796c6abaf36027685b25e85",
-   "updatedAt": "2026-11-19T19:18:05Z",
-   "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
-   "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
-  },
-  {
-   "id": "gid://shopify/Product/4344226372",
-   "handle": "sputnik-mixed",
-   "reason": [
-    "shipping-wording"
-   ],
-   "beforeHash": "a5459d9f1e893b95984eb8f3bb68ab1da81879710f96d81a9371b8802c5dace1",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "d346247b02f2d5b6e9e6751a880322a048a989ba5d3b71688f861942eae9db30",
-   "verifiedAt": "2026-11-19T20:05:18.772Z"
-  },
-  {
-   "id": "gid://shopify/Product/1712495428",
-   "handle": "modern-live-edge-dining-table",
-   "reason": [
-    "shipping-wording",
-    "warranty-paragraph-removed"
-   ],
-   "beforeHash": "c5b93a4b375eb192d2b03ed7e19ec0881cebfacfefa513bb5e3211013f90a3b7",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "b33407e85975ab51023f1bb390ae11e13816b27f7454bbf70e0bd156f2b04cf2",
-   "verifiedAt": "2026-11-19T20:05:24.137Z"
-  },
-  {
-   "id": "gid://shopify/Product/4743435972",
-   "handle": "live-edge-dining-table",
-   "reason": [
-    "shipping-wording",
-    "warranty-paragraph-removed"
-   ],
-   "beforeHash": "87e2f30a08ecde144a05276394b8bb7ac84a9ac46fc6f4961ad0d97b2f904bc5",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "9c2390e5b3532466e8333690655d444a3e6298515d526069c6fda3817a72d64b",
-   "verifiedAt": "2026-11-19T20:05:24.819Z"
-  },
-  {
-   "id": "gid://shopify/Product/4828419972",
-   "handle": "the-april-live-edge-slab",
-   "reason": [
-    "shipping-wording"
-   ],
-   "beforeHash": "b6c4930fa0c6bff426c6a056fb282c76b826547b75343812f03218fb3f96663d",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "2e279884fe8880bf0bd1340a92f45da92c122772816c973dcec6230c3c01359c",
-   "verifiedAt": "2026-11-19T20:05:25.595Z"
-  },
-  {
-   "id": "gid://shopify/Product/8622649041",
-   "handle": "claro-walnut-dining-table",
-   "reason": [
-    "shipping-wording",
-    "lead-time-12-16"
-   ],
-   "beforeHash": "c7f13995e6cb7cfabb6837cde9420e63fd7873beb7bd828122f90e2fc191c993",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "fa8a2f8efa113fe8ef3b80d58566d2ba72a20aa82c22848c0a851a1c0dbedb6d",
-   "verifiedAt": "2026-11-19T20:05:26.301Z"
-  },
-  {
-   "id": "gid://shopify/Product/4861853237350",
-   "handle": "claro-walnut-live-edge-table",
-   "reason": [
-    "shipping-wording"
-   ],
-   "beforeHash": "ea818b818eb981fa91124007c587618fc223b1375916cbc27606b3b55c3c814d",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "82ebd182f0c4d19ffccef65d4e10342a515c747b9e34dc02adcab65d17df5d8e",
-   "verifiedAt": "2026-11-19T20:05:27.040Z"
-  },
-  {
-   "id": "gid://shopify/Product/1480874229862",
-   "handle": "live-edge-walnut-resin-table",
-   "reason": [
-    "shipping-wording",
-    "lead-time-12-16",
-    "warranty-paragraph-removed"
-   ],
-   "beforeHash": "690cae8fa90bba1c0faf96ba4463df7420fef7023e4e818224d8afad95c38380",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "ac2ed48031f28d1cd7efc7201d6eeec17396491a9575beaf5d4fec5c998ebb1f",
-   "verifiedAt": "2026-11-19T20:05:27.683Z"
-  },
-  {
-   "id": "gid://shopify/Product/4034290436",
-   "handle": "modern-mid-century-glass-dining-table",
-   "reason": [
-    "shipping-wording",
-    "warranty-paragraph-removed"
-   ],
-   "beforeHash": "394da91b1c30370479c086c928ab4e6ed22c23eeb0c85c55f592e6de97e5a670",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "7a1129e1d1a182d8aba3b7ce59f7fc7112abe9112dcb6136cb583c8da7992c59",
-   "verifiedAt": "2026-11-19T20:05:28.456Z"
-  },
-  {
-   "id": "gid://shopify/Product/1707454212",
-   "handle": "mila-dining-table",
-   "reason": [
-    "shipping-wording"
-   ],
-   "beforeHash": "fda6a9bf205c9f27fd0ba05d1169423589b0bd8051bafd4c35bbda6d127418f4",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "985194511dafe5f68edf53c8dc3d0e648fccefc9649d59c517a2dbb471c99d58",
-   "verifiedAt": "2026-11-19T20:05:29.039Z"
-  },
-  {
-   "id": "gid://shopify/Product/1710842308",
-   "handle": "sputnik-scandinavian-modern-dining-table-handmade-ohio",
-   "reason": [
-    "shipping-wording"
-   ],
-   "beforeHash": "01f750905bc1ede1d4b7f249d57429f54126e585e16f64ff904dc43982a79e48",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "1495c5e1f82ec364bbb75a0c7db64d5e777a6cc69ef070edc8723dd986b40535",
-   "verifiedAt": "2026-11-19T20:05:29.653Z"
-  },
-  {
-   "id": "gid://shopify/Product/1731943300",
-   "handle": "sputnik-hairpin",
-   "reason": [
-    "shipping-wording"
-   ],
-   "beforeHash": "bf4a2a9ebcb58c13740d9d2d2620b9c5b77b34701196a473a14c8cb4a292e01d",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "287fb29e54e3ab963009cb4e8f7d2fecfc354bb139654df1872f97a08674fa97",
-   "verifiedAt": "2026-11-19T20:05:30.458Z"
-  },
-  {
-   "id": "gid://shopify/Product/7726031560",
-   "handle": "the-modern-coffee-table-provo",
-   "reason": [
-    "shipping-wording"
-   ],
-   "beforeHash": "7571095d3869a2292cf12a421829b30b79c450364a8a9f176b2c57c9b68c9480",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "f3ef9a5236ae8ba78c3ef5e5f1baf5e2280c09c3a691a77fd9231d61525ee675",
-   "verifiedAt": "2026-11-19T20:05:31.362Z"
-  },
-  {
-   "id": "gid://shopify/Product/1811627588",
-   "handle": "the-zoe",
-   "reason": [
-    "shipping-wording"
-   ],
-   "beforeHash": "c56bc1eee8284a9c4c5c4f5cf2029f3b4d2a0df7b54f50482d5b0d3903688f51",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "87a12c3b5e8ec50c162e77adba6fd1e1a6dd120828861e665901db1a4c4180d9",
-   "verifiedAt": "2026-11-19T20:05:32.005Z"
-  },
-  {
-   "id": "gid://shopify/Product/1981529668",
-   "handle": "santa-barbara",
-   "reason": [
-    "shipping-wording"
-   ],
-   "beforeHash": "c534ddf7387b2e39985115868114e3a3e2073da621f0a164c75fbbc62f16e623",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "0a7de715779b1f046df152fb6328f2d8c03e94c0f1e5af64ced0c9bacfd8f855",
-   "verifiedAt": "2026-11-19T20:05:32.710Z"
-  },
-  {
-   "id": "gid://shopify/Product/1702116932",
-   "handle": "mid-century-modern-extendable-dining-table-santa-monica",
-   "reason": [
-    "shipping-wording",
-    "warranty-paragraph-removed"
-   ],
-   "beforeHash": "d2027de2499f6b27deea74caf9c0c914f3ca90f12960f5e20694197f3518944a",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "d949ee8a0cfccc698534f618c11a29c97301fca51bac633a136bafae9212dd22",
-   "verifiedAt": "2026-11-19T20:05:33.450Z"
-  },
-  {
-   "id": "gid://shopify/Product/1731997572",
-   "handle": "scandinavian-danish-modern-dining-table",
-   "reason": [
-    "shipping-wording",
-    "lead-time-12-16"
-   ],
-   "beforeHash": "8d97809120dea3201428de6577ee75addb26563e164adf8f9d3c9dc0062963be",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "26739f6eafa89d4f380821104958dcace74c725d8406e5ece69194b901ca15f0",
-   "verifiedAt": "2026-11-19T20:05:34.159Z"
-  },
-  {
-   "id": "gid://shopify/Product/1775367236",
-   "handle": "santa-monica-cherry",
-   "reason": [
-    "shipping-wording"
-   ],
-   "beforeHash": "4cd416e5c1e8d78a50b8f3efb42f76bda9728c01e7622e583bb04ca074a0b651",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "3a5dd8462da24b8b414a0f64faacba7dd73c8d8fda3da7ff7c0a281dfa3f56a6",
-   "verifiedAt": "2026-11-19T20:05:34.861Z"
-  },
-  {
-   "id": "gid://shopify/Product/3956268548",
-   "handle": "santa-monica-mixed",
-   "reason": [
-    "shipping-wording"
-   ],
-   "beforeHash": "479163e6389b93515d11f8405f9f1ce7b91fa04bc225bd2d814bc4fcc2d7f65c",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "af10a59ad76f1dbd0cfc95377de2053e388cb5fd5764ea4aaae131c257d334cf",
-   "verifiedAt": "2026-11-19T20:05:35.547Z"
-  },
-  {
-   "id": "gid://shopify/Product/9885299671339",
-   "handle": "the-bossa-nova-walnut-handcrafted-expandable-table-401794229",
-   "reason": [
-    "shipping-wording"
-   ],
-   "beforeHash": "01c59b266efdc5edc75d44879bdec44dc30ca7f12b3892a7662186b8cb02b999",
-   "result": "updated",
-   "checks": {
-    "standardSentenceOnce": true,
-    "noBannedWording": true,
-    "stillDraft": true
-   },
-   "afterHash": "7e08f78923f367e88c6b6e01436ac82c006be3db8ff8f581b295918ceca48e41",
-   "verifiedAt": "2026-11-19T20:05:36.188Z"
-  }
- ]
+  "standardSentence": "Free white glove delivery in the contiguous US: we bring your piece into your home and assemble it. Where access makes in-home delivery impossible (fewer than 5% of orders), we deliver to your threshold instead.",
+  "decidedBy": "owner, 2026-11-19 (option B; remove tax wording, curbside, 'varies by location' and the pasted two-year-warranty block; all furniture lead times 12-16 weeks)",
+  "receipts": [
+    {
+      "id": "gid://shopify/Product/1732057796",
+      "handle": "round-walnut-dining-table",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "dea50f9c106b419423797e675324544d3eba2b03d82fe73116e29163873f50fa",
+      "updatedAt": "2026-11-19T15:24:31Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/4249916100",
+      "handle": "mid-century-glass-dining-table",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "ddc86fbf9dfb7ebbc0ab24a91b7740434d29cb3989fb0dd8c726dfbd8b15a251",
+      "updatedAt": "2026-11-19T15:35:58Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/4799382916",
+      "handle": "sputnik-mid-century-dining-set",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "6e91fbab57c1d4946dbbc2d4edef804dd759e052bc1f11749a94475c12c246d0",
+      "updatedAt": "2026-11-19T15:51:22Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/8343305847083",
+      "handle": "capri-modern-dining-table-set_",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "1e2161598a396baedfeec09e08ae9c83e79fc423968f1dfc670ee08bf00ac9f7",
+      "updatedAt": "2026-11-19T16:35:36Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/8402750439723",
+      "handle": "modern-round-extendable-dining-table-ohio",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "8b97f6d1c31f6dda667ecbcdd0bb912bb4ca38459c0a631b4b728d7ed7b8de69",
+      "updatedAt": "2026-11-19T16:36:58Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/8402750865707",
+      "handle": "extendable-dining-table-compagno",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "31c2540e7439abfcbb34402b3f369ae67473a5f4afcc84711e11d6c3cb799b4a",
+      "updatedAt": "2026-11-19T16:39:56Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/9755081310507",
+      "handle": "scandinavian-oval-dining-table-mar-vista",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "8ceef1cb8ca894eb8dd8ec634290a9df7aed4efccc968186f6523c4e6b87a205",
+      "updatedAt": "2026-11-19T16:42:49Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/6658939551846",
+      "handle": "kineko-mid-century-modern-tv-stand",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "821b2b97a9ef72b9c1b3a2af3182fad31d6f8a04c738e182a515038ed9f6819d",
+      "updatedAt": "2026-11-19T16:45:18Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/8734589518123",
+      "handle": "the-astrid-mid-century-modern-sideboard-buffet",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "ccb4a609ec74303388679d3124246b4d0fc44a83b484851c8c11d7a6a546aa89",
+      "updatedAt": "2026-11-19T16:51:45Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/6746851049574",
+      "handle": "mid-century-modern-walnut-nightstand",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "605b0e05fac12d3eb6778a7d84f47e021c9da8f17a69e52586de7c3bcca7e634",
+      "updatedAt": "2026-11-19T16:59:08Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/1702750404",
+      "handle": "mid-century-walnut-coffee-table",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "af1356c5c1d58f55fa7ee65398ee450d0aa165e63a04fae95fee08f9a60380cf",
+      "updatedAt": "2026-11-19T16:59:50Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/1702784452",
+      "handle": "modern-surfboard-coffee-table",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "9c4907a9f84be3768f2d6c2f149a8300f979eff93d5613788952a0649226f71d",
+      "updatedAt": "2026-11-19T17:03:14Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/1484121931878",
+      "handle": "modern-oval-surfboard-coffee-table",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "33ce1f48480ade228d7359cb78dd88e74f572575ba9e4cdf1b7bf1683c174d2b",
+      "updatedAt": "2026-11-19T17:05:10Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/3744091140",
+      "handle": "mid-century-walnut-round-coffee-table",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "404e14d1784ab0d98e8b9645f439f01449456ab107e93cfec1826b2a4bf2005f",
+      "updatedAt": "2026-11-19T17:22:01Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/1710953732",
+      "handle": "mid-century-modern-coffee-table-the-clevelander",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "a8e1effc54ae299021199b0772a64ead2f1a660f44b39a8829645c628ba24b65",
+      "updatedAt": "2026-11-19T17:22:34Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/6262652228",
+      "handle": "luxury-marble-coffee-table",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "f1ea527cb7b6f13e875a57dc8c6c05f4820dbc478bd65f03cea637907b39522e",
+      "updatedAt": "2026-11-19T17:23:06Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/6658981134438",
+      "handle": "kineko-japandi-coffee-table",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "53248415cb1bb96b0f571a3dbf13a3c3b5f2170c3e3b618df68f49d72e3ce0cf",
+      "updatedAt": "2026-11-19T17:23:40Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/6778398507110",
+      "handle": "modern-side-table-nightstand-pair",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "e47dba599b63fb8b770f2605d0b17c3d4b6707fac82c264ec597a5f83a8401e7",
+      "updatedAt": "2026-11-19T17:28:36Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/1480826191974",
+      "handle": "the-elmore-modern-credenza",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "b44cf0c7c8e02573a6ea233629b66075aee8709730032ec22bcd8678abc6b353",
+      "updatedAt": "2026-11-19T17:29:04Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/6717951934566",
+      "handle": "the-wabi-sabi-low-credenza",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "9da35756c3ced0e61a717c81fa5fc89a583c39f08907fb768259f2967451f7b9",
+      "updatedAt": "2026-11-19T17:30:14Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/6823326253158",
+      "handle": "jaco-modern-sideboard-solid-oak-3d-texture-handmade-ohio",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "40905f1c7be96d20ed281d174a7d091501ab3ec5aa5fb491c7ab8a7aed46fe93",
+      "updatedAt": "2026-11-19T18:16:57Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/8758404612395",
+      "handle": "caipirinha-modern-bar-cabinet-solid-walnut",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "3c65edd555ddda7bfe495083a86fc1440ea10802895aadbd5efa6ff80b68033e",
+      "updatedAt": "2026-11-19T18:17:35Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/3906204932",
+      "handle": "luxury-pink-steel-console-table",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "57f0782b9a28a8658cc4401271532e927fe57a6f8b3fa56fdf2257dbb820c835",
+      "updatedAt": "2026-11-19T18:36:05Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/4700977860",
+      "handle": "luxury-pink-console-table",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "e1ad948664cf1c7678e3fa7f9f9a15589e413773acefb65f98cadb07315d7344",
+      "updatedAt": "2026-11-19T18:43:25Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/8616677507371",
+      "handle": "mid-century-dresser-larchmere-tallboy",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "e16ff817280eab9667000ec91441c0ce87ddb54678d7f84aa129909273f72327",
+      "updatedAt": "2026-11-19T18:45:15Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/4870979844",
+      "handle": "the-stowe",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "049f95e69d5c4b3ede729e7c2f7c95ef88a0b82bde3a76012423d92ec769818e",
+      "updatedAt": "2026-11-19T18:45:48Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/3532051710054",
+      "handle": "the-wookie",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "bf0f8a611b66cfdf47ebdefdd77ad744e355bc4881ef43d49a39b72d60bb5601",
+      "updatedAt": "2026-11-19T18:47:02Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/1377488404582",
+      "handle": "the-carlyle_walnut-dresser",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "e80fe77c91c4ec95da939a2f20510ef089e398deb1a4a52f1b532227e1f105a8",
+      "updatedAt": "2026-11-19T18:56:01Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/8576072876331",
+      "handle": "larchmere-wideboy-mid-century-modern-dresser",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "82f9c6175ca535fe5eda8760b1dbee934e30f93dea0de4580e39c0be92e36e26",
+      "updatedAt": "2026-11-19T18:59:03Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/6125433284",
+      "handle": "mid-century-modern-bench_continental",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "44524809a4776baeadc2e8b78a707b03b77bf912dc2c74c2335286f3ae15694e",
+      "updatedAt": "2026-11-19T19:01:58Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/3926746759270",
+      "handle": "danish-mid-century-office-desk",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "017b6e72131fe0de12aae3367c233addf9f818c23c61dae8f313fa172db11ce1",
+      "updatedAt": "2026-11-19T19:04:58Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/3532484608102",
+      "handle": "mid-century-modern-floor-lamp-warwick",
+      "result": "updated",
+      "session": "earlier 2026-11-19 cloud session via Shopify connector",
+      "afterHash": "6b0be933a2673567b3e6e2e8ffd4da0cb0a60882d796c6abaf36027685b25e85",
+      "updatedAt": "2026-11-19T19:18:05Z",
+      "note": "before text not retained (prepared file lost with the cloud session); rollback source is post-content-2026-11-05.json / baseline.json, re-read current state first",
+      "verifiedAt": "2026-11-19 re-read: standard sentence once; no curbside/blanket/varies-by-location/two-year/tax/boilerplate; lead times 12-16"
+    },
+    {
+      "id": "gid://shopify/Product/4344226372",
+      "handle": "sputnik-mixed",
+      "reason": ["shipping-wording"],
+      "beforeHash": "a5459d9f1e893b95984eb8f3bb68ab1da81879710f96d81a9371b8802c5dace1",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "d346247b02f2d5b6e9e6751a880322a048a989ba5d3b71688f861942eae9db30",
+      "verifiedAt": "2026-11-19T20:05:18.772Z"
+    },
+    {
+      "id": "gid://shopify/Product/1712495428",
+      "handle": "modern-live-edge-dining-table",
+      "reason": ["shipping-wording", "warranty-paragraph-removed"],
+      "beforeHash": "c5b93a4b375eb192d2b03ed7e19ec0881cebfacfefa513bb5e3211013f90a3b7",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "b33407e85975ab51023f1bb390ae11e13816b27f7454bbf70e0bd156f2b04cf2",
+      "verifiedAt": "2026-11-19T20:05:24.137Z"
+    },
+    {
+      "id": "gid://shopify/Product/4743435972",
+      "handle": "live-edge-dining-table",
+      "reason": ["shipping-wording", "warranty-paragraph-removed"],
+      "beforeHash": "87e2f30a08ecde144a05276394b8bb7ac84a9ac46fc6f4961ad0d97b2f904bc5",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "9c2390e5b3532466e8333690655d444a3e6298515d526069c6fda3817a72d64b",
+      "verifiedAt": "2026-11-19T20:05:24.819Z"
+    },
+    {
+      "id": "gid://shopify/Product/4828419972",
+      "handle": "the-april-live-edge-slab",
+      "reason": ["shipping-wording"],
+      "beforeHash": "b6c4930fa0c6bff426c6a056fb282c76b826547b75343812f03218fb3f96663d",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "2e279884fe8880bf0bd1340a92f45da92c122772816c973dcec6230c3c01359c",
+      "verifiedAt": "2026-11-19T20:05:25.595Z"
+    },
+    {
+      "id": "gid://shopify/Product/8622649041",
+      "handle": "claro-walnut-dining-table",
+      "reason": ["shipping-wording", "lead-time-12-16"],
+      "beforeHash": "c7f13995e6cb7cfabb6837cde9420e63fd7873beb7bd828122f90e2fc191c993",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "fa8a2f8efa113fe8ef3b80d58566d2ba72a20aa82c22848c0a851a1c0dbedb6d",
+      "verifiedAt": "2026-11-19T20:05:26.301Z"
+    },
+    {
+      "id": "gid://shopify/Product/4861853237350",
+      "handle": "claro-walnut-live-edge-table",
+      "reason": ["shipping-wording"],
+      "beforeHash": "ea818b818eb981fa91124007c587618fc223b1375916cbc27606b3b55c3c814d",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "82ebd182f0c4d19ffccef65d4e10342a515c747b9e34dc02adcab65d17df5d8e",
+      "verifiedAt": "2026-11-19T20:05:27.040Z"
+    },
+    {
+      "id": "gid://shopify/Product/1480874229862",
+      "handle": "live-edge-walnut-resin-table",
+      "reason": [
+        "shipping-wording",
+        "lead-time-12-16",
+        "warranty-paragraph-removed"
+      ],
+      "beforeHash": "690cae8fa90bba1c0faf96ba4463df7420fef7023e4e818224d8afad95c38380",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "ac2ed48031f28d1cd7efc7201d6eeec17396491a9575beaf5d4fec5c998ebb1f",
+      "verifiedAt": "2026-11-19T20:05:27.683Z"
+    },
+    {
+      "id": "gid://shopify/Product/4034290436",
+      "handle": "modern-mid-century-glass-dining-table",
+      "reason": ["shipping-wording", "warranty-paragraph-removed"],
+      "beforeHash": "394da91b1c30370479c086c928ab4e6ed22c23eeb0c85c55f592e6de97e5a670",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "7a1129e1d1a182d8aba3b7ce59f7fc7112abe9112dcb6136cb583c8da7992c59",
+      "verifiedAt": "2026-11-19T20:05:28.456Z"
+    },
+    {
+      "id": "gid://shopify/Product/1707454212",
+      "handle": "mila-dining-table",
+      "reason": ["shipping-wording"],
+      "beforeHash": "fda6a9bf205c9f27fd0ba05d1169423589b0bd8051bafd4c35bbda6d127418f4",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "985194511dafe5f68edf53c8dc3d0e648fccefc9649d59c517a2dbb471c99d58",
+      "verifiedAt": "2026-11-19T20:05:29.039Z"
+    },
+    {
+      "id": "gid://shopify/Product/1710842308",
+      "handle": "sputnik-scandinavian-modern-dining-table-handmade-ohio",
+      "reason": ["shipping-wording"],
+      "beforeHash": "01f750905bc1ede1d4b7f249d57429f54126e585e16f64ff904dc43982a79e48",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "1495c5e1f82ec364bbb75a0c7db64d5e777a6cc69ef070edc8723dd986b40535",
+      "verifiedAt": "2026-11-19T20:05:29.653Z"
+    },
+    {
+      "id": "gid://shopify/Product/1731943300",
+      "handle": "sputnik-hairpin",
+      "reason": ["shipping-wording"],
+      "beforeHash": "bf4a2a9ebcb58c13740d9d2d2620b9c5b77b34701196a473a14c8cb4a292e01d",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "287fb29e54e3ab963009cb4e8f7d2fecfc354bb139654df1872f97a08674fa97",
+      "verifiedAt": "2026-11-19T20:05:30.458Z"
+    },
+    {
+      "id": "gid://shopify/Product/7726031560",
+      "handle": "the-modern-coffee-table-provo",
+      "reason": ["shipping-wording"],
+      "beforeHash": "7571095d3869a2292cf12a421829b30b79c450364a8a9f176b2c57c9b68c9480",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "f3ef9a5236ae8ba78c3ef5e5f1baf5e2280c09c3a691a77fd9231d61525ee675",
+      "verifiedAt": "2026-11-19T20:05:31.362Z"
+    },
+    {
+      "id": "gid://shopify/Product/1811627588",
+      "handle": "the-zoe",
+      "reason": ["shipping-wording"],
+      "beforeHash": "c56bc1eee8284a9c4c5c4f5cf2029f3b4d2a0df7b54f50482d5b0d3903688f51",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "87a12c3b5e8ec50c162e77adba6fd1e1a6dd120828861e665901db1a4c4180d9",
+      "verifiedAt": "2026-11-19T20:05:32.005Z"
+    },
+    {
+      "id": "gid://shopify/Product/1981529668",
+      "handle": "santa-barbara",
+      "reason": ["shipping-wording"],
+      "beforeHash": "c534ddf7387b2e39985115868114e3a3e2073da621f0a164c75fbbc62f16e623",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "0a7de715779b1f046df152fb6328f2d8c03e94c0f1e5af64ced0c9bacfd8f855",
+      "verifiedAt": "2026-11-19T20:05:32.710Z"
+    },
+    {
+      "id": "gid://shopify/Product/1702116932",
+      "handle": "mid-century-modern-extendable-dining-table-santa-monica",
+      "reason": ["shipping-wording", "warranty-paragraph-removed"],
+      "beforeHash": "d2027de2499f6b27deea74caf9c0c914f3ca90f12960f5e20694197f3518944a",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "d949ee8a0cfccc698534f618c11a29c97301fca51bac633a136bafae9212dd22",
+      "verifiedAt": "2026-11-19T20:05:33.450Z"
+    },
+    {
+      "id": "gid://shopify/Product/1731997572",
+      "handle": "scandinavian-danish-modern-dining-table",
+      "reason": ["shipping-wording", "lead-time-12-16"],
+      "beforeHash": "8d97809120dea3201428de6577ee75addb26563e164adf8f9d3c9dc0062963be",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "26739f6eafa89d4f380821104958dcace74c725d8406e5ece69194b901ca15f0",
+      "verifiedAt": "2026-11-19T20:05:34.159Z"
+    },
+    {
+      "id": "gid://shopify/Product/1775367236",
+      "handle": "santa-monica-cherry",
+      "reason": ["shipping-wording"],
+      "beforeHash": "4cd416e5c1e8d78a50b8f3efb42f76bda9728c01e7622e583bb04ca074a0b651",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "3a5dd8462da24b8b414a0f64faacba7dd73c8d8fda3da7ff7c0a281dfa3f56a6",
+      "verifiedAt": "2026-11-19T20:05:34.861Z"
+    },
+    {
+      "id": "gid://shopify/Product/3956268548",
+      "handle": "santa-monica-mixed",
+      "reason": ["shipping-wording"],
+      "beforeHash": "479163e6389b93515d11f8405f9f1ce7b91fa04bc225bd2d814bc4fcc2d7f65c",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "af10a59ad76f1dbd0cfc95377de2053e388cb5fd5764ea4aaae131c257d334cf",
+      "verifiedAt": "2026-11-19T20:05:35.547Z"
+    },
+    {
+      "id": "gid://shopify/Product/9885299671339",
+      "handle": "the-bossa-nova-walnut-handcrafted-expandable-table-401794229",
+      "reason": ["shipping-wording"],
+      "beforeHash": "01c59b266efdc5edc75d44879bdec44dc30ca7f12b3892a7662186b8cb02b999",
+      "result": "updated",
+      "checks": {
+        "standardSentenceOnce": true,
+        "noBannedWording": true,
+        "stillDraft": true
+      },
+      "afterHash": "7e08f78923f367e88c6b6e01436ac82c006be3db8ff8f581b295918ceca48e41",
+      "verifiedAt": "2026-11-19T20:05:36.188Z"
+    }
+  ]
 }
