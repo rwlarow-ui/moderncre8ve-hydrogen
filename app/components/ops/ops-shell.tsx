@@ -85,6 +85,7 @@ export function OpsShell({ children }: { children: React.ReactNode }) {
           aria-label="Ops"
           className="mx-auto flex max-w-(--page-width) overflow-x-auto border-line-subtle border-t px-4 text-sm md:px-8"
         >
+          <OpsNavLink to="/ops/status">Status</OpsNavLink>
           <OpsNavLink to="/ops/daily">Daily</OpsNavLink>
           <OpsNavLink to="/ops">Current orders</OpsNavLink>
           <OpsNavLink to="/ops/pipeline">Pipeline</OpsNavLink>

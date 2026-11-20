@@ -144,3 +144,9 @@ The Tech tab has an **Ops Hub status** source (`ops-hub-status`), the rollout pa
 1. Run `scripts/sql/ops-hub-status-source.sql` in the existing Supabase SQL editor **before** deploying. It only adds the ID to the database's source allowlist and is safe to reapply.
 2. Deploy. If the app is deployed first, reading context fails with "Unknown source" until the SQL runs, because every visible source is checked when a tab or `list_context` loads.
 3. Publish the page's text to `ops-hub-status` with the connector. The artifact itself is private to Rob until he shares it with Haven from its page on claude.ai.
+
+## Status tab
+
+`/ops/status` is the live rollout checklist, split into **Haven's to-dos** and **Rob's to-dos**. Each step ticks itself off from the hub's own data every time the page loads: sign-ins, Google connections, the care@ sender, approved templates, PDF and signature, emails sent, the worker secret, the sign-in cutover flag, the PO and request-form email settings, the last saved "Request this piece", pipeline Reply needed tasks and document freshness. Steps the hub can't see (the old ChatGPT hub, Google scopes) show as "can't be checked". Below the lists are the email settings Haven decides and an area-by-area view.
+
+It needs no setup and no SQL: it only reads tables and settings that already exist, and only booleans, counts and dates reach the browser. Rules are in `app/utils/ops-status.js` (tested in `tests/ops-hub-status.test.mjs`), reads in `app/utils/ops-status.server.js`.
