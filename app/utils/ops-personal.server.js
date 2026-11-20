@@ -1,9 +1,13 @@
 import { CompactEncrypt, compactDecrypt } from "jose";
+import { googleConnectError } from "./ops-google-errors.js";
 import { opsStore } from "./ops-store.server.js";
 
 function encryptionKey(env) {
   if (!/^[a-f0-9]{64}$/i.test(env.OPS_CONNECTION_ENCRYPTION_KEY || ""))
-    throw new Error("Private connection encryption is not configured.");
+    throw googleConnectError(
+      "no_key",
+      "Private connection encryption is not configured.",
+    );
   return Uint8Array.from(env.OPS_CONNECTION_ENCRYPTION_KEY.match(/../g), (s) =>
     Number.parseInt(s, 16),
   );
@@ -12,14 +16,19 @@ export async function savePersonalConnection(env, user, tokens) {
   if (user.role !== "owner") throw new Response("Forbidden", { status: 403 });
   const scopes = new Set(String(tokens.scope || "").split(" "));
   if (
-    !tokens.refresh_token ||
     !scopes.has("https://www.googleapis.com/auth/gmail.readonly") ||
     !scopes.has("https://www.googleapis.com/auth/calendar.events.readonly")
   ) {
-    throw new Error(
+    throw googleConnectError(
+      "missing_scopes",
       "Please grant the requested read-only mail and calendar access.",
     );
   }
+  if (!tokens.refresh_token)
+    throw googleConnectError(
+      "no_refresh_token",
+      "Google did not return a refresh token.",
+    );
   const encrypted = await new CompactEncrypt(
     new TextEncoder().encode(tokens.refresh_token),
   )

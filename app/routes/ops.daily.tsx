@@ -6,6 +6,7 @@ import {
 } from "~/components/ops/ops-shell";
 import { OpsWorkspace } from "~/components/ops/workspace";
 import { listCurrentOrders } from "~/utils/ops-dashboard.server";
+import { googleConnectErrorMessage } from "~/utils/ops-google-errors";
 import { paidOrderWeek } from "~/utils/ops-live.server";
 import { loadPersonalDay } from "~/utils/ops-personal.server";
 import { privateHeaders } from "~/utils/ops-store.server";
@@ -23,6 +24,9 @@ export async function loader({ request, context }: Route.LoaderArgs) {
   ]);
   return {
     info,
+    googleError: googleConnectErrorMessage(
+      new URL(request.url).searchParams.get("googleError"),
+    ),
     paid: paid.status === "fulfilled" ? paid.value : null,
     orders: orders.status === "fulfilled" ? orders.value : null,
     personal:
@@ -37,7 +41,8 @@ export async function loader({ request, context }: Route.LoaderArgs) {
 export const action = ({ request, context }: Route.ActionArgs) =>
   workspaceAction(request, context, "daily");
 export default function Daily() {
-  const { info, orders, personal, paid } = useLoaderData<typeof loader>();
+  const { info, orders, personal, paid, googleError } =
+    useLoaderData<typeof loader>();
   return (
     <OpsWorkspace info={info}>
       <OpsCard>
@@ -133,7 +138,7 @@ export default function Daily() {
         <OpsCard>
           <OpsSectionHeading
             title="Your daybook"
-            description="Private to Rob · unread Primary mail and the next seven calendar days"
+            description="Private to you · unread Primary mail and the next seven calendar days"
             action={
               <a
                 className="text-sm underline"
@@ -143,7 +148,10 @@ export default function Daily() {
               </a>
             }
           />
-          <div className="p-6">
+          <div className="space-y-4 p-6">
+            {googleError ? (
+              <OpsNotice ok={false}>{googleError}</OpsNotice>
+            ) : null}
             {personal?.error ? (
               <OpsNotice ok={false}>{personal.error}</OpsNotice>
             ) : !personal?.connected ? (

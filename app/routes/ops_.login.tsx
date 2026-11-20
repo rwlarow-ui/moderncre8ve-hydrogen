@@ -18,6 +18,10 @@ import {
   isOpsAuthenticated,
 } from "~/utils/ops-auth.server";
 import {
+  googleConnectErrorMessage,
+  withGoogleError,
+} from "~/utils/ops-google-errors";
+import {
   assertOpsOrigin,
   currentOpsUser,
   googleConfigured,
@@ -44,18 +48,31 @@ export async function loader({ request, context }: Route.LoaderArgs) {
   const individual = url.searchParams.get("individual") === "1";
   const legacyAllowed =
     context.env.OPS_INDIVIDUAL_LOGIN_ENABLED !== "true" && !individual;
+  const reason = url.searchParams.get("reason");
+  const googleErrorCode =
+    url.searchParams.get("error") === "google"
+      ? googleConnectErrorMessage(reason)
+        ? reason!
+        : "unknown"
+      : null;
+  const googleError = googleErrorCode
+    ? googleConnectErrorMessage(googleErrorCode)
+    : null;
   if (user || (legacyAllowed && isOpsAuthenticated(context.session))) {
+    const target = safeOpsRedirect(
+      url.searchParams.get("redirectTo") || (user ? "/ops/daily" : "/ops"),
+    );
+    // Already signed in: carry the Google failure through instead of
+    // dropping it on the redirect.
     throw redirect(
-      safeOpsRedirect(
-        url.searchParams.get("redirectTo") || (user ? "/ops/daily" : "/ops"),
-      ),
+      googleErrorCode ? withGoogleError(target, googleErrorCode) : target,
     );
   }
   return data(
     {
       googleConfigured: googleConfigured(context.env),
       legacyAllowed,
-      googleError: url.searchParams.get("error") === "google",
+      googleError,
     },
     { headers: privateHeaders },
   );
@@ -209,11 +226,7 @@ export default function OpsLoginRoute() {
             For Rob and Haven’s approved ModernCre8ve Google accounts.
           </p>
           {setup.googleError ? (
-            <OpsNotice ok={false}>
-              Google sign-in could not be completed. Choose the approved account
-              and try again. For a private connection, grant both requested
-              read-only permissions.
-            </OpsNotice>
+            <OpsNotice ok={false}>{setup.googleError}</OpsNotice>
           ) : null}
           {setup.legacyAllowed ? (
             <details className="border-line border-t pt-5">
