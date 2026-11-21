@@ -50,3 +50,18 @@ export function withGoogleError(path, code) {
   url.searchParams.set("googleError", code);
   return url.pathname + url.search;
 }
+
+/**
+ * Where a failed Google *sign-in* goes: the login page in individual mode,
+ * so a legacy shared-password session (before the individual-login cutover)
+ * does not bounce the user past the message to a page that never shows it.
+ */
+export function googleSignInFailurePath(code, returnTo) {
+  const params = new URLSearchParams({
+    individual: "1",
+    error: "google",
+    reason: code,
+  });
+  if (returnTo) params.set("redirectTo", returnTo);
+  return `/ops/login?${params}`;
+}

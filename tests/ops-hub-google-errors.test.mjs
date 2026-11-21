@@ -4,6 +4,7 @@ import { saveCareSender } from "../app/utils/ops-care.server.js";
 import {
   GOOGLE_CONNECT_ERRORS,
   googleConnectErrorMessage,
+  googleSignInFailurePath,
   withGoogleError,
 } from "../app/utils/ops-google-errors.js";
 import { savePersonalConnection } from "../app/utils/ops-personal.server.js";
@@ -76,4 +77,23 @@ test("care@ sender save reports account, scopes and key problems", async () => {
     "no_refresh_token",
   );
   await code(saveCareSender({}, haven, full), "no_key");
+});
+
+test("a failed sign-in returns to the login page in individual mode", () => {
+  const url = new URL(
+    googleSignInFailurePath("not_allowed", "/ops/pos?x=1"),
+    "https://moderncre8ve.com",
+  );
+  assert.equal(url.pathname, "/ops/login");
+  assert.equal(url.searchParams.get("individual"), "1");
+  assert.equal(url.searchParams.get("error"), "google");
+  assert.equal(url.searchParams.get("reason"), "not_allowed");
+  assert.equal(url.searchParams.get("redirectTo"), "/ops/pos?x=1");
+  assert.equal(
+    new URL(
+      googleSignInFailurePath("expired"),
+      "https://x.test",
+    ).searchParams.has("redirectTo"),
+    false,
+  );
 });
