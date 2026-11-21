@@ -1,6 +1,9 @@
 import { redirect } from "react-router";
 import { saveCareSender } from "~/utils/ops-care.server";
-import { withGoogleError } from "~/utils/ops-google-errors";
+import {
+  googleSignInFailurePath,
+  withGoogleError,
+} from "~/utils/ops-google-errors";
 import {
   createIndividualSession,
   currentOpsUser,
@@ -26,7 +29,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
     );
     const target = pending?.personal
       ? withGoogleError(pending.returnTo, code)
-      : `/ops/login?error=google&reason=${encodeURIComponent(code)}`;
+      : googleSignInFailurePath(code, pending?.returnTo);
     return redirect(target, {
       headers: {
         ...privateHeaders,
