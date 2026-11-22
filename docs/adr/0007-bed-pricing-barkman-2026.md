@@ -1,6 +1,8 @@
 # ADR-0007: Bed pricing from Barkman's 2026 wholesale list
 
-**Status:** Accepted. Prices applied in Shopify on 2026-11-09; both beds are still Draft (catalog rollout Wave 1).
+**Status:** Accepted. Prices applied in Shopify on 2026-11-09. Amended 2026-11-22 (D5): the Mansfield takes the Bosco
+prices, the Warwick is four woods with no drawers, and stock tracking is off. All three beds are live (the Bosco and
+Warwick since 2026-11-09).
 **Date:** 2026-11-09
 **Deciders:** Rob LaRow (owner/ops)
 **Where it lives:** Shopify Admin (variant prices). No code changes.
@@ -65,7 +67,8 @@ price    = CEILING((wholesale + delivery) / (1 − 0.05 SAC − 0.33 margin − 
 | King | $3,775 | $4,350 | $5,350 |
 | Cali King | $3,775 | $4,350 | $5,350 |
 
-**The Warwick** (`scandinavian-solid-hardwood-bed-frame`, walnut only, 9 variants)
+**The Warwick** (`scandinavian-solid-hardwood-bed-frame`), as first approved: walnut only, 9 variants. *Superseded by
+D5: the Warwick now has four woods and no drawer versions.*
 
 | Size | No drawers | 2 or 4 drawers |
 |---|---|---|
@@ -80,12 +83,25 @@ price    = CEILING((wholesale + delivery) / (1 − 0.05 SAC − 0.33 margin − 
   rails as a separate unit with no drawer-count split, and it is not confirmed whether the unit replaces the standard
   rails or adds to them.
 
+### D5. Amendments, 2026-11-09 to 2026-11-12 (recorded 2026-11-22)
+
+Checked against Shopify on 2026-11-22.
+
+- **The Mansfield** (`minimalist-bed-frame-ohio`, 20 variants) takes the Bosco prices in D3: Twin and Full $3,350 /
+  $3,800 / $4,600, Queen $3,450 / $3,925 / $4,800, King and Cali King $3,775 / $4,350 / $5,350 (cherry / maple and oak
+  / walnut). Owner decision, applied 2026-11-09. It replaces the legacy prices (Queen Walnut $2,698.20).
+- **The Warwick** is now offered in walnut, maple, oak and cherry, Queen, King and Cali King, with **no drawer
+  versions** (12 variants). It uses the same grid as the Bosco for those sizes: Queen $3,450 / $3,925 / $4,800, King
+  and Cali King $3,775 / $4,350 / $5,350 ($3,450–$5,350). The drawer proxy in D4 no longer applies. The Warwick stays
+  request-only (no Add to Cart; the cart refuses it on the server since #197).
+- **Stock tracking is off** on all three beds, under the made-to-order rule set on 2026-11-09: made-to-order furniture
+  does not track inventory, so a bed cannot sell out. Only the Cure All and imported Xin Yean pieces track stock.
+
 ## Consequences
 
 - Prices rise roughly 60–90% on these beds. The Bosco Queen Walnut goes from $2,698.20 to $4,800.
 - The proxied configurations (Twin, Cali King, Warwick drawers) are the least certain. Get Barkman quotes before or
   soon after launch and reprice those variants if they differ.
-- The Mansfield (`minimalist-bed-frame-ohio`, live and protected in the rollout) still has legacy prices (Queen
-  Walnut $2,698.20) and has not been repriced under this decision.
-- Bed stock settings are unchanged: variants still track inventory with "deny" at zero, so the Warwick (1 per variant;
-  King no drawers at 0) can sell out. Decide a made-to-order policy before publishing.
+- ~~The Mansfield still has legacy prices.~~ Repriced to the Bosco grid on 2026-11-09 (D5).
+- ~~Bed variants track inventory and can sell out.~~ Tracking is off on all three beds (D5).
+- If Barkman later builds drawers for the Warwick, price them from a Barkman quote rather than the storage-unit proxy.
