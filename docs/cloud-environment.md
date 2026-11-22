@@ -67,7 +67,7 @@ When you add a key to the table, also add it to `KEYS` in `scripts/cloud-session
 Run this on the Mac, from the live clone. It puts the approved keys on the clipboard with fresh cloud-only `SESSION_SECRET` and `OPS_DASHBOARD_PASSWORD` values, and no value is printed to the terminal. Paste the clipboard into the environment's variables box:
 
 ```bash
-cd ~/Desktop/my-hydrogen-storefront && { echo "SESSION_SECRET=$(openssl rand -hex 32)"; echo "OPS_DASHBOARD_PASSWORD=$(openssl rand -base64 18)"; grep -E '^(PUBLIC_STORE_DOMAIN|PUBLIC_STOREFRONT_API_TOKEN|PUBLIC_STOREFRONT_ID|PUBLIC_CHECKOUT_DOMAIN|PUBLIC_CUSTOMER_ACCOUNT_API_CLIENT_ID|PUBLIC_CUSTOMER_ACCOUNT_API_URL|SHOP_ID|CUSTOM_COLLECTION_BANNER_METAFIELD|OPS_ADMIN_API_TOKEN)=' .env; } | pbcopy
+cd ~/Developer/my-hydrogen-storefront && { echo "SESSION_SECRET=$(openssl rand -hex 32)"; echo "OPS_DASHBOARD_PASSWORD=$(openssl rand -base64 18)"; grep -E '^(PUBLIC_STORE_DOMAIN|PUBLIC_STOREFRONT_API_TOKEN|PUBLIC_STOREFRONT_ID|PUBLIC_CHECKOUT_DOMAIN|PUBLIC_CUSTOMER_ACCOUNT_API_CLIENT_ID|PUBLIC_CUSTOMER_ACCOUNT_API_URL|SHOP_ID|CUSTOM_COLLECTION_BANNER_METAFIELD|OPS_ADMIN_API_TOKEN)=' .env; } | pbcopy
 ```
 
 `OPS_ADMIN_API_TOKEN` is not in the local `.env` yet. Mint it first in your own terminal with `node scripts/get-admin-token.mjs --ops <client_id> <client_secret>`, which runs an OAuth flow and appends the token to `.env`. Check it with `node scripts/verify-ops-token.mjs`, then run the copy command.
