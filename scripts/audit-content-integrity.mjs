@@ -31,7 +31,10 @@ const DEMO_COPY_PATTERNS = [
   /\bplaceholder\b/i,
   /\bsample\b/i,
   /\bdemo\b/i,
-  /\bcopy of\b/i,
+  // Shopify titles duplicated products "Copy of …" (capital C). Case-sensitive
+  // so legitimate prose such as "Request a copy of the personal data" in
+  // app/page-builder/pages/legal.ts is not flagged.
+  /\bCopy of\b/,
 ];
 
 const SOURCE_MARKER_PATTERNS = [
@@ -39,7 +42,7 @@ const SOURCE_MARKER_PATTERNS = [
   /\bsample\b/i,
   /\bdemo\b/i,
   /\bdummy\b/i,
-  /\bcopy of\b/i,
+  /\bCopy of\b/,
   /\bweaverse\b/i,
   /\btest\b/i,
 ];
