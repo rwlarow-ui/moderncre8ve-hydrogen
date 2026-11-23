@@ -1,6 +1,6 @@
 # Content Audit
 
-Generated: 2026-11-22T13:11:00.242Z
+Generated: 2026-11-23T12:34:34.333Z
 
 ## Summary
 
@@ -12,41 +12,41 @@ Generated: 2026-11-22T13:11:00.242Z
 ## Highest Priority Live Findings
 
 - [high] page https://moderncre8ve.com/pages/legal -> demo_or_placeholder_copy
-  Evidence: Visible marker hits: \bcopy of\b | Main text sample: The policies that cover your visit and your order Legal & Policies Every ModernCre8ve piece is handcrafted to order, so we want the terms behind your purchase to be as clear as the craftsmanship. Each policy below opens... | Storefront page "Legal" exists with body length 0.
+  Evidence: Visible marker hits: \bcopy of\b | Main text sample: The policies that cover your visit and your order Legal & Policies Every ModernCre8ve piece is handcrafted to order, so we want the terms behind your purchase to be as clear as the craftsmanship. Each policy below opens...
   Source: Mapped page definition: app/page-builder/pages/legal; published page route
   Fix: Replace demo or placeholder copy with production content and remove any temporary merchandising language from the published page.
 - [high] page https://moderncre8ve.com/pages/my-personal-data -> empty_or_thin_live_content
-  Evidence: Rendered <main> text length: 142 | Section markers: 3 | Image count inside <main>: 0 | Page body is unusually thin for a CMS page. | Storefront page "My Personal Data" exists with body length 233. | Admin page "My Personal Data" last updated 2023-07-06T14:12:22Z with body length 233.
+  Evidence: Rendered <main> text length: 142 | Section markers: 3 | Image count inside <main>: 0 | Page body is unusually thin for a CMS page.
   Source: No mapped local fallback JSON; published page route
   Fix: Populate the page definition so the route renders meaningful body content server-side.
 - [medium] product https://moderncre8ve.com/products/copy-of-santa-monica-bench-modern-walnut-bench -> suspicious_handle_or_slug
-  Evidence: Handle `copy-of-santa-monica-bench-modern-walnut-bench` still contains a copy-of prefix. | Storefront product "The Santa Monica Bench - Modern Walnut Bench" exists with description length 1794.
+  Evidence: Handle `copy-of-santa-monica-bench-modern-walnut-bench` still contains a copy-of prefix.
   Source: Published product route
   Fix: Confirm the published handle is intentional. If not, create a clean canonical handle and redirect the old URL.
 - [low] page https://moderncre8ve.com/pages/trade-1 -> suspicious_handle_or_slug
-  Evidence: Handle `trade-1` looks like a duplicate page slug. | Storefront page "TRADE" exists with body length 0.
+  Evidence: Handle `trade-1` looks like a duplicate page slug.
   Source: Mapped page definition: app/page-builder/pages/trade; published page route
   Fix: Confirm the published handle is intentional. If not, create a clean canonical handle and redirect the old URL.
 
 ## Source Risks
 
 - [medium] https://moderncre8ve.com/pages/cleveland-workshop-showroom -> no_repo_fallback
-  Evidence: Page handle `cleveland-workshop-showroom` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts. | Storefront page "Visit Our Cleveland Workshop & Showroom" exists with body length 2761.
+  Evidence: Page handle `cleveland-workshop-showroom` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts.
   Fix: Either add a page definition for this handle or confirm the default page template is intended.
 - [medium] https://moderncre8ve.com/pages/custom-kitchen-cabinets-cleveland -> no_repo_fallback
-  Evidence: Page handle `custom-kitchen-cabinets-cleveland` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts. | Storefront page "Cleveland Custom Cabinets | Tailored to Your Style and Space" exists with body length 865.
+  Evidence: Page handle `custom-kitchen-cabinets-cleveland` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts.
   Fix: Either add a page definition for this handle or confirm the default page template is intended.
 - [medium] https://moderncre8ve.com/pages/my-personal-data -> no_repo_fallback
-  Evidence: Page handle `my-personal-data` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts. | Storefront page "My Personal Data" exists with body length 233.
+  Evidence: Page handle `my-personal-data` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts.
   Fix: Either add a page definition for this handle or confirm the default page template is intended.
 - [medium] https://moderncre8ve.com/pages/privacy-policy -> no_repo_fallback
-  Evidence: Page handle `privacy-policy` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts. | Storefront page "Privacy Policy" exists with body length 60295.
+  Evidence: Page handle `privacy-policy` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts.
   Fix: Either add a page definition for this handle or confirm the default page template is intended.
 - [medium] https://moderncre8ve.com/pages/request-personal-data -> no_repo_fallback
-  Evidence: Page handle `request-personal-data` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts. | Storefront page "Request Personal Data" exists with body length 931.
+  Evidence: Page handle `request-personal-data` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts.
   Fix: Either add a page definition for this handle or confirm the default page template is intended.
 - [medium] https://moderncre8ve.com/pages/terms-of-service -> no_repo_fallback
-  Evidence: Page handle `terms-of-service` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts. | Storefront page "Terms of Service" exists with body length 22044.
+  Evidence: Page handle `terms-of-service` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts.
   Fix: Either add a page definition for this handle or confirm the default page template is intended.
 - [medium] app/page-builder/pages/homepage.ts -> page_definition_empty_fields
   Evidence: app/page-builder/pages/homepage.ts contains 1 empty string field(s). | Empty field: product

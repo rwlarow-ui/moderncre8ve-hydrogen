@@ -1,0 +1,1590 @@
+{
+  "generatedAt": "2026-11-23T12:34:34.333Z",
+  "canonicalOrigin": "https://moderncre8ve.com",
+  "notes": [
+    "Canonical production crawl target is https://moderncre8ve.com.",
+    "The Oxygen preview URL in AGENTS.md returned a Shopify Oxygen 404 during this audit and was not used."
+  ],
+  "summary": {
+    "totalUrls": 92,
+    "flaggedUrls": 9,
+    "okUrls": 83,
+    "sourceOnlyFindings": 6,
+    "findingsBySeverity": {
+      "critical": 0,
+      "high": 2,
+      "medium": 11,
+      "low": 3
+    },
+    "flaggedByType": {
+      "product": 1,
+      "page": 8
+    },
+    "mappedFallbackPages": 15
+  },
+  "inventory": [
+    {
+      "url": "https://moderncre8ve.com/products/the-haven-a-mid-century-modern-credenza",
+      "page_type": "product",
+      "handle": "the-haven-a-mid-century-modern-credenza",
+      "blog_handle": null,
+      "title": "The Haven Mid-Century Modern Walnut Credenza | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 7046,
+      "heading_text": "\"The Haven\", A Mid Century Modern Credenza \"The Haven\", A Mid Century Modern Credenza Elevate Your Space with The Haven - A Mid Century Modern Solid Walnut Credenza Iconic Design: Superior Craftsmanship: Dimensions: Our Promise to You 1-Year Warranty Inspect on Delivery Built to Last Generations White Glove Delivery Included Handcrafted in Ohio Solid Hardwood Made in the USA Custom Orders Welcome Dimensions & Weight Materials & Construction Care & Maintenance Delivery & Lead Time Built by Hand, Start to Finish Lumber Selection Joinery & Shaping Sanding & Finishing White Glove Delivery Complete Your Space",
+      "section_count": 31,
+      "image_count": 11,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/products/contemporary-dining-bench-vermonter",
+      "page_type": "product",
+      "handle": "contemporary-dining-bench-vermonter",
+      "blog_handle": null,
+      "title": "Vermonter Solid Wood Dining Bench | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 5834,
+      "heading_text": "Contemporary Dining Bench - 60\" Solid Black Walnut Profile Contemporary Dining Bench - 60\" Solid Black Walnut Profile Our Promise to You 1-Year Warranty Inspect on Delivery Built to Last Generations White Glove Delivery Included Handcrafted in Ohio Solid Hardwood Made in the USA Custom Orders Welcome Dimensions & Weight Materials & Construction Care & Maintenance Delivery & Lead Time Built by Hand, Start to Finish Lumber Selection Joinery & Shaping Sanding & Finishing White Glove Delivery Complete Your Space",
+      "section_count": 31,
+      "image_count": 14,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/products/lareauxs-furniture-wax",
+      "page_type": "product",
+      "handle": "lareauxs-furniture-wax",
+      "blog_handle": null,
+      "title": "Lareaux's Furniture Cure All Paste Wax, 8 oz | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 3875,
+      "heading_text": "Lareaux's Furniture Cure All Lareaux's Furniture Cure All How to Use Apply Wait Buff Furniture Cure All FAQ What is Lareaux's Furniture Cure All? What's in it? What can I use it on? What does it protect against? How often should I apply it? How do I dispose of used rags? How fast does it ship? Complete Your Space",
+      "section_count": 22,
+      "image_count": 3,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/products/bosco-walnut-mid-century-modern-bed-handmade",
+      "page_type": "product",
+      "handle": "bosco-walnut-mid-century-modern-bed-handmade",
+      "blog_handle": null,
+      "title": "The Bosco Walnut Mid-Century Modern Bed | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 5653,
+      "heading_text": "The Bosco: Walnut Mid Century Modern Bed The Bosco: Walnut Mid Century Modern Bed The Bosco: Walnut Mid Century Modern Bed Timeless Walnut Elegance Exceptional Craftsmanship: Dimensions to Suit Your Space: Our Promise to You 1-Year Warranty Inspect on Delivery Built to Last Generations White Glove Delivery Included Handcrafted in Ohio Solid Hardwood Made in the USA Custom Orders Welcome Dimensions & Weight Materials & Construction Care & Maintenance Delivery & Lead Time Built by Hand, Start to Finish Lumber Selection Joinery & Shaping Sanding & Finishing White Glove Delivery Complete Your Space",
+      "section_count": 31,
+      "image_count": 23,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/products/bossa-nova-modern-dining-table-small-handmade-ohio",
+      "page_type": "product",
+      "handle": "bossa-nova-modern-dining-table-small-handmade-ohio",
+      "blog_handle": null,
+      "title": "Bossa Nova Extendable Dining Table in Solid Hardwood | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 5286,
+      "heading_text": "The Bossa Nova: Solid Wood Extendable Dining Table The Bossa Nova: Solid Wood Extendable Dining Table Sizes and seating Extension leaves Wood and finish Construction and delivery Our Promise to You 1-Year Warranty Inspect on Delivery Built to Last Generations White Glove Delivery Included Handcrafted in Ohio Solid Hardwood Made in the USA Custom Orders Welcome Dimensions & Weight Materials & Construction Care & Maintenance Delivery & Lead Time Built by Hand, Start to Finish Lumber Selection Joinery & Shaping Sanding & Finishing White Glove Delivery Complete Your Space",
+      "section_count": 31,
+      "image_count": 20,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/products/minimalist-bed-frame-ohio",
+      "page_type": "product",
+      "handle": "minimalist-bed-frame-ohio",
+      "blog_handle": null,
+      "title": "Mansfield Minimalist Bed Frame, Made in Ohio | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 5655,
+      "heading_text": "The Mansfield The Mansfield The Mansfield A Homage to Minimalist Design Timeless Craftsmanship Our Promise to You 1-Year Warranty Inspect on Delivery Built to Last Generations White Glove Delivery Included Handcrafted in Ohio Solid Hardwood Made in the USA Custom Orders Welcome Dimensions & Weight Materials & Construction Care & Maintenance Delivery & Lead Time Built by Hand, Start to Finish Lumber Selection Joinery & Shaping Sanding & Finishing White Glove Delivery Complete Your Space",
+      "section_count": 31,
+      "image_count": 26,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/products/payne-oval-extendable-dining-table-for-6-8",
+      "page_type": "product",
+      "handle": "payne-oval-extendable-dining-table-for-6-8",
+      "blog_handle": null,
+      "title": "Payne Oval Extendable Dining Table in Solid Wood | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 5157,
+      "heading_text": "The Payne: Oval Extendable Dining Table The Payne: Oval Extendable Dining Table Sizes and seating Extension leaves Wood and finish Construction and delivery Our Promise to You 1-Year Warranty Inspect on Delivery Built to Last Generations White Glove Delivery Included Handcrafted in Ohio Solid Hardwood Made in the USA Custom Orders Welcome Dimensions & Weight Materials & Construction Care & Maintenance Delivery & Lead Time Built by Hand, Start to Finish Lumber Selection Joinery & Shaping Sanding & Finishing White Glove Delivery Complete Your Space",
+      "section_count": 31,
+      "image_count": 23,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/products/copy-of-santa-monica-bench-modern-walnut-bench",
+      "page_type": "product",
+      "handle": "copy-of-santa-monica-bench-modern-walnut-bench",
+      "blog_handle": null,
+      "title": "Santa Monica Bench | Modern Walnut Bench | ModernCre8ve",
+      "status": "flagged",
+      "visible_text_length": 5645,
+      "heading_text": "The Santa Monica Bench - Modern Walnut Bench The Santa Monica Bench - Modern Walnut Bench Santa Monica Bench - Modern Walnut Bench Craftsmanship Dimensions & Details: Our Promise to You 1-Year Warranty Inspect on Delivery Built to Last Generations White Glove Delivery Included Handcrafted in Ohio Solid Hardwood Made in the USA Custom Orders Welcome Dimensions & Weight Materials & Construction Care & Maintenance Delivery & Lead Time Built by Hand, Start to Finish Lumber Selection Joinery & Shaping Sanding & Finishing White Glove Delivery Complete Your Space",
+      "section_count": 31,
+      "image_count": 12,
+      "findings": [
+        {
+          "url": "https://moderncre8ve.com/products/copy-of-santa-monica-bench-modern-walnut-bench",
+          "page_type": "product",
+          "issue_type": "suspicious_handle_or_slug",
+          "severity": "medium",
+          "visible_live": true,
+          "evidence": [
+            "Handle `copy-of-santa-monica-bench-modern-walnut-bench` still contains a copy-of prefix."
+          ],
+          "content_source": "Published product route",
+          "recommended_fix": "Confirm the published handle is intentional. If not, create a clean canonical handle and redirect the old URL.",
+          "owner": "Merchandising / Shopify"
+        }
+      ]
+    },
+    {
+      "url": "https://moderncre8ve.com/products/the-santa-monica-mid-century-modern-dining-table",
+      "page_type": "product",
+      "handle": "the-santa-monica-mid-century-modern-dining-table",
+      "blog_handle": null,
+      "title": "Santa Monica Mid-Century Modern Solid Wood Dining Table | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 5464,
+      "heading_text": "The Santa Monica: Mid-Century Modern Extendable Dining Table The Santa Monica: Mid-Century Modern Extendable Dining Table Sizes and seating Extension leaves Wood and finish Construction and delivery Our Promise to You 1-Year Warranty Inspect on Delivery Built to Last Generations White Glove Delivery Included Handcrafted in Ohio Solid Hardwood Made in the USA Custom Orders Welcome Dimensions & Weight Materials & Construction Care & Maintenance Delivery & Lead Time Built by Hand, Start to Finish Lumber Selection Joinery & Shaping Sanding & Finishing White Glove Delivery Complete Your Space",
+      "section_count": 31,
+      "image_count": 20,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/products/the-seymour-modern-dining-chair",
+      "page_type": "product",
+      "handle": "the-seymour-modern-dining-chair",
+      "blog_handle": null,
+      "title": "Seymour - Modern Dining Chair | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 5603,
+      "heading_text": "The Seymour - Modern Dining Chair The Seymour - Modern Dining Chair The Seymour - Modern Dining Chair Key Features: Why You’ll Love It: Dimensions: Benefits for Your Home: Our Promise to You 1-Year Warranty Inspect on Delivery Built to Last Generations White Glove Delivery Included Handcrafted in Ohio Solid Hardwood Made in the USA Custom Orders Welcome Dimensions & Weight Materials & Construction Care & Maintenance Delivery & Lead Time Built by Hand, Start to Finish Lumber Selection Joinery & Shaping Sanding & Finishing White Glove Delivery Complete Your Space",
+      "section_count": 31,
+      "image_count": 10,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/products/the-vista-modern-dining-chair",
+      "page_type": "product",
+      "handle": "the-vista-modern-dining-chair",
+      "blog_handle": null,
+      "title": "The Vista Solid Wood Dining Chairs | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 5507,
+      "heading_text": "The Vista, Solid wood dining chairs The Vista, Solid wood dining chairs Vista - Modern Wood Dining Chair Key Features: Why Choose the Vista Chair? Our Promise to You 1-Year Warranty Inspect on Delivery Built to Last Generations White Glove Delivery Included Handcrafted in Ohio Solid Hardwood Made in the USA Custom Orders Welcome Dimensions & Weight Materials & Construction Care & Maintenance Delivery & Lead Time Built by Hand, Start to Finish Lumber Selection Joinery & Shaping Sanding & Finishing White Glove Delivery Complete Your Space",
+      "section_count": 31,
+      "image_count": 41,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/products/scandinavian-dining-table-extendable-dining-table",
+      "page_type": "product",
+      "handle": "scandinavian-dining-table-extendable-dining-table",
+      "blog_handle": null,
+      "title": "Vista Scandinavian Oval Extendable Dining Table | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 5188,
+      "heading_text": "The Vista: Scandinavian Oval Extendable Dining Table The Vista: Scandinavian Oval Extendable Dining Table Sizes and seating Extension leaves Wood and finish Construction and delivery Our Promise to You 1-Year Warranty Inspect on Delivery Built to Last Generations White Glove Delivery Included Handcrafted in Ohio Solid Hardwood Made in the USA Custom Orders Welcome Dimensions & Weight Materials & Construction Care & Maintenance Delivery & Lead Time Built by Hand, Start to Finish Lumber Selection Joinery & Shaping Sanding & Finishing White Glove Delivery Complete Your Space",
+      "section_count": 31,
+      "image_count": 28,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/products/scandinavian-solid-hardwood-bed-frame",
+      "page_type": "product",
+      "handle": "scandinavian-solid-hardwood-bed-frame",
+      "blog_handle": null,
+      "title": "Warwick Scandinavian Solid Wood Bed Frame | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 8103,
+      "heading_text": "Warwick Solid Wood Bed Frame - Modern Platform Bed with Nordic Elegance Warwick Solid Wood Bed Frame - Modern Platform Bed with Nordic Elegance Discover the Warwick: A Solid Wood Modern Bed Frame with Nordic Elegance Explore More from Moderncre8ve Frequently Asked Questions: Our Promise to You 1-Year Warranty Inspect on Delivery Built to Last Generations White Glove Delivery Included Handcrafted in Ohio Solid Hardwood Made in the USA Custom Orders Welcome Dimensions & Weight Materials & Construction Care & Maintenance Delivery & Lead Time Built by Hand, Start to Finish Lumber Selection Joinery & Shaping Sanding & Finishing White Glove Delivery Complete Your Space",
+      "section_count": 31,
+      "image_count": 8,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/custom-furniture-crafted-to-perfection",
+      "page_type": "page",
+      "handle": "custom-furniture-crafted-to-perfection",
+      "blog_handle": null,
+      "title": "Bespoke Custom Furniture Crafted to Perfection | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 1222,
+      "heading_text": "Exquisite Custom Furniture Pioneers in Custom Furniture Your Custom Furniture Journey 1. Start the Conversation 2. Transparent Pricing 3. Collaborative Design 4. Creation Begins Beauty Meets Function Originality Guaranteed Made to Order Ready to Start?",
+      "section_count": 33,
+      "image_count": 7,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/mid-century-modern-press-coverage",
+      "page_type": "page",
+      "handle": "mid-century-modern-press-coverage",
+      "blog_handle": null,
+      "title": "Luxury Mid-Century Modern Press Coverage | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 648,
+      "heading_text": "Press Coverage Handcrafted Furniture Featured in National Publications As Featured In HGTV Domino Magazine Apartment Therapy Buzzfeed Etsy Dwell Atomic Ranch The Plain Dealer Refinery 29 Press Inquiries",
+      "section_count": 33,
+      "image_count": 12,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/my-personal-data",
+      "page_type": "page",
+      "handle": "my-personal-data",
+      "blog_handle": null,
+      "title": "My Personal Data | ModernCre8ve",
+      "status": "flagged",
+      "visible_text_length": 142,
+      "heading_text": "My Personal Data",
+      "section_count": 3,
+      "image_count": 0,
+      "findings": [
+        {
+          "url": "https://moderncre8ve.com/pages/my-personal-data",
+          "page_type": "page",
+          "issue_type": "no_repo_fallback",
+          "severity": "medium",
+          "visible_live": false,
+          "evidence": [
+            "Page handle `my-personal-data` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
+          ],
+          "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
+          "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
+          "owner": "Content / Page builder"
+        },
+        {
+          "url": "https://moderncre8ve.com/pages/my-personal-data",
+          "page_type": "page",
+          "issue_type": "empty_or_thin_live_content",
+          "severity": "high",
+          "visible_live": true,
+          "evidence": [
+            "Rendered <main> text length: 142",
+            "Section markers: 3",
+            "Image count inside <main>: 0",
+            "Page body is unusually thin for a CMS page."
+          ],
+          "content_source": "No mapped local fallback JSON; published page route",
+          "recommended_fix": "Populate the page definition so the route renders meaningful body content server-side.",
+          "owner": "Content / Page builder"
+        }
+      ]
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/request-personal-data",
+      "page_type": "page",
+      "handle": "request-personal-data",
+      "blog_handle": null,
+      "title": "Request Personal Data for Enhanced Privacy Control | ModernCre8ve",
+      "status": "flagged",
+      "visible_text_length": 361,
+      "heading_text": "Request Personal Data",
+      "section_count": 3,
+      "image_count": 0,
+      "findings": [
+        {
+          "url": "https://moderncre8ve.com/pages/request-personal-data",
+          "page_type": "page",
+          "issue_type": "no_repo_fallback",
+          "severity": "medium",
+          "visible_live": false,
+          "evidence": [
+            "Page handle `request-personal-data` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
+          ],
+          "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
+          "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
+          "owner": "Content / Page builder"
+        }
+      ]
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/our-materials",
+      "page_type": "page",
+      "handle": "our-materials",
+      "blog_handle": null,
+      "title": "Our Materials | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 1362,
+      "heading_text": "Our Materials Premium Hardwood Species American Walnut White Oak Hard Maple American Cherry Mixed Walnut",
+      "section_count": 20,
+      "image_count": 6,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/legal",
+      "page_type": "page",
+      "handle": "legal",
+      "blog_handle": null,
+      "title": "ModernCre8ve Legal Information and Policies Details | ModernCre8ve",
+      "status": "flagged",
+      "visible_text_length": 1175,
+      "heading_text": "Legal & Policies Privacy Policy Terms of Service Refund Policy Order Policies & Guidelines Shipping Policy & Customer Responsibilities Your Personal Data",
+      "section_count": 22,
+      "image_count": 1,
+      "findings": [
+        {
+          "url": "https://moderncre8ve.com/pages/legal",
+          "page_type": "page",
+          "issue_type": "demo_or_placeholder_copy",
+          "severity": "high",
+          "visible_live": true,
+          "evidence": [
+            "Visible marker hits: \\bcopy of\\b",
+            "Main text sample: The policies that cover your visit and your order Legal & Policies Every ModernCre8ve piece is handcrafted to order, so we want the terms behind your purchase to be as clear as the craftsmanship. Each policy below opens..."
+          ],
+          "content_source": "Mapped page definition: app/page-builder/pages/legal; published page route",
+          "recommended_fix": "Replace demo or placeholder copy with production content and remove any temporary merchandising language from the published page.",
+          "owner": "Content / Page builder"
+        }
+      ]
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/reviews",
+      "page_type": "page",
+      "handle": "reviews",
+      "blog_handle": null,
+      "title": "Moderncre8ve Reviews | Hear from Our Satisfied Customers | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 615,
+      "heading_text": "Customer Reviews Well Worth the Wait I looked at about five hundred bed frames and this checked all the boxes. Well worth the wait and exactly as pictured. I'm 100% delighted. Better Than the Photos This table took some time to get to us, but it's gorgeous and just the right size. The craftsmanship is awesome, and it looks just like (or even better than) the images. Exquisite Design Exquisite design, excellent craftsmanship, quality materials! Amish Craftsmanship Solid Hardwood Made in the USA",
+      "section_count": 21,
+      "image_count": 4,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/custom-kitchen-cabinets-cleveland",
+      "page_type": "page",
+      "handle": "custom-kitchen-cabinets-cleveland",
+      "blog_handle": null,
+      "title": "Cleveland Custom Cabinets | Tailored to Your Style and Space | ModernCre8ve",
+      "status": "flagged",
+      "visible_text_length": 671,
+      "heading_text": "Cleveland Custom Cabinets | Tailored to Your Style and Space Welcome to Our Modern Kitchen Gallery",
+      "section_count": 5,
+      "image_count": 0,
+      "findings": [
+        {
+          "url": "https://moderncre8ve.com/pages/custom-kitchen-cabinets-cleveland",
+          "page_type": "page",
+          "issue_type": "no_repo_fallback",
+          "severity": "medium",
+          "visible_live": false,
+          "evidence": [
+            "Page handle `custom-kitchen-cabinets-cleveland` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
+          ],
+          "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
+          "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
+          "owner": "Content / Page builder"
+        }
+      ]
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/contact-us",
+      "page_type": "page",
+      "handle": "contact-us",
+      "blog_handle": null,
+      "title": "Contact Us | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 961,
+      "heading_text": "Contact Us Send Us a Message Visit Our Showroom Custom Furniture, Crafted for You Nationwide Shipping & In-Home Setup",
+      "section_count": 28,
+      "image_count": 3,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/assembly-care",
+      "page_type": "page",
+      "handle": "assembly-care",
+      "blog_handle": null,
+      "title": "Assembly & Care | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 550,
+      "heading_text": "Assembly & Care Assembly Santa Monica Table & Extension Table Bosco, Wookie, Stowe, Warwick and Baxter Beds Care & Use Guidelines What finish is on my furniture? How do I clean my furniture? How do I use Lareaux's Furniture Cure All? What should I avoid? What about sunlight and humidity?",
+      "section_count": 23,
+      "image_count": 1,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/about-us",
+      "page_type": "page",
+      "handle": "about-us",
+      "blog_handle": null,
+      "title": "about us | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 1449,
+      "heading_text": "Handcrafted in Cleveland Since 2013 Great Design, Honest Materials, Real Craftsmanship 3,600 Square Feet of Wood, Steel and Finish Made to Order, One Piece at a Time Making a Difference, However Small",
+      "section_count": 42,
+      "image_count": 5,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/terms-of-service",
+      "page_type": "page",
+      "handle": "terms-of-service",
+      "blog_handle": null,
+      "title": "Terms of Service | ModernCre8ve",
+      "status": "flagged",
+      "visible_text_length": 18491,
+      "heading_text": "Terms of Service OVERVIEW",
+      "section_count": 3,
+      "image_count": 0,
+      "findings": [
+        {
+          "url": "https://moderncre8ve.com/pages/terms-of-service",
+          "page_type": "page",
+          "issue_type": "no_repo_fallback",
+          "severity": "medium",
+          "visible_live": false,
+          "evidence": [
+            "Page handle `terms-of-service` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
+          ],
+          "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
+          "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
+          "owner": "Content / Page builder"
+        }
+      ]
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/privacy-policy",
+      "page_type": "page",
+      "handle": "privacy-policy",
+      "blog_handle": null,
+      "title": "Discover and Explore Our Privacy Policy | ModernCre8ve",
+      "status": "flagged",
+      "visible_text_length": 41017,
+      "heading_text": "Privacy Policy Privacy Policy Interpretation and Definitions Interpretation Definitions Collecting and Using Your Personal Data Types of Data Collected Personal Data Usage Data Tracking Technologies and Cookies Use of Your Personal Data Retention of Your Personal Data Transfer of Your Personal Data Disclosure of Your Personal Data Business Transactions Law enforcement Other legal requirements Security of Your Personal Data Detailed Information on the Processing of Your Personal Data Analytics Advertising Email Marketing Payments CCPA Privacy Categories of Personal Information Collected Sources of Personal Information Use of Personal Information for Business Purposes or Commercial Purposes Disclosure of Personal Information for Business Purposes or Commercial Purposes Sale of Personal Information Share of Personal Information Sale of Personal Information of Minors Under 16 Years of Age Your Rights under the CCPA Exercising Your CCPA Data Protection Rights Do Not Sell My Personal Information Website Mobile Devices \"Do Not Track\" Policy as Required by California Online Privacy Protection Act (CalOPPA) Children's Privacy Your California Privacy Rights (California's Shine the Light law) California Privacy Rights for Minor Users (California Business and Professions Code Section 22581) Links to Other Websites Changes to this Privacy Policy Contact Us",
+      "section_count": 3,
+      "image_count": 0,
+      "findings": [
+        {
+          "url": "https://moderncre8ve.com/pages/privacy-policy",
+          "page_type": "page",
+          "issue_type": "no_repo_fallback",
+          "severity": "medium",
+          "visible_live": false,
+          "evidence": [
+            "Page handle `privacy-policy` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
+          ],
+          "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
+          "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
+          "owner": "Content / Page builder"
+        }
+      ]
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/ordering-policies",
+      "page_type": "page",
+      "handle": "ordering-policies",
+      "blog_handle": null,
+      "title": "Order Policies & Guidelines | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 331,
+      "heading_text": "Order Policies & Guidelines Policies Payment Information Chargebacks & Disputes Description of Service Product Warranty Shipping & Delivery Lead Times Order Cancellations Damaged Product Force Majeure",
+      "section_count": 19,
+      "image_count": 1,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/shipping-policy-and-customer-responsibilities",
+      "page_type": "page",
+      "handle": "shipping-policy-and-customer-responsibilities",
+      "blog_handle": null,
+      "title": "Shipping Policy: Ensuring a Seamless Delivery Experience | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 314,
+      "heading_text": "Shipping Policy & Customer Responsibilities Delivery Methods In-Home Delivery with Assembly Freight / White Glove Shipping Threshold Delivery Important Policies Communication Process Inspection Responsibilities Exceptional Shipping Services Storage Fees",
+      "section_count": 22,
+      "image_count": 1,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/faq",
+      "page_type": "page",
+      "handle": "faq",
+      "blog_handle": null,
+      "title": "Frequently Asked Questions | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 970,
+      "heading_text": "Frequently Asked Questions Ordering & Payment What payment methods do you accept? Can I change or cancel my order? What is your guarantee/warranty? Shipping & Delivery How long does shipping take? Do you offer white glove delivery? What about exceptional shipping situations? What if my furniture arrives damaged? Are there storage fees? Materials & Care What wood species do you use? What's the difference between mixed walnut and classic walnut? How do I care for my furniture? How durable is the finish? Custom Orders Can I order custom sizes? Do you make custom designs? Can I get custom wood finishes? Can I buy the steel bases separately? Still Have Questions?",
+      "section_count": 50,
+      "image_count": 2,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/trade-1",
+      "page_type": "page",
+      "handle": "trade-1",
+      "blog_handle": null,
+      "title": "TRADE | ModernCre8ve",
+      "status": "flagged",
+      "visible_text_length": 986,
+      "heading_text": "Visit & Contact Us Apply for Trade Pricing Our Showroom Schedule a Showroom Visit or Send Us a Message Nationwide Shipping & In-Home Setup",
+      "section_count": 28,
+      "image_count": 3,
+      "findings": [
+        {
+          "url": "https://moderncre8ve.com/pages/trade-1",
+          "page_type": "page",
+          "issue_type": "suspicious_handle_or_slug",
+          "severity": "low",
+          "visible_live": true,
+          "evidence": [
+            "Handle `trade-1` looks like a duplicate page slug."
+          ],
+          "content_source": "Mapped page definition: app/page-builder/pages/trade; published page route",
+          "recommended_fix": "Confirm the published handle is intentional. If not, create a clean canonical handle and redirect the old URL.",
+          "owner": "Content / Page builder"
+        }
+      ]
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/cleveland-workshop-showroom",
+      "page_type": "page",
+      "handle": "cleveland-workshop-showroom",
+      "blog_handle": null,
+      "title": "Cleveland Furniture Showroom | Visit Our Ohio Workshop | ModernCre8ve",
+      "status": "flagged",
+      "visible_text_length": 2336,
+      "heading_text": "Visit Our Cleveland Workshop & Showroom Experience Handcrafted Furniture in Person Why Visit Our Cleveland Workshop? Schedule Your Private Workshop Visit Local Delivery & Pickup Options About Our Ohio Craftsmanship",
+      "section_count": 3,
+      "image_count": 0,
+      "findings": [
+        {
+          "url": "https://moderncre8ve.com/pages/cleveland-workshop-showroom",
+          "page_type": "page",
+          "issue_type": "no_repo_fallback",
+          "severity": "medium",
+          "visible_live": false,
+          "evidence": [
+            "Page handle `cleveland-workshop-showroom` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
+          ],
+          "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
+          "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
+          "owner": "Content / Page builder"
+        }
+      ]
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/all",
+      "page_type": "collection",
+      "handle": "all",
+      "blog_handle": null,
+      "title": "All Furniture | Handcrafted Modern Furniture | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 5685,
+      "heading_text": "All Products All Products About This Collection Custom Made Modern Furniture for Your Home",
+      "section_count": 5,
+      "image_count": 23,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/all-products",
+      "page_type": "collection",
+      "handle": "all-products",
+      "blog_handle": null,
+      "title": "Scandinavian Modern Furniture Collection | All Products | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 2921,
+      "heading_text": "All products: Scandinavian Modern Furniture Collection All products: Scandinavian Modern Furniture Collection About This Collection Frequently Asked Questions",
+      "section_count": 7,
+      "image_count": 21,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/scandinavian-design-furniture",
+      "page_type": "collection",
+      "handle": "scandinavian-design-furniture",
+      "blog_handle": null,
+      "title": "Scandinavian Design Furniture | Handcrafted in Ohio | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 2585,
+      "heading_text": "Scandinavian Design Furniture Scandinavian Design Furniture About This Collection Frequently Asked Questions",
+      "section_count": 7,
+      "image_count": 15,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/japandi-scandi-mid-century-modern-furniture",
+      "page_type": "collection",
+      "handle": "japandi-scandi-mid-century-modern-furniture",
+      "blog_handle": null,
+      "title": "Japandi, Scandi & Mid-Century Furniture | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 3238,
+      "heading_text": "All: Japandi, Scandi & Mid-Century Modern Furniture All: Japandi, Scandi & Mid-Century Modern Furniture About This Collection Japandi, Scandi & Mid-Century Modern Furniture Collection Experience the Fusion of Styles Handcrafted in Cleveland, Ohio Minimalism Meets Functionality Timeless Mid-Century Modern Appeal Shop the Collection",
+      "section_count": 5,
+      "image_count": 27,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/mid-century-modern-credenza",
+      "page_type": "collection",
+      "handle": "mid-century-modern-credenza",
+      "blog_handle": null,
+      "title": "Mid-Century Modern Credenzas & Sideboards | Solid Walnut | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 2502,
+      "heading_text": "Media Consoles & Credenzas Media Consoles & Credenzas About This Collection Frequently Asked Questions",
+      "section_count": 7,
+      "image_count": 3,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/mid-century-modern-coffee-tables",
+      "page_type": "collection",
+      "handle": "mid-century-modern-coffee-tables",
+      "blog_handle": null,
+      "title": "Mid-Century Modern Coffee Tables | Solid Walnut & Oak | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 4761,
+      "heading_text": "Mid Century Modern Coffee Tables Mid Century Modern Coffee Tables About This Collection Frequently Asked Questions",
+      "section_count": 7,
+      "image_count": 1,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/benches",
+      "page_type": "collection",
+      "handle": "benches",
+      "blog_handle": null,
+      "title": "Handcrafted Benches | Solid Wood Dining & Bedroom Benches | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 4355,
+      "heading_text": "BENCHES BENCHES About This Collection Handcrafted Benches Collection: Where Functionality Meets Artistry Quality and Craftsmanship Versatile Designs for Every Space Sustainable and Local Craftsmanship Explore the Collection",
+      "section_count": 5,
+      "image_count": 5,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/bedroom",
+      "page_type": "collection",
+      "handle": "bedroom",
+      "blog_handle": null,
+      "title": "Bedroom Furniture | Bed Frames, Nightstands & Dressers | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 1680,
+      "heading_text": "Bedroom Bedroom About This Collection",
+      "section_count": 5,
+      "image_count": 7,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/custom-made-furniture",
+      "page_type": "collection",
+      "handle": "custom-made-furniture",
+      "blog_handle": null,
+      "title": "Custom Made Furniture | Quality Handcrafted Pieces | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 4747,
+      "heading_text": "Custom Made Furniture Custom Made Furniture About This Collection Frequently Asked Questions",
+      "section_count": 7,
+      "image_count": 1,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/mid-century-modern-dining-tables",
+      "page_type": "collection",
+      "handle": "mid-century-modern-dining-tables",
+      "blog_handle": null,
+      "title": "Mid-Century Modern Dining Tables | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 3322,
+      "heading_text": "Mid Century Modern Dining Tables Mid Century Modern Dining Tables About This Collection Frequently Asked Questions",
+      "section_count": 7,
+      "image_count": 11,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/modern-scandinavian-furniture",
+      "page_type": "collection",
+      "handle": "modern-scandinavian-furniture",
+      "blog_handle": null,
+      "title": "Luxury Modern Scandinavian Furniture | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 2529,
+      "heading_text": "Featured Featured About This Collection",
+      "section_count": 5,
+      "image_count": 9,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/best-sellers",
+      "page_type": "collection",
+      "handle": "best-sellers",
+      "blog_handle": null,
+      "title": "Best Sellers: Mid Century Modern Furniture | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 2180,
+      "heading_text": "Best Sellers Best Sellers About This Collection",
+      "section_count": 5,
+      "image_count": 13,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/housewares",
+      "page_type": "collection",
+      "handle": "housewares",
+      "blog_handle": null,
+      "title": "Housewares & Home Accents | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 2357,
+      "heading_text": "Housewares Housewares About This Collection Elevate Your Home with Our Curated Decor & Housewares Collection",
+      "section_count": 5,
+      "image_count": 3,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/living",
+      "page_type": "collection",
+      "handle": "living",
+      "blog_handle": null,
+      "title": "Mid Century Modern Furniture | LIVING Collection | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 4252,
+      "heading_text": "Living Room Living Room About This Collection Mid Century Modern Furniture: Scandinavian and Japandi Influenced Collection Mid Century Modern Tables with Scandinavian and Japandi Elements Scandinavian Modern Desks and Japandi Style Credenzas in Mid Century Design Elegant Entertainment: Mid Century Modern Meets Scandinavian and Japandi Styles Sophisticated Storage Solutions: Mid Century Modern with Scandinavian and Japandi Touches Mid Century Modern Nightstands and Bookcases: A Blend of Scandinavian and Japandi Aesthetics",
+      "section_count": 5,
+      "image_count": 1,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/new-products",
+      "page_type": "collection",
+      "handle": "new-products",
+      "blog_handle": null,
+      "title": "New Arrivals: Handcrafted Modern Furniture | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 2621,
+      "heading_text": "New Products New Products About This Collection Elevate Your Dining Experience with Mid-Century Modern Dining Sets",
+      "section_count": 5,
+      "image_count": 7,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/modern-dining-chairs",
+      "page_type": "collection",
+      "handle": "modern-dining-chairs",
+      "blog_handle": null,
+      "title": "Modern Dining Chairs | Solid Wood, Handcrafted in Ohio | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 3229,
+      "heading_text": "Modern Dining Chairs Modern Dining Chairs About This Collection Frequently Asked Questions",
+      "section_count": 7,
+      "image_count": 5,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/nightstand-end-tables",
+      "page_type": "collection",
+      "handle": "nightstand-end-tables",
+      "blog_handle": null,
+      "title": "Mid Century Modern Nightstands & Tables | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 1956,
+      "heading_text": "Nightstand + End Tables Nightstand + End Tables About This Collection",
+      "section_count": 5,
+      "image_count": 1,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/japandi",
+      "page_type": "collection",
+      "handle": "japandi",
+      "blog_handle": null,
+      "title": "Japandi Furniture Collection | Walnut & Oak | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 2304,
+      "heading_text": "Japandi Collection - Moderncre8ve Japandi Collection - Moderncre8ve About This Collection Frequently Asked Questions",
+      "section_count": 7,
+      "image_count": 9,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/custom-made-expandable-dining-tables",
+      "page_type": "collection",
+      "handle": "custom-made-expandable-dining-tables",
+      "blog_handle": null,
+      "title": "Custom Extendable Dining Tables | Solid Walnut & Oak | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 2260,
+      "heading_text": "Custom Made Expandable Dining Tables Custom Made Expandable Dining Tables About This Collection Frequently Asked Questions",
+      "section_count": 7,
+      "image_count": 7,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/dining",
+      "page_type": "collection",
+      "handle": "dining",
+      "blog_handle": null,
+      "title": "Mid Century Modern Dining Tables | Handmade Solid Wood | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 1957,
+      "heading_text": "Mid Century Modern Dining Tables & Chairs Mid Century Modern Dining Tables & Chairs About This Collection",
+      "section_count": 5,
+      "image_count": 17,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/mid-century-modern",
+      "page_type": "collection",
+      "handle": "mid-century-modern",
+      "blog_handle": null,
+      "title": "Amish Made Modern Furniture Collection | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 3652,
+      "heading_text": "Mid Century Modern Collection Mid Century Modern Collection About This Collection Frequently Asked Questions",
+      "section_count": 7,
+      "image_count": 17,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/oval-dining-tables",
+      "page_type": "collection",
+      "handle": "oval-dining-tables",
+      "blog_handle": null,
+      "title": "Oval Dining Tables | Handcrafted Walnut & Oak | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 2719,
+      "heading_text": "Oval Dining Tables Oval Dining Tables About This Collection Frequently Asked Questions",
+      "section_count": 7,
+      "image_count": 5,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/collections/modern-bed-frames",
+      "page_type": "collection",
+      "handle": "modern-bed-frames",
+      "blog_handle": null,
+      "title": "Modern Bed Frames | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 2130,
+      "heading_text": "Modern Bed Frames Modern Bed Frames About This Collection",
+      "section_count": 5,
+      "image_count": 7,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/58430660-we-are-an-etsy-featured-shop-sept-2015",
+      "page_type": "article",
+      "handle": "58430660-we-are-an-etsy-featured-shop-sept-2015",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Etsy Featured Shop | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 7504,
+      "heading_text": "We are an Etsy Featured Shop! Sept 2015 Related articles Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table Dainty Squid Feature",
+      "section_count": 5,
+      "image_count": 8,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/7-must-have-features-extendable-dining-table",
+      "page_type": "article",
+      "handle": "7-must-have-features-extendable-dining-table",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "7 Must-Have Features of an Extendable Dining Table | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 9742,
+      "heading_text": "Extendable Dining Tables: Functional Elegance Extendable Dining Tables: Functional Elegance Extendable Dining Tables: Marrying Function with Elegance Introduction The Evolution of the Dining Experience Why Opt for an Extendable Dining Table? Maximize Space Showcase Versatility Choose Your Aesthetics Diving Deeper into the Types of Modern Extendable Tables Drop-leaf Tables Butterfly Leaf Center Extension Table Self Storing Leaves Top 3 Best Modern Extendable Tables 1.The Vista 2. The Santa Monica 3.The Compagno How To Care for Your Table Maintaining Slider Hardware Wood Care and Protection Extending and Retracting with Care Stability Checks & Inspections Finally: Form Marries Function Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 8,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/82049284-dainty-squid-feature",
+      "page_type": "article",
+      "handle": "82049284-dainty-squid-feature",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Dainty Squid Feature | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 428,
+      "heading_text": "Dainty Squid Feature Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 5,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/82272644-a-midcentury-modern-hairpin-legs-diy-tutorial",
+      "page_type": "article",
+      "handle": "82272644-a-midcentury-modern-hairpin-legs-diy-tutorial",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "A Midcentury Modern Hairpin Legs DIY Tutorial | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 7817,
+      "heading_text": "A Midcentury Modern Hairpin Legs DIY Tutorial! (Originally posted in 2013, I've reposted this tutorial for those who have asked about it) A Midcentury Hairpin Legs DIY Tutorial Here we go! Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 16,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/amish-modern-furniture",
+      "page_type": "article",
+      "handle": "amish-modern-furniture",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Discover Amish Modern Furniture Today! | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 5001,
+      "heading_text": "Amish Modern Furniture: Timeless Craftsmanship Meets Modern Style Amish Modern Furniture: Timeless Craftsmanship Meets Modern Style Introduction Why Choose Amish Modern Furniture? Quality Craftsmanship Sustainable Materials Unique Aesthetic What Sets Amish Modern Furniture Apart? 1. Traditional Techniques, Modern Styles 2. Sustainable and High-Quality Materials 3. Handcrafted Precision and Durability 4. Customization Options for Personal Style 5. Natural Wood Finishes 6. Functional and Elegant Design 7. Blending Classic and Contemporary Elements 8. Long-Lasting, Heirloom Quality Conclusion FAQs 1. How durable is Amish furniture? 2. Can Amish furniture be customized? 3. What materials are commonly used in Amish modern furniture? Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 10,
+      "image_count": 6,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/best-scandinavian-furniture-online",
+      "page_type": "article",
+      "handle": "best-scandinavian-furniture-online",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Top Online Scandinavian Furniture Stores | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 3695,
+      "heading_text": "Best Scandinavian Furniture Online — Top Stores, Sofas & Chairs (2026) The Best Places to Find Scandinavian Furniture Online 1. IKEA 2. Nordic Nest 3. Finnish Design Shop 4. Scandinavian Designs 5. FJØRN Scandinavian 6. 2Modern 7. Huset 8. FROY 9. Moderncre8ve 10. JYSK Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 7,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/comparing-scandinavian-furniture-and-mid-century-modern-furniture",
+      "page_type": "article",
+      "handle": "comparing-scandinavian-furniture-and-mid-century-modern-furniture",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Comparing Scandinavian vs Mid-Century Modern Furniture | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 9854,
+      "heading_text": "A Tale of Two Design Eras: Scandinavian and Mid-Century Modern Furniture. Scandinavian vs Mid Century Modern. Ummm, Whats the difference? Both are known for their clean lines, simplicity, and functionality, but they each have their own distinct characteristics. In this article, we will delve into the intricacies of these design trends to help you understand the differences and choose the right style for your home. Scandinavian design, with its focus on minimalism and natural materials, originated in the 1950s and comes from the Nordic regions. It embraces light and airy spaces, with light-colored furniture and a cozy, welcoming atmosphere. On the other hand, Mid Century Modern design emerged in the mid-20th century and is characterized by its sleek, retro-inspired aesthetic. It combines organic shapes with bold colors, and often incorporates vintage pieces for a nostalgic feel. By understanding the unique features of these two design styles, you can make informed decisions about how to bring them into your own space. Whether you are drawn to the simplicity of Scandinavian design or the retro charm of Mid-Century Modern, this article will provide you with the knowledge you need to create a beautifully curated home that reflects your personal style. Scandinavian Furniture vs Mid Century- A Primer Scandinavian Furniture Understanding Scandinavian Furniture Scandinavian dining tables Mid-Century Modern- What's it all about? One fascinating layer to the 'retro' aspect of Mid-Century Modern design is its infusion of space-age aesthetics and futurism. The mid-20th century was a pivotal era marked by groundbreaking advancements in science and technology, most notably the Space Race. This period's collective imagination was captured by the promise of space exploration, moon landings, and the idea that a futuristic utopia was just around the corner. Ideas for combining these two styles Summary: How to Blend Scandinavian and Mid-Century Modern Design About the Author Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 13,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/design-milk-feature-moderncre8ve-timeless-furniture-collection",
+      "page_type": "article",
+      "handle": "design-milk-feature-moderncre8ve-timeless-furniture-collection",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Timeless Craftsmanship | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 1221,
+      "heading_text": "Timeless Furniture Design: MODERNCRE8VE's Craftsmanship Unveiled Discover Enduring Craftsmanship with MODERNCRE8VE’s Furniture Collection Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 4,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/discover-the-pinnacle-of-handcrafted-furniture-top-10-furniture-makers-in-the-usa-2023-2024",
+      "page_type": "article",
+      "handle": "discover-the-pinnacle-of-handcrafted-furniture-top-10-furniture-makers-in-the-usa-2023-2024",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Discover the Pinnacle of Handcrafted Furniture: Top 10 Furniture Makers in the USA (2023-2024) | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 9425,
+      "heading_text": "Discover the Pinnacle of Handcrafted Furniture: Top 10 Furniture Makers in the USA (2023-2024) The 2023-2024 Definitive Guide To The Best In the USA . MODERNCRE8VE Maiden Home The Quintessence of Craftsmanship: Celebrating Authentic Furniture Makers Discovering The Soul of Craftsmanship MODERNCRE8VE: A Testament to Handcrafted Furniture Investing in a Legacy of Craftsmanship A Voyage into America's Artisanal Heritage Embodiments of Tradition and Artistry Benchmade Modern Burrow Floyd Inside Weather In Conclusion About the Author Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 11,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/discovering-japandi-style-artful-fusion-of-japanese-tranquility-and-scandinavian-simplicity",
+      "page_type": "article",
+      "handle": "discovering-japandi-style-artful-fusion-of-japanese-tranquility-and-scandinavian-simplicity",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Japandi Style: The Artful Fusion of Japanese Tranquility and Sca | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 8681,
+      "heading_text": "Discovering Japandi Style: The Artful Fusion of Japanese Tranquility and Scandinavian Simplicity Introducing Japandi, the artful fusion of two design philosophies that results in a harmonious and visually stunning aesthetic. The History and Origins of Japandi Style Key Principles of Japandi Style Elements of Japanese Design in Japandi Style Elements of Scandinavian Design in Japandi Colors and Materials in Japandi Design Incorporating Japandi in Different Spaces Japandi DIY Projects and Home Decor Ideas One of the best things about Japandi design is that it lends itself well to DIY projects and home decor ideas. Here are a few ideas to get you started: - Create a shoji screen room divider using wooden frames and translucent paper.- Make your own natural wood furniture, such as a coffee table or bookshelf. - Use natural materials, such as driftwood or stones, to create unique decorative pieces. - Create a cozy reading nook with a low platform chair, soft lighting, and a wool throw. Tips for Achieving Balance and Harmony in Japandi Design Conclusion - Embracing the Beauty of Japandi About the Author Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 8,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/domino-magazine-feature-moderncre8ve-formica",
+      "page_type": "article",
+      "handle": "domino-magazine-feature-moderncre8ve-formica",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Moderncre8ve featured in Domino Magazine | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 621,
+      "heading_text": "Domino Magazine Feature: Moderncre8ve | Formica Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 5,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/evolving-mcm",
+      "page_type": "article",
+      "handle": "evolving-mcm",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Mid-Century Modern Design: Embracing Change and Creating Comfort | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 4427,
+      "heading_text": "Evolving MCM... It's Not Dead, I Promise Mid-Century Modern is Dead? Upholstery and Cushioning Lighting Throws and Linens Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 7,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/exploring-mid-century-modern-furniture-for-your-home",
+      "page_type": "article",
+      "handle": "exploring-mid-century-modern-furniture-for-your-home",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Explore Mid Century Modern Furniture Elegance | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 6372,
+      "heading_text": "Exploring Mid Century Modern Furniture for Your Home The Enduring Appeal of Mid Century Modern Furniture: How to Style a Credenza and More Introduction to Mid Century Modern Furniture The Origins of Mid Century Modern Furniture Historical Context Key Characteristics The Allure of Vintage Mid Century Modern Furniture Nostalgia Factor Sustainability Benefits Choosing the Perfect Mid Century Modern Credenza Blending Functionality and Style Incorporating a Mid Century Modern Credenza into Your Decor Color Palette Tips Space Utilization Accessorizing Tips Expanding Mid Century Modern Styling Beyond Credenzas Final Thoughts on Mid Century Modern Furniture FAQs 1. What makes mid-century modern furniture unique? 2. How do I care for my mid-century modern credenza? 3. Where is the best place to position a credenza in my home? 4. What other furniture complements a mid-century modern credenza? Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 14,
+      "image_count": 7,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/extendable-dining-tables",
+      "page_type": "article",
+      "handle": "extendable-dining-tables",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "10 Reasons to Choose an Extendable Dining Table | Explore the Benefits | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 4979,
+      "heading_text": "10 Reasons to Choose an Extendable Dining Table 10 Reasons to Choose an Extendable Dining Table Introduction 1. Versatility and Flexibility 2. Space Optimization 3. Customizability 4. Practicality for Growing Families 5. Multi-Functional Use 6. Elegance and Style 7. Easy Maintenance 8. Cost-Effective Solution 9. Sustainable Choice 10. Lasting Durability Conclusion Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 8,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/happy-new-year-and-how-covid-has-affected-our-shop",
+      "page_type": "article",
+      "handle": "happy-new-year-and-how-covid-has-affected-our-shop",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Crafting Success: The Stories of Small Business Resilience | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 4593,
+      "heading_text": "What #standwithsmall Really Means Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 5,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/heritage-meets-innovation-exploring-the-collaborative-journey-of-moderncre8ve-and-ohios-amish-craftsmen",
+      "page_type": "article",
+      "handle": "heritage-meets-innovation-exploring-the-collaborative-journey-of-moderncre8ve-and-ohios-amish-craftsmen",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Exploring the Collaborative Journey of Mode | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 7243,
+      "heading_text": "Exploring the Collaborative Journey of Moderncre8ve and Ohio's Amish Craftsmen One of Our Amish Craftsmens Workshop. No Power lines in Sight! What Makes the Amish Such a good Choice? Inside An Amish Workshop. Amish Craftsmanship The Traditional Craftsmanship of Ohio's Amish Community boasts a legacy of unparalleled craftsmanship, with a tradition deeply rooted in woodworking and furniture making. Passed down through generations, these time-honored techniques have become synonymous with exceptional quality and enduring beauty. The Amish artisans' commitment to precision and dedication to their craft is evident in every meticulously carved detail and polished surface of their creations. Their reverence for tradition is palpable, as they adhere to age-old methods, eschewing modern conveniences in favor of time-tested practices that have stood the test of time. The resulting pieces bear the hallmark of authenticity and a profound connection to the land and their heritage The Moderncre8ve Approach In stark contrast to the traditional techniques of the Amish craftsmen, Moderncre8ve brings a fresh perspective to the world of furniture design. Embracing contemporary aesthetics and modern sensibilities, the creative minds behind Moderncre8ve infuse their designs with a bold, forward-thinking ethos. Their pieces are characterized by clean lines, striking silhouettes, and a harmonious balance of form and function. Drawing inspiration from diverse sources, including mid-century modern design and minimalist principles, Moderncre8ve's furniture exudes a distinct, cosmopolitan flair that resonates with today's design aficionados. \"At the heart of Moderncre8ve's approach lies a deep appreciation for craftsmanship and a commitment to sustainable practices. Each design is a testament to the brand's dedication to creating furniture that transcends fleeting trends, embodying enduring elegance and timeless appeal. By marrying innovation with traditional craftsmanship, Moderncre8ve has carved a niche for itself as a purveyor of distinctive, handcrafted furniture that seamlessly integrates into modern lifestyles while honoring the ethos of artisanal excellence\" The Final Result The fruits of the collaborative endeavor between Moderncre8ve and Ohio's Amish craftsmen are a testament to the power of blending tradition and innovation. Each creation reflects a harmonious marriage of design ingenuity and artisanal mastery, resonating with a sense of timelessness and contemporary allure. From sleek, mid-century-inspired dining tables to elegantly crafted chairs that exude modern sophistication, the collection embodies a captivating fusion of heritage and innovation. The furniture pieces bear the indelible stamp of the Amish craftsmen's meticulous handiwork, with every joint, curve, and surface embodying a sense of grace and precision that can only be achieved through centuries of honed skill. At the same time, they exude a modern sensibility that speaks to the discerning tastes of today's design enthusiasts, seamlessly integrating into a spectrum of interior aesthetics, from classic to contemporary. Each creation is a testament to the power of collaboration, a bridge between the past and the present, and a celebration of the enduring allure of handcrafted excellence.The furniture pieces bear the indelible stamp of the Amish craftsmen's meticulous handiwork, with every joint, curve, and surface embodying a sense of grace and precision that can only be achieved through centuries of honed skill. At the same time, they exude a modern sensibility that speaks to the discerning tastes of today's design enthusiasts, seamlessly integrating into a spectrum of interior aesthetics, from classic to contemporary. In Closing About the Author Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 10,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/japandi-bedroom",
+      "page_type": "article",
+      "handle": "japandi-bedroom",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Japandi Bedroom: The Fusion of Simplicity and Elegance | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 5404,
+      "heading_text": "Japandi Bedroom: The Fusion of Simplicity and Elegance Understanding Japandi: A Blend of Japanese and Scandinavian Styles Key Elements of a Japandi Bedroom 1. Minimalist Approach: Simplifying the Space 2. Natural Materials: Bringing Nature Indoors 3. Neutral Colors: Creating a Calm Palette 4. Functional Furniture: Combining Form and Function 5. Textural Contrast: Adding Depth and Interest Design Tips for Creating a Japandi Bedroom 1. Focus on Quality Over Quantity 2. Incorporate Greenery 3. Use Lighting to Create Ambiance 4. Embrace Art and Craftsmanship 5. Maintain a Clutter-Free Space Final Thoughts: Achieving Balance and Harmony About the Author About MODERNCRE8VE Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 8,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/japandi-style-90-things",
+      "page_type": "article",
+      "handle": "japandi-style-90-things",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Discover the Minimalist Elegance: 90 Unique Features of Japandi Style You Never Knew | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 12235,
+      "heading_text": "Discover the Minimalist Elegance: 90 Unique Features of Japandi Style You Never Knew What is Japandi Style? Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 4,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/memorial-day-sale-deets",
+      "page_type": "article",
+      "handle": "memorial-day-sale-deets",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "MODERNCRE8VE Memorial Day Sale | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 885,
+      "heading_text": "Memorial Day Sale Deets! Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 5,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/mid-century-modern-coffee-table-the-perfect-blend-of-style-and-functionality",
+      "page_type": "article",
+      "handle": "mid-century-modern-coffee-table-the-perfect-blend-of-style-and-functionality",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Mid Century Modern Coffee Tables: Timeless Design and Functionality | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 7768,
+      "heading_text": "Mid Century Modern Coffee Tables: The Perfect Blend of Style and Functionality A Nod to the Past: The Beauty of Mid-Century Modern Coffee Tables: Organic Shapes and Unique Materials: Versatility for Every Living Space Functional Features: A Centerpiece for Conversation and Connection Styling Your Mid-Century Modern Coffee Table: Play with Contrasts: Embrace Minimalism: Add a Pop of Color: Mix Heights and Shapes: Where to Find Mid-Century Modern Coffee Tables Antique Stores and Flea Markets: Where to find Online Local Furniture Stores and Design Boutiques: Conclusion: Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 4,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/mid-century-modern-table_-the-santa-monica",
+      "page_type": "article",
+      "handle": "mid-century-modern-table_-the-santa-monica",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "The Art of Modern Living: Embracing Mid-Century Modern Tables | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 11267,
+      "heading_text": "Mid Century Modern Table Mid Century Modern Table 1. Introduction 2. What is Mid Century Modern Design? 3. Origins and Influences of Mid Century Modern Design 4. Key Features of Mid Century Modern Tables Clean Lines and Minimalistic Design Natural Materials Innovative Use of Materials Functionality and Versatility 5. Popular Mid Century Modern Table Styles Eames Molded Plywood Coffee Table Noguchi Coffee Table Saarinen Tulip Table Wegner Wishbone Dining Table 6. Incorporating Mid Century Modern Tables in Interior Design Living Room Dining Room Home Office Outdoor Spaces 7. How to Choose the Right Mid Century Modern Table Size and Scale Materials and Finishes Design and Style Budget Considerations 8. Caring for Mid Century Modern Tables Cleaning and Maintenance Tips Protecting and Restoring the Finish 9. The Timeless Appeal of Mid Century Modern Tables 10. Conclusion 11. FAQs Related articles We are an Etsy Featured Shop! Sept 2015 Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table Dainty Squid Feature",
+      "section_count": 5,
+      "image_count": 4,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/mid-century-modern-walnut-credenza-a-guide-to-finding-the-perfect-piece",
+      "page_type": "article",
+      "handle": "mid-century-modern-walnut-credenza-a-guide-to-finding-the-perfect-piece",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Transform Your Space with Mid-Century Modern Walnut Credenzas | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 3522,
+      "heading_text": "Mid-Century Modern Walnut Credenza: A Guide to Finding the Perfect Piece Mid-Century Modern Walnut Credenza: A Guide to Finding the Perfect Piece What to look for This is MDF. This is Plywood. Again it has a super-thin slice of walnut over layers of lower grade whitewood that is oriented in different directions to give strength to the wood. This runs the same risk as mdf as it can chip in the exact same manner is next to impossible to repair. Another telltale sign of veneer is a very large section that is one continuous grain pattern. This is Solid Wood. Common Mistakes. Know what you are paying for. Look for deceptive language and descriptions. Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 7,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/modern-wood-furniture-timeless-style-and-durability",
+      "page_type": "article",
+      "handle": "modern-wood-furniture-timeless-style-and-durability",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Modern Wood Furniture: A Stylish and Sustainable Choice | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 6441,
+      "heading_text": "Modern Wood Furniture: Timeless Style and Durability Modern Wood Furniture: A Stylish and Sustainable Choice Timeless Style and Durability Sustainable and Durable Three examples of Solid Wood How Modern Wood Furniture Can Enhance Your Home Decor Common Faqs The Benefits of Modern Wood Furniture Timeless Style Moderncre8ve's Selection Conclusion About the Author Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 7,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/moderncre8ve-yoshi-coffee-table-facebook-hq-ice-cream-parlor",
+      "page_type": "article",
+      "handle": "moderncre8ve-yoshi-coffee-table-facebook-hq-ice-cream-parlor",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Moderncre8ve Impresses Facebook HQ with New Order | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 794,
+      "heading_text": "Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Dainty Squid Feature",
+      "section_count": 5,
+      "image_count": 5,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/oval-dining-tables-elegance-functionality-guide",
+      "page_type": "article",
+      "handle": "oval-dining-tables-elegance-functionality-guide",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Why Choose an Oval Dining Table: Use Cases and Advantages | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 3341,
+      "heading_text": "Why Choose an Oval Dining Table: In-Depth Insights and Advantages Introduction Maximizing Small Spaces Enhancing Social Interactions Versatility in Design Material and Durability Case Studies and Testimonials Conclusion About the Author Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 6,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/scandi-modern-furniture-style-differences-explained",
+      "page_type": "article",
+      "handle": "scandi-modern-furniture-style-differences-explained",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Scandi Modern Furniture: Style Differences Explained | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 5642,
+      "heading_text": "Scandi Modern Furniture: Style Differences Explained How Scandinavian Design Differs from Mid-Century Modern and Other Styles Origins and Influences Mid-Century Modern Scandinavian Design Scandinavian Design Elements and Decor Scandinavian Décor Style Accessories Scandinavian Furniture Scandinavian Interior Design Key Characteristics of the Style Key Characteristics Mid-Century Modern Scandinavian Design Style Comparison Color Palette Decor Elements Furniture Design Contemporary Influences The Role of Craftsmanship Conclusion FAQs Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 8,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/scandinavian-modern-design",
+      "page_type": "article",
+      "handle": "scandinavian-modern-design",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Scandinavian Modern Design Overview | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 6031,
+      "heading_text": "Scandinavian Modern Design: A Style That Stands the Test of Time Scandinavian Modern Design: A Style That Stands the Test of Time Introduction Origins of Scandinavian Modern Design Defining Characteristics Timeless Appeal and Resurgence Scandinavian Modern in Contemporary Interiors Tips for Incorporating Scandinavian Modern Design: The Role of Sustainability in Its Longevity Conclusion FAQs",
+      "section_count": 11,
+      "image_count": 1,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/solid-wood-furniture-care-guide",
+      "page_type": "article",
+      "handle": "solid-wood-furniture-care-guide",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Solid Wood Furniture Care: Maintenance, Cleaning and Preservation Tips | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 5460,
+      "heading_text": "Complete Guide to Solid Wood Furniture Care: Maintenance, Cleaning, and Preservation Tips\" How to Care for Solid Wood Furniture: A Comprehensive Guide 2. Understanding Your Wood Type 2.1 Identifying Wood Types 3. Daily Maintenance 4. Dealing with Spills and Stains 5. Polishing and Waxing 6. Seasonal Care 7. Repairing Scratches and Dents 8. Moving and Handling 9. Recycle and Refinish 10. Conclusion Frequently Asked Questions Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 9,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/the-ultimate-guide-to-a-mid-century-modern-dresser-handmade-furniture-with-fsc-certified-hardwood",
+      "page_type": "article",
+      "handle": "the-ultimate-guide-to-a-mid-century-modern-dresser-handmade-furniture-with-fsc-certified-hardwood",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Mid Century Modern Dresser: Your Ultimate Buyer's Guide | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 6968,
+      "heading_text": "The Ultimate Guide to a Mid Century Modern Dresser: Handmade Furniture With FSC Certified Hardwood What to look for in a Mid Century Modern Dresser; A buyers Guide. Timeless Appeal Meets Modern Sophistication Quality Matters: Materials and Craftsmanship, What to look for. Key Features to Recognize The Allure of FSC Certified Hardwood Why Handmade Is the Way to Go Undermount Slides and Soft Close Slides—The Unsung Heroes Solid Wood vs. MDF: The Eternal Debate Dovetail Drawer Boxes Your Must-Have Checklist for a Mid Century Modern Dresser Keep this checklist at hand, and you and your spouse are sure to find a dresser that's not just a storage solution but a lifelong investment. Choosing a Dresser is More Than Skin Deep Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 8,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/the-ultimate-guide-to-cleaning-and-caring-for-your-handmade-solid-wood-furniture",
+      "page_type": "article",
+      "handle": "the-ultimate-guide-to-cleaning-and-caring-for-your-handmade-solid-wood-furniture",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "The Ultimate Guide to Cleaning and Caring for Your Handmade Solid Wood Furniture | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 3602,
+      "heading_text": "The Ultimate Guide to Cleaning and Caring for Your Handmade Solid Wood Furniture The Ultimate Guide to Cleaning and Caring for Your Handmade Solid Wood Furniture Understanding Your Handmade Table Daily Maintenance for Handmade Wood Tables Cleaning Basics: Protective Measures: Seasonal Maintenance and Deep Cleaning Humidity Control: Deep Cleaning Tips: Conditioning and Polishing: Protecting Your Table from Sunlight and Uneven Fading Prevention Tips: Common Mistakes to Avoid Conclusion Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 11,
+      "image_count": 5,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/title-top-5-modern-mid-century-furniture-companies-you-should-know-2022-moderncre8ve",
+      "page_type": "article",
+      "handle": "title-top-5-modern-mid-century-furniture-companies-you-should-know-2022-moderncre8ve",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Discover the Best US-Made Modern Mid-Century Furniture Companies | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 3627,
+      "heading_text": "Top 5 US Made Modern Mid Century Furniture Companies You Should Know Top 5 US Made Modern Mid Century Furniture Companies. #1: Moderncre8ve : #2 Vermont Wood Studios #3 Bricker and Beam #4 Wake The Tree: #5 Leah K.S. Amick Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 9,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/top-7-modern-interior-design-trends-to-watch-for-2019",
+      "page_type": "article",
+      "handle": "top-7-modern-interior-design-trends-to-watch-for-2019",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "TOP INTERIOR DESIGN TRENDS 2019 | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 1095,
+      "heading_text": "TOP 7 MODERN INTERIOR DESIGN TRENDS TO WATCH FOR 2019 Top 2019 Interior Design Trends: What's on the Horizon? Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 5,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/top-places-to-buy-modern-midcentury-and-scandinavian-danish-furniture-cleveland-ohio",
+      "page_type": "article",
+      "handle": "top-places-to-buy-modern-midcentury-and-scandinavian-danish-furniture-cleveland-ohio",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Top 4 Places to Buy Modern Furniture in Cleveland Ohio | Furniture Stores Cleveland | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 5300,
+      "heading_text": "Top 4 Places to Buy Modern Furniture in Cleveland Ohio | Furniture Stores Cleveland Finding Modern Furniture in Cleveland Ohio Custom & Handmade Furniture in Cleveland: A Timeless Investment Our Services at Moderncre8ve Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 8,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/ultimate-guide-to-mid-century-modern-furniture-and-design",
+      "page_type": "article",
+      "handle": "ultimate-guide-to-mid-century-modern-furniture-and-design",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "The Ultimate Guide to Mid-Century Modern Furniture and Design | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 6085,
+      "heading_text": "The Ultimate Guide to Mid-Century Modern Furniture and Design Unveiling the Mystique of Mid-Century Modern Design Mid-Century Modern (MCM) has more than just a retro appeal; it stands as an enduring embodiment of architectural and furniture innovation. This design approach emerged in the middle of the 20th century, defining an era and forever changing our living spaces. It fuses simple yet captivating lines, an array of colors, and a blend of materials that speaks to both form and function. Defining Characteristics: What Makes It Mid-Century Modern? Understanding the nuances of MCM is essential for both collectors and everyday enthusiasts. Let's explore the core principles that set this design trend apart. Simplicity in Form Functionality First A Palette of Possibilities Material Dexterity A Stroll Through History: The Origins and Influences Mid-Century Modern vs. Modern Industrial: Spotting the Differences Mid-Century Modern Modern Industrial Mid Century Modern: A Timeless Narrative One fascinating layer to the 'retro' aspect of Mid-Century Modern design is its infusion of space-age aesthetics and futurism. The mid-20th century was a pivotal era marked by groundbreaking advancements in science and technology, most notably the Space Race. This period's collective imagination was captured by the promise of space exploration, moon landings, and the idea that a futuristic utopia was just around the corner. Further Reading About the Author Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 10,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/uncovering-the-beauty-and-durability-of-black-walnut-wood-the-ultimate-guide",
+      "page_type": "article",
+      "handle": "uncovering-the-beauty-and-durability-of-black-walnut-wood-the-ultimate-guide",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Uncovering the Beauty of Black Walnut Wood: The Ultimat | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 12738,
+      "heading_text": "Uncovering the Beauty and Durability of Black Walnut Wood: The Ultimate Guide Introducing the Ultimate Guide to Black Walnut Wood: Uncovering its Beauty and Durability When it comes to elegance and durability, few woods can rival the timeless allure of black walnut. Known for its rich, dark tones and swirling grain patterns, black walnut wood is a versatile and sought-after material in the world of woodworking and interior design. In this comprehensive guide, we will delve deep into the beauty and durability of black walnut wood, revealing insights, tips, and practical advice for incorporating this extraordinary material into your own projects. From its origins as a native hardwood in North America to its impeccable finish and ability to withstand the test of time, we will explore the many facets that make black walnut wood a true gem in the realm of natural materials. Whether you are considering black walnut for a furniture piece, a flooring option, or simply want to learn more about this exquisite wood species, this guide is your go-to resource. Join us as we embark on a journey through the fascinating world of black walnut wood, and uncover why it has become a favorite choice for artisans and enthusiasts alike. Introduction Characteristics and Properties of Black Walnut Wood The History of Black Walnut Wood in Furniture Making Green Walnuts: The Unripe Marvels Benefits of Using Black Walnut Wood in Furniture Popular Uses of Black Walnut Wood in Home Decor How to Care for and Maintain Black Walnut Wood Furniture Black Walnut Wood vs. Other Hardwoods: A Comparison Where to Buy Black Walnut Wood Products DIY Projects Using Black Walnut Wood Conclusion: The Timeless Beauty of Black Walnut Wood Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 9,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/weve-moved-shops-aka-growing-pains",
+      "page_type": "article",
+      "handle": "weve-moved-shops-aka-growing-pains",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Craftsmanship at Its Best: The Advantages of a Small Team Approach | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 2799,
+      "heading_text": "We've moved our workshop. It's so hard to say goodbye (kind of...) Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 6,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog/yoshi-coffee-table-featured-hgtv-magazine",
+      "page_type": "article",
+      "handle": "yoshi-coffee-table-featured-hgtv-magazine",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "In the Spotlight: Moderncre8ve Featured in HGTV Magazine! | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 634,
+      "heading_text": "We are featured in HGTV magazine this month! Related articles We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table",
+      "section_count": 5,
+      "image_count": 5,
+      "findings": []
+    },
+    {
+      "url": "https://moderncre8ve.com/blogs/mid-century-modern-scandi-japandi-design-blog",
+      "page_type": "blog",
+      "handle": "mid-century-modern-scandi-japandi-design-blog",
+      "blog_handle": "mid-century-modern-scandi-japandi-design-blog",
+      "title": "Mid-Century Modern & More Designs | ModernCre8ve",
+      "status": "ok",
+      "visible_text_length": 390,
+      "heading_text": "Mid-Century Modern, Scandi And Japandi Design Insights We are an Etsy Featured Shop! Sept 2015 Mid Century Modern Table Revamping Facebook HQ's \"Sweet Shop\" with a Moderncre8ve Yoshi Coffee Table Dainty Squid Feature A Midcentury Modern Hairpin Legs DIY Tutorial! We are featured in HGTV magazine this month!",
+      "section_count": 3,
+      "image_count": 6,
+      "findings": []
+    }
+  ],
+  "findings": [
+    {
+      "url": "https://moderncre8ve.com/pages/legal",
+      "page_type": "page",
+      "issue_type": "demo_or_placeholder_copy",
+      "severity": "high",
+      "visible_live": true,
+      "evidence": [
+        "Visible marker hits: \\bcopy of\\b",
+        "Main text sample: The policies that cover your visit and your order Legal & Policies Every ModernCre8ve piece is handcrafted to order, so we want the terms behind your purchase to be as clear as the craftsmanship. Each policy below opens..."
+      ],
+      "content_source": "Mapped page definition: app/page-builder/pages/legal; published page route",
+      "recommended_fix": "Replace demo or placeholder copy with production content and remove any temporary merchandising language from the published page.",
+      "owner": "Content / Page builder"
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/my-personal-data",
+      "page_type": "page",
+      "issue_type": "empty_or_thin_live_content",
+      "severity": "high",
+      "visible_live": true,
+      "evidence": [
+        "Rendered <main> text length: 142",
+        "Section markers: 3",
+        "Image count inside <main>: 0",
+        "Page body is unusually thin for a CMS page."
+      ],
+      "content_source": "No mapped local fallback JSON; published page route",
+      "recommended_fix": "Populate the page definition so the route renders meaningful body content server-side.",
+      "owner": "Content / Page builder"
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/cleveland-workshop-showroom",
+      "page_type": "page",
+      "issue_type": "no_repo_fallback",
+      "severity": "medium",
+      "visible_live": false,
+      "evidence": [
+        "Page handle `cleveland-workshop-showroom` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
+      ],
+      "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
+      "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
+      "owner": "Content / Page builder"
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/custom-kitchen-cabinets-cleveland",
+      "page_type": "page",
+      "issue_type": "no_repo_fallback",
+      "severity": "medium",
+      "visible_live": false,
+      "evidence": [
+        "Page handle `custom-kitchen-cabinets-cleveland` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
+      ],
+      "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
+      "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
+      "owner": "Content / Page builder"
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/my-personal-data",
+      "page_type": "page",
+      "issue_type": "no_repo_fallback",
+      "severity": "medium",
+      "visible_live": false,
+      "evidence": [
+        "Page handle `my-personal-data` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
+      ],
+      "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
+      "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
+      "owner": "Content / Page builder"
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/privacy-policy",
+      "page_type": "page",
+      "issue_type": "no_repo_fallback",
+      "severity": "medium",
+      "visible_live": false,
+      "evidence": [
+        "Page handle `privacy-policy` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
+      ],
+      "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
+      "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
+      "owner": "Content / Page builder"
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/request-personal-data",
+      "page_type": "page",
+      "issue_type": "no_repo_fallback",
+      "severity": "medium",
+      "visible_live": false,
+      "evidence": [
+        "Page handle `request-personal-data` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
+      ],
+      "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
+      "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
+      "owner": "Content / Page builder"
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/terms-of-service",
+      "page_type": "page",
+      "issue_type": "no_repo_fallback",
+      "severity": "medium",
+      "visible_live": false,
+      "evidence": [
+        "Page handle `terms-of-service` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
+      ],
+      "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
+      "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
+      "owner": "Content / Page builder"
+    },
+    {
+      "url": "https://moderncre8ve.com/products/copy-of-santa-monica-bench-modern-walnut-bench",
+      "page_type": "product",
+      "issue_type": "suspicious_handle_or_slug",
+      "severity": "medium",
+      "visible_live": true,
+      "evidence": [
+        "Handle `copy-of-santa-monica-bench-modern-walnut-bench` still contains a copy-of prefix."
+      ],
+      "content_source": "Published product route",
+      "recommended_fix": "Confirm the published handle is intentional. If not, create a clean canonical handle and redirect the old URL.",
+      "owner": "Merchandising / Shopify"
+    },
+    {
+      "url": "source://app/page-builder/pages/homepage.ts",
+      "page_type": "source-risk",
+      "issue_type": "page_definition_empty_fields",
+      "severity": "medium",
+      "visible_live": false,
+      "evidence": [
+        "app/page-builder/pages/homepage.ts contains 1 empty string field(s).",
+        "Empty field: product"
+      ],
+      "content_source": "Page definition (app/page-builder/pages/homepage.ts)",
+      "recommended_fix": "Fill or remove empty content fields so mapped pages do not render blank components.",
+      "owner": "Content / Page builder"
+    },
+    {
+      "url": "source://app/page-builder/pages/press.ts",
+      "page_type": "source-risk",
+      "issue_type": "page_definition_empty_fields",
+      "severity": "medium",
+      "visible_live": false,
+      "evidence": [
+        "app/page-builder/pages/press.ts contains 9 empty string field(s).",
+        "Empty field: content",
+        "Empty field: content",
+        "Empty field: content",
+        "Empty field: content",
+        "Empty field: content",
+        "Empty field: content",
+        "Empty field: content",
+        "Empty field: content",
+        "Empty field: content"
+      ],
+      "content_source": "Page definition (app/page-builder/pages/press.ts)",
+      "recommended_fix": "Fill or remove empty content fields so mapped pages do not render blank components.",
+      "owner": "Content / Page builder"
+    },
+    {
+      "url": "source://app/sections/image-with-text/image.tsx",
+      "page_type": "source-risk",
+      "issue_type": "source_placeholder_image_fallback",
+      "severity": "medium",
+      "visible_live": false,
+      "evidence": [
+        "app/sections/image-with-text/image.tsx:60 contains \"IMAGES_PLACEHOLDERS.image\"."
+      ],
+      "content_source": "Hydrogen section fallback logic (app/sections/image-with-text/image.tsx)",
+      "recommended_fix": "Require a real image for published sections or render nothing instead of a placeholder asset.",
+      "owner": "Storefront engineering"
+    },
+    {
+      "url": "source://app/sections/slideshow/slide.tsx",
+      "page_type": "source-risk",
+      "issue_type": "source_placeholder_image_fallback",
+      "severity": "medium",
+      "visible_live": false,
+      "evidence": [
+        "app/sections/slideshow/slide.tsx:466 contains \"IMAGES_PLACEHOLDERS.banner_1\"."
+      ],
+      "content_source": "Hydrogen section fallback logic (app/sections/slideshow/slide.tsx)",
+      "recommended_fix": "Guard published slideshow slides so missing images do not fall back to placeholder banners.",
+      "owner": "Storefront engineering"
+    },
+    {
+      "url": "https://moderncre8ve.com/pages/trade-1",
+      "page_type": "page",
+      "issue_type": "suspicious_handle_or_slug",
+      "severity": "low",
+      "visible_live": true,
+      "evidence": [
+        "Handle `trade-1` looks like a duplicate page slug."
+      ],
+      "content_source": "Mapped page definition: app/page-builder/pages/trade; published page route",
+      "recommended_fix": "Confirm the published handle is intentional. If not, create a clean canonical handle and redirect the old URL.",
+      "owner": "Content / Page builder"
+    },
+    {
+      "url": "source://app/page-builder/pages/default-product.ts",
+      "page_type": "source-risk",
+      "issue_type": "page_definition_demo_markers",
+      "severity": "low",
+      "visible_live": false,
+      "evidence": [
+        "app/page-builder/pages/default-product.ts contains marker hits: \\bplaceholder\\b."
+      ],
+      "content_source": "Page definition (app/page-builder/pages/default-product.ts)",
+      "recommended_fix": "Confirm these marker strings are not production-facing copy, then remove or replace them if they are placeholders.",
+      "owner": "Content / Page builder"
+    },
+    {
+      "url": "source://app/page-builder/pages/legal.ts",
+      "page_type": "source-risk",
+      "issue_type": "page_definition_demo_markers",
+      "severity": "low",
+      "visible_live": false,
+      "evidence": [
+        "app/page-builder/pages/legal.ts contains marker hits: \\bcopy of\\b."
+      ],
+      "content_source": "Page definition (app/page-builder/pages/legal.ts)",
+      "recommended_fix": "Confirm these marker strings are not production-facing copy, then remove or replace them if they are placeholders.",
+      "owner": "Content / Page builder"
+    }
+  ]
+}
