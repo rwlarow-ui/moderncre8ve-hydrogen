@@ -1,24 +1,20 @@
 # Content Audit
 
-Generated: 2026-11-16T21:52:59.632Z
+Generated: 2026-11-23T12:34:34.333Z
 
 ## Summary
 
-- Audited URLs: 93
-- Flagged live URLs: 10
-- Source-only findings: 5
-- Severity counts: critical 0, high 3, medium 13, low 2
+- Audited URLs: 92
+- Flagged live URLs: 9
+- Source-only findings: 6
+- Severity counts: critical 0, high 2, medium 11, low 3
 
 ## Highest Priority Live Findings
 
-- [high] page https://moderncre8ve.com/pages/blog -> empty_or_thin_live_content
-  Evidence: Rendered <main> text length: 24 | Section markers: 3 | Image count inside <main>: 0 | Page body is unusually thin for a CMS page.
-  Source: No mapped local fallback JSON; published page route
-  Fix: Populate the page definition so the route renders meaningful body content server-side.
-- [high] page https://moderncre8ve.com/pages/legal -> empty_or_thin_live_content
-  Evidence: Rendered <main> text length: 26 | Section markers: 3 | Image count inside <main>: 0 | Page body is unusually thin for a CMS page.
-  Source: No mapped local fallback JSON; published page route
-  Fix: Populate the page definition so the route renders meaningful body content server-side.
+- [high] page https://moderncre8ve.com/pages/legal -> demo_or_placeholder_copy
+  Evidence: Visible marker hits: \bcopy of\b | Main text sample: The policies that cover your visit and your order Legal & Policies Every ModernCre8ve piece is handcrafted to order, so we want the terms behind your purchase to be as clear as the craftsmanship. Each policy below opens...
+  Source: Mapped page definition: app/page-builder/pages/legal; published page route
+  Fix: Replace demo or placeholder copy with production content and remove any temporary merchandising language from the published page.
 - [high] page https://moderncre8ve.com/pages/my-personal-data -> empty_or_thin_live_content
   Evidence: Rendered <main> text length: 142 | Section markers: 3 | Image count inside <main>: 0 | Page body is unusually thin for a CMS page.
   Source: No mapped local fallback JSON; published page route
@@ -34,17 +30,11 @@ Generated: 2026-11-16T21:52:59.632Z
 
 ## Source Risks
 
-- [medium] https://moderncre8ve.com/pages/blog -> no_repo_fallback
-  Evidence: Page handle `blog` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts.
-  Fix: Either add a page definition for this handle or confirm the default page template is intended.
 - [medium] https://moderncre8ve.com/pages/cleveland-workshop-showroom -> no_repo_fallback
   Evidence: Page handle `cleveland-workshop-showroom` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts.
   Fix: Either add a page definition for this handle or confirm the default page template is intended.
 - [medium] https://moderncre8ve.com/pages/custom-kitchen-cabinets-cleveland -> no_repo_fallback
   Evidence: Page handle `custom-kitchen-cabinets-cleveland` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts.
-  Fix: Either add a page definition for this handle or confirm the default page template is intended.
-- [medium] https://moderncre8ve.com/pages/legal -> no_repo_fallback
-  Evidence: Page handle `legal` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts.
   Fix: Either add a page definition for this handle or confirm the default page template is intended.
 - [medium] https://moderncre8ve.com/pages/my-personal-data -> no_repo_fallback
   Evidence: Page handle `my-personal-data` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts.
@@ -73,19 +63,20 @@ Generated: 2026-11-16T21:52:59.632Z
 - [low] app/page-builder/pages/default-product.ts -> page_definition_demo_markers
   Evidence: app/page-builder/pages/default-product.ts contains marker hits: \bplaceholder\b.
   Fix: Confirm these marker strings are not production-facing copy, then remove or replace them if they are placeholders.
+- [low] app/page-builder/pages/legal.ts -> page_definition_demo_markers
+  Evidence: app/page-builder/pages/legal.ts contains marker hits: \bcopy of\b.
+  Fix: Confirm these marker strings are not production-facing copy, then remove or replace them if they are placeholders.
 
 ## Flagged URL Inventory
 
 - product https://moderncre8ve.com/products/copy-of-santa-monica-bench-modern-walnut-bench
   Findings: suspicious_handle_or_slug
-- page https://moderncre8ve.com/pages/blog
-  Findings: no_repo_fallback, empty_or_thin_live_content
 - page https://moderncre8ve.com/pages/my-personal-data
   Findings: no_repo_fallback, empty_or_thin_live_content
 - page https://moderncre8ve.com/pages/request-personal-data
   Findings: no_repo_fallback
 - page https://moderncre8ve.com/pages/legal
-  Findings: no_repo_fallback, empty_or_thin_live_content
+  Findings: demo_or_placeholder_copy
 - page https://moderncre8ve.com/pages/custom-kitchen-cabinets-cleveland
   Findings: no_repo_fallback
 - page https://moderncre8ve.com/pages/terms-of-service

@@ -1,26 +1,26 @@
 {
-  "generatedAt": "2026-11-16T21:52:59.632Z",
+  "generatedAt": "2026-11-23T12:34:34.333Z",
   "canonicalOrigin": "https://moderncre8ve.com",
   "notes": [
     "Canonical production crawl target is https://moderncre8ve.com.",
     "The Oxygen preview URL in AGENTS.md returned a Shopify Oxygen 404 during this audit and was not used."
   ],
   "summary": {
-    "totalUrls": 93,
-    "flaggedUrls": 10,
+    "totalUrls": 92,
+    "flaggedUrls": 9,
     "okUrls": 83,
-    "sourceOnlyFindings": 5,
+    "sourceOnlyFindings": 6,
     "findingsBySeverity": {
       "critical": 0,
-      "high": 3,
-      "medium": 13,
-      "low": 2
+      "high": 2,
+      "medium": 11,
+      "low": 3
     },
     "flaggedByType": {
       "product": 1,
-      "page": 9
+      "page": 8
     },
-    "mappedFallbackPages": 14
+    "mappedFallbackPages": 15
   },
   "inventory": [
     {
@@ -56,7 +56,7 @@
       "blog_handle": null,
       "title": "Lareaux's Furniture Cure All Paste Wax, 8 oz | ModernCre8ve",
       "status": "ok",
-      "visible_text_length": 3885,
+      "visible_text_length": 3875,
       "heading_text": "Lareaux's Furniture Cure All Lareaux's Furniture Cure All How to Use Apply Wait Buff Furniture Cure All FAQ What is Lareaux's Furniture Cure All? What's in it? What can I use it on? What does it protect against? How often should I apply it? How do I dispose of used rags? How fast does it ship? Complete Your Space",
       "section_count": 22,
       "image_count": 3,
@@ -207,49 +207,6 @@
       "findings": []
     },
     {
-      "url": "https://moderncre8ve.com/pages/blog",
-      "page_type": "page",
-      "handle": "blog",
-      "blog_handle": null,
-      "title": "Moderncre8ve Blog | ModernCre8ve",
-      "status": "flagged",
-      "visible_text_length": 24,
-      "heading_text": "Blog",
-      "section_count": 3,
-      "image_count": 0,
-      "findings": [
-        {
-          "url": "https://moderncre8ve.com/pages/blog",
-          "page_type": "page",
-          "issue_type": "no_repo_fallback",
-          "severity": "medium",
-          "visible_live": false,
-          "evidence": [
-            "Page handle `blog` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
-          ],
-          "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
-          "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
-          "owner": "Content / Page builder"
-        },
-        {
-          "url": "https://moderncre8ve.com/pages/blog",
-          "page_type": "page",
-          "issue_type": "empty_or_thin_live_content",
-          "severity": "high",
-          "visible_live": true,
-          "evidence": [
-            "Rendered <main> text length: 24",
-            "Section markers: 3",
-            "Image count inside <main>: 0",
-            "Page body is unusually thin for a CMS page."
-          ],
-          "content_source": "No mapped local fallback JSON; published page route",
-          "recommended_fix": "Populate the page definition so the route renders meaningful body content server-side.",
-          "owner": "Content / Page builder"
-        }
-      ]
-    },
-    {
       "url": "https://moderncre8ve.com/pages/custom-furniture-crafted-to-perfection",
       "page_type": "page",
       "handle": "custom-furniture-crafted-to-perfection",
@@ -365,38 +322,23 @@
       "blog_handle": null,
       "title": "ModernCre8ve Legal Information and Policies Details | ModernCre8ve",
       "status": "flagged",
-      "visible_text_length": 26,
-      "heading_text": "Legal",
-      "section_count": 3,
-      "image_count": 0,
+      "visible_text_length": 1175,
+      "heading_text": "Legal & Policies Privacy Policy Terms of Service Refund Policy Order Policies & Guidelines Shipping Policy & Customer Responsibilities Your Personal Data",
+      "section_count": 22,
+      "image_count": 1,
       "findings": [
         {
           "url": "https://moderncre8ve.com/pages/legal",
           "page_type": "page",
-          "issue_type": "no_repo_fallback",
-          "severity": "medium",
-          "visible_live": false,
-          "evidence": [
-            "Page handle `legal` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
-          ],
-          "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
-          "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
-          "owner": "Content / Page builder"
-        },
-        {
-          "url": "https://moderncre8ve.com/pages/legal",
-          "page_type": "page",
-          "issue_type": "empty_or_thin_live_content",
+          "issue_type": "demo_or_placeholder_copy",
           "severity": "high",
           "visible_live": true,
           "evidence": [
-            "Rendered <main> text length: 26",
-            "Section markers: 3",
-            "Image count inside <main>: 0",
-            "Page body is unusually thin for a CMS page."
+            "Visible marker hits: \\bcopy of\\b",
+            "Main text sample: The policies that cover your visit and your order Legal & Policies Every ModernCre8ve piece is handcrafted to order, so we want the terms behind your purchase to be as clear as the craftsmanship. Each policy below opens..."
           ],
-          "content_source": "No mapped local fallback JSON; published page route",
-          "recommended_fix": "Populate the page definition so the route renders meaningful body content server-side.",
+          "content_source": "Mapped page definition: app/page-builder/pages/legal; published page route",
+          "recommended_fix": "Replace demo or placeholder copy with production content and remove any temporary merchandising language from the published page.",
           "owner": "Content / Page builder"
         }
       ]
@@ -591,7 +533,9 @@
           "issue_type": "suspicious_handle_or_slug",
           "severity": "low",
           "visible_live": true,
-          "evidence": ["Handle `trade-1` looks like a duplicate page slug."],
+          "evidence": [
+            "Handle `trade-1` looks like a duplicate page slug."
+          ],
           "content_source": "Mapped page definition: app/page-builder/pages/trade; published page route",
           "recommended_fix": "Confirm the published handle is intentional. If not, create a clean canonical handle and redirect the old URL.",
           "owner": "Content / Page builder"
@@ -788,10 +732,10 @@
       "blog_handle": null,
       "title": "Housewares & Home Accents | ModernCre8ve",
       "status": "ok",
-      "visible_text_length": 2247,
+      "visible_text_length": 2357,
       "heading_text": "Housewares Housewares About This Collection Elevate Your Home with Our Curated Decor & Housewares Collection",
       "section_count": 5,
-      "image_count": 1,
+      "image_count": 3,
       "findings": []
     },
     {
@@ -1421,35 +1365,17 @@
   ],
   "findings": [
     {
-      "url": "https://moderncre8ve.com/pages/blog",
-      "page_type": "page",
-      "issue_type": "empty_or_thin_live_content",
-      "severity": "high",
-      "visible_live": true,
-      "evidence": [
-        "Rendered <main> text length: 24",
-        "Section markers: 3",
-        "Image count inside <main>: 0",
-        "Page body is unusually thin for a CMS page."
-      ],
-      "content_source": "No mapped local fallback JSON; published page route",
-      "recommended_fix": "Populate the page definition so the route renders meaningful body content server-side.",
-      "owner": "Content / Page builder"
-    },
-    {
       "url": "https://moderncre8ve.com/pages/legal",
       "page_type": "page",
-      "issue_type": "empty_or_thin_live_content",
+      "issue_type": "demo_or_placeholder_copy",
       "severity": "high",
       "visible_live": true,
       "evidence": [
-        "Rendered <main> text length: 26",
-        "Section markers: 3",
-        "Image count inside <main>: 0",
-        "Page body is unusually thin for a CMS page."
+        "Visible marker hits: \\bcopy of\\b",
+        "Main text sample: The policies that cover your visit and your order Legal & Policies Every ModernCre8ve piece is handcrafted to order, so we want the terms behind your purchase to be as clear as the craftsmanship. Each policy below opens..."
       ],
-      "content_source": "No mapped local fallback JSON; published page route",
-      "recommended_fix": "Populate the page definition so the route renders meaningful body content server-side.",
+      "content_source": "Mapped page definition: app/page-builder/pages/legal; published page route",
+      "recommended_fix": "Replace demo or placeholder copy with production content and remove any temporary merchandising language from the published page.",
       "owner": "Content / Page builder"
     },
     {
@@ -1466,19 +1392,6 @@
       ],
       "content_source": "No mapped local fallback JSON; published page route",
       "recommended_fix": "Populate the page definition so the route renders meaningful body content server-side.",
-      "owner": "Content / Page builder"
-    },
-    {
-      "url": "https://moderncre8ve.com/pages/blog",
-      "page_type": "page",
-      "issue_type": "no_repo_fallback",
-      "severity": "medium",
-      "visible_live": false,
-      "evidence": [
-        "Page handle `blog` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
-      ],
-      "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
-      "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
       "owner": "Content / Page builder"
     },
     {
@@ -1502,19 +1415,6 @@
       "visible_live": false,
       "evidence": [
         "Page handle `custom-kitchen-cabinets-cleveland` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
-      ],
-      "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
-      "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
-      "owner": "Content / Page builder"
-    },
-    {
-      "url": "https://moderncre8ve.com/pages/legal",
-      "page_type": "page",
-      "issue_type": "no_repo_fallback",
-      "severity": "medium",
-      "visible_live": false,
-      "evidence": [
-        "Page handle `legal` is present in the live sitemap but not mapped in app/page-builder/pages/index.ts."
       ],
       "content_source": "Shopify page record without a page definition of its own; renders the default page template.",
       "recommended_fix": "Either add a page definition for this handle or confirm the default page template is intended.",
@@ -1653,7 +1553,9 @@
       "issue_type": "suspicious_handle_or_slug",
       "severity": "low",
       "visible_live": true,
-      "evidence": ["Handle `trade-1` looks like a duplicate page slug."],
+      "evidence": [
+        "Handle `trade-1` looks like a duplicate page slug."
+      ],
       "content_source": "Mapped page definition: app/page-builder/pages/trade; published page route",
       "recommended_fix": "Confirm the published handle is intentional. If not, create a clean canonical handle and redirect the old URL.",
       "owner": "Content / Page builder"
@@ -1668,6 +1570,19 @@
         "app/page-builder/pages/default-product.ts contains marker hits: \\bplaceholder\\b."
       ],
       "content_source": "Page definition (app/page-builder/pages/default-product.ts)",
+      "recommended_fix": "Confirm these marker strings are not production-facing copy, then remove or replace them if they are placeholders.",
+      "owner": "Content / Page builder"
+    },
+    {
+      "url": "source://app/page-builder/pages/legal.ts",
+      "page_type": "source-risk",
+      "issue_type": "page_definition_demo_markers",
+      "severity": "low",
+      "visible_live": false,
+      "evidence": [
+        "app/page-builder/pages/legal.ts contains marker hits: \\bcopy of\\b."
+      ],
+      "content_source": "Page definition (app/page-builder/pages/legal.ts)",
       "recommended_fix": "Confirm these marker strings are not production-facing copy, then remove or replace them if they are placeholders.",
       "owner": "Content / Page builder"
     }
