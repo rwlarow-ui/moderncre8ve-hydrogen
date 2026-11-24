@@ -11,6 +11,9 @@ const PAGE_REDIRECTS: Readonly<Record<string, string>> = {
   // Admin stub page duplicating the real blog, which lives under /blogs/.
   blog: "/blogs/mid-century-modern-scandi-japandi-design-blog",
   "contact-and-inquiry": "contact-us",
+  // Liquid GDPR-app page; its body needs the app's script. The working
+  // personal-data page is app/page-builder/pages/personal-data.ts.
+  "my-personal-data": "request-personal-data",
 };
 
 export function getPageRedirectUrl(requestUrl: string, handle: string) {

@@ -15,6 +15,7 @@ import { legal } from "./legal";
 import { orderPolicies } from "./order-policies";
 import { ourMaterials } from "./our-materials";
 import { defaultPage } from "./page";
+import { personalData } from "./personal-data";
 import { press } from "./press";
 import { reviews } from "./reviews";
 import { shippingPolicy } from "./shipping-policy";
@@ -38,6 +39,7 @@ const PAGES: Record<string, PageDefinition> = {
   "mid-century-modern-press-coverage": press,
   "ordering-policies": orderPolicies,
   "our-materials": ourMaterials,
+  "request-personal-data": personalData,
   reviews,
   "shipping-policy": shippingPolicy,
   "shipping-policy-and-customer-responsibilities": shippingPolicy,
