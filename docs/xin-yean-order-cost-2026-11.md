@@ -28,3 +28,5 @@ First wholesale furniture order from Shenzhen Xin Yean Furniture (the seating/st
 - $256.24/piece is a blended average across a mix (dining chairs, leisure chairs, bar stools, a desk); it is not the per-item landed cost for any single SKU. For per-SKU costing, allocate freight pro-rata by FOB value against each line in PI20260826.
 
 _Recorded 2026-11-09._
+
+Shipment status and the supplier verification are recorded in `docs/xin-yean-order-memory-2026-11.md`, which is kept local-only (gitignored). For a redacted summary, see `docs/cloud-environment.md`.

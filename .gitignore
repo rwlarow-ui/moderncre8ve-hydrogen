@@ -31,3 +31,7 @@ moderncre8ve-seo-truth-layer/
 
 # design-system build output
 design-system/dist/
+
+# Local-only supplier/order records (contacts, payment and shipment identifiers).
+# Cloud sessions get a redacted pointer in docs/cloud-environment.md instead.
+docs/xin-yean-order-memory-2026-11.md
