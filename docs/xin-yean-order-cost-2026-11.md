@@ -11,13 +11,13 @@ First wholesale furniture order from Shenzhen Xin Yean Furniture (the seating/st
 | Final / balance payment (60%) | $2,614.00 |
 | Pieces | 17 |
 | Blended landed cost per piece | $256.24 |
-| Reference freight folded in (Lucia, Jun 25 DDP quote) | ~$1,850.00 |
+| Reference freight folded in (supplier's Jun 25 DDP quote) | ~$1,850.00 |
 
 ## Source
 
-- WorldFirst order `2026082629211000000794900880614`, status **Paid** (2026/10/19); invoice file `PI20260826.pdf`.
-- Seller: Shenzhen Xin Yean Furniture Co., Ltd (S.X.Y. Ltd). Contact: Lucia Tang.
-- Freight basis: Lucia's 2026-06-25 DDP door-to-door quote (5 CBM, ocean + inland, 38–42 days) — USD 1,850, flagged "reference only."
+- WorldFirst payment (order number kept in the local-only record), status **Paid** (2026/10/19); invoice file `PI20260826.pdf`.
+- Seller: Shenzhen Xin Yean Furniture Co., Ltd (S.X.Y. Ltd). Contact details are in the local-only record.
+- Freight basis: the supplier's 2026-06-25 DDP door-to-door quote (5 CBM, ocean + inland, 38–42 days) — USD 1,850, flagged "reference only."
 
 ## Notes
 
