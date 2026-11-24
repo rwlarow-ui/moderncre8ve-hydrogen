@@ -7,9 +7,9 @@ import type { PageDefinition } from "../types";
  * Both Shopify pages were authored by a Liquid-era GDPR app: their bodies are
  * markup for that app's script (a loader that never resolves, and a form whose
  * submit handler is undefined), which never loads on Hydrogen. Requests go to
- * the privacy contact named in the Privacy Policy instead.
+ * the store's main inbox instead (the Privacy Policy still names support@).
  */
-const PRIVACY_EMAIL = "support@moderncre8ve.com";
+const PRIVACY_EMAIL = "info@moderncre8ve.com";
 const REQUEST_MAILTO = `mailto:${PRIVACY_EMAIL}?subject=${encodeURIComponent("Personal data request")}`;
 const link = (href: string, text: string) =>
   `<a href="${href}" class="underline underline-offset-4">${text}</a>`;
