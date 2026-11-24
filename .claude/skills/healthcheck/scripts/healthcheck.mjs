@@ -96,6 +96,18 @@ const shape = {
   playwright: existsSync(p("playwright.config.ts")),
   ci: existsSync(p(".github/workflows")),
   envFile: existsSync(p(".env")),
+  // Names of .env keys with a non-empty value. Values are never kept or printed.
+  envKeys: [
+    ...new Set(
+      read(".env")
+        .split(/\r?\n/)
+        .map((l) =>
+          l.match(/^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(\S.*)?$/),
+        )
+        .filter((m) => m?.[2] && !/^(["'])\1$/.test(m[2].trim()))
+        .map((m) => m[1]),
+    ),
+  ],
   envExample: existsSync(p(".env.example")),
   docs,
   scripts: Object.keys(scripts),
@@ -383,12 +395,25 @@ if (wants("env")) {
   const envArgs = {
     "check:collections": ["--ignore=piper-fox,piper-fox-co"],
   };
+  // Env names a script cannot run without. audit:content has none: without
+  // credentials it still crawls the live site and skips only the Shopify checks.
+  const envNeeds = {
+    "check:collections": [
+      "PUBLIC_STORE_DOMAIN",
+      "PUBLIC_STOREFRONT_API_TOKEN",
+      "SHOPIFY_ADMIN_API_TOKEN",
+    ],
+  };
+  const hasEnv = (k) => shape.envKeys.includes(k) || Boolean(process.env[k]);
   for (const name of allow) {
     const extra = envArgs[name] || [];
+    const missing = (envNeeds[name] || []).filter((k) => !hasEnv(k));
     if (!scripts[name]) {
       add("SKIP", T, name, "script not present");
     } else if (!shape.envFile) {
       add("SKIP", T, name, "needs .env");
+    } else if (missing.length) {
+      add("SKIP", T, name, `needs .env values: ${missing.join(", ")}`);
     } else {
       const r = npmRun(name, undefined, extra);
       add(
