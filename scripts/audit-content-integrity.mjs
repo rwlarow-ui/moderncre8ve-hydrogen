@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-import { readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { existsSync, readFileSync } from "node:fs";
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, extname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -138,6 +139,7 @@ async function main() {
     "utf8",
   );
   await writeFile(latestMdPath, buildMarkdownReport(report), "utf8");
+  formatJsonWithBiome([jsonPath, latestJsonPath]);
 
   console.log(
     JSON.stringify(
@@ -1179,3 +1181,29 @@ function loadDotEnv() {
 }
 
 await main();
+
+// JSON.stringify never puts a short array on one line, but Biome does, so
+// unformatted reports fail `npm run biome`. Format them with the repo's Biome.
+function formatJsonWithBiome(paths) {
+  const bin = resolve(
+    ROOT,
+    "node_modules/.bin",
+    process.platform === "win32" ? "biome.cmd" : "biome",
+  );
+  if (!existsSync(bin)) {
+    console.warn(
+      "Biome not installed; run `npm run biome` before committing reports.",
+    );
+    return;
+  }
+  const result = spawnSync(bin, ["format", "--write", ...paths], {
+    cwd: ROOT,
+    encoding: "utf8",
+    shell: process.platform === "win32",
+  });
+  if (result.status !== 0) {
+    console.warn(
+      `Biome could not format the reports:\n${result.stderr || result.stdout}`,
+    );
+  }
+}
