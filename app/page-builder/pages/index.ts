@@ -37,6 +37,7 @@ const PAGES: Record<string, PageDefinition> = {
   faq,
   legal,
   "mid-century-modern-press-coverage": press,
+  "my-personal-data": personalData,
   "ordering-policies": orderPolicies,
   "our-materials": ourMaterials,
   "request-personal-data": personalData,
