@@ -28,7 +28,7 @@ const SECTIONS = [
   {
     id: "see",
     title: "See your data",
-    body: `If you have an account, ${link("/account", "sign in")} to see your orders, saved addresses and profile details at any time, and to update your name, phone number and addresses yourself.`,
+    body: `If you have an account, ${link("/account", "sign in")} to see your orders, saved addresses and profile details at any time, and to update your name and saved addresses yourself.`,
   },
   {
     id: "request",
@@ -103,7 +103,7 @@ export const personalData: PageDefinition = {
       type: "paragraph",
       data: {
         content:
-          "We only collect the personal data we need to make and deliver your furniture, and you can ask to see, correct or delete it at any time.",
+          "We collect the personal data we need to make and deliver your furniture, plus your email address if you subscribe to our newsletter, and you can ask to see, correct or delete it at any time.",
         alignment: "left",
         width: "full",
       },
