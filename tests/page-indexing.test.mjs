@@ -23,6 +23,15 @@ test("duplicate pages redirect within the requested locale and keep query parame
     "https://moderncre8ve.com/pages/contact-us",
   );
   assert.equal(
+    getPageRedirectUrl(
+      "https://moderncre8ve.com/pages/my-personal-data",
+      "my-personal-data",
+    ),
+    "https://moderncre8ve.com/pages/request-personal-data",
+  );
+  assert.equal(isIndexablePageHandle("my-personal-data"), false);
+  assert.equal(isIndexablePageHandle("request-personal-data"), true);
+  assert.equal(
     getPageRedirectUrl("https://moderncre8ve.com/pages/faq", "faq"),
     null,
   );

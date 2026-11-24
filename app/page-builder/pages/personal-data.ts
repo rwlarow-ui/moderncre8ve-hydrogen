@@ -1,39 +1,38 @@
 import type { PageDefinition } from "../types";
 
 /**
- * `/pages/my-personal-data` and `/pages/request-personal-data` — what personal
- * data we hold and how to see, correct or delete it.
+ * `/pages/request-personal-data` (`/pages/my-personal-data` 301s here, see
+ * `app/utils/page-indexing.ts`).
  *
- * Both Shopify pages were authored by a Liquid-era GDPR app: their bodies are
- * markup for that app's script (a loader that never resolves, and a form whose
- * submit handler is undefined), which never loads on Hydrogen. Requests go to
- * the store's main inbox instead (the Privacy Policy still names support@).
+ * Both Shopify pages were created by a GDPR app for the old Liquid theme. Their
+ * admin bodies depend on that app's script (the request form's Submit button
+ * calls an undefined `sendDataRequest()`, and the data page is one sentence),
+ * so on Hydrogen they rendered a form that did nothing and a near-empty page.
+ * This composition gives a working route instead: sign in to the account, or
+ * email the privacy contact named in the Privacy Policy.
  */
-const PRIVACY_EMAIL = "info@moderncre8ve.com";
-const REQUEST_MAILTO = `mailto:${PRIVACY_EMAIL}?subject=${encodeURIComponent("Personal data request")}`;
+const PRIVACY_EMAIL = "support@moderncre8ve.com";
 const link = (href: string, text: string) =>
   `<a href="${href}" class="underline underline-offset-4">${text}</a>`;
 
 const SECTIONS = [
   {
     id: "what",
-    title: "What we hold",
-    body: "When you place an order or contact us, we keep what we need to build and deliver your piece: your name, email address and phone number, your shipping and billing addresses, your order history, and any notes about your order or delivery. Payments are processed by Shopify; we never see or store your full card number.",
+    heading: "What we hold",
+    body: "To make and deliver your order we keep the details you give us at checkout or in your account: your name, email address, phone number, delivery and billing addresses, and your order history. The Privacy Policy sets out everything we collect and why.",
   },
   {
-    id: "why",
-    title: "Why we hold it",
-    body: "Every piece is handcrafted to order and most are delivered in your home, so we use your details to confirm your order, keep you updated while it is built, schedule delivery and assembly, and support you with care and warranty questions afterwards. If you subscribed to our newsletter, we also use your email address to send it.",
-  },
-  {
-    id: "see",
-    title: "See your data",
-    body: `If you have an account, ${link("/account", "sign in")} to see your orders, saved addresses and profile details at any time, and to update your name and saved addresses yourself.`,
+    id: "account",
+    heading: "View or update it yourself",
+    body: `${link("/account", "Sign in to your account")} to see your orders and change your name or saved addresses at any time.`,
   },
   {
     id: "request",
-    title: "Request a copy, a correction or deletion",
-    body: `Email ${link(REQUEST_MAILTO, PRIVACY_EMAIL)} from the address you used with us and tell us what you would like: a copy of the personal data we hold about you, a correction, or deletion. We will confirm your identity before acting on the request. We may need to keep some records, such as order and tax records, for as long as the law requires.`,
+    heading: "Request a copy, a correction or deletion",
+    body: `Email ${link(
+      `mailto:${PRIVACY_EMAIL}?subject=Personal%20data%20request`,
+      PRIVACY_EMAIL,
+    )} from the address you ordered with and tell us what you would like: a copy of your data, a correction (including a change of email address), or deletion. We may ask you to confirm your identity before we act on a request. Some records, such as order and payment details, may have to be kept to meet legal and tax obligations.`,
   },
 ];
 
@@ -65,7 +64,7 @@ export const personalData: PageDefinition = {
       id: "personal-data-hero-sub",
       type: "subheading",
       data: {
-        content: "What we keep, why, and how to access it",
+        content: "See, correct or delete what we hold about you",
         color: "#ffffff",
       },
     },
@@ -89,30 +88,19 @@ export const personalData: PageDefinition = {
       id: "personal-data-info",
       type: "content-information",
       children: [
-        { id: "personal-data-intro" },
         ...SECTIONS.flatMap((s) => [
           { id: `personal-data-${s.id}-heading` },
           { id: `personal-data-${s.id}-body` },
         ]),
-        { id: "personal-data-more" },
+        { id: "personal-data-policy" },
       ],
       data: { gap: 20 },
-    },
-    {
-      id: "personal-data-intro",
-      type: "paragraph",
-      data: {
-        content:
-          "We collect the personal data we need to make and deliver your furniture, plus your email address if you subscribe to our newsletter, and you can ask to see, correct or delete it at any time.",
-        alignment: "left",
-        width: "full",
-      },
     },
     ...SECTIONS.flatMap((s) => [
       {
         id: `personal-data-${s.id}-heading`,
         type: "heading",
-        data: { content: s.title, as: "h2", alignment: "left" },
+        data: { content: s.heading, as: "h2", alignment: "left" },
       },
       {
         id: `personal-data-${s.id}-body`,
@@ -121,10 +109,13 @@ export const personalData: PageDefinition = {
       },
     ]),
     {
-      id: "personal-data-more",
+      id: "personal-data-policy",
       type: "paragraph",
       data: {
-        content: `The full details, including your rights under privacy laws such as the CCPA, are in our ${link("/policies/privacy-policy", "Privacy Policy")}. For anything else, ${link("/pages/contact-us", "contact us")}.`,
+        content: `Your rights, including those of California residents, and how long we take to respond are set out in our ${link(
+          "/policies/privacy-policy",
+          "Privacy Policy",
+        )}. All of our policies are on the ${link("/pages/legal", "Legal & Policies")} page.`,
         alignment: "left",
         width: "full",
       },
