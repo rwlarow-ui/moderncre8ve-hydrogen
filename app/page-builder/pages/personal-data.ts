@@ -24,7 +24,7 @@ const SECTIONS = [
   {
     id: "account",
     heading: "View or update it yourself",
-    body: `${link("/account", "Sign in to your account")} to see your orders and change your name, email address or saved addresses at any time.`,
+    body: `${link("/account", "Sign in to your account")} to see your orders and change your name or saved addresses at any time.`,
   },
   {
     id: "request",
@@ -32,7 +32,7 @@ const SECTIONS = [
     body: `Email ${link(
       `mailto:${PRIVACY_EMAIL}?subject=Personal%20data%20request`,
       PRIVACY_EMAIL,
-    )} from the address you ordered with and tell us what you would like: a copy of your data, a correction, or deletion. We may ask you to confirm your identity before we act on a request. Some records, such as order and payment details, may have to be kept to meet legal and tax obligations.`,
+    )} from the address you ordered with and tell us what you would like: a copy of your data, a correction (including a change of email address), or deletion. We may ask you to confirm your identity before we act on a request. Some records, such as order and payment details, may have to be kept to meet legal and tax obligations.`,
   },
 ];
 
