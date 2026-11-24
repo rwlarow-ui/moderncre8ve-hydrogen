@@ -196,7 +196,7 @@ The new Xin Yean chairs will have a different lead time and origin, so edit answ
 
 ## New seating launch kit: Xin Yean order PI20260826
 
-**Correction to the plan:** "Lucia" is the supplier's contact person (Lucia Tang at Shenzhen Xin Yean Furniture). It isn't a chair model, and there's no rounded bouclé chair on this order. The 90-day plan's "Lucia & Xin Yen chairs" appear to come from the contact and company names. What you're actually adding is **17 pieces: 16 chairs and stools plus 1 writing desk**, all made in Shenzhen, China, mostly in solid American ash or walnut. The kit below is built from the invoice, not the plan.
+**Correction to the plan:** "Lucia" is the first name of the supplier's contact person at Shenzhen Xin Yean Furniture. It isn't a chair model, and there's no rounded bouclé chair on this order. The 90-day plan's "Lucia & Xin Yen chairs" appear to come from the contact and company names. What you're actually adding is **17 pieces: 16 chairs and stools plus 1 writing desk**, all made in Shenzhen, China, mostly in solid American ash or walnut. The kit below is built from the invoice, not the plan.
 
 ### Facts the listings must state accurately
 

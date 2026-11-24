@@ -11,13 +11,13 @@ First wholesale furniture order from Shenzhen Xin Yean Furniture (the seating/st
 | Final / balance payment (60%) | $2,614.00 |
 | Pieces | 17 |
 | Blended landed cost per piece | $256.24 |
-| Reference freight folded in (Lucia, Jun 25 DDP quote) | ~$1,850.00 |
+| Reference freight folded in (supplier's Jun 25 DDP quote) | ~$1,850.00 |
 
 ## Source
 
-- WorldFirst order `2026082629211000000794900880614`, status **Paid** (2026/10/19); invoice file `PI20260826.pdf`.
-- Seller: Shenzhen Xin Yean Furniture Co., Ltd (S.X.Y. Ltd). Contact: Lucia Tang.
-- Freight basis: Lucia's 2026-06-25 DDP door-to-door quote (5 CBM, ocean + inland, 38–42 days) — USD 1,850, flagged "reference only."
+- WorldFirst payment (order number kept in the local-only record), status **Paid** (2026/10/19); invoice file `PI20260826.pdf`.
+- Seller: Shenzhen Xin Yean Furniture Co., Ltd (S.X.Y. Ltd). Contact details are in the local-only record.
+- Freight basis: the supplier's 2026-06-25 DDP door-to-door quote (5 CBM, ocean + inland, 38–42 days) — USD 1,850, flagged "reference only."
 
 ## Notes
 
@@ -28,3 +28,5 @@ First wholesale furniture order from Shenzhen Xin Yean Furniture (the seating/st
 - $256.24/piece is a blended average across a mix (dining chairs, leisure chairs, bar stools, a desk); it is not the per-item landed cost for any single SKU. For per-SKU costing, allocate freight pro-rata by FOB value against each line in PI20260826.
 
 _Recorded 2026-11-09._
+
+Shipment status and the supplier verification are recorded in `docs/xin-yean-order-memory-2026-11.md`, which is kept local-only (gitignored). For a redacted summary, see `docs/cloud-environment.md`.

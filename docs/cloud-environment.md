@@ -16,6 +16,7 @@ Docs: https://code.claude.com/docs/en/cloud-environments
 - Plugins (`enabledPlugins`) are not installed in the cloud VM.
 - Mac-only tools: Desktop Commander, computer use, Claude in Chrome, iMessage, the built-in browser.
 - furniture-studio concepts live in `~/.moderncre8ve/furniture-studio` on the Mac. The MCP server starts with an empty store.
+- Local-only docs, gitignored because the repo is public: `docs/xin-yean-order-memory-2026-11.md` is the full record of the first Xin Yean wholesale order (supplier contacts, payment and shipment identifiers, the supplier verification). It exists only on the owner's Mac. What a cloud session can rely on: the order is paid in full under DDP terms (costs are in `docs/xin-yean-order-cost-2026-11.md`), the supplier was verified as legitimate in November 2026, the container reached Long Beach on 2026-11-19, and door delivery is expected 2026-12-13 to 12-19. Still open: check on arrival whether the DT7258 desk and CW8137 Wishbone chair came in natural ash or walnut-stained ash. For contacts or tracking numbers, ask the owner.
 - claude.ai connectors (Shopify, Google Drive, Gmail, Calendar…) can be enabled per cloud session. Their traffic goes through Anthropic, so they need no allowlist entries.
 
 ## Environment settings
