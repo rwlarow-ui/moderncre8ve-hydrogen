@@ -31,10 +31,10 @@ If fal tools are missing or return 401, ask the user to run `/mcp`, choose **fal
    - Otherwise download each returned file URL with `curl -fsSL -o <path> <url>`.
    - Write a `prompt.txt` beside the images with the exact prompt, the model id and the job id.
 7. **Review against the design.** Compare each image with `get_cut_list` and report mismatches plainly:
-   - drawer count left / right
-   - proportions (tower vs case widths, knee opening, height)
+   - drawer count (cabinet form: left / right; apron form: total, and which one is the wider lead drawer)
+   - proportions (cabinet: tower vs case widths, knee opening, height; apron: slab sides to the floor, apron depth, knee clearance)
    - wood and finish
-   - cane inserts and leather pulls
+   - cane inserts and leather pulls (cabinet form); apron-form fronts have no hardware
 
    Renders don't lock geometry. A good-looking image with the wrong drawer count is a failed render.
 
