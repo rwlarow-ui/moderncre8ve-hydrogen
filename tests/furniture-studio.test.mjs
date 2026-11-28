@@ -6,7 +6,9 @@ import { join } from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import {
+  APRON_SEED,
   applyConceptPatch,
+  apronLayout,
   cloneSeed,
   conceptErrors,
   conceptParts,
@@ -141,6 +143,123 @@ test("material schedule reports board feet and per-material counts", () => {
   assert.ok(s.oakBoardFeet > 10 && s.oakBoardFeet < 100);
 });
 
+/* ------------------------------ apron form ------------------------------ */
+
+const overlap = (a, b) =>
+  ["x", "y", "z"].every((k, i) => {
+    const size = ["w", "d", "h"][i];
+    return a[k] < b[k] + b[size] - 1e-9 && b[k] < a[k] + a[size] - 1e-9;
+  });
+
+test("apron seed is valid, fits its envelope and parts don't collide", () => {
+  assert.deepEqual(conceptErrors(APRON_SEED), []);
+  assert.deepEqual(designIssues(APRON_SEED), []);
+  const parts = conceptParts(APRON_SEED);
+  // top, 2 sides, deck, rear rail, 1 divider, 2 × (front + 2 sides + 2 ends + bottom)
+  assert.equal(parts.length, 18);
+  const p = APRON_SEED.parameters;
+  for (const part of parts) {
+    assert.ok(part.x >= 0 && part.x + part.w <= p.width + 1e-9, part.label);
+    assert.ok(part.y >= 0 && part.y + part.d <= p.depth + 1e-9, part.label);
+    assert.ok(part.z >= 0 && part.z + part.h <= p.height + 1e-9, part.label);
+  }
+  // Drawer boxes are studied as overlapping blanks; everything else must not
+  // touch anything else, boxes included.
+  for (let i = 0; i < parts.length; i++)
+    for (let j = i + 1; j < parts.length; j++) {
+      const [a, b] = [parts[i], parts[j]];
+      if (a.material === "drawer" && b.material === "drawer") continue;
+      assert.ok(!overlap(a, b), `${a.label} overlaps ${b.label}`);
+    }
+  assert.equal(
+    parts.filter((x) => x.material !== "oak" && x.material !== "drawer").length,
+    0,
+  );
+});
+
+test("lead drawer share sizes the rightmost drawer", () => {
+  const l = apronLayout(APRON_SEED.parameters);
+  const zone = l.openings.reduce((sum, o) => sum + o.w, 0);
+  assert.ok(Math.abs(l.openings[1].w / zone - 0.55) < 1e-9);
+  const three = applyConceptPatch(APRON_SEED, {
+    parameters: { width: 1400, drawers: 3, leadShare: 40 },
+  });
+  const o = apronLayout(three.parameters).openings;
+  assert.equal(o.length, 3);
+  assert.ok(Math.abs(o[0].w - o[1].w) < 1e-9);
+  assert.ok(o[2].w > o[0].w);
+  assert.equal(
+    conceptParts(three).filter((x) => x.label.endsWith("front")).length,
+    3,
+  );
+});
+
+test("apron checks: low knee is advisory, cramped drawers block", () => {
+  const low = applyConceptPatch(APRON_SEED, {
+    parameters: { height: 700, apron: 220 },
+  });
+  assert.match(designIssues(low).join(" "), /Knee clearance/);
+  assert.equal(isBlocked(low), false);
+  const narrow = applyConceptPatch(APRON_SEED, {
+    parameters: { width: 800, drawers: 3, leadShare: 80 },
+  });
+  assert.match(designIssues(narrow).join(" "), /too narrow/);
+  assert.equal(isBlocked(narrow), true);
+});
+
+test("apron cost, prompt and form switching", () => {
+  assert.equal(costEstimate(APRON_SEED).drawers, 2);
+  const prompt = renderPrompt(APRON_SEED);
+  assert.match(prompt, /Exactly 2 drawers side by side/);
+  assert.match(prompt, /1050 mm wide/);
+  assert.doesNotMatch(prompt, /rattan|leather|sled/i);
+  for (const [leadShare, wording] of [
+    [40, /rightmost one narrowest/],
+    [50, /all the same width/],
+  ])
+    assert.match(
+      renderPrompt(
+        applyConceptPatch(APRON_SEED, { parameters: { leadShare } }),
+      ),
+      wording,
+    );
+
+  const switched = applyConceptPatch(
+    applyConceptPatch(SEED_CONCEPT, { checks: { envelope: true } }),
+    { form: "apron", parameters: { width: 1100 } },
+  );
+  assert.equal(switched.form, "apron");
+  assert.equal(switched.parameters.width, 1100);
+  assert.equal(switched.parameters.drawers, APRON_SEED.parameters.drawers);
+  assert.deepEqual(switched.checks, {});
+  assert.deepEqual(conceptErrors(switched), []);
+  assert.throws(
+    () => applyConceptPatch(APRON_SEED, { parameters: { leftDrawers: 3 } }),
+    /Unknown parameter "leftDrawers"/,
+  );
+  const back = applyConceptPatch(switched, { form: "cabinet" });
+  assert.deepEqual(back.parameters, SEED_CONCEPT.parameters);
+
+  const cabinetRanges = cloneSeed();
+  cabinetRanges.form = "apron";
+  assert.ok(
+    conceptErrors(cabinetRanges).some((e) =>
+      e.includes("Unknown parameter leftWidth"),
+    ),
+  );
+  for (const form of ["__proto__", "constructor", "sled"]) {
+    assert.ok(
+      conceptErrors({ ...APRON_SEED, form }).some((e) =>
+        e.startsWith("form must be"),
+      ),
+    );
+    assert.throws(
+      () => applyConceptPatch(APRON_SEED, { form }),
+      /Unknown form/,
+    );
+  }
+});
+
 /* ------------------------------ MCP server ------------------------------ */
 
 const serverPath = fileURLToPath(
@@ -259,10 +378,44 @@ test("MCP server lists tools and saves, revises and exports a concept", async ()
     assert.match(readFileSync(files[0].path, "utf8"), /^"Part"/);
     assert.ok(files.every((f) => f.path.startsWith(dir)));
 
+    const template = await s.call("get_design_template");
+    assert.deepEqual(Object.keys(template.structuredContent.forms), [
+      "cabinet",
+      "apron",
+    ]);
+
+    const apron = await s.call("save_concept", {
+      form: "apron",
+      name: "Slab vanity",
+      parameters: { width: 1000 },
+    });
+    assert.ok(!apron.isError, apron.content[0].text);
+    assert.equal(apron.structuredContent.document.form, "apron");
+    assert.equal(apron.structuredContent.document.cane, "None");
+    assert.equal(apron.structuredContent.derived.form, "apron");
+    const wrongKey = await s.call("save_concept", {
+      id: apron.structuredContent.id,
+      parameters: { leftDrawers: 3 },
+    });
+    assert.equal(wrongKey.isError, true);
+
+    const converted = await s.call("save_concept", {
+      id,
+      expectedRevision: 2,
+      form: "apron",
+      parameters: { width: 1200 },
+    });
+    assert.ok(!converted.isError, converted.content[0].text);
+    assert.equal(converted.structuredContent.revision, 3);
+    assert.equal(converted.structuredContent.document.wood, "Black walnut");
+    assert.equal(converted.structuredContent.document.parameters.width, 1200);
+    const apronPrompt = await s.call("build_render_prompt", { id });
+    assert.match(apronPrompt.structuredContent.prompt, /slab-side/);
+
     const traversal = await s.call("get_concept", { id: "../../etc" });
     assert.equal(traversal.isError, true);
 
-    const prompt = await s.call("build_render_prompt", { id });
+    const prompt = await s.call("build_render_prompt", { id, revision: 2 });
     assert.match(prompt.structuredContent.prompt, /1800 mm wide/);
   } finally {
     s.child.kill();

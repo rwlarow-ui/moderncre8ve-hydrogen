@@ -31,8 +31,8 @@ import { homedir } from "node:os";
 import { join, resolve } from "node:path";
 import {
   applyConceptPatch,
+  apronLayout,
   COST_FIELDS,
-  cloneSeed,
   conceptErrors,
   conceptParts,
   costEstimate,
@@ -41,14 +41,15 @@ import {
   EXPORT_FORMATS,
   EXPORT_NOTICE,
   exportStem,
-  FIELDS,
+  FORM_KEYS,
+  FORMS,
+  formOf,
   GATES,
-  INTEGER_FIELDS,
   isBlocked,
   MATERIAL_FIELDS,
   materialSchedule,
   renderPrompt,
-  SEED_CONCEPT,
+  seedFor,
 } from "../app/utils/furniture-studio.js";
 
 const serverInfo = { name: "moderncre8ve-furniture-studio", version: "1.0.0" };
@@ -64,25 +65,46 @@ const ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,79}$/;
 const MAX_IMPORT_BYTES = 100_000;
 
 const LIMITS =
-  "Concept study only: rectangular blanks stand in for the sculpted sleds, rattan is an aperture panel and leather a flat blank. Joinery, radii, wood movement, cane retention, runner machining, hardware holes, loads and tolerances are unresolved. Material rows are net sizes; costs are editable allowances that do not scale with size.";
+  "Concept study only: rectangular blanks stand in for sculpted sleds and profiles, rattan is an aperture panel and leather a flat blank. Joinery, radii, wood movement, cane retention, runner machining, hardware holes, loads and tolerances are unresolved. Material rows are net sizes; costs are editable allowances that do not scale with size.";
 
 /* ------------------------------- schemas -------------------------------- */
+
+/**
+ * One flat schema over every form's parameters. Keys shared by both forms
+ * get the widest range here; the model enforces each form's own range and
+ * rejects keys that don't belong to the concept's form.
+ */
+function parameterProperties() {
+  const props = {};
+  for (const form of FORM_KEYS) {
+    const { fields, integerFields } = FORMS[form];
+    for (const [key, label, min, max] of fields) {
+      const range = `${form} ${min}–${max}`;
+      const prev = props[key];
+      props[key] = prev
+        ? {
+            ...prev,
+            minimum: Math.min(prev.minimum, min),
+            maximum: Math.max(prev.maximum, max),
+            description: `${prev.description}, ${range}`,
+          }
+        : {
+            type: integerFields.includes(key) ? "integer" : "number",
+            minimum: min,
+            maximum: max,
+            description: `${label} (${range}`,
+          };
+    }
+  }
+  for (const p of Object.values(props)) p.description += ")";
+  return props;
+}
 
 const parameterSchema = {
   type: "object",
   description:
-    "Any subset of the template parameters, in mm (drawer counts are whole numbers).",
-  properties: Object.fromEntries(
-    FIELDS.map(([key, label, min, max]) => [
-      key,
-      {
-        type: INTEGER_FIELDS.includes(key) ? "integer" : "number",
-        minimum: min,
-        maximum: max,
-        description: label,
-      },
-    ]),
-  ),
+    "Any subset of the parameters of the concept's form, in mm (drawer counts are whole numbers). Cabinet and apron forms have different parameter sets; get_design_template lists both.",
+  properties: parameterProperties(),
   additionalProperties: false,
 };
 
@@ -110,6 +132,12 @@ const checksSchema = {
 };
 
 const patchProperties = {
+  form: {
+    type: "string",
+    enum: FORM_KEYS,
+    description:
+      "Template form: cabinet (left tower, right case, sled bases) or apron (slab-side desk with apron drawers). Switching form on an existing concept resets parameters to that form's seed values before applying any parameters given in the same call.",
+  },
   name: { type: "string", maxLength: 140 },
   brief: { type: "string", maxLength: 4000, description: "Design intent" },
   ...Object.fromEntries(
@@ -136,7 +164,7 @@ const TOOLS = [
   {
     name: "get_design_template",
     description:
-      "Describe the parametric furniture template (an asymmetric cabinet vanity / desk: left drawer tower, right drawer case, bridge worktop, rear shelf, sled bases). Returns every parameter with label and mm range, material and cost fields, the 10 prototype review gates, the seed 'Oak and rattan vanity' concept, the design brief link and the export limits. Call this first.",
+      "Describe the parametric furniture template and its two forms: cabinet (asymmetric vanity / desk: left drawer tower, right drawer case, bridge worktop, rear shelf, sled bases) and apron (slab-side desk: top on two full-height side panels, side-by-side drawers in an apron, open knee space). Returns each form's parameters with label and mm range and its seed concept, material and cost fields, the 10 prototype review gates, the design brief link and the export limits. Call this first.",
     inputSchema: { type: "object", properties: {} },
   },
   {
@@ -154,7 +182,7 @@ const TOOLS = [
   {
     name: "save_concept",
     description:
-      "Create a concept or save the next immutable revision of one. Without id, starts from the seed (or from fromId) and applies the given fields. With id, applies the fields to its latest revision; pass expectedRevision to refuse the save if someone else saved first. Rejected when values are out of range or the geometry collides (knee-room warnings are allowed). Design edits clear review checks.",
+      "Create a concept or save the next immutable revision of one. Without id, starts from the seed of the given form (cabinet by default) or from fromId, and applies the given fields. With id, applies the fields to its latest revision; pass expectedRevision to refuse the save if someone else saved first. Rejected when values are out of range or the geometry collides (knee-room warnings are allowed). Design edits clear review checks.",
     inputSchema: {
       type: "object",
       properties: {
@@ -177,7 +205,7 @@ const TOOLS = [
   {
     name: "evaluate_concept",
     description:
-      "Dry-run a design change without saving: applies the fields to a saved concept (or the seed) and returns validation errors, design warnings, whether exports would be blocked, key derived dimensions (knee opening, drawer front heights), part count and cost estimate.",
+      "Dry-run a design change without saving: applies the fields to a saved concept (or the seed of the given form) and returns validation errors, design warnings, whether exports would be blocked, key derived dimensions (knee opening / clearance, drawer front sizes), part count and cost estimate.",
     inputSchema: {
       type: "object",
       properties: { ...ref, ...patchProperties },
@@ -309,6 +337,7 @@ class ToolError extends Error {}
 function pickPatch(args) {
   const patch = {};
   for (const key of [
+    "form",
     "name",
     "brief",
     "wood",
@@ -331,26 +360,42 @@ function summary(document) {
     errors: conceptErrors(document),
     warnings: valid ? designIssues(document) : [],
     exportsBlocked: isBlocked(document),
-    derived: valid
-      ? {
-          kneeOpeningMm: p.width - p.leftWidth - p.rightWidth,
-          leftDrawerFrontMm: round(
-            (p.height +
-              p.towerRise -
-              p.base -
-              2 * p.wall -
-              (p.leftDrawers + 1) * p.gap) /
-              p.leftDrawers,
-          ),
-          rightDrawerFrontMm: round(
-            (p.rightCase - 2 * p.wall - (p.rightDrawers + 1) * p.gap) /
-              p.rightDrawers,
-          ),
-          partCount: conceptParts(document).length,
-        }
-      : null,
+    derived: valid ? derived(document) : null,
     estimateUsd: valid ? costEstimate(document) : null,
     reviewChecks: `${GATES.filter(([k]) => document.checks?.[k]).length} of ${GATES.length}`,
+  };
+}
+
+function derived(document) {
+  const p = document.parameters;
+  if (formOf(document) === "apron") {
+    const l = apronLayout(p);
+    return {
+      form: "apron",
+      kneeClearanceMm: round(l.kneeClearance),
+      kneeWidthMm: round(l.span),
+      drawerOpeningWidthsMm: l.openings.map((o) => round(o.w)),
+      drawerFrontHeightMm: round(l.openingH - 2 * p.gap),
+      drawerBoxMm: { height: round(l.boxH), depth: round(l.boxD) },
+      partCount: conceptParts(document).length,
+    };
+  }
+  return {
+    form: "cabinet",
+    kneeOpeningMm: p.width - p.leftWidth - p.rightWidth,
+    leftDrawerFrontMm: round(
+      (p.height +
+        p.towerRise -
+        p.base -
+        2 * p.wall -
+        (p.leftDrawers + 1) * p.gap) /
+        p.leftDrawers,
+    ),
+    rightDrawerFrontMm: round(
+      (p.rightCase - 2 * p.wall - (p.rightDrawers + 1) * p.gap) /
+        p.rightDrawers,
+    ),
+    partCount: conceptParts(document).length,
   };
 }
 
@@ -358,27 +403,41 @@ const round = (n) => Math.round(n * 10) / 10;
 
 function baseDocument(args) {
   if (args.id) return readRevision(args.id, args.revision).document;
-  return cloneSeed();
+  return seedFor(args.form === "apron" ? "apron" : "cabinet");
 }
 
 async function callTool(name, args) {
   switch (name) {
     case "get_design_template":
       return {
-        template: "Asymmetric cabinet vanity / desk",
+        template:
+          "Parametric vanity / desk with two forms. A concept without form is a cabinet.",
         units: "mm, USD",
-        parameters: FIELDS.map(([key, label, min, max]) => ({
-          key,
-          label,
-          min,
-          max,
-          integer: INTEGER_FIELDS.includes(key),
-          seed: SEED_CONCEPT.parameters[key],
-        })),
+        forms: Object.fromEntries(
+          FORM_KEYS.map((form) => {
+            const seed = seedFor(form);
+            const { label, description, fields, integerFields } = FORMS[form];
+            return [
+              form,
+              {
+                label,
+                description,
+                parameters: fields.map(([key, l, min, max]) => ({
+                  key,
+                  label: l,
+                  min,
+                  max,
+                  integer: integerFields.includes(key),
+                  seed: seed.parameters[key],
+                })),
+                seed,
+              },
+            ];
+          }),
+        ),
         materials: MATERIAL_FIELDS.map(([key, label]) => ({ key, label })),
         costs: COST_FIELDS.map(([key, label]) => ({ key, label })),
         reviewGates: GATES.map(([key, label]) => ({ key, label })),
-        seed: SEED_CONCEPT,
         designBrief: DESIGN_PAGE_URL,
         exportFormats: Object.keys(EXPORT_FORMATS),
         limits: LIMITS,
@@ -428,7 +487,9 @@ async function callTool(name, args) {
         base = latest.document;
         baseRevision = latest.revision;
       } else {
-        base = args.fromId ? readRevision(args.fromId).document : cloneSeed();
+        base = args.fromId
+          ? readRevision(args.fromId).document
+          : seedFor(args.form === "apron" ? "apron" : "cabinet");
         id = `${exportStem({ name: args.name || base.name })
           .replace(/-r0$/, "")
           .slice(0, 60)}-${randomUUID().slice(0, 8)}`;

@@ -9,6 +9,7 @@ import {
 } from "~/components/ops/ops-shell";
 import { cn } from "~/utils/cn";
 import {
+  applyConceptPatch,
   COST_FIELDS,
   cloneSeed,
   conceptErrors,
@@ -19,13 +20,17 @@ import {
   EXPORT_FORMATS,
   EXPORT_NOTICE,
   exportStem,
-  FIELDS,
+  FORM_KEYS,
+  FORMS,
+  fieldsFor,
+  formOf,
   GATES,
-  INTEGER_FIELDS,
+  integerFieldsFor,
   isBlocked,
   MATERIAL_FIELDS,
   materialSchedule,
   renderPrompt,
+  seedFor,
 } from "~/utils/furniture-studio";
 
 /* ---------------------------------------------------------------------------
@@ -203,6 +208,11 @@ export function FurnitureStudio() {
   const budget = valid ? costEstimate(draft) : null;
   const schedule = valid ? materialSchedule(draft) : null;
   const p = draft.parameters;
+  const form = formOf(draft);
+  const knee: [number, string] =
+    form === "apron"
+      ? [p.height - p.top - p.apron, "Knee clearance"]
+      : [p.width - p.leftWidth - p.rightWidth, "Knee opening"];
 
   /** Any design edit clears the review checks, as in the original studio. */
   const edit = (next: Concept) => setDraft({ ...next, checks: {} });
@@ -239,9 +249,22 @@ export function FurnitureStudio() {
   function reset() {
     if (!window.confirm("Discard this draft and start from the seed concept?"))
       return;
-    setDraft(cloneSeed());
+    const seed = seedFor(form);
+    setDraft(seed);
     setRevision(0);
-    setMessage("Started again from the oak and rattan vanity.");
+    setMessage(`Started again from the ${seed.name}.`);
+  }
+
+  function switchForm(next: (typeof FORM_KEYS)[number]) {
+    if (next === form) return;
+    if (
+      !window.confirm(
+        `Switch to the ${FORMS[next].label} form? Its parameters start from that form's seed values; name, brief and materials are kept.`,
+      )
+    )
+      return;
+    edit(applyConceptPatch(draft, { form: next }));
+    setMessage(`Switched to the ${FORMS[next].label} form.`);
   }
 
   const tabs: [Tab, string][] = [
@@ -262,6 +285,21 @@ export function FurnitureStudio() {
               value={draft.name}
               onChange={(e) => edit({ ...draft, name: e.target.value })}
             />
+          </OpsField>
+          <OpsField label="Template form" hint={FORMS[form].description}>
+            <select
+              className={opsInputClass}
+              value={form}
+              onChange={(e) =>
+                switchForm(e.target.value as (typeof FORM_KEYS)[number])
+              }
+            >
+              {FORM_KEYS.map((key) => (
+                <option key={key} value={key}>
+                  {FORMS[key].label}
+                </option>
+              ))}
+            </select>
           </OpsField>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -348,7 +386,7 @@ export function FurnitureStudio() {
           <OpsCard>
             <OpsSectionHeading
               title="Component study"
-              description="Geometry follows the parameters. Square blanks stand in for the sculpted sleds; not a photoreal render or joinery model."
+              description="Geometry follows the parameters. Square blanks stand in for sculpted sleds and profiles; not a photoreal render or joinery model."
               action={
                 <select
                   aria-label="Drawing view"
@@ -376,7 +414,7 @@ export function FurnitureStudio() {
                   [p.width, "Width"],
                   [p.depth, "Depth"],
                   [p.height, "Worktop"],
-                  [p.width - p.leftWidth - p.rightWidth, "Knee opening"],
+                  knee,
                 ].map(([value, label]) => (
                   <div key={label} className="border-line-subtle border-l pl-3">
                     <dt className="text-body-subtle">{label} mm</dt>
@@ -413,8 +451,8 @@ export function FurnitureStudio() {
               description="Millimetres. Study inputs; the original image was not measured."
             />
             <div className="grid gap-3 p-5">
-              {FIELDS.map(([key, label, min, max]) => {
-                const integer = INTEGER_FIELDS.includes(key);
+              {fieldsFor(draft).map(([key, label, min, max]) => {
+                const integer = integerFieldsFor(draft).includes(key);
                 return (
                   <OpsField
                     key={key}

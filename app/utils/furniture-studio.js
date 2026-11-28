@@ -13,10 +13,11 @@
  * movement, runner machining, loads and tolerances are unresolved.
  */
 
-/** @typedef {"width"|"depth"|"height"|"leftWidth"|"rightWidth"|"towerRise"|"top"|"wall"|"base"|"rightCase"|"leg"|"frame"|"shelfRise"|"shelfDepth"|"gap"|"slideAllowance"|"leftDrawers"|"rightDrawers"} ParamKey */
+/** @typedef {"width"|"depth"|"height"|"leftWidth"|"rightWidth"|"towerRise"|"top"|"wall"|"base"|"rightCase"|"leg"|"frame"|"shelfRise"|"shelfDepth"|"gap"|"slideAllowance"|"leftDrawers"|"rightDrawers"|"side"|"overhang"|"apron"|"rail"|"drawers"|"leadShare"} ParamKey */
 /** @typedef {Record<ParamKey, number>} Parameters */
+/** @typedef {"cabinet"|"apron"} Form */
 /** @typedef {{oak:number; drawer:number; cane:number; leather:number; slide:number; other:number; finish:number; hours:number; rate:number; packaging:number; contingency:number}} Costs */
-/** @typedef {{name:string; brief:string; wood:string; finish:string; cane:string; leather:string; parameters:Parameters; checks:Record<string, boolean>; costs:Costs}} Concept */
+/** @typedef {{form?:Form; name:string; brief:string; wood:string; finish:string; cane:string; leather:string; parameters:Parameters; checks:Record<string, boolean>; costs:Costs}} Concept */
 /** @typedef {{id:string; label:string; material:"oak"|"drawer"|"cane"|"leather"; x:number; y:number; z:number; w:number; d:number; h:number; note:string}} Part */
 
 /** The ChatGPT Page Codex wrote from the "Furniture Design Ideas" chat. */
@@ -46,6 +47,63 @@ export const FIELDS = [
 ];
 
 export const INTEGER_FIELDS = ["leftDrawers", "rightDrawers"];
+
+/**
+ * Slab-side desk: a top on two full-height side panels, with an apron of
+ * side-by-side drawers under the top and open knee space below. The last
+ * (rightmost) drawer is the lead drawer and takes `leadShare` % of the
+ * drawer zone; the others share the rest equally.
+ * @type {ReadonlyArray<readonly [ParamKey, string, number, number]>}
+ */
+export const APRON_FIELDS = [
+  ["width", "Overall width", 800, 1600],
+  ["depth", "Overall depth", 380, 600],
+  ["height", "Work surface height", 700, 800],
+  ["top", "Top thickness", 20, 40],
+  ["side", "Side panel thickness", 20, 45],
+  ["overhang", "Top overhang (ends and front)", 0, 60],
+  ["apron", "Apron (drawer band) height", 100, 220],
+  ["rail", "Deck, divider and front thickness", 18, 30],
+  ["drawers", "Drawer count", 1, 3],
+  ["leadShare", "Right (lead) drawer share %", 20, 80],
+  ["gap", "Drawer front gap", 2, 5],
+  ["slideAllowance", "Total runner width allowance", 20, 60],
+];
+
+/** Template forms. A concept without `form` is a cabinet (older saves). */
+export const FORMS = /** @type {const} */ ({
+  cabinet: {
+    label: "Asymmetric cabinet vanity / desk",
+    description:
+      "Left drawer tower, right drawer case, bridge worktop, rear shelf, sled bases.",
+    fields: FIELDS,
+    integerFields: INTEGER_FIELDS,
+  },
+  apron: {
+    label: "Slab-side apron desk / vanity",
+    description:
+      "Top on two full-height slab side panels, side-by-side drawers in an apron under the top, open knee space.",
+    fields: APRON_FIELDS,
+    integerFields: ["drawers"],
+  },
+});
+
+export const FORM_KEYS = /** @type {Form[]} */ (Object.keys(FORMS));
+
+/** @param {{form?: unknown}} d @returns {Form} */
+export function formOf(d) {
+  return d?.form === "apron" ? "apron" : "cabinet";
+}
+
+/** Parameter fields for a concept's form. @param {{form?: unknown}} d */
+export function fieldsFor(d) {
+  return FORMS[formOf(d)].fields;
+}
+
+/** @param {{form?: unknown}} d */
+export function integerFieldsFor(d) {
+  return FORMS[formOf(d)].integerFields;
+}
 
 export const MATERIAL_FIELDS = [
   ["wood", "Primary wood"],
@@ -127,6 +185,50 @@ export const SEED_CONCEPT = {
   },
 };
 
+/** @type {Concept} */
+export const APRON_SEED = {
+  form: "apron",
+  name: "Slab-side oak vanity",
+  brief:
+    "Compact MODERNCRE8VE vanity / dressing table. Thin top on two full-height slab side panels, two handle-free drawers side by side in a shallow apron (the right one larger), open knee space for a low stool. Mirror and stool are separate accessories.",
+  wood: "Light natural white oak",
+  finish: "Matte clear finish — sample pending",
+  cane: "None",
+  leather: "None — handle-free fronts (finger grip under the front)",
+  parameters: {
+    width: 1050,
+    depth: 450,
+    height: 760,
+    top: 22,
+    side: 25,
+    overhang: 15,
+    apron: 120,
+    rail: 20,
+    drawers: 2,
+    leadShare: 55,
+    gap: 3,
+    slideAllowance: 26,
+  },
+  checks: {},
+  costs: {
+    oak: 420,
+    drawer: 70,
+    cane: 0,
+    leather: 0,
+    slide: 47.5,
+    other: 40,
+    finish: 80,
+    hours: 16,
+    rate: 65,
+    packaging: 130,
+    contingency: 15,
+  },
+};
+
+/** @param {Form} form */
+export const seedFor = (form) =>
+  structuredClone(form === "apron" ? APRON_SEED : SEED_CONCEPT);
+
 export const EXPORT_NOTICE =
   "CONCEPT STUDY — NOT FOR MANUFACTURE. All dimensions mm. Joinery, runner machining, sculpted profiles, loads and tolerances require engineering and prototype validation.";
 
@@ -150,8 +252,10 @@ export function conceptErrors(value) {
   }
   const d = /** @type {Concept} */ (value);
   const errors = [];
+  if (d.form !== undefined && !FORM_KEYS.includes(d.form))
+    errors.push(`form must be one of ${FORM_KEYS.join(", ")}.`);
   textErrors(d, errors);
-  parameterErrors(d.parameters, errors);
+  parameterErrors(d.parameters, errors, fieldsFor(d), integerFieldsFor(d));
   costErrors(d.costs, errors);
   checkErrors(d.checks, errors);
   return errors;
@@ -172,21 +276,26 @@ function textErrors(d, errors) {
 }
 
 /** @param {unknown} parameters @param {string[]} errors */
-function parameterErrors(parameters, errors) {
+function parameterErrors(
+  parameters,
+  errors,
+  fields = FIELDS,
+  integers = INTEGER_FIELDS,
+) {
   if (!parameters || typeof parameters !== "object") {
     errors.push("parameters are required.");
     return;
   }
-  for (const [key, label, min, max] of FIELDS) {
+  for (const [key, label, min, max] of fields) {
     const v = parameters[key];
     if (!Number.isFinite(v) || v < min || v > max) {
       errors.push(`${label} (${key}) must be ${min}–${max}.`);
-    } else if (INTEGER_FIELDS.includes(key) && !Number.isInteger(v)) {
+    } else if (integers.includes(key) && !Number.isInteger(v)) {
       errors.push(`${label} (${key}) must be a whole number.`);
     }
   }
   for (const key of Object.keys(parameters)) {
-    if (!FIELDS.some(([f]) => f === key)) {
+    if (!fields.some(([f]) => f === key)) {
       errors.push(`Unknown parameter ${key}.`);
     }
   }
@@ -240,6 +349,7 @@ export function validConcept(value) {
  * @param {Concept} d
  */
 export function designIssues(d) {
+  if (formOf(d) === "apron") return apronIssues(d);
   const p = d.parameters;
   const warnings = [];
   if (p.width <= p.leftWidth + p.rightWidth)
@@ -270,6 +380,64 @@ export function designIssues(d) {
   return warnings;
 }
 
+/** Seated clearance under the apron for a vanity stool (≈ 24 in). */
+const APRON_KNEE_TARGET = 610;
+
+/**
+ * Derived apron-desk geometry shared by the checks, parts and summaries.
+ * @param {Parameters} p
+ */
+export function apronLayout(p) {
+  const x0 = p.overhang + p.side;
+  const span = p.width - 2 * x0;
+  const zone = span - (p.drawers - 1) * p.rail;
+  const lead = p.drawers === 1 ? zone : (zone * p.leadShare) / 100;
+  const other = p.drawers === 1 ? 0 : (zone - lead) / (p.drawers - 1);
+  const openings = [];
+  let x = x0;
+  for (let i = 0; i < p.drawers; i++) {
+    const w = i === p.drawers - 1 ? lead : other;
+    openings.push({ x, w });
+    x += w + p.rail;
+  }
+  const deckZ = p.height - p.top - p.apron;
+  const openingH = p.apron - p.rail;
+  return {
+    x0,
+    span,
+    openings,
+    deckZ,
+    openingH,
+    kneeClearance: deckZ,
+    boxH: openingH - 25,
+    boxD: p.depth - p.overhang - 2 * p.rail - 20,
+  };
+}
+
+/** @param {Concept} d */
+function apronIssues(d) {
+  const p = d.parameters;
+  const l = apronLayout(p);
+  const warnings = [];
+  if (l.kneeClearance < APRON_KNEE_TARGET)
+    warnings.push(
+      `Knee clearance under the apron is below the ${APRON_KNEE_TARGET} mm / 24 in study target.`,
+    );
+  if (Math.min(...l.openings.map((o) => o.w)) - p.slideAllowance < 150)
+    warnings.push(
+      "A drawer opening is too narrow for a box and runners. Widen the piece, use fewer drawers or rebalance the lead drawer share.",
+    );
+  if (l.boxH < 50)
+    warnings.push(
+      "Apron is too shallow for a drawer box. Increase apron height or reduce deck thickness.",
+    );
+  if (l.boxD < 250)
+    warnings.push(
+      "Depth is too shallow for drawer boxes. Increase depth or reduce the front overhang.",
+    );
+  return warnings;
+}
+
 /**
  * True when exports should be withheld: invalid input or a geometry warning
  * other than the advisory knee-opening one.
@@ -281,17 +449,13 @@ export function isBlocked(d) {
 }
 
 /**
- * Net component list derived from the parameters.
- * @param {Concept} d
- * @returns {Part[]}
+ * Part collector: numbers parts P001… and drops non-positive blanks.
+ * @param {Part[]} out
  */
-export function conceptParts(d) {
-  const p = d.parameters;
-  /** @type {Part[]} */
-  const out = [];
+function partAdder(out) {
   let seq = 0;
   /** @param {string} label @param {Part["material"]} material */
-  const add = (
+  return (
     label,
     material,
     x,
@@ -316,8 +480,25 @@ export function conceptParts(d) {
         note,
       });
   };
+}
+
+/**
+ * Net component list derived from the parameters.
+ * @param {Concept} d
+ * @returns {Part[]}
+ */
+export function conceptParts(d) {
+  const p = d.parameters;
+  /** @type {Part[]} */
+  const out = [];
+  const add = partAdder(out);
+  if (formOf(d) === "apron") {
+    apronParts(p, add);
+    return out;
+  }
   add(
     "Bridge worktop",
+
     "oak",
     p.leftWidth,
     0,
@@ -519,6 +700,121 @@ export function conceptParts(d) {
   return out;
 }
 
+/**
+ * Apron-desk components. Sides start behind the front overhang and run to
+ * the rear edge (wall side); fronts are inset slabs flush with the sides.
+ * @param {Parameters} p
+ * @param {ReturnType<typeof partAdder>} add
+ */
+function apronParts(p, add) {
+  const l = apronLayout(p);
+  const front = p.overhang;
+  const underTop = p.height - p.top;
+  add("Top", "oak", 0, 0, underTop, p.width, p.depth, p.top);
+  for (const [label, x] of [
+    ["Left slab side", p.overhang],
+    ["Right slab side", p.width - p.overhang - p.side],
+  ])
+    add(
+      label,
+      "oak",
+      x,
+      front,
+      0,
+      p.side,
+      p.depth - front,
+      underTop,
+      "Solid panel study; grain vertical, top attachment must allow movement",
+    );
+  add(
+    "Drawer deck",
+    "oak",
+    l.x0,
+    front,
+    l.deckZ,
+    l.span,
+    p.depth - front,
+    p.rail,
+    "Visible underside of the apron; carries the runners",
+  );
+  add(
+    "Rear apron rail",
+    "oak",
+    l.x0,
+    p.depth - p.rail,
+    l.deckZ + p.rail,
+    l.span,
+    p.rail,
+    l.openingH,
+    "Main racking resistance with the deck; joint to sides unresolved",
+  );
+  for (let i = 0; i < l.openings.length - 1; i++) {
+    const o = l.openings[i];
+    add(
+      `Drawer divider ${i + 1}`,
+      "oak",
+      o.x + o.w,
+      front,
+      l.deckZ + p.rail,
+      p.rail,
+      p.depth - front - p.rail,
+      l.openingH,
+    );
+  }
+  l.openings.forEach((o, i) => {
+    const name = `Drawer ${i + 1}${i === l.openings.length - 1 && l.openings.length > 1 ? " (lead)" : ""}`;
+    const z = l.deckZ + p.rail;
+    add(
+      `${name} front`,
+      "oak",
+      o.x + p.gap,
+      front,
+      z + p.gap,
+      o.w - 2 * p.gap,
+      p.rail,
+      l.openingH - 2 * p.gap,
+      "Slab front, handle-free; finger-grip profile under the front pending",
+    );
+    const boxX = o.x + p.slideAllowance / 2;
+    const boxW = o.w - p.slideAllowance;
+    const boxY = front + p.rail + 5;
+    for (const sx of [boxX, boxX + boxW - 15])
+      add(
+        `${name} box side`,
+        "drawer",
+        sx,
+        boxY,
+        z + 10,
+        15,
+        l.boxD,
+        l.boxH,
+        "15 mm study box; slide notches and dovetails unresolved",
+      );
+    for (const sy of [boxY, boxY + l.boxD - 15])
+      add(
+        `${name} box end`,
+        "drawer",
+        boxX + 15,
+        sy,
+        z + 10,
+        boxW - 30,
+        15,
+        l.boxH,
+      );
+    add(
+      `${name} bottom`,
+      "drawer",
+      boxX,
+      boxY,
+      z + 10,
+      boxW,
+      l.boxD,
+      6,
+      "6 mm bottom study; groove allowance and load capacity unresolved",
+    );
+  });
+}
+
 /** Cubic millimetres in one board foot (144 in³). */
 const MM3_PER_BOARD_FOOT = 2359737.216;
 
@@ -554,7 +850,10 @@ export function materialSchedule(d) {
  */
 export function costEstimate(d) {
   const c = d.costs;
-  const drawers = d.parameters.leftDrawers + d.parameters.rightDrawers;
+  const drawers =
+    formOf(d) === "apron"
+      ? d.parameters.drawers
+      : d.parameters.leftDrawers + d.parameters.rightDrawers;
   const materials =
     c.oak +
     c.drawer +
@@ -574,13 +873,39 @@ export function costEstimate(d) {
   };
 }
 
+/** First paragraph of the brief (≤ 450 chars): later paragraphs are notes. @param {Concept} d */
+const briefLead = (d) =>
+  d.brief
+    .split(/\n\s*\n/)[0]
+    .trim()
+    .slice(0, 450);
+
 /**
  * Photoreal render prompt for an image model. Does not lock geometry.
  * @param {Concept} d
  */
 export function renderPrompt(d) {
   const p = d.parameters;
-  return `Photorealistic studio product visualization of a premium MODERNCRE8VE asymmetric vanity / desk. ${d.brief.slice(0, 450)} Primary wood: ${d.wood}. Finish: ${d.finish}. Drawer inserts: ${d.cane}. Pulls: ${d.leather}, discreet fasteners. Exactly ${p.leftDrawers} left drawers and ${p.rightDrawers} right drawers. Study envelope ${p.width} mm wide, ${p.depth} mm deep, ${p.height} mm worktop height. Left tower ${p.leftWidth} mm wide, right case ${p.rightWidth} mm wide, knee opening ${p.width - p.leftWidth - p.rightWidth} mm. Sculpted sled bases, softened corners, elevated slim rear shelf. Warm neutral seamless background, physically plausible oak grain and woven texture, soft daylight, three-quarter front view, full piece in frame. No text, labels, props covering the piece or watermark. Concept visualization only; no dimensional accuracy claim.`.slice(
+  if (formOf(d) === "apron") {
+    const l = apronLayout(p);
+    const [first, ...rest] = l.openings;
+    const lead = rest.at(-1)?.w ?? first.w;
+    const others = l.openings.slice(0, -1).map((o) => o.w);
+    const sizing = others.every((w) => Math.abs(w - lead) < 1)
+      ? "all the same width"
+      : lead > Math.max(...others)
+        ? "the rightmost one widest"
+        : "the rightmost one narrowest";
+    const drawers =
+      p.drawers === 1
+        ? "Exactly 1 drawer in the apron"
+        : `Exactly ${p.drawers} drawers side by side in the apron, ${sizing}`;
+    return `Photorealistic studio product visualization of a premium MODERNCRE8VE slab-side vanity / desk. ${briefLead(d)} Primary wood: ${d.wood}. Finish: ${d.finish}. ${drawers}; flat slab drawer fronts with no hardware. Study envelope ${p.width} mm wide, ${p.depth} mm deep, ${p.height} mm worktop height. Thin top on two full-height solid side panels that reach the floor, no legs, ${p.apron} mm apron, open knee space about ${Math.round(l.kneeClearance)} mm high. Warm neutral seamless background, physically plausible oak grain, soft daylight, three-quarter front view, full piece in frame. No text, labels, props covering the piece or watermark. Concept visualization only; no dimensional accuracy claim.`.slice(
+      0,
+      1500,
+    );
+  }
+  return `Photorealistic studio product visualization of a premium MODERNCRE8VE asymmetric vanity / desk. ${briefLead(d)} Primary wood: ${d.wood}. Finish: ${d.finish}. Drawer inserts: ${d.cane}. Pulls: ${d.leather}, discreet fasteners. Exactly ${p.leftDrawers} left drawers and ${p.rightDrawers} right drawers. Study envelope ${p.width} mm wide, ${p.depth} mm deep, ${p.height} mm worktop height. Left tower ${p.leftWidth} mm wide, right case ${p.rightWidth} mm wide, knee opening ${p.width - p.leftWidth - p.rightWidth} mm. Sculpted sled bases, softened corners, elevated slim rear shelf. Warm neutral seamless background, physically plausible oak grain and woven texture, soft daylight, three-quarter front view, full piece in frame. No text, labels, props covering the piece or watermark. Concept visualization only; no dimensional accuracy claim.`.slice(
     0,
     1500,
   );
@@ -725,12 +1050,20 @@ export function exportStem(d, revision = 0) {
  * Applies a partial update (throws on unknown parameter / cost keys); any design change clears the review checks, as in
  * the original studio, unless only `checks` were supplied.
  * @param {Concept} base
- * @param {{name?:string; brief?:string; wood?:string; finish?:string; cane?:string; leather?:string; parameters?:Partial<Parameters>; costs?:Partial<Costs>; checks?:Record<string, boolean>}} patch
+ * @param {{form?:Form; name?:string; brief?:string; wood?:string; finish?:string; cane?:string; leather?:string; parameters?:Partial<Parameters>; costs?:Partial<Costs>; checks?:Record<string, boolean>}} patch
  * @returns {Concept}
  */
 export function applyConceptPatch(base, patch = {}) {
   const next = structuredClone(base);
   let designChanged = false;
+  if (patch.form !== undefined && patch.form !== formOf(next)) {
+    if (!FORM_KEYS.includes(patch.form))
+      throw new Error(`Unknown form "${patch.form}".`);
+    // A form has its own parameter set: start from that form's seed values.
+    next.form = patch.form;
+    next.parameters = seedFor(patch.form).parameters;
+    designChanged = true;
+  }
   for (const key of TEXT_KEYS) {
     if (patch[key] !== undefined && patch[key] !== next[key]) {
       next[key] = patch[key];
@@ -738,7 +1071,7 @@ export function applyConceptPatch(base, patch = {}) {
     }
   }
   const known = {
-    parameters: FIELDS.map(([key]) => key),
+    parameters: fieldsFor(next).map(([key]) => key),
     costs: COST_FIELDS.map(([key]) => key),
   };
   for (const group of ["parameters", "costs"]) {
