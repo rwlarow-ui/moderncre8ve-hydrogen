@@ -177,6 +177,18 @@ test("apron seed is valid, fits its envelope and parts don't collide", () => {
   );
 });
 
+test("apron form takes 3/4 in sheet stock for every panel", () => {
+  const ply = applyConceptPatch(APRON_SEED, {
+    parameters: { top: 19.05, side: 19.05, rail: 19.05 },
+  });
+  assert.deepEqual(conceptErrors(ply), []);
+  assert.equal(isBlocked(ply), false);
+  const deck = conceptParts(ply).find((x) => x.label === "Drawer deck");
+  assert.ok(
+    Math.abs(deck.w - (ply.parameters.width - 2 * (15 + 19.05))) < 1e-9,
+  );
+});
+
 test("lead drawer share sizes the rightmost drawer", () => {
   const l = apronLayout(APRON_SEED.parameters);
   const zone = l.openings.reduce((sum, o) => sum + o.w, 0);
